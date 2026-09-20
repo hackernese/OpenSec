@@ -1,0 +1,48 @@
+{
+  "target_identity": {
+    "canonical_name": "Ausecurity",
+    "root_domains": ["ausecurity.best"],
+    "address": "63 Paddington St, Paddington NSW 2021, Australia",
+    "owner": "Vinh Dinh",
+    "email": "info@ausecurity.best"
+  },
+  "confirmed": [
+    {"type": "domain", "host": "ausecurity.best", "ip": "51.79.166.148", "confidence": 100},
+    {"type": "subdomain", "host": "www.ausecurity.best", "ip": "51.79.166.148", "confidence": 95},
+    {"type": "subdomain", "host": "blog.ausecurity.best", "ip": "51.79.167.208", "confidence": 95},
+    {"type": "subdomain", "host": "ticket.ausecurity.best", "ip": "51.79.166.209", "confidence": 95},
+    {"type": "subdomain", "host": "contact.ausecurity.best", "ip": "51.79.166.148", "confidence": 88},
+    {"type": "ip", "host": "51.79.166.148", "confidence": 100},
+    {"type": "ip", "host": "51.79.167.208", "confidence": 100},
+    {"type": "ip", "host": "51.79.166.209", "confidence": 100},
+    {"type": "webapp", "host": "https://ausecurity.best/ (static site)", "ip": "51.79.166.148", "confidence": 100},
+    {"type": "webapp", "host": "https://ausecurity.best/login (Admin Login)", "ip": "51.79.166.148", "confidence": 95},
+    {"type": "webapp", "host": "https://ausecurity.best/dashboard", "ip": "51.79.166.148", "confidence": 95},
+    {"type": "api", "host": "https://ausecurity.best/api/auth/me", "ip": "51.79.166.148", "confidence": 95},
+    {"type": "api", "host": "https://ausecurity.best/api/auth/login", "ip": "51.79.166.148", "confidence": 95},
+    {"type": "api", "host": "https://ausecurity.best/api/auth/logout", "ip": "51.79.166.148", "confidence": 90},
+    {"type": "api", "host": "https://ausecurity.best/api/contact", "ip": "51.79.166.148", "confidence": 95},
+    {"type": "webapp", "host": "https://blog.ausecurity.best/ (WordPress)", "ip": "51.79.167.208", "confidence": 95},
+    {"type": "webapp", "host": "https://ticket.ausecurity.best/ (osTicket)", "ip": "51.79.166.209", "confidence": 95}
+  ],
+  "rejected": [
+    {"type": "domain", "host": "ausecurity.net", "reason": "lookalike, different entity"}
+  ],
+  "third_party": [
+    "Spaceship Inc (registrar/DNS)",
+    "Let's Encrypt (TLS)",
+    "Google Fonts",
+    "Gravatar",
+    "WordPress.org"
+  ],
+  "cloud_cdn": [
+    {"provider": "OVHcloud", "asn": "AS16276", "netblock": "51.79.164.0/22", "note": "IaaS only; VPS IPs in scope"}
+  ],
+  "warnings": [
+    "WHOIS registrant privacy-redacted",
+    "Apex serves self-signed certificate",
+    "osTicket installer exposed (uninstalled)",
+    "WordPress xmlrpc.php exposed with custom methods",
+    "No CDN/WAF; assets directly exposed on OVH Singapore"
+  ]
+}

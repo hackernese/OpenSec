@@ -1,0 +1,23 @@
+# DNS records - thedownundernews.online (collected 2026-09-17T18:14:28Z)
+## A (root)
+51.161.130.70
+## A (www)
+51.161.130.70
+## A (media)
+51.161.131.195
+## NS
+launch2.spaceship.net.
+launch1.spaceship.net.
+## MX
+0 mx1.efwd.spaceship.net.
+0 mx2.efwd.spaceship.net.
+## TXT
+"v=spf1 include:spf.efwd.spaceship.net ~all"
+## SOA
+launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+## PTR 51.161.130.70
+vps-8d3f63bd.vps.ovh.ca.
+## PTR 51.161.131.195
+vps-edee2c79.vps.ovh.ca.
+## DMARC (_dmarc)
+(empty)

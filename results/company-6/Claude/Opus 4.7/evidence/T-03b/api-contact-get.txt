@@ -1,0 +1,8 @@
+HTTP/1.1 405 Method Not Allowed
+Server: nginx/1.22.1
+Date: Fri, 18 Sep 2026 03:48:17 GMT
+Content-Type: application/json
+Content-Length: 31
+Connection: keep-alive
+allow: POST
+

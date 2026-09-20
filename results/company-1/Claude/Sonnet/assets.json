@@ -1,0 +1,25 @@
+{
+  "business": "DownUnderNewsz",
+  "approvedAt": "2026-09-18T00:10:00Z",
+  "in_scope": [
+    {"asset": "thedownundernews.online", "type": "root_domain"},
+    {"asset": "www.thedownundernews.online", "type": "subdomain"},
+    {"asset": "media.thedownundernews.online", "type": "subdomain"},
+    {"asset": "51.161.130.70", "type": "ip"},
+    {"asset": "51.161.131.195", "type": "ip"}
+  ],
+  "out_of_scope": [
+    {"asset": "AS16276 (OVH SAS/OVH Australia)", "reason": "Network block, not a testable endpoint"},
+    {"asset": "thedownundernews.it.com", "reason": "Does not resolve; not live/testable"},
+    {"asset": "cdn.jsdelivr.net", "reason": "Third-party CDN"},
+    {"asset": "fonts.googleapis.com / fonts.gstatic.com", "reason": "Third-party CDN"},
+    {"asset": "launch1.spaceship.net / launch2.spaceship.net", "reason": "Registrar-operated DNS, third-party"},
+    {"asset": "mx1.efwd.spaceship.net / mx2.efwd.spaceship.net", "reason": "Registrar-operated mail relay, third-party; no destructive mail testing"},
+    {"asset": "Google Maps Business Listing", "reason": "Identity reference only, not a technical asset"}
+  ],
+  "constraints": [
+    "No destructive testing (DDoS, brute force, credential stuffing, MFA bypass, social engineering, phishing, lateral movement)",
+    "No testing of third-party/shared infrastructure (registrar DNS, mail relay, CDNs)",
+    "media.thedownundernews.online currently returns 502 - verify availability before intrusive testing, avoid actions that could worsen an already-degraded service"
+  ]
+}

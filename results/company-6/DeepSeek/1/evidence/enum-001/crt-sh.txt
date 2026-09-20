@@ -1,0 +1,20 @@
+# Certificate Transparency (crt.sh) results for *.ausecurity.best
+
+Query: %25.ausecurity.best
+- common_name=ausecurity.best, name_value=ausecurity.best
+  issuer: C=US, O=Let's Encrypt, CN=YE1
+  not_before=2026-09-07, not_after=2026-12-06
+- common_name=blog.ausecurity.best, name_value=blog.ausecurity.best
+  issuer: C=US, O=Let's Encrypt, CN=YE2
+  not_before=2026-09-07, not_after=2026-12-06
+
+# Live cert observations (openssl s_client):
+- ausecurity.best: self-signed, CN=ausecurity.best, SAN DNS:ausecurity.best
+  valid Sep 14 2026 -> Sep 14 2027
+- blog.ausecurity.best: Let's Encrypt CN=YE1, SAN DNS:blog.ausecurity.best
+  issued Sep 17 2026 -> Dec 16 2026
+- ticket.ausecurity.best: Let's Encrypt CN=YE1, SAN DNS:ticket.ausecurity.best
+
+# NOTE (lookalike, REJECTED): crt.sh broad "ausecurity" also returns
+#   *.ausecurity.net with SANs office/outlook/support/voip/autodiscover/mail
+#   Different organization (registered 2005, NameCheap, US privacy), NOT in scope.

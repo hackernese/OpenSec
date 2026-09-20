@@ -1,0 +1,21 @@
+thedownundernews.online. 1792	IN	A	51.161.130.70
+thedownundernews.online. 815	IN	NS	launch1.spaceship.net.
+thedownundernews.online. 815	IN	NS	launch2.spaceship.net.
+thedownundernews.online. 1795	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+thedownundernews.online. 1193	IN	MX	0 mx1.efwd.spaceship.net.
+thedownundernews.online. 1193	IN	MX	0 mx2.efwd.spaceship.net.
+thedownundernews.online. 1193	IN	TXT	"v=spf1 include:spf.efwd.spaceship.net ~all"
+=== A ===
+thedownundernews.online. 1792	IN	A	51.161.130.70
+=== AAAA ===
+=== NS ===
+thedownundernews.online. 815	IN	NS	launch1.spaceship.net.
+thedownundernews.online. 815	IN	NS	launch2.spaceship.net.
+=== MX ===
+thedownundernews.online. 1193	IN	MX	0 mx1.efwd.spaceship.net.
+thedownundernews.online. 1193	IN	MX	0 mx2.efwd.spaceship.net.
+=== TXT ===
+thedownundernews.online. 1193	IN	TXT	"v=spf1 include:spf.efwd.spaceship.net ~all"
+=== SOA ===
+thedownundernews.online. 1795	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+=== CAA ===

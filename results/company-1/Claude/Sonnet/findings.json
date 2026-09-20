@@ -1,0 +1,95 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Anonymous FTP Access Exposes Files on Media Server",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "**Severity:** Medium\n\nThe FTP service on the media server accepts anonymous logins with no username or password required, allowing anyone on the internet to browse and download files stored on it.",
+      "description": "A port scan identified an open FTP service (vsftpd 3.0.5) on 51.161.131.195, the server behind media.thedownundernews.online. Testing confirmed the server accepts anonymous login (username \"anonymous\") and grants read access to a shared directory. At the time of testing this directory contained 4 files (2 images, 1 PDF, 1 HTML file) totalling roughly 1MB, none of which appeared to contain credentials or highly sensitive personal data, but the service itself has no access control at all - any current or future file placed in that directory is exposed to the public internet without authentication. Write/delete capability could not be safely validated during this engagement (a validation attempt was declined by the assessment's own safety controls), so it is unknown whether an anonymous user could also upload or modify content; this should be treated as an open question and verified by the site owner directly.",
+      "recommendation": "Disable anonymous FTP login. If the media server needs to serve files publicly, do so over HTTPS from the existing web server instead of via a separate unauthenticated FTP service. If FTP access is required for legitimate internal use, restrict it to authenticated accounts and firewall the port to trusted IP addresses only.",
+      "affected_components": [
+        "media.thedownundernews.online (51.161.131.195:21, vsftpd 3.0.5)"
+      ],
+      "references": [
+        "CWE-287 (Improper Authentication)",
+        "CWE-284 (Improper Access Control)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Backend Application Server Directly Reachable, Bypassing HTTPS/Reverse Proxy",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "summary": "**Severity:** Medium\n\nThe website's backend application server is directly reachable from the internet over plain, unencrypted HTTP on port 5000, completely bypassing the HTTPS encryption and the nginx web server that normally sits in front of it.",
+      "description": "Port scanning of 51.161.130.70 revealed an open port 5000 running Gunicorn (the Python application server that powers the website). Direct requests to http://51.161.130.70:5000/ return the exact same application - including the search page and the administrative login page (/admin) - as the properly encrypted https://thedownundernews.online/. Because this path is unencrypted, any sensitive data submitted through it (most notably, administrator login credentials, since the /admin login form is reachable the same way) would travel in plain text and could be intercepted by anyone positioned on the network path. This exposure also means that the application server itself is directly internet-facing rather than only reachable through the intended nginx front end, removing a layer of defense.",
+      "recommendation": "Configure the server's firewall to block external access to port 5000, so the application is only reachable through nginx on ports 80/443 (nginx should proxy to the app server over localhost only, e.g. 127.0.0.1:5000). This is a standard, low-effort fix that eliminates the unencrypted access path entirely.",
+      "affected_components": [
+        "51.161.130.70:5000 (Gunicorn application server, main website's backend)"
+      ],
+      "references": [
+        "CWE-319 (Cleartext Transmission of Sensitive Information)",
+        "CWE-668 (Exposure of Resource to Wrong Sphere)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing Security-Related HTTP Response Headers",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+      "summary": "**Severity:** Low\n\nThe website does not send several standard browser security headers, leaving it with fewer built-in protections than modern best practice recommends.",
+      "description": "Reviewing the site's HTTP response headers showed none of the following are set: Content-Security-Policy, Strict-Transport-Security (HSTS), X-Frame-Options, X-Content-Type-Options, Referrer-Policy, or Permissions-Policy. In practical terms: the site could be embedded in a hidden frame on a malicious page (clickjacking), browsers won't be told to always use HTTPS for this domain, and there's no defense-in-depth policy restricting what scripts/resources the page can load if an injection flaw is ever found elsewhere.",
+      "recommendation": "Add the missing headers at the nginx level (a small, low-risk configuration change): Strict-Transport-Security, X-Frame-Options: DENY (or CSP frame-ancestors), X-Content-Type-Options: nosniff, a baseline Content-Security-Policy, and Referrer-Policy: strict-origin-when-cross-origin.",
+      "affected_components": [
+        "thedownundernews.online and www.thedownundernews.online (all pages)"
+      ],
+      "references": [
+        "CWE-1021 (Improper Restriction of Rendered UI Layers - Clickjacking)",
+        "OWASP Secure Headers Project"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "TLS Certificate Does Not Cover the \"www\" Hostname",
+      "cvss": "n/a",
+      "summary": "**Severity:** Low\n\nVisitors who type \"www.thedownundernews.online\" into their browser will see a security warning because the site's TLS certificate was only issued for the bare domain, not the www version.",
+      "description": "The certificate served on port 443 lists only \"thedownundernews.online\" in its subject/SAN. When the same server is accessed via the www subdomain, browsers correctly flag a hostname mismatch. The site still loads if the visitor clicks through the warning, but this both damages visitor trust and trains users to ignore certificate warnings.",
+      "recommendation": "Reissue the TLS certificate to include \"www.thedownundernews.online\" as an additional Subject Alternative Name (most certificate providers, including free ones like Let's Encrypt, support multiple SANs at no extra cost), or configure a permanent redirect from www to the bare domain if www is not meant to be used directly.",
+      "affected_components": [
+        "www.thedownundernews.online"
+      ],
+      "references": []
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Domain Missing DMARC Record (Email Spoofing Exposure)",
+      "cvss": "n/a",
+      "summary": "**Severity:** Low\n\nThe domain has no DMARC policy published, which makes it easier for attackers to send emails that appear to come from @thedownundernews.online addresses.",
+      "description": "A direct DNS query for a DMARC record (_dmarc.thedownundernews.online) returned no result. Without DMARC, even if SPF is configured, receiving mail servers have no instruction on how to handle messages that fail authentication checks, making the domain a more attractive target for phishing campaigns impersonating the business.",
+      "recommendation": "Publish a DMARC TXT record starting in monitoring mode (e.g. \"v=DMARC1; p=none; rua=mailto:<owner-email>\") and gradually move to a stricter policy (p=quarantine, then p=reject) once legitimate mail flows are confirmed to pass authentication.",
+      "affected_components": [
+        "thedownundernews.online (DNS zone)"
+      ],
+      "references": []
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Administrative Login Panel Publicly Exposed Without Additional Protection",
+      "cvss": "n/a",
+      "summary": "**Severity:** Low\n\nThe website's admin login page is reachable by anyone on the internet with no additional restriction (such as IP allow-listing or a VPN requirement), increasing the attack surface for credential-guessing attempts.",
+      "description": "The page itself only presents a standard username/password login form and does not leak any data to unauthenticated visitors, so this is not a vulnerability on its own. However, combined with the lack of network-level restriction, it broadens the avenues an attacker could use to attempt to guess credentials over time (a technique this assessment did not test, per engagement rules against brute-force attacks). Reducing this exposed surface is a reasonable hardening step.",
+      "recommendation": "Restrict access to /admin at the network level (IP allow-list for known administrator locations, or place it behind a VPN), and ensure the underlying account has a strong, unique password and, ideally, multi-factor authentication.",
+      "affected_components": [
+        "thedownundernews.online/admin (also reachable via 51.161.130.70:5000/admin, see related finding on backend exposure)"
+      ],
+      "references": []
+    }
+  }
+]

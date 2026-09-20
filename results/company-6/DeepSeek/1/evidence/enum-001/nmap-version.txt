@@ -1,0 +1,88 @@
+# Nmap 7.99 scan initiated Fri Sep 18 05:12:19 2026 as: /usr/lib/nmap/nmap --privileged -sV -sC -Pn -p 22,80,443,8080 -oN /home/research/Projects/AuSecurity/evidence/enum-001/nmap-version.txt 51.79.166.148 51.79.167.208 51.79.166.209
+Nmap scan report for vps-10f1e4c3.vps.ovh.ca (51.79.166.148)
+Host is up (0.20s latency).
+
+PORT     STATE SERVICE  VERSION
+22/tcp   open  ssh      OpenSSH 9.2p1 Debian 2+deb12u10 (protocol 2.0)
+| ssh-hostkey: 
+|   256 9a:bd:49:00:5b:b0:59:65:53:a3:6c:86:3a:ae:ed:9a (ECDSA)
+|_  256 1d:ef:e7:0b:cc:5c:b8:c2:95:24:16:84:46:f1:d3:0e (ED25519)
+80/tcp   open  http     nginx 1.22.1
+|_http-title: Did not follow redirect to https://vps-10f1e4c3.vps.ovh.ca/
+|_http-server-header: nginx/1.22.1
+443/tcp  open  ssl/http nginx 1.22.1
+|_http-server-header: nginx/1.22.1
+|_http-title: Ausecurity \xE2\x80\x94 GRC Consulting & Penetration Testing
+| tls-alpn: 
+|   http/1.1
+|   http/1.0
+|_  http/0.9
+|_ssl-date: TLS randomness does not represent time
+| ssl-cert: Subject: commonName=ausecurity.best
+| Subject Alternative Name: DNS:ausecurity.best
+| Not valid before: 2026-09-14T15:32:18
+|_Not valid after:  2027-09-14T15:32:18
+8080/tcp open  http     nginx 1.25.5
+|_http-server-header: nginx/1.25.5
+|_http-title: Ausecurity \xE2\x80\x94 GRC Consulting & Penetration Testing
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Nmap scan report for vps-d64a720c.vps.ovh.ca (51.79.167.208)
+Host is up (0.20s latency).
+
+PORT     STATE    SERVICE    VERSION
+22/tcp   open     ssh        OpenSSH 9.2p1 Debian 2+deb12u10 (protocol 2.0)
+| ssh-hostkey: 
+|   256 24:6e:a6:ee:62:0b:a9:2c:73:c1:9a:e3:bf:e1:2c:fe (ECDSA)
+|_  256 e7:1a:00:70:5a:64:4f:f8:fe:b4:29:19:ef:ba:a1:a6 (ED25519)
+80/tcp   open     http       Apache httpd 2.4.68 ((Debian))
+|_http-title: AuSecurity
+|_http-generator: WordPress 7.1
+|_http-server-header: Apache/2.4.68 (Debian)
+443/tcp  open     ssl/http   Apache httpd 2.4.68 ((Debian))
+|_ssl-date: TLS randomness does not represent time
+|_http-server-header: Apache/2.4.68 (Debian)
+|_http-generator: WordPress 7.1
+| ssl-cert: Subject: commonName=blog.ausecurity.best
+| Subject Alternative Name: DNS:blog.ausecurity.best
+| Not valid before: 2026-09-17T18:25:38
+|_Not valid after:  2026-12-16T18:25:37
+|_http-title: AuSecurity
+8080/tcp filtered http-proxy
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Nmap scan report for vps-91287016.vps.ovh.ca (51.79.166.209)
+Host is up (0.20s latency).
+
+PORT     STATE  SERVICE  VERSION
+22/tcp   open   ssh      OpenSSH 9.2p1 Debian 2+deb12u10 (protocol 2.0)
+| ssh-hostkey: 
+|   256 54:64:22:67:4b:a1:50:93:c9:2e:f5:c4:e7:8b:44:5e (ECDSA)
+|_  256 27:fa:c8:43:03:c8:08:b9:01:63:17:fb:28:df:69:2d (ED25519)
+80/tcp   closed http
+443/tcp  open   ssl/http nginx 1.22.1
+| http-title: osTicket Installer
+|_Requested resource was /setup/install.php
+|_http-server-header: nginx/1.22.1
+|_ssl-date: TLS randomness does not represent time
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+| ssl-cert: Subject: commonName=ticket.ausecurity.best
+| Subject Alternative Name: DNS:ticket.ausecurity.best
+| Not valid before: 2026-09-14T15:46:12
+|_Not valid after:  2026-12-13T15:46:11
+8080/tcp open   http     Apache httpd 2.4.68 ((Debian))
+| http-title: osTicket Installer
+|_Requested resource was /setup/install.php
+|_http-server-header: Apache/2.4.68 (Debian)
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-open-proxy: Proxy might be redirecting requests
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Fri Sep 18 05:12:52 2026 -- 3 IP addresses (3 hosts up) scanned in 32.66 seconds

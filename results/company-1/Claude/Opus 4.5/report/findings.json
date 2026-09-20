@@ -1,0 +1,140 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Exposed Backend Application Server (Port 5000)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "summary": "The Gunicorn backend application server is directly accessible on port 5000 without any authentication or access controls. This completely bypasses the nginx reverse proxy security layer, exposing administrative functionality and sensitive data.",
+      "description": "During the assessment, it was discovered that the Python/Gunicorn backend server running on port 5000 is publicly accessible. While the nginx reverse proxy on ports 80/443 is intended to be the only entry point, the backend server accepts connections directly from the internet.\n\nThis exposure allows attackers to:\n- Access the admin panel (/admin) without proxy-level restrictions\n- Retrieve sensitive API data including admin credentials\n- Bypass any rate limiting or access controls implemented at the proxy level\n- Access internal endpoints not intended for public consumption\n\n**Evidence:**\n- Direct access to http://51.161.130.70:5000/ returns the full website\n- http://51.161.130.70:5000/admin returns 200 OK (2,894 bytes)\n- http://51.161.130.70:5000/api/articles exposes admin user details\n- Server header confirms: \"Server: gunicorn\"\n\n**Business Impact:**\nComplete compromise of application security model. The multi-tier architecture is rendered ineffective as attackers can bypass all proxy-level security controls. This could lead to unauthorized administrative access, data theft, and system compromise.",
+      "recommendation": "1. **IMMEDIATE**: Block port 5000 from public internet access using firewall rules (iptables/ufw)\n2. Configure Gunicorn to listen only on localhost (127.0.0.1:5000)\n3. Implement application-level authentication on all sensitive endpoints\n4. Consider network segmentation to isolate backend services",
+      "affected_components": [
+        "51.161.130.70:5000 (thedownundernews.online backend)"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/284.html",
+        "https://owasp.org/Top10/A01_2021-Broken_Access_Control/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Anonymous FTP Access Enabled",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "summary": "The FTP server on the media subdomain allows anonymous login, providing unauthenticated access to media files including documents and images.",
+      "description": "The vsftpd 3.0.5 FTP server on the media server (51.161.131.195) permits anonymous authentication. Upon connecting with anonymous credentials, users gain read access to the FTP root directory containing media assets.\n\n**Files currently exposed:**\n- 37550846eae5457d93ddd8e1d2faeaca.html (76 bytes)\n- 58e75939c3d24841806d3a069e919576.png (230,599 bytes)\n- 66ea642847be4ef0a800fb8cb8432d79.png (167,268 bytes)\n- d2273a1a2576489fb419cc1049c4c62f.pdf (624,807 bytes)\n\nAdditionally, all FTP communications occur in plaintext (unencrypted), exposing any credentials used to potential interception.\n\n**Evidence:**\n- nmap ftp-anon script confirms: \"Anonymous FTP login allowed (FTP code 230)\"\n- FTP banner: \"vsFTPd 3.0.5\"\n- Directory listing shows 4 files with read permissions\n\n**Business Impact:**\nUnauthorized access to media files that may contain proprietary content, internal documents, or sensitive information. The PDF file (624KB) is particularly concerning as it may contain business documents. Plaintext FTP also risks credential exposure if staff use authenticated sessions.",
+      "recommendation": "1. Disable anonymous FTP access in vsftpd configuration (anonymous_enable=NO)\n2. Migrate to SFTP (SSH-based file transfer) for encrypted communications\n3. Implement proper authentication for all file access\n4. Review exposed files for sensitive content and assess data breach implications\n5. Consider removing FTP service entirely if not business-critical",
+      "affected_components": [
+        "51.161.131.195:21 (media.thedownundernews.online)"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/284.html",
+        "https://cwe.mitre.org/data/definitions/552.html",
+        "https://owasp.org/Top10/A01_2021-Broken_Access_Control/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Admin Credentials Disclosed in API Response",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "summary": "The public API endpoint exposes administrator account information including username, email address, role, and account creation timestamp.",
+      "description": "The /api/articles endpoint returns article data that includes full author details. For articles authored by the administrator, this exposes:\n\n- Username: admin\n- Email: admin@thedownundernews.it.com\n- Role: admin\n- Account status: active\n- Creation date: 2026-09-13T13:16:02.003617+00:00\n\nThis information disclosure provides attackers with valid usernames and email addresses for potential credential attacks, phishing, or social engineering.\n\n**Evidence:**\n- GET request to /api/articles returns JSON with author objects\n- Author object contains: {\"username\": \"admin\", \"email\": \"admin@thedownundernews.it.com\", \"role\": \"admin\", \"is_active\": true}\n\n**Business Impact:**\nExposure of admin credentials enables targeted attacks against administrative accounts. The email address can be used for spear-phishing, and the username confirms valid authentication targets for brute-force attempts.",
+      "recommendation": "1. Implement API response filtering to exclude sensitive user fields\n2. Create a separate \"public profile\" object with only necessary display information\n3. Review all API endpoints for similar information disclosure\n4. Consider implementing field-level access controls based on authentication status",
+      "affected_components": [
+        "https://thedownundernews.online/api/articles"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/200.html",
+        "https://cwe.mitre.org/data/definitions/359.html",
+        "https://owasp.org/Top10/A01_2021-Broken_Access_Control/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing HTTP Security Headers",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The web application is missing critical HTTP security headers that protect against common web attacks including clickjacking, MIME-type sniffing, and protocol downgrade attacks.",
+      "description": "Security header analysis revealed the following deficiencies:\n\n**Missing Headers:**\n- Strict-Transport-Security (HSTS): Not implemented - vulnerable to SSL stripping\n- Content-Security-Policy (CSP): Not implemented - no XSS mitigation\n- X-Content-Type-Options: Not implemented - MIME sniffing possible\n- Referrer-Policy: Not implemented - referrer leakage\n- Permissions-Policy: Not implemented - unrestricted browser features\n\n**Present but Suboptimal:**\n- X-Frame-Options: Present (deprecated, should use CSP frame-ancestors)\n- Server: nginx (information disclosure)\n\n**Evidence:**\n- curl -sI https://thedownundernews.online/ shows only Server header\n- No security headers present in response\n\n**Business Impact:**\nWithout these protections, the application is more susceptible to:\n- Man-in-the-middle attacks (no HSTS)\n- Cross-site scripting exploitation (no CSP)\n- Clickjacking attacks (deprecated X-Frame-Options only)\n- Browser feature abuse (no Permissions-Policy)",
+      "recommendation": "Add the following headers in nginx configuration:\n\n```nginx\nadd_header Strict-Transport-Security \"max-age=31536000; includeSubDomains; preload\" always;\nadd_header Content-Security-Policy \"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-ancestors 'none';\" always;\nadd_header X-Content-Type-Options \"nosniff\" always;\nadd_header Referrer-Policy \"strict-origin-when-cross-origin\" always;\nadd_header Permissions-Policy \"geolocation=(), microphone=(), camera=()\" always;\n```",
+      "affected_components": [
+        "https://thedownundernews.online/",
+        "https://media.thedownundernews.online/"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/693.html",
+        "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing HSTS on TLS Endpoints",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+      "summary": "Neither web endpoint implements HTTP Strict Transport Security (HSTS), leaving users vulnerable to protocol downgrade and man-in-the-middle attacks.",
+      "description": "While both domains support HTTPS with valid Let's Encrypt certificates and redirect HTTP to HTTPS, the absence of HSTS headers means:\n\n- Browsers will still attempt initial HTTP connections\n- Active network attackers can intercept and prevent the HTTPS redirect\n- Users are vulnerable to SSL stripping attacks on untrusted networks\n\nBoth servers were confirmed to lack this header during SSL/TLS analysis using testssl.\n\n**Evidence:**\n- testssl output: \"HSTS: NOT offered\"\n- curl -sI shows no Strict-Transport-Security header\n\n**Business Impact:**\nUsers accessing the site from public WiFi, corporate networks, or compromised networks may have their sessions intercepted before the HTTPS redirect occurs, potentially exposing credentials or session tokens.",
+      "recommendation": "1. Add HSTS header: Strict-Transport-Security: max-age=31536000; includeSubDomains\n2. After confirming proper HTTPS operation, consider HSTS preloading\n3. Ensure all subdomains also support HTTPS before adding includeSubDomains",
+      "affected_components": [
+        "https://thedownundernews.online/",
+        "https://media.thedownundernews.online/"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/319.html",
+        "https://owasp.org/Top10/A02_2021-Cryptographic_Failures/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "TLS CBC-Mode Ciphers Enabled (LUCKY13 Potential)",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "Both TLS endpoints support CBC-mode cipher suites which are theoretically vulnerable to the LUCKY13 timing attack.",
+      "description": "SSL/TLS analysis revealed that both servers support TLS 1.2 cipher suites using CBC (Cipher Block Chaining) mode, including:\n\n- ECDHE-ECDSA-AES128-SHA256\n- ECDHE-ECDSA-AES256-SHA384\n\nWhile modern TLS implementations include mitigations for LUCKY13, the presence of these ciphers represents a theoretical weakness. AEAD ciphers (GCM, ChaCha20-Poly1305) are preferred.\n\n**Evidence:**\n- testssl output: \"LUCKY13 (CVE-2013-0169): potentially vulnerable (uses TLS CBC ciphers)\"\n- CBC ciphers listed but not preferred over AEAD alternatives\n\n**Business Impact:**\nLow practical impact due to attack complexity, but represents deviation from TLS best practices. Modern browsers will typically negotiate AEAD ciphers when available.",
+      "recommendation": "1. Disable CBC-mode ciphers in nginx SSL configuration\n2. Prioritize AEAD ciphers (GCM, ChaCha20-Poly1305) in cipher ordering\n3. Example nginx configuration:\n   ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305';",
+      "affected_components": [
+        "https://thedownundernews.online/",
+        "https://media.thedownundernews.online/"
+      ],
+      "references": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2013-0169",
+        "https://cwe.mitre.org/data/definitions/310.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Server Information Disclosure",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The web server and backend disclose software identification in HTTP response headers, aiding attackers in fingerprinting the technology stack.",
+      "description": "HTTP response headers reveal:\n\n- Main server: \"Server: nginx\"\n- Backend: \"Server: gunicorn\"\n- FTP server: \"vsFTPd 3.0.5\"\n\nWhile version numbers are not fully disclosed for nginx, the software identification assists attackers in:\n\n- Identifying potential version-specific vulnerabilities\n- Tailoring exploits for the detected software\n- Reducing reconnaissance effort\n\n**Evidence:**\n- curl -sI responses show Server headers\n- FTP SYST command returns version information\n\n**Business Impact:**\nMinimal direct impact, but reduces the effort required for targeted attacks and contributes to the overall attack surface.",
+      "recommendation": "1. Configure nginx: server_tokens off;\n2. Configure Gunicorn to suppress server header or use nginx to strip it\n3. Configure vsftpd: ftpd_banner=Welcome to FTP service (custom banner)",
+      "affected_components": [
+        "All endpoints (thedownundernews.online, media.thedownundernews.online, 51.161.130.70, 51.161.131.195)"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/200.html",
+        "https://owasp.org/Top10/A01_2021-Broken_Access_Control/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Media Server Backend Unavailable (502 Bad Gateway)",
+      "cvss": "",
+      "summary": "The media subdomain returns HTTP 502 Bad Gateway errors, indicating a backend service failure.",
+      "description": "All requests to media.thedownundernews.online return 502 errors from the nginx reverse proxy. This indicates the backend application server is either:\n\n- Not running\n- Misconfigured\n- Unable to communicate with nginx\n\nWhile not a security vulnerability per se, this represents an availability issue and may indicate infrastructure problems that could mask other security concerns.\n\n**Evidence:**\n- curl -sI https://media.thedownundernews.online/ returns HTTP/1.1 502 Bad Gateway\n- Consistent across multiple test requests\n\n**Business Impact:**\nMedia content is unavailable to users. If the subdomain was intended to serve media files, content delivery is impacted.",
+      "recommendation": "1. Review backend service logs for the media subdomain\n2. Ensure backend application is running and properly configured\n3. Verify nginx upstream configuration points to correct backend address",
+      "affected_components": [
+        "https://media.thedownundernews.online/"
+      ],
+      "references": []
+    }
+  }
+]

@@ -1,0 +1,225 @@
+# AuSecurity — Confirmed Vulnerability Findings
+Engagement: Full-scope authorized vulnerability assessment
+Date: 2026-09-17
+Scope: ausecurity.best + www/contact/blog/ticket subdomains (IPs 51.79.166.148, 51.79.167.208, 51.79.166.209)
+
+---
+
+# Finding: Unauthenticated Remote Code Execution via Unsafe Deserialization (Python pickle)
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
+Affected: https://ausecurity.best/ (51.79.166.148) — API backend, `admin_token` cookie
+References: CWE-502 (Deserialization of Untrusted Data), OWASP A08:2021 Software and Data Integrity Failures
+
+Summary:
+An attacker can run arbitrary operating-system commands on the AuSecurity web server without logging in. The session cookie is built using Python's unsafe `pickle` serialization and is accepted by the server with no integrity check.
+
+Description:
+The authentication cookie `admin_token` is a Base64-encoded Python pickle object that wraps a JWT-like string (verified format: `base64(pickle.dumps("|" + jwt))`). The server unpickles this cookie value on every request to the API (e.g. `/api/auth/me`) with no cryptographic signature or MAC protecting the cookie payload. Sending a crafted pickle that reduces to `os.system("<command>")` executes the command server-side before authentication is evaluated.
+
+Proof (timing-based, non-destructive):
+- Benign pickle (returns a string): response in ~0.70s, HTTP 401.
+- Payload `os.system('sleep 3')`: response in ~3.6s, HTTP 401.
+- Payload `os.system('sleep 8')`: response in ~8.8s, HTTP 401.
+- Repeated `sleep 3` reproduced at ~3.7s. Delay is proportional to the command's sleep argument, confirming server-side command execution.
+
+This is reachable with no credentials or prior authentication, affecting the application and the underlying host, including any sensitive data and lateral access.
+
+Recommendation:
+Replace the pickle-based session serializer with a signed, integrity-protected format (e.g. Flask's `itsdangerous` JSON serializer with a strong, random `SECRET_KEY`, or a standard signed JWT). Never deserialize untrusted input with `pickle`. Rotate any secrets/keys and audit the host for signs of compromise.
+
+---
+
+# Finding: Default Administrative Credentials (admin:admin)
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+Affected: https://ausecurity.best/api/auth/login (51.79.166.148)
+References: CWE-798 (Use of Hard-coded Credentials), CWE-521 (Weak Password Requirements)
+
+Summary:
+The administrative login accepts the well-known default credentials `admin` / `admin`, giving anyone full access to the admin dashboard.
+
+Description:
+POST /api/auth/login with `{"username":"admin","password":"admin"}` returns HTTP 200 and sets the `admin_token` session cookie. With this cookie, GET /api/auth/me returns `{"authenticated":true,"user":"admin"}` and the `/dashboard` page is accessible, exposing internal business data (see the "Sensitive Data Exposure" finding). The login endpoint does not distinguish valid vs invalid usernames in error responses, but the default credential itself is trivially guessable and grants administrative access.
+
+Recommendation:
+Immediately change the admin password to a strong, unique value. Enforce a password policy and add multi-factor authentication for administrative accounts. Remove or rotate any other default/hard-coded credentials.
+
+---
+
+# Finding: Sensitive Business/Client Data Exposed via Admin Dashboard
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N
+Affected: https://ausecurity.best/dashboard (51.79.166.148)
+References: CWE-200 (Exposure of Sensitive Information), OWASP A01:2021 Broken Access Control
+
+Summary:
+The admin dashboard discloses client names, contact emails, and commercial metrics. It is reachable using the default admin credentials, so this data is effectively public.
+
+Description:
+The dashboard (dashboard.html) is embedded with client records (e.g. "James Hargreaves · james@meridianfs.com.au", "Lara Whitfield · lara@shopstream.io", plus four more), together with business metrics (total enquiries 47, active clients 12, revenue YTD $1.2M) and an activity feed. Because the dashboard is protected only by the default `admin:admin` credential, an unauthenticated attacker can read this confidential client data.
+
+Recommendation:
+Change the admin credential (see previous finding) and enforce access control so the dashboard is only reachable by authenticated, authorized users. Reassess whether client PII and revenue figures belong in the marketing-hosted application.
+
+---
+
+# Finding: Publicly Accessible osTicket Installer (Unattended Application Setup)
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N
+Affected: https://ticket.ausecurity.best/ (51.79.166.209), ports 443 and 8080
+References: CWE-489 (Active Debug Code), CWE-693 (Protection Mechanism Failure)
+
+Summary:
+The osTicket helpdesk is deployed but never finished installation, and its setup wizard is publicly accessible. Anyone can complete the installation and take over the system as administrator.
+
+Description:
+Requests to https://ticket.ausecurity.best/ redirect to /setup/install.php, which serves the osTicket v1.18.4 installation wizard (Step 1 prerequisites) with no authentication. The same installer is reachable over plaintext HTTP on port 8080. /setup/inc/ also returns an open directory listing. Because osTicket is uninstalled, the first person to complete the wizard becomes the administrator; an attacker who reaches it first gains full control of the helpdesk before the business does. The staff panel (/scp/) and API (/api/http.php, /api/tickets.php) all redirect to the installer, confirming the app is not configured.
+
+Recommendation:
+Complete the installation immediately and restrict access to /setup/ during deployment. Delete or disable the setup directory after installation (osTicket recommends removing /setup/). Ensure the helpdesk is not exposed on plaintext HTTP (8080).
+
+---
+
+# Finding: Reflected DOM-based Cross-Site Scripting (XSS)
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+Affected: https://ausecurity.best/consultation-success.html (51.79.166.148)
+References: CWE-79 (Improper Neutralization of Input During Web Page Generation)
+
+Summary:
+The `name` URL parameter is written into the page using `innerHTML` without sanitization, allowing reflected cross-site scripting.
+
+Description:
+consultation-success.html reads the `name` query parameter and assigns it directly: `document.getElementById('user-name').innerHTML = userName;` (line 176). A crafted URL such as `/consultation-success.html?name=<img src=x onerror=alert(1)>` executes attacker-controlled JavaScript in the victim's browser in the context of the AuSecurity origin. This is also reachable through the contact form, whose `full_name` field is reflected into the success redirect (`redirect_url` contains `?name=...`). The `company` parameter uses `textContent` and is safe; only `name` is vulnerable.
+
+Recommendation:
+Use `textContent` instead of `innerHTML` for the `name` value (as is already done for `company`), or sanitize/encode the value before inserting it into the DOM.
+
+---
+
+# Finding: WordPress XML-RPC Enabled (Pingback SSRF / Multicall Amplification)
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://blog.ausecurity.best/xmlrpc.php (51.79.167.208)
+References: CWE-749 (Exposed Dangerous Method or Function), CWE-441 (Unintended Proxy), OWASP SSRF
+
+Summary:
+The WordPress blog exposes XML-RPC with 81 methods, including `pingback.ping` (a server-side request forgery vector) and `system.multicall` (request amplification). Custom `demo.*` methods indicate non-standard code is loaded.
+
+Description:
+xmlrpc.php responds with the full method list. `pingback.ping` can be abused to make the server issue outbound HTTP requests to arbitrary targets (SSRF), and `system.multicall` allows many requests to be batched into one (amplification). Two custom methods (`demo.sayHello` returning "Hello!", `demo.addTwoNumbers` returning 3) are also exposed, indicating custom test code has been added to the XML-RPC handler. XML-RPC is unnecessary for modern WordPress and is a common attack surface.
+
+Recommendation:
+Disable XML-RPC entirely (e.g. block /xmlrpc.php at the web server or use a plugin) unless a specific integration requires it. If it must remain, restrict `pingback` and `system.multicall` methods.
+
+---
+
+# Finding: WordPress Username Enumeration
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://blog.ausecurity.best/ (51.79.167.208)
+References: CWE-200 (Exposure of Sensitive Information)
+
+Summary:
+The WordPress author archive reveals the administrative username `admin`.
+
+Description:
+GET /?author=1 returns a 301 redirect to /index.php/author/admin/, disclosing that the user with ID 1 has the login "admin". An attacker can confirm this username to target the admin account (e.g. via the login page or XML-RPC).
+
+Recommendation:
+Disable author enumeration (e.g. block `?author=` requests or redirect them), and avoid using predictable usernames for privileged accounts.
+
+---
+
+# Finding: Directory Listing Enabled on Web Directories
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://blog.ausecurity.best/wp-content/uploads/ (51.79.167.208); https://ticket.ausecurity.best/setup/inc/ (51.79.166.209)
+References: CWE-548 (Exposure of Information Through Directory Listing)
+
+Summary:
+Directory browsing is enabled on the WordPress uploads directory and the osTicket setup includes directory, exposing file names and structure.
+
+Description:
+https://blog.ausecurity.best/wp-content/uploads/ returns an "Index of /wp-content/uploads" listing (2026/09 subfolders). https://ticket.ausecurity.best/setup/inc/ returns an "Index of /setup/inc" listing. These expose internal file names and directory structure that aid further attacks.
+
+Recommendation:
+Disable directory indexing (e.g. `Options -Indexes` in Apache, or `autoindex off` in nginx) and add a default index document or deny rule.
+
+---
+
+# Finding: Self-Signed TLS Certificate on Main Site
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N
+Affected: https://ausecurity.best/ (51.79.166.148)
+References: CWE-295 (Improper Certificate Validation)
+
+Summary:
+The main website serves a self-signed TLS certificate instead of a trusted certificate, undermining transport security and enabling man-in-the-middle attacks.
+
+Description:
+The certificate for ausecurity.best:443 is self-signed (issuer == subject "CN=ausecurity.best"), valid 2026-09-14 to 2027-09-14, single-name SAN. By contrast, blog.ausecurity.best and ticket.ausecurity.best use valid Let's Encrypt certificates. The self-signed cert causes browsers to show warnings and means clients cannot verify the server's identity, allowing interception of credentials and session tokens.
+
+Recommendation:
+Replace the self-signed certificate with a trusted certificate (e.g. free Let's Encrypt), consistent with the other subdomains, and automate renewal.
+
+---
+
+# Finding: osTicket Session Cookie Missing HttpOnly Flag
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N
+Affected: https://ticket.ausecurity.best/ (51.79.166.209)
+References: CWE-1004 (Sensitive Cookie Without 'HttpOnly' Flag)
+
+Summary:
+The PHPSESSID cookie set by the osTicket installer lacks the HttpOnly flag, increasing exposure to cookie theft via script injection.
+
+Description:
+Responses from https://ticket.ausecurity.best/ (and port 8080) set the PHPSESSID cookie without the HttpOnly attribute. If any script execution vulnerability exists in the application, the session identifier could be exfiltrated via JavaScript.
+
+Recommendation:
+Set `HttpOnly` (and `Secure`, with an appropriate `SameSite` value) on session cookies.
+
+---
+
+# Finding: Software Version and Technology Disclosure
+Severity: info
+CVSS:
+Affected: ausecurity.best, blog.ausecurity.best, ticket.ausecurity.best (all in-scope IPs)
+References: CWE-200 (Exposure of Sensitive Information)
+
+Summary:
+Multiple services disclose exact software versions, aiding an attacker in selecting exploits.
+
+Description:
+Observed disclosures: nginx/1.22.1 and nginx/1.25.5 (via Server header and error footers), Apache/2.4.68 (Debian), PHP/8.2.33 (X-Powered-By on osTicket), WordPress 7.1 (generator meta and `?ver=7.1` asset query), osTicket v1.18.4 (installer), and OpenSSH 9.2p1 Debian (banner). Additionally, port 443 advertises HTTP/0.9 via ALPN, which is unusual and unnecessary.
+
+Recommendation:
+Suppress version banners (`server_tokens off` in nginx, `expose_php = Off` in PHP, `ServerTokens Prod` in Apache) and disable obsolete protocol advertisement.
+
+---
+
+# Finding: Client-Side Open Redirect in Login Flow
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N
+Affected: https://ausecurity.best/login (51.79.166.148)
+References: CWE-601 (URL Redirection to Untrusted Site), OWASP A01:2021
+
+Summary:
+The login page redirects to an arbitrary URL supplied in the `?redirect=` query parameter after authentication, without validating that the target is same-origin.
+
+Description:
+In assets/js/main.js, both the pre-auth and post-login flows assign `window.location.href = redirect` (from the `redirect` query parameter) with no validation, despite a code comment claiming "only allow same-origin redirects". A crafted link such as /login?redirect=https://evil.example.com sends a user to an attacker-controlled site after they log in, enabling phishing/credential capture.
+
+Recommendation:
+Validate the `redirect` value server-side or client-side to allow only same-origin/relative URLs (e.g. reject values starting with `//` or containing `://`).
+
+---
+
+# Notes / Limitations
+- SSH (port 22) is open on all three hosts but was not brute-forced or exploited (out of scope per engagement rules). Only the version banner was recorded.
+- No denial-of-service or destructive testing was performed.
+- WordPress was not observed to use identifiable third-party plugins; no plugin-specific vulnerability testing was possible. WordPress REST API is blocked at /wp-json/ but reachable at /index.php/wp-json/.
+- The `h` parameter of /api/contact was investigated for SSRF and rejected (behaves as input validation, no outbound fetch observed).
+- A non-standard file (ticket.ausecurity.best/main.inc.php returning "kwaheri rafiki!") suggests the osTicket source may have been modified; source review was not possible without filesystem access.

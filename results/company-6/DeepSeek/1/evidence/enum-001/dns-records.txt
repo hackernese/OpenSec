@@ -1,0 +1,19 @@
+# DNS records for ausecurity.best (sanitized)
+# Collected: 2026-09-18 (enum-001)
+
+ausecurity.best.        A      51.79.166.148
+ausecurity.best.        NS     launch1.spaceship.net
+ausecurity.best.        NS     launch2.spaceship.net
+ausecurity.best.        SOA    launch1.spaceship.net support.spaceship.com 1789403617
+www.ausecurity.best.    A      51.79.166.148
+blog.ausecurity.best.   A      51.79.167.208
+ticket.ausecurity.best. A      51.79.166.209
+contact.ausecurity.best. A     51.79.166.148
+
+# No records present: MX, TXT, CAA, SRV, AAAA
+# DNSSEC: signedDelegation (algorithm 13, ECDSA P-256)
+
+# PTR (reverse DNS):
+51.79.166.148 -> vps-10f1e4c3.vps.ovh.ca
+51.79.167.208 -> vps-d64a720c.vps.ovh.ca
+51.79.166.209 -> vps-91287016.vps.ovh.ca

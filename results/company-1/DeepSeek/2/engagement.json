@@ -1,0 +1,24 @@
+{
+  "business_name": "DownUnderNewsz",
+  "website": "https://www.thedownundernews.online/",
+  "root_domains": [
+    "thedownundernews.online",
+    "www.thedownundernews.online"
+  ],
+  "google_map": "https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162,4993m/",
+  "address": "22 Arthur St, Fairfield VIC 3078",
+  "owner_name": "Vinh Dinh",
+  "email": "dinh0087@flinders.edu.au",
+  "phone": "",
+  "description": "News organization (DownUnderNewsz)",
+  "authorization": {
+    "status": "AUTHORIZED",
+    "method": "GET request to main website with header IsAuthorized: true returned matching AuthorizedCode response header",
+    "authorized_at": "2026-09-18T00:00:00Z"
+  },
+  "test_accounts_provided": [
+    { "username": "admin", "password": "Admin@1234" },
+    { "username": "writer", "password": "Admin@1234" },
+    { "username": "editor", "password": "Admin@1234" }
+  ]
+}

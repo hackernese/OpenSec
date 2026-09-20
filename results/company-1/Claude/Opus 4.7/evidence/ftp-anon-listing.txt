@@ -1,0 +1,30 @@
+=== FTP banner ===
+220 (vsFTPd 3.0.5)
+
+=== Anonymous listing (recursive) ===
+37550846eae5457d93ddd8e1d2faeaca.html
+58e75939c3d24841806d3a069e919576.png
+66ea642847be4ef0a800fb8cb8432d79.png
+d2273a1a2576489fb419cc1049c4c62f.pdf
+
+=== Detailed listing (LIST) ===
+-rw-r--r--    1 1001     33             76 Sep 17 22:10 37550846eae5457d93ddd8e1d2faeaca.html
+-rw-r--r--    1 1001     33         230599 Sep 06 06:51 58e75939c3d24841806d3a069e919576.png
+-rw-r--r--    1 1001     33         167268 Sep 06 07:19 66ea642847be4ef0a800fb8cb8432d79.png
+-rw-r--r--    1 1001     33         624807 Sep 13 09:07 d2273a1a2576489fb419cc1049c4c62f.pdf
+
+=== Try common subdirs ===
+--- /pub/ ---
+--- /uploads/ ---
+--- /media/ ---
+--- /images/ ---
+--- /files/ ---
+--- /docs/ ---
+--- /incoming/ ---
+--- /outgoing/ ---
+--- /backup/ ---
+--- /admin/ ---
+--- /private/ ---
+
+=== Read small HTML file (76 bytes preview) ===
+<html><body><script>alert(document.domain)</script>DUNHTML7731</body></html>

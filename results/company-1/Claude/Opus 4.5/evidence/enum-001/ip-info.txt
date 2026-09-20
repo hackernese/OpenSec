@@ -1,0 +1,24 @@
+# IP Information
+
+## Primary Server: 51.161.130.70
+Reverse DNS: vps-8d3f63bd.vps.ovh.ca
+Organization: OVH Australia PTY LTD
+Netblock: 51.161.0.0/16 (OVH Hosting, Inc.)
+Location: Sydney, Australia
+Open Ports: 22 (SSH), 80 (HTTP), 443 (HTTPS), 5000 (Gunicorn)
+Services:
+  - SSH: OpenSSH 10.0p2 Debian 7+deb13u4
+  - HTTP/HTTPS: nginx (proxying to Gunicorn)
+  - Port 5000: Gunicorn (Python WSGI)
+
+## Media Server: 51.161.131.195
+Reverse DNS: vps-edee2c79.vps.ovh.ca
+Organization: OVH Australia PTY LTD
+Netblock: 51.161.0.0/16 (OVH Hosting, Inc.)
+Location: Sydney, Australia
+Open Ports: 21 (FTP), 22 (SSH), 80 (HTTP), 443 (HTTPS)
+Services:
+  - FTP: vsftpd 3.0.5
+  - SSH: OpenSSH 10.0p2 Debian 7+deb13u4
+  - HTTP/HTTPS: nginx
+Status: 502 Bad Gateway on HTTPS

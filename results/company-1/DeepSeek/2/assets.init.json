@@ -1,0 +1,34 @@
+{
+  "task_id": "enum-001",
+  "date_utc": "2026-09-17",
+  "run_mode": "passive_enumeration_only",
+  "all_assets": {
+    "confirmed": [
+      "thedownundernews.online",
+      "www.thedownundernews.online",
+      "media.thedownundernews.online",
+      "51.161.130.70",
+      "51.161.131.195"
+    ],
+    "candidate": [
+      "thedownundernews.it.com"
+    ],
+    "rejected": [],
+    "third_party": [
+      "AS16276 OVH (cloud provider + netblocks)",
+      "Spaceship registrar/DNS/email-forwarding (launch*.spaceship.net, *.efwd.spaceship.net)",
+      "Google Fonts (fonts.googleapis.com, fonts.gstatic.com)",
+      "jsDelivr CDN (cdn.jsdelivr.net)",
+      "Let's Encrypt CA"
+    ]
+  },
+  "warnings": [
+    "WHOIS registrant contact data is privacy-redacted",
+    "media.thedownundernews.online returned 502 at enumeration time",
+    "thedownundernews.it.com referenced on site but does not resolve",
+    "Shodan keyword search returned no results; only host lookups available",
+    "No DMARC policy published (SPF only)",
+    "FTP port 21 on 51.161.131.195 reported open by Shodan but banner not captured"
+  ],
+  "evidence_dir": "/home/research/Projects/DownUnderNewsz/evidence/enum-001/"
+}

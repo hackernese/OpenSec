@@ -1,0 +1,122 @@
+WhatWeb report for https://media.thedownundernews.online/
+Status    : 502 Bad Gateway
+Title     : 502 Bad Gateway
+IP        : 51.161.131.195
+Country   : UNITED KINGDOM, GB
+
+Summary   : HTTPServer[nginx], nginx
+
+Detected Plugins:
+[ HTTPServer ]
+	HTTP server header string. This plugin also attempts to 
+	identify the operating system from the server header. 
+
+	String       : nginx (from server string)
+
+[ nginx ]
+	Nginx (Engine-X) is a free, open-source, high-performance 
+	HTTP server and reverse proxy, as well as an IMAP/POP3 
+	proxy server. 
+
+	Website     : http://nginx.net/
+
+HTTP Headers:
+	HTTP/1.1 502 Bad Gateway
+	Server: nginx
+	Date: Fri, 18 Sep 2026 01:26:15 GMT
+	Content-Type: text/html
+	Content-Length: 150
+	Connection: close
+	
+WhatWeb report for https://thedownundernews.online/
+Status    : 200 OK
+Title     : The Down Under News – Australia's Independent Online Newspaper
+IP        : 51.161.130.70
+Country   : UNITED KINGDOM, GB
+
+Summary   : Bootstrap, HTML5, HTTPServer[nginx], nginx, Script
+
+Detected Plugins:
+[ Bootstrap ]
+	Bootstrap is an open source toolkit for developing with 
+	HTML, CSS, and JS. 
+
+	Website     : https://getbootstrap.com/
+
+[ HTML5 ]
+	HTML version 5, detected by the doctype declaration 
+
+
+[ HTTPServer ]
+	HTTP server header string. This plugin also attempts to 
+	identify the operating system from the server header. 
+
+	String       : nginx (from server string)
+
+[ Script ]
+	This plugin detects instances of script HTML elements and 
+	returns the script language/type. 
+
+
+[ nginx ]
+	Nginx (Engine-X) is a free, open-source, high-performance 
+	HTTP server and reverse proxy, as well as an IMAP/POP3 
+	proxy server. 
+
+	Website     : http://nginx.net/
+
+HTTP Headers:
+	HTTP/1.1 200 OK
+	Server: nginx
+	Date: Fri, 18 Sep 2026 01:26:15 GMT
+	Content-Type: text/html; charset=utf-8
+	Transfer-Encoding: chunked
+	Connection: close
+	Content-Encoding: gzip
+	
+WhatWeb report for https://www.thedownundernews.online/
+Status    : 200 OK
+Title     : The Down Under News – Australia's Independent Online Newspaper
+IP        : 51.161.130.70
+Country   : UNITED KINGDOM, GB
+
+Summary   : Bootstrap, HTML5, HTTPServer[nginx], nginx, Script
+
+Detected Plugins:
+[ Bootstrap ]
+	Bootstrap is an open source toolkit for developing with 
+	HTML, CSS, and JS. 
+
+	Website     : https://getbootstrap.com/
+
+[ HTML5 ]
+	HTML version 5, detected by the doctype declaration 
+
+
+[ HTTPServer ]
+	HTTP server header string. This plugin also attempts to 
+	identify the operating system from the server header. 
+
+	String       : nginx (from server string)
+
+[ Script ]
+	This plugin detects instances of script HTML elements and 
+	returns the script language/type. 
+
+
+[ nginx ]
+	Nginx (Engine-X) is a free, open-source, high-performance 
+	HTTP server and reverse proxy, as well as an IMAP/POP3 
+	proxy server. 
+
+	Website     : http://nginx.net/
+
+HTTP Headers:
+	HTTP/1.1 200 OK
+	Server: nginx
+	Date: Fri, 18 Sep 2026 01:26:15 GMT
+	Content-Type: text/html; charset=utf-8
+	Transfer-Encoding: chunked
+	Connection: close
+	Content-Encoding: gzip
+	

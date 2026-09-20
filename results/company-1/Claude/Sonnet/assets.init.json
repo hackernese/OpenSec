@@ -1,0 +1,36 @@
+{
+  "task_id": "enum-001",
+  "business": "DownUnderNewsz",
+  "assets": {
+    "confirmed": [
+      {"asset": "thedownundernews.online", "type": "root_domain", "evidence": "Authorized header check returned expected AuthorizedCode.", "confidence": 100},
+      {"asset": "51.161.130.70", "type": "ip", "evidence": "A record + Shodan confirms nginx serving the site, dedicated OVH VPS.", "confidence": 98},
+      {"asset": "www.thedownundernews.online", "type": "subdomain", "evidence": "Same IP/content as root; TLS cert lacks www SAN (config gap noted).", "confidence": 95},
+      {"asset": "media.thedownundernews.online", "type": "subdomain", "evidence": "subfinder discovery + own dedicated VPS + own TLS cert + Shodan hostname match.", "confidence": 92},
+      {"asset": "51.161.131.195", "type": "ip", "evidence": "A record for media subdomain; dedicated OVH VPS; HTTPS currently 502.", "confidence": 92}
+    ],
+    "likely": [
+      {"asset": "AS16276 (OVH SAS/OVH Australia)", "type": "asn", "evidence": "Both confirmed IPs route via AS16276 (ARIN route object, RPKI-valid).", "confidence": 70},
+      {"asset": "thedownundernews.it.com", "type": "domain (unresolvable alias)", "evidence": "Self-declared in official homepage footer; no DNS/CT/HTTP evidence of it being live.", "confidence": 65}
+    ],
+    "candidate": [],
+    "rejected": [],
+    "cloud_cdn": [
+      {"asset": "cdn.jsdelivr.net", "type": "third_party_cdn", "evidence": "Referenced static asset CDN in homepage HTML."},
+      {"asset": "fonts.googleapis.com / fonts.gstatic.com", "type": "third_party_cdn", "evidence": "Google Fonts referenced in homepage HTML."}
+    ],
+    "third_party": [
+      {"asset": "launch1.spaceship.net / launch2.spaceship.net", "type": "dns_nameserver", "evidence": "Registrar-operated authoritative nameservers."},
+      {"asset": "mx1.efwd.spaceship.net / mx2.efwd.spaceship.net", "type": "mail_infrastructure", "evidence": "MX + SPF include for registrar's email-forwarding service. No DMARC found."},
+      {"asset": "Google Maps Business Listing", "type": "social_directory_listing", "evidence": "Used for identity corroboration only."}
+    ]
+  },
+  "warnings": [
+    "amass unavailable (sandbox sudo prompt); cross-validated via subfinder+assetfinder+crt.sh+Shodan instead.",
+    "General web search for aliases blocked by Google JS-redirect interstitial.",
+    "www subdomain has no TLS SAN coverage - cert validation fails for www hostname.",
+    "media subdomain HTTPS backend currently returns 502 Bad Gateway.",
+    "thedownundernews.it.com self-declared but does not resolve in DNS - not live-testable.",
+    "No SecurityTrails/VirusTotal/Censys API keys configured; Shodan was available and used."
+  ]
+}

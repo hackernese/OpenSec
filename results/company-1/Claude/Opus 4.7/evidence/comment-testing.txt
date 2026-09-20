@@ -1,0 +1,119 @@
+=== Fetch article page to view comment form ===
+        <form action="/search" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="" aria-label="Search news" />
+        </form>
+    <p>The Down Under News was founded with a simple mission: to provide Australians with high-quality journalism that informs, engages, and empowers.</p>
+    <p>Thank you for choosing The Down Under News as your news source. We look forward to keeping you informed.</p>
+    <!-- Comments section -->
+    <section class="comments-section" id="comments" aria-label="Comments">
+      <h3 class="comments-title">
+        Comments <span class="comments-count">(0)</span>
+      <!-- Flash messages (comment submission feedback) -->
+      <p class="no-comments">No comments yet. Be the first to comment!</p>
+      <!-- Comment form -->
+      <div class="comment-form-wrapper">
+        <h4>Leave a Comment</h4>
+        <p class="comment-notice">All fields are required. Your comment will appear immediately.</p>
+        <form action="/article/welcome-to-the-down-under-news/comment" method="post" class="comment-form">
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" id="author_name" name="author_name" required maxlength="150" placeholder="Your name" />
+            <div class="form-group">
+              <input type="email" id="author_email" name="author_email" required maxlength="255" placeholder="your@email.com" />
+          <div class="form-group">
+            <label for="content">Comment <span class="required">*</span></label>
+            <textarea id="content" name="content" rows="5" required maxlength="2000" placeholder="Share your thoughts…"></textarea>
+          <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+
+=== POST comment (test marker) ===
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:33 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 283
+Connection: keep-alive
+Location: /article/welcome-to-the-down-under-news#comments
+Vary: Cookie
+Set-Cookie: session=.eJwNyMEJgDAMBdBVQs7iAE7hXUSq_mohNprUg4i729OD9_IUJfgO5254mUqFYabGDfeC4KCYRChlChXDdSfDWhOyOs2IaqBTvaS80aO30aLHgVxaHr_x-wFmGiKE.aqycMQ.TjDTRyEhHlsedI6oqLh6-c4H5g0; HttpOnly; Path=/
+
+<!doctype html>
+<html lang=en>
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p>You should be redirected automatically to the target URL: <a href="/article/welcome-to-the-down-under-news#comments">/article/welcome-to-the-down-under-news#comments</a>. If not, click the link.
+
+=== Verify comment appears (fetch article again) ===
+
+=== POST comment XSS probe (marker + <script>) ===
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:34 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 283
+Connection: keep-alive
+Location: /article/welcome-to-the-down-under-news#comments
+Vary: Cookie
+Set-Cookie: session=.eJwNyMEJgDAMBdBVQs7iAE7hXUSq_mohNprUg4i729OD9_IUJfgO5254mUqFYabGDfeC4KCYRChlChXDdSfDWhOyOs2IaqBTvaS80aO30aLHgVxaHr_x-wFmGiKE.aqycMg.O9JLB3p9HLiZNJ4m4OSM0FLYftg; HttpOnly; Path=/
+
+<!doctype html>
+<html lang=en>
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p>You should be redirected automatically to the target URL: <a href="/article/welcome-to-the-down-under-news#comments">/article/welcome-to-the-down-under-news#comments</a>. If not, click the link.
+
+=== Verify XSS payload storage ===
+
+=== Look for how the comment is rendered (encoded or raw) ===
+
+=== SQL error probe via content ===
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:34 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 283
+Connection: keep-alive
+Location: /article/welcome-to-the-down-under-news#comments
+Vary: Cookie
+Set-Cookie: session=.eJwNyMEJgDAMBdBVQs7iAE7hXUSq_mohNprUg4i729OD9_IUJfgO5254mUqFYabGDfeC4KCYRChlChXDdSfDWhOyOs2IaqBTvaS80aO30aLHgVxaHr_x-wFmGiKE.aqycMg.O9JLB3p9HLiZNJ4m4OSM0FLYftg; HttpOnly; Path=/
+
+<!doctype html>
+<html lang=en>
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p>You should be redirected automatically to the target URL: <a href="/article/welcome-to-the-down-under-news#comments">/article/welcome-to-the-down-under-news#comments</a>. If not, click the link.
+
+=== Empty POST ===
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:34 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 283
+Connection: keep-alive
+Location: /article/welcome-to-the-down-under-news#comments
+Vary: Cookie
+Set-Cookie: session=.eJwNyMEJgDAMBdBVQs7iAE7hXUSq_mohNprUg4i729OD9_IUJfgO5254mUqFYabGDfeC4KCYRChlChXDdSfDWhOyOs2IaqBTvaS80aO30aLHgVxaHr_x-wFmGiKE.aqycMg.O9JLB3p9HLiZNJ4m4OSM0FLYftg; HttpOnly; Path=/
+
+<!doctype html>
+<html lang=en>
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p>You should be redirected automatically to the target URL: <a href="/article/welcome-to-the-down-under-news#comments">/article/welcome-to-the-down-under-news#comments</a>. If not, click the link.
+
+=== Comment on nonexistent article ===
+HTTP/1.1 500 Internal Server Error
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:34 GMT
+Content-Type: text/html
+Content-Length: 141
+Connection: keep-alive
+
+<html>
+  <head>
+    <title>Internal Server Error</title>
+  </head>
+  <body>
+    <h1><p>Internal Server Error</p></h1>
+    
+  </body>
+</html>

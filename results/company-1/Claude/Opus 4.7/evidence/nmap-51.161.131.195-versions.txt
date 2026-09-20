@@ -1,0 +1,60 @@
+# Nmap 7.99 scan initiated Fri Sep 18 10:57:47 2026 as: /usr/lib/nmap/nmap --privileged -sV -sC -Pn -p 21,22,80,443 --script "default,vuln and safe and not (dos or brute)" -oN /home/research/Projects/DownUnderNewsz/evidence/nmap-51.161.131.195-versions.txt 51.161.131.195
+Nmap scan report for vps-edee2c79.vps.ovh.ca (51.161.131.195)
+Host is up (0.024s latency).
+
+PORT    STATE SERVICE  VERSION
+21/tcp  open  ftp      vsftpd 3.0.5
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+| -rw-r--r--    1 1001     33             76 Sep 17 22:10 37550846eae5457d93ddd8e1d2faeaca.html
+| -rw-r--r--    1 1001     33         230599 Sep 06 06:51 58e75939c3d24841806d3a069e919576.png
+| -rw-r--r--    1 1001     33         167268 Sep 06 07:19 66ea642847be4ef0a800fb8cb8432d79.png
+|_-rw-r--r--    1 1001     33         624807 Sep 13 09:07 d2273a1a2576489fb419cc1049c4c62f.pdf
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:129.96.81.217
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 5
+|      vsFTPd 3.0.5 - secure, fast, stable
+|_End of status
+22/tcp  open  ssh      OpenSSH 10.0p2 Debian 7+deb13u4 (protocol 2.0)
+| vulners: 
+|   cpe:/a:openbsd:openssh:10.0p2: 
+|     	CVE-2026-60002	9.4	https://vulners.com/cve/CVE-2026-60002
+|     	CVE-2026-35414	8.1	https://vulners.com/cve/CVE-2026-35414
+|     	CVE-2026-35386	8.1	https://vulners.com/cve/CVE-2026-35386
+|     	CVE-2026-35385	8.1	https://vulners.com/cve/CVE-2026-35385
+|     	CVE-2026-60000	7.5	https://vulners.com/cve/CVE-2026-60000
+|     	CVE-2026-59999	7.5	https://vulners.com/cve/CVE-2026-59999
+|     	CVE-2026-60001	6.5	https://vulners.com/cve/CVE-2026-60001
+|     	CVE-2026-59998	6.5	https://vulners.com/cve/CVE-2026-59998
+|     	CVE-2026-35387	6.5	https://vulners.com/cve/CVE-2026-35387
+|     	CVE-2026-59997	5.4	https://vulners.com/cve/CVE-2026-59997
+|     	CVE-2026-59996	5.4	https://vulners.com/cve/CVE-2026-59996
+|     	CVE-2026-59995	5.4	https://vulners.com/cve/CVE-2026-59995
+|     	CVE-2026-73282	4.8	https://vulners.com/cve/CVE-2026-73282
+|     	CVE-2025-61985	3.6	https://vulners.com/cve/CVE-2025-61985
+|     	CVE-2025-61984	3.6	https://vulners.com/cve/CVE-2025-61984
+|     	B7EACB4F-A5CF-5C5A-809F-E03CCE2AB150	3.6	https://vulners.com/githubexploit/B7EACB4F-A5CF-5C5A-809F-E03CCE2AB150	*EXPLOIT*
+|     	4C6E2182-0E99-5626-83F6-1646DD648C57	3.6	https://vulners.com/githubexploit/4C6E2182-0E99-5626-83F6-1646DD648C57	*EXPLOIT*
+|     	CVE-2026-73281	3.5	https://vulners.com/cve/CVE-2026-73281
+|     	CVE-2026-73283	2.5	https://vulners.com/cve/CVE-2026-73283
+|_    	CVE-2026-35388	2.5	https://vulners.com/cve/CVE-2026-35388
+80/tcp  open  http     nginx
+|_http-title: Did not follow redirect to https://vps-edee2c79.vps.ovh.ca/
+443/tcp open  ssl/http nginx
+|_http-title: 502 Bad Gateway
+| ssl-cert: Subject: commonName=media.thedownundernews.online
+| Subject Alternative Name: DNS:media.thedownundernews.online
+| Not valid before: 2026-09-16T12:43:26
+|_Not valid after:  2026-12-15T12:43:25
+|_ssl-date: TLS randomness does not represent time
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Fri Sep 18 10:59:04 2026 -- 1 IP address (1 host up) scanned in 76.81 seconds

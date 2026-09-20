@@ -1,0 +1,119 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Hardcoded AWS Root Credentials Exposed in Client-Side JavaScript",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+      "summary": "The public-facing website ships a JavaScript file containing hardcoded AWS access credentials. The credentials are valid and map to the AWS account root identity, giving any visitor full administrative control over the business's AWS account.",
+      "description": "The file `/js/awsvalid.js` (publicly downloadable at https://imagesharer.xyz/js/awsvalid.js) contains a hardcoded AWS Access Key ID, Secret Access Key, and region (`ap-southeast-2`) in plaintext comments. Validation via a read-only `aws sts get-caller-identity` call confirmed the credentials are active and resolve to `arn:aws:iam::016170038077:root` (account 016170038077, user id 016170038077) \u2014 the AWS account root identity. Anyone who fetches the JavaScript file can authenticate to the AWS account as root and perform unrestricted actions (read/modify/delete all resources, access stored data, create IAM users, incur costs). Only the minimum read-only proof (identity resolution) was obtained; no further AWS enumeration or modification was performed.",
+      "recommendation": "1. Immediately rotate and remove the exposed AWS root access keys.\n2. Never embed AWS credentials in client-side code; issue temporary, least-privilege credentials server-side (STS / Cognito / IAM Roles).\n3. Audit AWS CloudTrail for unauthorized activity and any IAM principals/resources created with the exposed keys.\n4. Remove credential-bearing files from the public web root and scan the codebase (including git history) for hardcoded secrets.",
+      "affected_components": [
+        "https://imagesharer.xyz/js/awsvalid.js (AWS account 016170038077, region ap-southeast-2)"
+      ],
+      "references": [
+        "https://imagesharer.xyz/js/awsvalid.js",
+        "AWS STS GetCallerIdentity"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "S3 Bucket Publicly Listable and Readable (Private Images Exposed)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "summary": "The S3 bucket that stores all user-uploaded images allows anonymous listing and anonymous download, so every image \u2014 including those marked \"Private\" \u2014 is accessible to anyone without authentication, bypassing the application's privacy controls.",
+      "description": "The application stores uploaded images in the S3 bucket `filesharer-research` under the path `users/<user-uuid>/<image-uuid>.<ext>`. Two misconfigurations were confirmed: (1) an unauthenticated `ListObjectsV2` request (`?list-type=2`) returns the full object namespace (HTTP 200), exposing all object keys, user UUIDs, filenames, sizes, and timestamps; (2) an unauthenticated `GET` of an object returns the object contents (HTTP 200) without any pre-signed URL or signature. This was proven by anonymously downloading a \"Private\" test image. The application enforces privacy only at the web-application layer (the detail page redirects unauthenticated/foreign users to /dashboard), so the storage-layer exposure completely bypasses the privacy model. Multiple real user accounts (distinct user UUID prefixes) were present in the listing, confirming real user data exposure. Anonymous write (PUT) is correctly denied (403 AccessDenied).",
+      "recommendation": "1. Remove the public-read bucket policy; block public access (ListBucket and GetObject) at the S3 bucket level.\n2. Serve images only through the application with per-object authorization, or via short-lived pre-signed URLs.\n3. If public images are required, separate them into a dedicated public bucket and never store private objects there.\n4. Enable S3 server access logging and CloudTrail to detect unauthorized access.",
+      "affected_components": [
+        "Amazon S3 bucket \"filesharer-research\" (ap-southeast-2)"
+      ],
+      "references": [
+        "https://filesharer-research.s3.ap-southeast-2.amazonaws.com/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Stored Cross-Site Scripting (XSS) via Uploaded Filename",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
+      "summary": "The filename of an uploaded image is rendered without HTML escaping on the image detail page, allowing an attacker to store a JavaScript payload that executes in the browser of any user who opens the image link.",
+      "description": "Uploading an image with a filename such as `<img src=x onerror=alert(document.domain)>.png` results in the filename being reflected unescaped on the image detail page inside a `<span>` element, creating a live `<img src=x onerror=...>` element. The payload was verified to execute in a browser (an alert fired showing the domain). The dashboard view escapes the filename, but the detail page does not. Because the application has no CSRF protection and the XSS executes within an authenticated session, an attacker can perform actions on behalf of the victim (delete images, change visibility, read account data). Session cookies are flagged HttpOnly, which limits direct cookie theft but does not prevent same-origin account actions.",
+      "recommendation": "1. HTML-encode all user-supplied values (including filenames) on output using a context-aware templating engine (e.g. htmlspecialchars/Blade escaping).\n2. Store the display filename separately from the on-disk name, and sanitize/reject control characters in filenames on upload.\n3. Serve uploaded images from a separate origin with a restrictive Content-Type and Content-Disposition.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/<uuid> (image detail page)"
+      ],
+      "references": [
+        "OWASP A03:2021 Injection",
+        "CWE-79"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Insecure Direct Object Reference via Hidden user_id Field in Upload",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+      "summary": "The image upload form trusts a hidden, attacker-controlled `user_id` field instead of deriving ownership from the authenticated session, allowing any logged-in user to upload images that are attributed to another user's account.",
+      "description": "The upload form includes `<input type=\"hidden\" name=\"user_id\" value=\"...\">`. Testing showed that when a request was submitted with one account's session cookie but a different account's `user_id`, the uploaded image was stored under the other user's S3 prefix and appeared in the other user's gallery (not the requester's). This confirms the server trusts the client-supplied `user_id` for ownership attribution. An attacker can inject arbitrary images into any victim's gallery (including abusive or policy-violating content attributed to the victim). Combined with the publicly listable S3 bucket, victim user UUIDs can be enumerated to select targets.",
+      "recommendation": "1. Ignore any client-supplied `user_id`; derive the owner from the authenticated session only.\n2. Enforce server-side authorization checks on every object-level operation (ownership must match the session user).",
+      "affected_components": [
+        "https://imagesharer.xyz/images/upload"
+      ],
+      "references": [
+        "OWASP A01:2021 Broken Access Control",
+        "CWE-639"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing Cross-Site Request Forgery (CSRF) Protections",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N",
+      "summary": "State-changing forms and endpoints do not include CSRF tokens and do not validate the Origin/Referer header, allowing an attacker to craft requests that cause a logged-in user's browser to perform unintended actions.",
+      "description": "Review of the logout, image upload, visibility-change, delete, and avatar endpoints found no CSRF token on any form, and requests without an Origin/Referer header were accepted. An attacker can therefore trick an authenticated user into performing actions such as deleting their own images or changing an image's visibility. Object-level ownership checks do mitigate cross-account impact, so the practical impact is limited to actions on the victim's own account (denial of service, privacy toggle abuse).",
+      "recommendation": "1. Add per-session CSRF tokens to all state-changing forms/endpoints and validate them server-side.\n2. Enforce SameSite=Strict (or Lax plus Origin/Referer validation) on session cookies.\n3. Verify the Origin/Referer header for sensitive actions.",
+      "affected_components": [
+        "https://imagesharer.xyz/ (logout, images/upload, images/<id>/visibility, images/<id>/delete, profile/avatar)"
+      ],
+      "references": [
+        "OWASP A05:2021 Security Misconfiguration",
+        "CWE-352"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Account Enumeration via Registration",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The registration form reveals whether an email address is already registered, allowing an unauthenticated attacker to enumerate valid accounts.",
+      "description": "Submitting a registration with an already-registered email returns the distinct message \"An account with that email already exists.\" instead of a generic error. This allows attackers to confirm which email addresses have accounts on the platform, facilitating targeted attacks and privacy leakage.",
+      "recommendation": "1. Return a generic error (e.g. \"Unable to complete registration\") and send a confirmation email when the address is already in use, without revealing account existence.\n2. Apply rate limiting to the registration endpoint.",
+      "affected_components": [
+        "https://imagesharer.xyz/register"
+      ],
+      "references": [
+        "CWE-204",
+        "OWASP A01:2021"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Server and Technology Version Disclosure",
+      "cvss": "n/a",
+      "summary": "The web servers disclose their software versions in error responses and response headers.",
+      "description": "Error responses disclose `Apache/2.4.68 (Debian)` and the `X-Powered-By: PHP/8.2.33` header identifies the PHP version, on both the nginx (80/443) and Apache (8080) instances. The Apache 8080 instance directly exposes the Apache version. This information assists attackers in selecting version-specific exploits.",
+      "recommendation": "1. Disable server version disclosure (ServerTokens Prod / ServerSignature Off for Apache; server_tokens off for nginx).\n2. Remove or suppress the `X-Powered-By` header (expose_php = Off).",
+      "affected_components": [
+        "https://imagesharer.xyz/ and http://51.161.131.44:8080/"
+      ],
+      "references": [
+        "CWE-200"
+      ]
+    }
+  }
+]

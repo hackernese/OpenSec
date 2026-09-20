@@ -1,0 +1,414 @@
+# DownUnderNewsz Asset Enumeration Results
+# Task ID: enum-001
+# Date: 2026-09-18
+# Enumeration Agent: ClawSec
+
+target_identity:
+  canonical_name: "DownUnderNewsz"
+  aliases: ["The Down Under News", "Down Under News"]
+  official_website: "https://thedownundernews.online/"
+  address: "22 Arthur St, Fairfield VIC 3078, Victoria, Australia"
+  owner: "Vinh Dinh"
+  jurisdiction: "Australia (Victoria)"
+  description: "Australia's Independent Online Newspaper"
+
+enumeration_summary:
+  total_root_domains: 1
+  total_subdomains: 2
+  total_ips: 2
+  total_web_applications: 2
+  tools_used:
+    - dig
+    - whois
+    - nmap
+    - shodan
+    - subfinder
+    - crt.sh
+    - httpx-toolkit
+    - openssl
+  unavailable_sources:
+    - amass (timeout/no results)
+    - dnsrecon (no output)
+    - whatweb (no output)
+
+# =============================================================================
+# ROOT DOMAINS
+# =============================================================================
+root_domains:
+  - domain: "thedownundernews.online"
+    status: "confirmed"
+    confidence: 100
+    registrar: "Spaceship, Inc."
+    creation_date: "2026-08-04"
+    expiry_date: "2027-08-04"
+    nameservers:
+      - "launch1.spaceship.net"
+      - "launch2.spaceship.net"
+    dnssec: true
+    evidence:
+      - source: "user_input"
+        source_type: "input"
+        observed_value: "https://www.thedownundernews.online/"
+        reason: "Provided as official website by engagement request"
+        target_contact: false
+      - source: "whois"
+        source_type: "passive_osint"
+        observed_value: "thedownundernews.online registered via Spaceship"
+        reason: "WHOIS lookup confirms domain registration details"
+        target_contact: false
+      - source: "dns_resolution"
+        source_type: "active_dns"
+        observed_value: "Resolves to 51.161.130.70"
+        reason: "Direct DNS A record resolution"
+        target_contact: true
+
+# =============================================================================
+# SUBDOMAINS
+# =============================================================================
+subdomains:
+  - subdomain: "www.thedownundernews.online"
+    status: "confirmed"
+    confidence: 100
+    resolves_to: "51.161.130.70"
+    type: "CNAME/A"
+    evidence:
+      - source: "dns_resolution"
+        source_type: "active_dns"
+        observed_value: "www.thedownundernews.online -> 51.161.130.70"
+        reason: "DNS A record resolution, same IP as apex domain"
+        target_contact: true
+
+  - subdomain: "media.thedownundernews.online"
+    status: "confirmed"
+    confidence: 95
+    resolves_to: "51.161.131.195"
+    type: "A"
+    current_status: "502 Bad Gateway"
+    notes: "Separate VPS server, SSL certificate active, backend unavailable"
+    evidence:
+      - source: "subfinder"
+        source_type: "passive_osint"
+        observed_value: "media.thedownundernews.online"
+        reason: "Discovered via passive subdomain enumeration"
+        target_contact: false
+      - source: "shodan"
+        source_type: "passive_osint"
+        observed_value: "51.161.131.195 - media.thedownundernews.online"
+        reason: "Shodan confirms hostname association"
+        target_contact: false
+      - source: "ssl_certificate"
+        source_type: "active_tls"
+        observed_value: "CN=media.thedownundernews.online, Let's Encrypt"
+        reason: "Valid SSL certificate issued for this subdomain"
+        target_contact: true
+
+# =============================================================================
+# IP ADDRESSES
+# =============================================================================
+ip_addresses:
+  - ip: "51.161.130.70"
+    status: "confirmed"
+    confidence: 100
+    type: "primary_server"
+    reverse_dns: "vps-8d3f63bd.vps.ovh.ca"
+    asn: "AS16276"
+    organization: "OVH Australia PTY LTD"
+    netblock: "51.161.0.0/16"
+    location: "Sydney, Australia"
+    hosting_provider: "OVH"
+    hosting_type: "VPS"
+    open_ports:
+      - port: 22
+        protocol: "tcp"
+        service: "ssh"
+        version: "OpenSSH 10.0p2 Debian 7+deb13u4"
+      - port: 80
+        protocol: "tcp"
+        service: "http"
+        version: "nginx"
+        notes: "Redirects to HTTPS"
+      - port: 443
+        protocol: "tcp"
+        service: "https"
+        version: "nginx"
+      - port: 5000
+        protocol: "tcp"
+        service: "http"
+        version: "Gunicorn"
+        notes: "Python WSGI application server (backend)"
+    evidence:
+      - source: "dns_resolution"
+        source_type: "active_dns"
+        observed_value: "thedownundernews.online -> 51.161.130.70"
+        reason: "Primary A record for root domain"
+        target_contact: true
+      - source: "shodan"
+        source_type: "passive_osint"
+        observed_value: "Host scan showing ports and services"
+        reason: "Passive reconnaissance confirms infrastructure"
+        target_contact: false
+      - source: "whois_ip"
+        source_type: "passive_osint"
+        observed_value: "OVH Hosting, Inc. 51.161.0.0/16"
+        reason: "ARIN WHOIS confirms IP ownership"
+        target_contact: false
+
+  - ip: "51.161.131.195"
+    status: "confirmed"
+    confidence: 95
+    type: "media_server"
+    reverse_dns: "vps-edee2c79.vps.ovh.ca"
+    asn: "AS16276"
+    organization: "OVH Australia PTY LTD"
+    netblock: "51.161.0.0/16"
+    location: "Sydney, Australia"
+    hosting_provider: "OVH"
+    hosting_type: "VPS"
+    open_ports:
+      - port: 21
+        protocol: "tcp"
+        service: "ftp"
+        version: "vsftpd 3.0.5"
+      - port: 22
+        protocol: "tcp"
+        service: "ssh"
+        version: "OpenSSH 10.0p2 Debian 7+deb13u4"
+      - port: 80
+        protocol: "tcp"
+        service: "http"
+        version: "nginx"
+        notes: "Redirects to HTTPS"
+      - port: 443
+        protocol: "tcp"
+        service: "https"
+        version: "nginx"
+        notes: "Currently returning 502 Bad Gateway"
+    evidence:
+      - source: "dns_resolution"
+        source_type: "active_dns"
+        observed_value: "media.thedownundernews.online -> 51.161.131.195"
+        reason: "A record for media subdomain"
+        target_contact: true
+      - source: "shodan"
+        source_type: "passive_osint"
+        observed_value: "Host scan showing ports and services"
+        reason: "Passive reconnaissance confirms infrastructure"
+        target_contact: false
+
+# =============================================================================
+# WEB APPLICATIONS
+# =============================================================================
+web_applications:
+  - url: "https://thedownundernews.online/"
+    status: "confirmed"
+    confidence: 100
+    http_status: 200
+    title: "The Down Under News – Australia's Independent Online Newspaper"
+    server: "nginx"
+    backend: "Gunicorn (Python)"
+    ssl_issuer: "Let's Encrypt"
+    ssl_valid_until: "2026-12-15"
+    technologies:
+      - "nginx"
+      - "Gunicorn"
+      - "Python"
+      - "Bootstrap Icons"
+      - "Google Fonts"
+    discovered_paths:
+      - "/about"
+      - "/contact"
+      - "/category/politics"
+      - "/category/business"
+      - "/category/technology"
+      - "/category/sports"
+      - "/category/entertainment"
+      - "/category/science"
+      - "/category/world"
+      - "/category/opinion"
+      - "/article/*"
+      - "/static/css/style.css"
+      - "/static/js/main.js"
+    missing_files:
+      - "/robots.txt"
+      - "/sitemap.xml"
+      - "/.well-known/security.txt"
+    evidence:
+      - source: "http_request"
+        source_type: "active_http"
+        observed_value: "HTTP 200, Content-Type: text/html"
+        reason: "Direct HTTP request confirms availability"
+        target_contact: true
+      - source: "httpx-toolkit"
+        source_type: "active_http"
+        observed_value: "nginx, Python detected"
+        reason: "Technology fingerprinting"
+        target_contact: true
+
+  - url: "http://51.161.130.70:5000/"
+    status: "confirmed"
+    confidence: 95
+    http_status: 200
+    title: "The Down Under News – Australia's Independent Online Newspaper"
+    server: "gunicorn"
+    type: "backend_application"
+    notes: "Direct access to Python backend, bypassing nginx proxy"
+    technologies:
+      - "Gunicorn"
+      - "Python"
+    evidence:
+      - source: "nmap"
+        source_type: "active_scan"
+        observed_value: "Port 5000 open, Gunicorn service"
+        reason: "Service scan discovered exposed backend"
+        target_contact: true
+      - source: "http_request"
+        source_type: "active_http"
+        observed_value: "HTTP 200, same content as main site"
+        reason: "Backend serves same application"
+        target_contact: true
+
+  - url: "https://media.thedownundernews.online/"
+    status: "likely"
+    confidence: 75
+    http_status: 502
+    title: "502 Bad Gateway"
+    server: "nginx"
+    ssl_issuer: "Let's Encrypt"
+    ssl_valid_until: "2026-12-15"
+    notes: "Infrastructure exists but backend is down/misconfigured"
+    evidence:
+      - source: "http_request"
+        source_type: "active_http"
+        observed_value: "HTTP 502 Bad Gateway"
+        reason: "SSL cert valid, nginx running, backend unavailable"
+        target_contact: true
+
+# =============================================================================
+# DNS/MAIL INFRASTRUCTURE
+# =============================================================================
+dns_infrastructure:
+  nameservers:
+    - server: "launch1.spaceship.net"
+      status: "third_party"
+      provider: "Spaceship"
+      notes: "Registrar-provided nameserver"
+    - server: "launch2.spaceship.net"
+      status: "third_party"
+      provider: "Spaceship"
+      notes: "Registrar-provided nameserver"
+
+mail_infrastructure:
+  mx_records:
+    - server: "mx1.efwd.spaceship.net"
+      priority: 0
+      status: "third_party"
+      provider: "Spaceship Email Forwarding"
+    - server: "mx2.efwd.spaceship.net"
+      priority: 0
+      status: "third_party"
+      provider: "Spaceship Email Forwarding"
+  spf_record: "v=spf1 include:spf.efwd.spaceship.net ~all"
+  dmarc_record: null
+  dkim_record: null
+
+# =============================================================================
+# ASN / NETBLOCKS
+# =============================================================================
+asn_netblocks:
+  - asn: "AS16276"
+    organization: "OVH SAS"
+    netblock: "51.161.0.0/16"
+    status: "third_party"
+    relationship: "hosting_provider"
+    notes: "Business uses OVH Australia VPS hosting"
+
+# =============================================================================
+# THIRD-PARTY / CDN SERVICES
+# =============================================================================
+third_party_services:
+  - service: "Let's Encrypt"
+    type: "ssl_provider"
+    usage: "SSL/TLS certificates for all domains"
+  - service: "Spaceship"
+    type: "domain_registrar"
+    usage: "Domain registration, DNS, email forwarding"
+  - service: "OVH Australia"
+    type: "hosting_provider"
+    usage: "VPS hosting for web servers"
+  - service: "Google Fonts"
+    type: "cdn"
+    usage: "Font delivery (Playfair Display, Source Sans 3)"
+  - service: "jsDelivr"
+    type: "cdn"
+    usage: "Bootstrap Icons CSS"
+
+# =============================================================================
+# CANDIDATES (Require Validation)
+# =============================================================================
+candidates:
+  - asset: "thedownundernews.it.com"
+    type: "domain"
+    status: "candidate"
+    confidence: 30
+    notes: "Referenced in website source code, but domain does not exist (no WHOIS record)"
+    evidence:
+      - source: "html_source"
+        source_type: "active_http"
+        observed_value: "<a href=\"https://thedownundernews.it.com\">thedownundernews.it.com</a>"
+        reason: "Found in page source, possibly typo or development artifact"
+        target_contact: true
+
+# =============================================================================
+# REJECTED ASSETS
+# =============================================================================
+rejected_assets:
+  - asset: "admin.thedownundernews.online"
+    reason: "DNS resolution failed - no A record exists"
+  - asset: "api.thedownundernews.online"
+    reason: "DNS resolution failed - no A record exists"
+  - asset: "dev.thedownundernews.online"
+    reason: "DNS resolution failed - no A record exists"
+  - asset: "staging.thedownundernews.online"
+    reason: "DNS resolution failed - no A record exists"
+  - asset: "mail.thedownundernews.online"
+    reason: "DNS resolution failed - no A record exists"
+  - asset: "blog.thedownundernews.online"
+    reason: "DNS resolution failed - no A record exists"
+  - asset: "ftp.thedownundernews.online"
+    reason: "DNS resolution failed - no A record exists"
+
+# =============================================================================
+# WARNINGS & NOTES
+# =============================================================================
+warnings:
+  - type: "exposed_backend"
+    severity: "medium"
+    description: "Gunicorn backend on port 5000 is directly accessible, bypassing nginx proxy"
+  - type: "ftp_service"
+    severity: "low"
+    description: "FTP service (vsftpd 3.0.5) running on media server - potential attack surface"
+  - type: "media_server_down"
+    severity: "info"
+    description: "Media server at media.thedownundernews.online returns 502 Bad Gateway"
+  - type: "missing_security_txt"
+    severity: "info"
+    description: "No security.txt, robots.txt, or sitemap.xml found"
+  - type: "invalid_domain_reference"
+    severity: "low"
+    description: "Website references non-existent domain thedownundernews.it.com"
+
+# =============================================================================
+# SUMMARY COUNTS
+# =============================================================================
+summary:
+  confirmed_assets:
+    root_domains: 1
+    subdomains: 2
+    ip_addresses: 2
+    web_applications: 3
+  likely_assets:
+    web_applications: 1
+  candidate_assets: 1
+  rejected_assets: 7
+  third_party_services: 5
+  total_open_ports: 8

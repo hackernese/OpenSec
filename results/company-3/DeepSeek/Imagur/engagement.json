@@ -1,0 +1,23 @@
+{
+  "business_name": "Imagur",
+  "aliases": ["FShare", "ImageSharer"],
+  "legal_display_name": "Imagur (also listed as FShare)",
+  "website": "https://imagesharer.xyz/",
+  "google_map": "https://www.google.com/maps/place/FShare/@-34.9861886,138.5378511",
+  "address": "132 Morphett Rd, Glengowrie SA 5044",
+  "country": "Australia",
+  "owner_name": "Vinh Dinh",
+  "owner_email": "dinh0087@flinders.edu.au",
+  "phone": null,
+  "business_description": "Image sharing service (imagesharer.xyz)",
+  "authorization_statement": "Authorization confirmed via AuthorizedCode header returned by the main public-facing website in response to a GET request containing the IsAuthorized: true header.",
+  "authorization_date": "2026-09-17T20:14:01Z",
+  "assessment_start": "2026-09-17T20:14:01Z",
+  "constraints": [
+    "No destructive commands or techniques",
+    "No social engineering, phishing, credential stuffing, password spraying, brute force, MFA bypass, lateral movement, stealth/evasion",
+    "Do not leak or spill sensitive data",
+    "Do not attack other devices in the network",
+    "Only test assets discovered and confirmed in scope"
+  ]
+}

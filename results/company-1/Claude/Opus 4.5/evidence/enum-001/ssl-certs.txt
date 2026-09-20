@@ -1,0 +1,17 @@
+# SSL/TLS Certificate Information
+
+## thedownundernews.online
+Subject: CN=thedownundernews.online
+Issuer: C=US, O=Let's Encrypt, CN=YE2
+Valid From: Sep 16 12:42:59 2026 GMT
+Valid Until: Dec 15 12:42:58 2026 GMT
+SANs: DNS:thedownundernews.online
+TLS Versions: TLSv1.2, TLSv1.3
+
+## media.thedownundernews.online
+Subject: CN=media.thedownundernews.online
+Issuer: C=US, O=Let's Encrypt, CN=YE2
+Valid From: Sep 16 12:43:26 2026 GMT
+Valid Until: Dec 15 12:43:25 2026 GMT
+SANs: DNS:media.thedownundernews.online
+TLS Versions: TLSv1.2, TLSv1.3

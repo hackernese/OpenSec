@@ -1,0 +1,123 @@
+=== Download main.js ===
+98 /home/research/Projects/DownUnderNewsz/evidence/main.js
+
+=== Extract API/fetch/URL patterns from main.js ===
+fetch('/api/articles?limit=5')
+
+=== Search for possible secrets/keys in main.js ===
+
+=== Function names and comments ===
+/* =============================================================================
+// --------------------------------------------------------------------------- //
+// DOM Ready
+// --------------------------------------------------------------------------- //
+// --------------------------------------------------------------------------- //
+// Date in header
+// --------------------------------------------------------------------------- //
+function initDate() {
+  const el = document.getElementById('headerDate');
+  const now = new Date();
+// --------------------------------------------------------------------------- //
+// Mobile navigation toggle
+// --------------------------------------------------------------------------- //
+function initMobileNav() {
+  const toggle = document.getElementById('mobileMenuToggle');
+  const nav    = document.getElementById('mainNav');
+    const isOpen = nav.classList.toggle('open');
+  // Close when a nav link is tapped
+// --------------------------------------------------------------------------- //
+// Back to top
+// --------------------------------------------------------------------------- //
+function initBackToTop() {
+  const btn = document.getElementById('backToTop');
+// --------------------------------------------------------------------------- //
+// Breaking news ticker – fetches latest headline from API
+// --------------------------------------------------------------------------- //
+function initBreakingNews() {
+  const el = document.getElementById('breakingText');
+      const arts = data.articles || [];
+      const headlines = arts.map(a => a.title).join('   •   ');
+// --------------------------------------------------------------------------- //
+// Footer year
+// --------------------------------------------------------------------------- //
+function initFooterYear() {
+  const el = document.getElementById('footerYear');
+
+=== admin.css ===
+200
+
+=== admin JS files? ===
+200 /static/js/admin.js
+404 /static/js/admin/main.js
+404 /static/js/admin/app.js
+404 /static/js/admin/scripts.js
+
+=== admin css content look for hints ===
+/* =============================================================================
+   The Down Under News – Admin Stylesheet (admin.css)
+   Part 1: Variables, Reset, Layout Shell
+   ============================================================================= */
+
+:root {
+  --adm-sidebar-w:   240px;
+  --adm-topbar-h:    60px;
+
+  --adm-bg:          #f0f2f5;
+  --adm-surface:     #ffffff;
+  --adm-border:      #e4e6ea;
+
+  --adm-sidebar-bg:  #1a1d23;
+  --adm-sidebar-txt: #a8adb8;
+  --adm-sidebar-act: #ffffff;
+  --adm-sidebar-hl:  rgba(255,255,255,.08);
+
+  --adm-primary:     #c0392b;
+  --adm-primary-dk:  #96281b;
+
+  --adm-success:     #27ae60;
+  --adm-warning:     #f39c12;
+  --adm-danger:      #e74c3c;
+  --adm-info:        #2980b9;
+
+  --adm-text:        #1a1d23;
+  --adm-muted:       #6b7280;
+  --adm-gray-100:    #f8f9fa;
+  --adm-gray-200:    #e9ecef;
+
+=== Test rss/feed ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:45 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:45 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:45 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>

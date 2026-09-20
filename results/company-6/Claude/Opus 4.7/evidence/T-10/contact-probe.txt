@@ -1,0 +1,16 @@
+=== /robots.txt ===
+  status=404 size=153 type=text/html
+=== /sitemap.xml ===
+  status=404 size=153 type=text/html
+=== /contact ===
+  status=200 size=14212 type=text/html
+=== /api ===
+  status=301 size=169 type=text/html
+=== /api/contact ===
+  status=405 size=31 type=application/json
+=== /submit ===
+  status=404 size=153 type=text/html
+=== /message ===
+  status=404 size=153 type=text/html
+=== /send ===
+  status=404 size=153 type=text/html

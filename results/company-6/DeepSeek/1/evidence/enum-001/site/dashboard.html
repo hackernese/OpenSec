@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Ausecurity</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ---- Dashboard layout ---- */
+    .dash-shell {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg);
+    }
+
+    /* ---- Sidebar ---- */
+    .dash-sidebar {
+      width: 240px;
+      background: var(--navy);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 0;
+      flex-shrink: 0;
+    }
+
+    .dash-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dash-brand span { color: var(--blue); }
+
+    .dash-nav {
+      list-style: none;
+      margin-top: 1.25rem;
+      flex: 1;
+    }
+
+    .dash-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1.5rem;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+
+    .dash-nav li a:hover,
+    .dash-nav li a.active {
+      color: var(--white);
+      background: rgba(255,255,255,0.06);
+      border-left-color: var(--blue);
+    }
+
+    .dash-nav li a svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .dash-sidebar-footer {
+      padding: 1.25rem 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dash-sidebar-footer .admin-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.8);
+      padding: 0.55rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      width: 100%;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-logout:hover {
+      background: rgba(229,62,62,0.2);
+      border-color: rgba(229,62,62,0.4);
+      color: #FCA5A5;
+    }
+
+    .btn-logout svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ---- Main content ---- */
+    .dash-main {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .dash-topbar {
+      background: var(--white);
+      border-bottom: 1px solid #E5E7EB;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dash-topbar h1 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .dash-topbar .topbar-meta {
+      font-size: 0.8rem;
+      color: var(--slate);
+    }
+
+    .dash-content {
+      padding: 2rem;
+    }
+
+    /* ---- Stat cards ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid var(--blue);
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--slate);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .stat-card .stat-sub {
+      font-size: 0.78rem;
+      color: var(--slate);
+      margin-top: 0.35rem;
+    }
+
+    .stat-card.accent-green { border-left-color: #38A169; }
+    .stat-card.accent-orange { border-left-color: #DD6B20; }
+    .stat-card.accent-purple { border-left-color: #805AD5; }
+
+    /* ---- Panels ---- */
+    .panels-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .panels-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #F3F4F6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-header h2 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .panel-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: #EBF8FF;
+      color: #2B6CB0;
+    }
+
+    .panel-badge.green { background: #F0FFF4; color: #276749; }
+    .panel-badge.orange { background: #FFFAF0; color: #9C4221; }
+
+    .enquiry-list, .activity-list {
+      list-style: none;
+    }
+
+    .enquiry-item, .activity-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid #F9FAFB;
+      font-size: 0.875rem;
+    }
+
+    .enquiry-item:last-child, .activity-item:last-child { border-bottom: none; }
+
+    .enquiry-info strong { display: block; color: var(--navy); font-weight: 600; }
+    .enquiry-info span { color: var(--slate); font-size: 0.8rem; }
+
+    .enquiry-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    .tag-grc { background: #EBF8FF; color: #2B6CB0; }
+    .tag-pentest { background: #FAF5FF; color: #553C9A; }
+    .tag-notsure { background: #F0FFF4; color: #276749; }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-right: 0.75rem;
+    }
+
+    .activity-item .act-text { flex: 1; color: var(--navy); }
+    .activity-item .act-time { color: var(--slate); font-size: 0.78rem; white-space: nowrap; margin-left: 0.75rem; }
+
+    /* ---- Responsive sidebar ---- */
+    @media (max-width: 768px) {
+      .dash-sidebar { display: none; }
+      .dash-topbar { padding: 1rem; }
+      .dash-content { padding: 1rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dash-shell">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="dash-sidebar" aria-label="Admin navigation">
+      <a href="index.html" class="dash-brand" aria-label="Ausecurity home">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+
+      <ul class="dash-nav" role="list">
+        <li>
+          <a href="dashboard.html" class="active" aria-current="page">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            Overview
+          </a>
+        </li>
+        <li>
+          <a href="contact.html">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Enquiries
+          </a>
+        </li>
+        <li>
+          <a href="services.html">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+            Services
+          </a>
+        </li>
+        <li>
+          <a href="about.html">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            Team
+          </a>
+        </li>
+      </ul>
+
+      <div class="dash-sidebar-footer">
+        <div class="admin-label">Signed in as admin</div>
+        <button id="logout-btn" class="btn-logout" aria-label="Sign out">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="dash-main">
+
+      <div class="dash-topbar">
+        <h1>Dashboard Overview</h1>
+        <span class="topbar-meta" id="dash-date"></span>
+      </div>
+
+      <div class="dash-content">
+
+        <!-- Stat cards -->
+        <div class="stats-grid" role="region" aria-label="Key metrics">
+          <div class="stat-card">
+            <div class="stat-label">Total Enquiries</div>
+            <div class="stat-value">47</div>
+            <div class="stat-sub">Since January 2026</div>
+          </div>
+          <div class="stat-card accent-green">
+            <div class="stat-label">Active Clients</div>
+            <div class="stat-value">12</div>
+            <div class="stat-sub">Currently engaged</div>
+          </div>
+          <div class="stat-card accent-orange">
+            <div class="stat-label">Assessments YTD</div>
+            <div class="stat-value">19</div>
+            <div class="stat-sub">Pentest + GRC</div>
+          </div>
+          <div class="stat-card accent-purple">
+            <div class="stat-label">Open Proposals</div>
+            <div class="stat-value">5</div>
+            <div class="stat-sub">Awaiting sign-off</div>
+          </div>
+        </div>
+
+        <!-- Panels row -->
+        <div class="panels-grid">
+
+          <!-- Recent enquiries -->
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Recent Enquiries</h2>
+              <span class="panel-badge">Last 7 days</span>
+            </div>
+            <ul class="enquiry-list" aria-label="Recent enquiries">
+              <li class="enquiry-item">
+                <div class="enquiry-info">
+                  <strong>Meridian Financial Solutions</strong>
+                  <span>James Hargreaves · james@meridianfs.com.au</span>
+                </div>
+                <span class="enquiry-tag tag-grc">GRC</span>
+              </li>
+              <li class="enquiry-item">
+                <div class="enquiry-info">
+                  <strong>ShopStream Pty Ltd</strong>
+                  <span>Lara Whitfield · lara@shopstream.io</span>
+                </div>
+                <span class="enquiry-tag tag-pentest">Pentest</span>
+              </li>
+              <li class="enquiry-item">
+                <div class="enquiry-info">
+                  <strong>Nexahealth Clinics</strong>
+                  <span>Mark Okonkwo · m.okonkwo@nexahealth.au</span>
+                </div>
+                <span class="enquiry-tag tag-grc">GRC</span>
+              </li>
+              <li class="enquiry-item">
+                <div class="enquiry-info">
+                  <strong>Orion Logistics</strong>
+                  <span>Chen Wei · cwei@orionlogistics.com.au</span>
+                </div>
+                <span class="enquiry-tag tag-notsure">Not Sure</span>
+              </li>
+              <li class="enquiry-item">
+                <div class="enquiry-info">
+                  <strong>Starfield Technologies</strong>
+                  <span>Priya Nair · priya@starfieldtech.io</span>
+                </div>
+                <span class="enquiry-tag tag-pentest">Pentest</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Recent activity -->
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Recent Activity</h2>
+              <span class="panel-badge green">Live</span>
+            </div>
+            <ul class="activity-list" aria-label="Recent activity">
+              <li class="activity-item">
+                <div class="activity-dot"></div>
+                <span class="act-text">Proposal sent to Nexahealth Clinics</span>
+                <span class="act-time">2h ago</span>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot"></div>
+                <span class="act-text">New enquiry from Starfield Technologies</span>
+                <span class="act-time">5h ago</span>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot"></div>
+                <span class="act-text">ISO 27001 audit completed — Meridian FS</span>
+                <span class="act-time">Yesterday</span>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot"></div>
+                <span class="act-text">Pentest report delivered — ShopStream</span>
+                <span class="act-time">2 days ago</span>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot"></div>
+                <span class="act-text">Contract signed — Orion Logistics GRC</span>
+                <span class="act-time">3 days ago</span>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot"></div>
+                <span class="act-text">New enquiry from Meridian Financial Solutions</span>
+                <span class="act-time">4 days ago</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Service breakdown -->
+        <div class="panel" style="margin-bottom: 2rem;">
+          <div class="panel-header">
+            <h2>Service Breakdown (YTD)</h2>
+            <span class="panel-badge orange">2026</span>
+          </div>
+          <div style="padding: 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem;">
+            <div style="text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy);">10</div>
+              <div style="font-size:0.8rem;color:var(--slate);margin-top:0.25rem;">GRC Consulting</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy);">9</div>
+              <div style="font-size:0.8rem;color:var(--slate);margin-top:0.25rem;">Penetration Tests</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy);">3</div>
+              <div style="font-size:0.8rem;color:var(--slate);margin-top:0.25rem;">vCISO Engagements</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy);">2</div>
+              <div style="font-size:0.8rem;color:var(--slate);margin-top:0.25rem;">Red Team Exercises</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy);">$1.2M</div>
+              <div style="font-size:0.8rem;color:var(--slate);margin-top:0.25rem;">Revenue YTD</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /dash-content -->
+    </main>
+
+  </div><!-- /dash-shell -->
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

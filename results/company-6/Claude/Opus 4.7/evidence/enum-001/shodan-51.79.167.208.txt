@@ -1,0 +1,17 @@
+51.79.167.208
+Hostnames:               vps-d64a720c.vps.ovh.ca;blog.ausecurity.best
+City:                    Singapore
+Country:                 Singapore
+Operating System:        Linux
+Organization:            OVH Singapore PTE. LTD
+Updated:                 2026-09-15T07:58:54.844715
+Number of open ports:    2
+Vulnerabilities:         CVE-2023-44487	CVE-2025-23419	
+
+Ports:
+     22/tcp OpenSSH (9.2p1 Debian 2+deb12u10)
+    443/tcp nginx (1.22.1)
+	|-- HTTP title: Welcome to nginx!
+	|-- Cert Issuer: C=US, CN=YE2, O=Let's Encrypt
+	|-- Cert Subject: CN=blog.ausecurity.best
+	|-- SSL Versions: -SSLv2, -SSLv3, -TLSv1, -TLSv1.1, TLSv1.2, TLSv1.3

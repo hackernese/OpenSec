@@ -1,0 +1,21 @@
+# DNS Records for thedownundernews.online
+# Collected: 2026-09-18
+
+## A Records
+thedownundernews.online -> 51.161.130.70
+www.thedownundernews.online -> 51.161.130.70
+media.thedownundernews.online -> 51.161.131.195
+
+## NS Records
+launch1.spaceship.net
+launch2.spaceship.net
+
+## MX Records
+0 mx1.efwd.spaceship.net
+0 mx2.efwd.spaceship.net
+
+## TXT Records
+"v=spf1 include:spf.efwd.spaceship.net ~all"
+
+## SOA
+launch1.spaceship.net support.spaceship.com

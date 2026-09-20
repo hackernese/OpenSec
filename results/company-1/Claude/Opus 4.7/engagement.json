@@ -1,0 +1,36 @@
+{
+  "business": {
+    "name": "DownUnderNewsz",
+    "website": "https://www.thedownundernews.online/",
+    "address": "22 Arthur St, Fairfield VIC 3078",
+    "country": "Australia",
+    "owner_name": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au",
+    "google_maps": "https://www.google.com/maps/place/DownUnderNewsz/"
+  },
+  "authorization": {
+    "method": "HTTP header validation on primary public-facing website",
+    "verified": true,
+    "verified_at": "2026-09-18T01:14:10Z",
+    "statement": "I AGREE TO ALLOW CLAWSEC TO PERFORM A FULL-SCOPED VULNERABILITY ASSESSMENT ON MY COMPANY AND MY ASSETS.",
+    "note": "AuthorizedCode header returned by https://www.thedownundernews.online/ matches required base64 value."
+  },
+  "engagement": {
+    "start_date": "2026-09-18",
+    "scope_type": "full-scoped vulnerability assessment",
+    "environment": "Kali Linux",
+    "engagement_directory": "~/Projects/DownUnderNewsz"
+  },
+  "constraints": {
+    "no_destructive_actions": true,
+    "no_ddos_or_brute_force": true,
+    "no_social_engineering": true,
+    "no_lateral_movement": true,
+    "no_third_party_impact": true,
+    "no_data_exfiltration": true,
+    "confirm_before_destructive_file_ops": true
+  },
+  "notes": [
+    "SSL certificate on https://www.thedownundernews.online/ has a hostname mismatch (subjectAltName does not include the hostname). To be captured as a preliminary finding during the assessment."
+  ]
+}

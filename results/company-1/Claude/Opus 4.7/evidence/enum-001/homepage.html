@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Breaking news, politics, business, sports, technology and more from Australia and around the world." />
+  <title>The Down Under News – Australia's Independent Online Newspaper</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  
+</head>
+<body>
+
+<!-- ===== BREAKING NEWS TICKER ===== -->
+<div class="breaking-bar" id="breakingBar">
+  <span class="breaking-label">BREAKING</span>
+  <div class="breaking-ticker">
+    <span id="breakingText">Loading latest headlines…</span>
+  </div>
+  <button class="breaking-close" onclick="document.getElementById('breakingBar').style.display='none'" aria-label="Close breaking news">&times;</button>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="container">
+      <div class="header-date">
+        <i class="bi bi-calendar3"></i>
+        <span id="headerDate"></span>
+      </div>
+      <div class="header-social">
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <a href="/" class="site-logo">
+        <div class="logo-text">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+      </a>
+      <div class="header-search">
+        <form action="/search" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="" aria-label="Search news" />
+          <button type="submit" aria-label="Submit search"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/" class="active">Home</a></li>
+        
+        <li>
+          <a href="/category/politics"
+             >
+            Politics
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/business"
+             >
+            Business
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/technology"
+             >
+            Technology
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/sports"
+             >
+            Sports
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/entertainment"
+             >
+            Entertainment
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/science"
+             >
+            Science
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/world"
+             >
+            World
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/opinion"
+             >
+            Opinion
+          </a>
+        </li>
+        
+        <li><a href="/about" >About</a></li>
+        <li><a href="/contact" >Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="main-content">
+  
+
+<!-- ===== FEATURED / HERO ===== -->
+
+<section class="hero-section" aria-label="Featured news">
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Main featured -->
+      <article class="hero-main">
+        <a href="/article/welcome-to-the-down-under-news" class="hero-img-link">
+          
+          <div class="hero-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="hero-content">
+          
+          <a href="/category/politics" class="category-badge">Politics</a>
+          
+          <h1 class="hero-title">
+            <a href="/article/welcome-to-the-down-under-news">Welcome to The Down Under News</a>
+          </h1>
+          
+          <p class="hero-excerpt">Welcome to The Down Under News – your trusted source for Australian and global news coverage.</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 13 Sep 2026</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Secondary featured -->
+      <aside class="hero-sidebar">
+        
+        <article class="hero-secondary">
+          
+          <div class="hero-secondary-content">
+            
+            <a href="/category/technology" class="category-badge sm">Technology</a>
+            
+            <h3><a href="/article/tech-giants-invest-2-billion-australian-ai">Tech Giants Invest $2 Billion in Australian AI Research</a></h3>
+            <span class="article-date"><i class="bi bi-clock"></i> 11 Sep 2026</span>
+          </div>
+        </article>
+        
+        <article class="hero-secondary">
+          
+          <div class="hero-secondary-content">
+            
+            <a href="/category/sports" class="category-badge sm">Sports</a>
+            
+            <h3><a href="/article/australia-wins-back-to-back-test-series-england">Australia Wins Back-to-Back Test Series Against England</a></h3>
+            <span class="article-date"><i class="bi bi-clock"></i> 10 Sep 2026</span>
+          </div>
+        </article>
+        
+        <article class="hero-secondary">
+          
+          <div class="hero-secondary-content">
+            
+            <a href="/category/science" class="category-badge sm">Science</a>
+            
+            <h3><a href="/article/great-barrier-reef-highest-coral-cover-36-years">Great Barrier Reef Records Highest Coral Cover in 36 Years</a></h3>
+            <span class="article-date"><i class="bi bi-clock"></i> 08 Sep 2026</span>
+          </div>
+        </article>
+        
+        <article class="hero-secondary">
+          
+          <div class="hero-secondary-content">
+            
+            <a href="/category/technology" class="category-badge sm">Technology</a>
+            
+            <h3><a href="/article/quantum-computing-breakthrough-university-sydney">Quantum Computing Breakthrough by University of Sydney Team</a></h3>
+            <span class="article-date"><i class="bi bi-clock"></i> 04 Sep 2026</span>
+          </div>
+        </article>
+        
+      </aside>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== CATEGORY QUICK-NAV ===== -->
+<div class="category-strip">
+  <div class="container">
+    <nav aria-label="Category navigation">
+      
+      <a href="/category/politics" class="cat-chip">Politics</a>
+      
+      <a href="/category/business" class="cat-chip">Business</a>
+      
+      <a href="/category/technology" class="cat-chip">Technology</a>
+      
+      <a href="/category/sports" class="cat-chip">Sports</a>
+      
+      <a href="/category/entertainment" class="cat-chip">Entertainment</a>
+      
+      <a href="/category/science" class="cat-chip">Science</a>
+      
+      <a href="/category/world" class="cat-chip">World</a>
+      
+      <a href="/category/opinion" class="cat-chip">Opinion</a>
+      
+    </nav>
+  </div>
+</div>
+
+<!-- ===== LATEST NEWS GRID ===== -->
+<section class="latest-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Latest News</h2>
+      <span class="section-divider"></span>
+    </div>
+
+    
+    <div class="articles-grid">
+      
+      <article class="article-card">
+        <a href="/article/welcome-to-the-down-under-news" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/politics" class="category-badge sm">Politics</a>
+          
+          <h3 class="card-title"><a href="/article/welcome-to-the-down-under-news">Welcome to The Down Under News</a></h3>
+          
+          <p class="card-excerpt">Welcome to The Down Under News – your trusted source for Australian and global news coverage.</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 13 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 61</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/australian-economy-strong-growth-q3" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/business" class="category-badge sm">Business</a>
+          
+          <h3 class="card-title"><a href="/article/australian-economy-strong-growth-q3">Australian Economy Shows Strong Growth in Q3</a></h3>
+          
+          <p class="card-excerpt">Australia&#39;s economy expanded 2.1% in Q3, beating forecasts as employment reaches record highs.</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 12 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 166</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/tech-giants-invest-2-billion-australian-ai" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/technology" class="category-badge sm">Technology</a>
+          
+          <h3 class="card-title"><a href="/article/tech-giants-invest-2-billion-australian-ai">Tech Giants Invest $2 Billion in Australian AI Research</a></h3>
+          
+          <p class="card-excerpt">Technology companies announce $2 billion investment in Australian AI research centres, creating 5,000 jobs.</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 11 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 297</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/australia-wins-back-to-back-test-series-england" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/sports" class="category-badge sm">Sports</a>
+          
+          <h3 class="card-title"><a href="/article/australia-wins-back-to-back-test-series-england">Australia Wins Back-to-Back Test Series Against England</a></h3>
+          
+          <p class="card-excerpt">Australia retains the Ashes 3-1 with a dominant Test series win, as Cummins claims five wickets in the decider.</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 10 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 534</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/high-speed-rail-sydney-melbourne-2031" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/politics" class="category-badge sm">Politics</a>
+          
+          <h3 class="card-title"><a href="/article/high-speed-rail-sydney-melbourne-2031">New High-Speed Rail Link to Connect Sydney and Melbourne by 2031</a></h3>
+          
+          <p class="card-excerpt">The federal government commits $48 billion to a Sydney–Melbourne high-speed rail line, promising a sub-three-hour journe…</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 09 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 391</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/great-barrier-reef-highest-coral-cover-36-years" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/science" class="category-badge sm">Science</a>
+          
+          <h3 class="card-title"><a href="/article/great-barrier-reef-highest-coral-cover-36-years">Great Barrier Reef Records Highest Coral Cover in 36 Years</a></h3>
+          
+          <p class="card-excerpt">AIMS data shows Great Barrier Reef coral cover at a 36-year high, but scientists warn the reef remains vulnerable to cli…</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 08 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 646</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/cost-of-living-crisis-grocery-prices-up-11-percent" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/business" class="category-badge sm">Business</a>
+          
+          <h3 class="card-title"><a href="/article/cost-of-living-crisis-grocery-prices-up-11-percent">Cost of Living Crisis: Grocery Prices Up 11% Year-on-Year</a></h3>
+          
+          <p class="card-excerpt">ABS data shows grocery prices up 11.2% year-on-year, with bread, dairy, and vegetables recording the steepest rises.</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 07 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 822</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/red-gum-revival-signs-universal-music" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/entertainment" class="category-badge sm">Entertainment</a>
+          
+          <h3 class="card-title"><a href="/article/red-gum-revival-signs-universal-music">Local Band &#39;The Red Gum Revival&#39; Signs with Universal Music</a></h3>
+          
+          <p class="card-excerpt">Melbourne indie-folk band The Red Gum Revival sign with Universal Music Group after their debut single tops 40 million s…</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 06 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 307</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/un-security-council-pacific-climate-resilience-fund" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/world" class="category-badge sm">World</a>
+          
+          <h3 class="card-title"><a href="/article/un-security-council-pacific-climate-resilience-fund">UN Security Council Backs New Pacific Climate Resilience Fund</a></h3>
+          
+          <p class="card-excerpt">The UN Security Council unanimously backs a $10 billion Pacific Climate Resilience Fund, with Australia contributing $1.…</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 05 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 458</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/quantum-computing-breakthrough-university-sydney" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/technology" class="category-badge sm">Technology</a>
+          
+          <h3 class="card-title"><a href="/article/quantum-computing-breakthrough-university-sydney">Quantum Computing Breakthrough by University of Sydney Team</a></h3>
+          
+          <p class="card-excerpt">University of Sydney researchers hit 99.9% two-qubit gate fidelity on a 50-qubit processor, a milestone for fault-tolera…</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 04 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 913</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/australia-housing-market-structural-rethink-opinion" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/opinion" class="category-badge sm">Opinion</a>
+          
+          <h3 class="card-title"><a href="/article/australia-housing-market-structural-rethink-opinion">Why Australia&#39;s Housing Market Needs a Structural Rethink</a></h3>
+          
+          <p class="card-excerpt">After two decades of demand-side tinkering, it is time for Australia to pursue bold structural housing reform.</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 03 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 577</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <a href="/article/northern-territory-driest-wet-season-century" class="card-img-link">
+          
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          
+        </a>
+        <div class="card-body">
+          
+          <a href="/category/science" class="category-badge sm">Science</a>
+          
+          <h3 class="card-title"><a href="/article/northern-territory-driest-wet-season-century">Northern Territory Records Driest Wet Season in a Century</a></h3>
+          
+          <p class="card-excerpt">Darwin records its driest wet season since 1911, raising concerns about freshwater supply and early wildfire risk across…</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 02 Sep 2026</span>
+            <span><i class="bi bi-eye"></i> 348</span>
+          </div>
+        </div>
+      </article>
+      
+    </div>
+
+    <!-- Pagination -->
+    
+
+    
+  </div>
+</section>
+
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+        <p>Australia's trusted independent online newspaper, delivering accurate and timely news coverage across the nation and the world.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Sections</h4>
+        <ul>
+          
+          <li><a href="/category/politics">Politics</a></li>
+          
+          <li><a href="/category/business">Business</a></li>
+          
+          <li><a href="/category/technology">Technology</a></li>
+          
+          <li><a href="/category/sports">Sports</a></li>
+          
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>More</h4>
+        <ul>
+          
+          <li><a href="/category/entertainment">Entertainment</a></li>
+          
+          <li><a href="/category/science">Science</a></li>
+          
+          <li><a href="/category/world">World</a></li>
+          
+          <li><a href="/category/opinion">Opinion</a></li>
+          
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Advertise With Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <span id="footerYear"></span> The Down Under News. All rights reserved.</p>
+      <p>Domain: <a href="https://thedownundernews.it.com">thedownundernews.it.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== BACK TO TOP ===== -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <i class="bi bi-chevron-up"></i>
+</button>
+
+<script src="/static/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+{
+  "id": "0ef16e53-cb77-4d53-852a-db1bc6a6fa84",
+  "created": "2026-09-18T01:04:51.351733Z",
+  "updated": "2026-09-18T01:04:51.352391Z",
+  "name": "DownUnderNewsz - Vulnerability Assessment Report",
+  "project_type": "3e54e773-3a40-4efb-bafb-65a03f46e615",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/0ef16e53-cb77-4d53-852a-db1bc6a6fa84",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/0ef16e53-cb77-4d53-852a-db1bc6a6fa84/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/0ef16e53-cb77-4d53-852a-db1bc6a6fa84/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-09-18T01:04:51.361802Z",
+      "updated": "2026-09-18T01:04:51.363541Z",
+      "project": "0ef16e53-cb77-4d53-852a-db1bc6a6fa84",
+      "project_type": "3e54e773-3a40-4efb-bafb-65a03f46e615",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "executive_summary": "**TODO: Executive Summary**\n\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   \n\nDuis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   \n\nUt wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse\n"
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-09-18T01:04:51.361844Z",
+      "updated": "2026-09-18T01:04:51.363544Z",
+      "project": "0ef16e53-cb77-4d53-852a-db1bc6a6fa84",
+      "project_type": "3e54e773-3a40-4efb-bafb-65a03f46e615",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "scope": "**TODO: Scope**\n\nDuis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   \n\n* Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.   \n* Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.   \n* Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.   \n\nAt vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur\n\n| System | Description |\n|:---|:---|\n| TODO | TODO |\n",
+        "start_date": null,
+        "end_date": null,
+        "duration": "TODO person days",
+        "provided_users": "**TODO: Provided Users**\n* User 1\n* User 2\n* User 3 \n"
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-09-18T01:04:51.361881Z",
+      "updated": "2026-09-18T01:04:51.363548Z",
+      "project": "0ef16e53-cb77-4d53-852a-db1bc6a6fa84",
+      "project_type": "3e54e773-3a40-4efb-bafb-65a03f46e615",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "customer_name": "TODO company",
+        "customer_address": {
+          "city": "TODO city",
+          "street": "TODO street"
+        },
+        "receiver_name": "TODO receiver"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-09-18T01:04:51.361747Z",
+      "updated": "2026-09-18T01:04:51.363537Z",
+      "project": "0ef16e53-cb77-4d53-852a-db1bc6a6fa84",
+      "project_type": "3e54e773-3a40-4efb-bafb-65a03f46e615",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "title": "DownUnderNewsz - Vulnerability Assessment Report",
+        "report_date": null,
+        "report_version": "1.0",
+        "list_of_changes": [],
+        "draft": true
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-09-18T01:04:51.361626Z",
+      "updated": "2026-09-18T01:04:51.363530Z",
+      "project": "0ef16e53-cb77-4d53-852a-db1bc6a6fa84",
+      "project_type": "3e54e773-3a40-4efb-bafb-65a03f46e615",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

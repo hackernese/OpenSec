@@ -1,0 +1,76 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            05:77:05:d4:f3:e1:0c:d9:36:66:e0:a0:a6:c3:cf:54:01:66
+        Signature Algorithm: ecdsa-with-SHA384
+        Issuer: C=US, O=Let's Encrypt, CN=YE1
+        Validity
+            Not Before: Sep 14 15:46:12 2026 GMT
+            Not After : Dec 13 15:46:11 2026 GMT
+        Subject: CN=ticket.ausecurity.best
+        Subject Public Key Info:
+            Public Key Algorithm: id-ecPublicKey
+                Public-Key: (256 bit)
+                pub:
+                    04:13:9b:9e:6b:3f:cc:f7:3f:d3:ad:b6:4a:c6:b1:
+                    d4:8e:65:23:db:24:85:b7:c5:2c:d3:54:6c:17:13:
+                    1a:ea:f0:16:69:e2:8f:57:be:0b:63:1a:06:8d:21:
+                    26:b6:9d:5b:97:20:dc:50:c4:37:d6:71:87:e6:29:
+                    71:e5:27:1b:ad
+                ASN1 OID: prime256v1
+                NIST CURVE: P-256
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                56:03:6A:B6:39:16:86:3E:BE:CD:8F:3F:AA:97:4D:02:F0:F9:7C:71
+            X509v3 Authority Key Identifier: 
+                BB:20:CA:47:0B:FE:D7:E5:9C:F9:8F:09:2A:A3:8C:37:45:B1:BC:D8
+            Authority Information Access: 
+                CA Issuers - URI:http://ye1.i.lencr.org/
+            X509v3 Subject Alternative Name: 
+                DNS:ticket.ausecurity.best
+            X509v3 Certificate Policies: 
+                Policy: 2.23.140.1.2.1
+            X509v3 CRL Distribution Points: 
+                Full Name:
+                  URI:http://ye1.c.lencr.org/103.crl
+
+            CT Precertificate SCTs: 
+                Signed Certificate Timestamp:
+                    Version   : v1 (0x0)
+                    Log ID    : 94:4E:43:87:FA:EC:C1:EF:81:F3:19:24:26:A8:18:65:
+                                01:C7:D3:5F:38:02:01:3F:72:67:7D:55:37:2E:19:D8
+                    Timestamp : Sep 14 16:44:43.033 2026 GMT
+                    Extensions: none
+                    Signature : ecdsa-with-SHA256
+                                30:46:02:21:00:B3:19:94:42:33:C4:36:9B:CF:8C:EF:
+                                AF:8C:F0:CA:60:E2:9D:22:78:7A:B4:A6:CB:7A:99:82:
+                                4E:C1:DB:8D:11:02:21:00:BA:15:89:01:31:AB:46:4C:
+                                72:E9:3C:A2:C3:E1:F4:DE:63:58:AE:A0:CB:C1:1A:9F:
+                                71:9A:40:D4:B3:39:41:68
+                Signed Certificate Timestamp:
+                    Version   : v1 (0x0)
+                    Log ID    : 6C:FE:50:19:43:A8:5E:A9:16:BC:52:D1:33:E4:DC:C9:
+                                1E:F1:41:1C:7D:25:84:20:D1:73:80:9E:18:18:EB:3A
+                    Timestamp : Sep 14 16:44:43.607 2026 GMT
+                    Extensions: 00:00:05:00:35:24:AF:05
+                    Signature : ecdsa-with-SHA256
+                                30:44:02:20:56:75:8C:B4:B0:30:48:48:76:52:F3:F8:
+                                60:19:14:44:46:D9:4A:07:24:C4:29:FA:14:FC:14:83:
+                                C5:F1:B9:60:02:20:0F:B9:77:E9:61:F3:48:49:DB:AF:
+                                6B:95:22:A9:FA:AF:7D:6A:B1:18:B6:C8:25:AC:FB:D5:
+                                BF:4F:08:B2:1E:8B
+    Signature Algorithm: ecdsa-with-SHA384
+    Signature Value:
+        30:66:02:31:00:85:f7:dd:80:22:0f:07:99:da:55:b6:e8:9a:
+        34:e1:fa:09:6a:bc:21:5b:a7:ab:64:58:c1:27:e6:4f:bf:51:
+        32:9c:ea:2d:79:bb:95:b1:2f:4f:26:8f:e6:c5:89:ef:b5:02:
+        31:00:cc:c9:0f:06:5d:e0:bf:26:2e:87:ba:80:a4:07:ba:7d:
+        d6:c3:6e:8c:59:62:84:7e:8c:b0:36:ea:a0:97:2e:18:a1:99:
+        8c:9c:b5:87:dc:1e:7d:aa:69:6e:a2:f4:d4:ed

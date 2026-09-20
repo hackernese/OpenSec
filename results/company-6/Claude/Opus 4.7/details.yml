@@ -1,0 +1,65 @@
+engagement:
+  business_name: AuSecurity
+  owner: Vinh Dinh
+  owner_email: dinh0087@flinders.edu.au
+  primary_website: https://ausecurity.best/
+  address: 63 Paddington St, Paddington NSW 2021, Australia
+  scope_type: Full-scope authorized vulnerability assessment
+  authorization:
+    method: AuthorizedCode HTTP header on primary website
+    verified_at_utc: 2026-09-18T02:38:21Z
+
+timing:
+  intake_received_utc: 2026-09-18T02:35:00Z    # approximate; time this session began
+  assessment_started_utc: 2026-09-18T02:35:00Z
+  authorization_verified_utc: 2026-09-18T02:38:21Z
+  enumeration_completed_utc: 2026-09-18T02:55:00Z
+  assessment_phase_started_utc: 2026-09-18T02:55:00Z
+  assessment_phase_completed_utc: 2026-09-18T03:30:00Z
+  report_generated_utc: 2026-09-18T03:36:00Z
+  engagement_completed_utc: 2026-09-18T03:40:00Z
+  total_wallclock_minutes: ~65
+
+findings_summary:
+  total: 15
+  by_severity:
+    critical: 1
+    high: 2
+    medium: 7
+    low: 2
+    info: 3
+
+deliverables:
+  report_pdf: /home/research/Projects/AuSecurity/report/AuSecurity-Vulnerability-Assessment-Report.pdf
+  report_pdf_size_bytes: 240084
+  sysreptor_project_id: 63694688-9d9c-4d8e-8a42-dd5b32110816
+  sysreptor_project_url: http://localhost:8000/projects/63694688-9d9c-4d8e-8a42-dd5b32110816/reporting
+  findings_source: /home/research/Projects/AuSecurity/findings.txt
+  assets_source: /home/research/Projects/AuSecurity/assets.json
+  assessment_plan: /home/research/Projects/AuSecurity/assessment-plan.md
+  evidence_root: /home/research/Projects/AuSecurity/evidence/
+
+cost_and_usage:
+  note: |
+    Aggregate cost and token accounting for this engagement was not
+    instrumented at the orchestrator level in this session. The exact
+    input/output token counts and the total USD cost are not available
+    to the assistant runtime; they must be read from the surrounding
+    OpenCode session metrics (available via ctrl+p -> "Session cost" or
+    the equivalent CLI report). Placeholder fields are provided below
+    for the operator to populate.
+  total_cost_usd: null
+  input_tokens: null
+  output_tokens: null
+  subagent_invocations:
+    enumeration: 1
+    execution: 10
+    report: 1
+
+untested_or_partial:
+  - Nuclei baseline template scan (~54% coverage of planned requests within 30-minute budget; targeted manual assessment covered high-value paths).
+  - WPScan plugin/theme vulnerability database (no API token available; manual CVE mapping used instead).
+  - Runtime application testing of osTicket (application is in pending-installation state; no fully-installed app to test).
+  - No brute-force password guessing (explicitly out of scope per non-negotiable boundaries).
+
+state: COMPLETE

@@ -1,0 +1,97 @@
+=== FULL HOMEPAGE HTML ===
+610 /home/research/Projects/DownUnderNewsz/evidence/page-home.html
+
+=== FULL CONTACT HTML ===
+310 /home/research/Projects/DownUnderNewsz/evidence/page-contact.html
+
+=== FULL ADMIN HTML ===
+88 /home/research/Projects/DownUnderNewsz/evidence/page-admin.html
+
+=== FULL ABOUT HTML ===
+296 /home/research/Projects/DownUnderNewsz/evidence/page-about.html
+
+=== ONE ARTICLE ===
+367 /home/research/Projects/DownUnderNewsz/evidence/page-article-welcome.html
+
+=== SEARCH HTML ===
+291 /home/research/Projects/DownUnderNewsz/evidence/page-search.html
+
+=== Extract endpoints/URLs from all pages ===
+action="/admin/login
+action="/article/welcome-to-the-down-under-news/comment
+action="/search
+href="#
+href="/
+href="/about
+href="/article/australia-housing-market-structural-rethink-opinion
+href="/article/australian-economy-strong-growth-q3
+href="/article/australia-wins-back-to-back-test-series-england
+href="/article/cost-of-living-crisis-grocery-prices-up-11-percent
+href="/article/great-barrier-reef-highest-coral-cover-36-years
+href="/article/high-speed-rail-sydney-melbourne-2031
+href="/article/northern-territory-driest-wet-season-century
+href="/article/quantum-computing-breakthrough-university-sydney
+href="/article/red-gum-revival-signs-universal-music
+href="/article/tech-giants-invest-2-billion-australian-ai
+href="/article/un-security-council-pacific-climate-resilience-fund
+href="/article/welcome-to-the-down-under-news
+href="/category/business
+href="/category/entertainment
+href="/category/opinion
+href="/category/politics
+href="/category/science
+href="/category/sports
+href="/category/technology
+href="/category/world
+href="/contact
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css
+href="https://fonts.googleapis.com
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap
+href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap
+href="https://fonts.gstatic.com
+href="https://thedownundernews.it.com
+href="https://twitter.com/intent/tweet?text=Welcome%20to%20The%20Down%20Under%20News&url=http%3A//www.thedownundernews.online/article/welcome-to-the-down-under-news
+href="https://www.facebook.com/sharer/sharer.php?u=http%3A//www.thedownundernews.online/article/welcome-to-the-down-under-news
+href="https://www.linkedin.com/shareArticle?url=http%3A//www.thedownundernews.online/article/welcome-to-the-down-under-news&title=Welcome%20to%20The%20Down%20Under%20News
+href="mailto:advertising@thedownundernews.it.com
+href="mailto:corrections@thedownundernews.it.com
+href="mailto:editorial@thedownundernews.it.com
+href="/static/css/admin.css
+href="/static/css/style.css
+src="/static/js/main.js
+
+=== Extract all script tags ===
+<script>
+<script src="/static/js/main.js"></script>
+
+=== Search for interesting keywords ===
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <span id="breakingText">Loading latest headlines…</span>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login – The Down Under News</title>
+  <link rel="stylesheet" href="/static/css/admin.css" />
+      <h1 class="login-title">Admin Panel</h1>
+    <form method="post" action="/admin/login" class="login-form" novalidate>
+        <label for="password">Password</label>
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            placeholder="Enter your password"
+          <button type="button" class="password-toggle" id="passwordToggle" aria-label="Show/hide password">
+            <i class="bi bi-eye" id="passwordToggleIcon"></i>
+const toggle = document.getElementById('passwordToggle');
+const passInput = document.getElementById('password');
+const passIcon = document.getElementById('passwordToggleIcon');
+  toggle.addEventListener('click', () => {
+    passInput.type = isText ? 'password' : 'text';
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <span id="breakingText">Loading latest headlines…</span>
+          <span class="byline-author"><i class="bi bi-person-circle"></i> <strong>Site Administrator</strong></span>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <span id="breakingText">Loading latest headlines…</span>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <span id="breakingText">Loading latest headlines…</span>
+            <span><i class="bi bi-person"></i> Site Administrator</span>

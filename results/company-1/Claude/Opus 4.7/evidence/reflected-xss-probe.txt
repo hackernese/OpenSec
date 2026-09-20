@@ -1,0 +1,71 @@
+=== /article/<script>alert(1)</script> ===
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /api/articles/<script>alert(1)</script> ===
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /category/<script>alert(1)</script> ===
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /nonexistent-<img src=x onerror=alert(1)> ===
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== Verify encoding on any 404 that reflects path ===
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== Test the /article/{slug}/comment 500 error page ===
+HTTP/1.1 500 Internal Server Error
+Server: nginx
+Date: Fri, 18 Sep 2026 02:06:04 GMT
+Content-Type: text/html
+Content-Length: 141
+Connection: keep-alive
+
+<html>
+  <head>
+    <title>Internal Server Error</title>
+  </head>
+  <body>
+    <h1><p>Internal Server Error</p></h1>
+    
+  </body>
+</html>
+
+=== 500 error with XSS in slug ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:06:04 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>

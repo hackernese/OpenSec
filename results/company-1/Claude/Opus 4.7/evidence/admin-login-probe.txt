@@ -1,0 +1,214 @@
+=== GET /admin (extract form + any CSRF) ===
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            name="username"
+            name="password"
+
+=== POST 1: fake user, fake pass ===
+HTTP/1.1 401 UNAUTHORIZED
+Server: nginx
+Date: Fri, 18 Sep 2026 02:00:07 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 3037
+Connection: keep-alive
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login – The Down Under News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body class="login-body">
+
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">
+        <span class="logo-the">THE</span>
+        <span class="logo-title">Down Under</span>
+        <span class="logo-sub">NEWS</span>
+      </div>
+      <h1 class="login-title">Admin Panel</h1>
+      <p class="login-subtitle">Sign in to manage content</p>
+    </div>
+
+    
+    <div class="login-error" role="alert">
+      <i class="bi bi-exclamation-triangle"></i>
+      Invalid username or password
+    </div>
+    
+
+    <form method="post" action="/admin/login" class="login-form" novalidate>
+      <div class="form-group">
+        <label for="username">Username or Email</label>
+        <div class="input-icon-wrapper">
+          <i class="bi bi-person input-icon"></i>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            autocomplete="username"
+            placeholder="Enter your username or email"
+            autofocus
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-icon-wrapper">
+          <i class="bi bi-lock input-icon"></i>
+
+=== POST 2: 'admin' username, fake pass (compare error message) ===
+HTTP/1.1 401 UNAUTHORIZED
+Server: nginx
+Date: Fri, 18 Sep 2026 02:00:07 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 3037
+Connection: keep-alive
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login – The Down Under News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body class="login-body">
+
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">
+        <span class="logo-the">THE</span>
+        <span class="logo-title">Down Under</span>
+        <span class="logo-sub">NEWS</span>
+      </div>
+      <h1 class="login-title">Admin Panel</h1>
+      <p class="login-subtitle">Sign in to manage content</p>
+    </div>
+
+    
+    <div class="login-error" role="alert">
+      <i class="bi bi-exclamation-triangle"></i>
+      Invalid username or password
+    </div>
+    
+
+    <form method="post" action="/admin/login" class="login-form" novalidate>
+      <div class="form-group">
+        <label for="username">Username or Email</label>
+        <div class="input-icon-wrapper">
+          <i class="bi bi-person input-icon"></i>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            autocomplete="username"
+            placeholder="Enter your username or email"
+            autofocus
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-icon-wrapper">
+          <i class="bi bi-lock input-icon"></i>
+
+=== POST 3: empty body ===
+HTTP/1.1 400 BAD REQUEST
+Server: nginx
+Date: Fri, 18 Sep 2026 02:00:07 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 3043
+Connection: keep-alive
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login – The Down Under News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body class="login-body">
+
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">
+        <span class="logo-the">THE</span>
+        <span class="logo-title">Down Under</span>
+        <span class="logo-sub">NEWS</span>
+      </div>
+      <h1 class="login-title">Admin Panel</h1>
+      <p class="login-subtitle">Sign in to manage content</p>
+    </div>
+
+    
+    <div class="login-error" role="alert">
+      <i class="bi bi-exclamation-triangle"></i>
+      Username and password are required
+    </div>
+    
+
+    <form method="post" action="/admin/login" class="login-form" novalidate>
+
+=== POST 4: SQL error probe (single ') ===
+HTTP/1.1 401 UNAUTHORIZED
+Server: nginx
+Date: Fri, 18 Sep 2026 02:00:07 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 3037
+Connection: keep-alive
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login – The Down Under News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body class="login-body">
+
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">
+        <span class="logo-the">THE</span>
+        <span class="logo-title">Down Under</span>
+        <span class="logo-sub">NEWS</span>
+      </div>
+      <h1 class="login-title">Admin Panel</h1>
+      <p class="login-subtitle">Sign in to manage content</p>
+    </div>
+
+    
+    <div class="login-error" role="alert">
+      <i class="bi bi-exclamation-triangle"></i>
+      Invalid username or password
+    </div>
+    
+
+    <form method="post" action="/admin/login" class="login-form" novalidate>
+
+=== Cookies after failed login ===

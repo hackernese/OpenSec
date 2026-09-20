@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Fri, 18 Sep 2026 03:55:44 GMT
+Server: Apache/2.4.68 (Debian)
+Connection: close
+Vary: Accept-Encoding
+Content-Length: 370
+Content-Type: text/xml; charset=UTF-8
+

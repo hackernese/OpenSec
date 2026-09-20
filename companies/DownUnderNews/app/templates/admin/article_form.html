@@ -1,0 +1,374 @@
+{% extends "admin/base.html" %}
+{% block title %}{% if article %}Edit Article{% else %}New Article{% endif %} – Admin{% endblock %}
+{% block breadcrumb %}
+<i class="bi bi-chevron-right"></i>
+<a href="{{ url_for('admin.articles') }}">Articles</a>
+<i class="bi bi-chevron-right"></i>
+<span>{% if article %}Edit{% else %}New Article{% endif %}</span>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}
+
+{% block content %}
+<div class="page-heading-row">
+  <div>
+    <h1>{% if article %}Edit Article{% else %}New Article{% endif %}</h1>
+    {% if article %}<p>ID: {{ article.id }} &middot; Slug: <code>{{ article.slug }}</code></p>{% endif %}
+  </div>
+  {% if article %}
+  <div class="heading-actions">
+    {% if article.status == 'published' %}
+    <a href="{{ url_for('public.article', slug=article.slug) }}" class="btn btn-outline" target="_blank">
+      <i class="bi bi-eye"></i> View Live
+    </a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+<form id="articleForm" class="article-form" novalidate>
+  <div class="article-form-layout">
+    <!-- Main content -->
+    <div class="article-form-main">
+
+      <!-- Title -->
+      <div class="form-group">
+        <label for="title">Title <span class="required">*</span></label>
+        <input type="text" id="title" name="title" required maxlength="500"
+               value="{{ article.title if article else '' }}"
+               placeholder="Article headline…" class="form-input-lg" />
+      </div>
+
+      <!-- Subtitle -->
+      <div class="form-group">
+        <label for="subtitle">Subtitle / Deck</label>
+        <input type="text" id="subtitle" name="subtitle" maxlength="500"
+               value="{{ article.subtitle if article else '' }}"
+               placeholder="Supporting headline (optional)…" />
+      </div>
+
+      <!-- Content editor -->
+      <div class="form-group">
+        <label for="content">Content <span class="required">*</span></label>
+        <textarea id="content" name="content" rows="20" required>{{ article.content if article else '' }}</textarea>
+      </div>
+
+      <!-- Excerpt -->
+      <div class="form-group">
+        <label for="excerpt">Excerpt <span class="help-text">Short summary displayed in article listings (auto-generated if blank)</span></label>
+        <textarea id="excerpt" name="excerpt" rows="3" maxlength="500"
+                  placeholder="Brief article summary…">{{ article.excerpt if article else '' }}</textarea>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="article-form-sidebar">
+
+      <!-- Publish actions -->
+      <div class="sidebar-panel">
+        <h3 class="panel-title"><i class="bi bi-send"></i> Publish</h3>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" class="form-select">
+            <option value="draft" {% if not article or article.status == 'draft' %}selected{% endif %}>Draft</option>
+            {% if user.role in ('admin', 'editor') %}
+            <option value="published" {% if article and article.status == 'published' %}selected{% endif %}>Published</option>
+            <option value="archived" {% if article and article.status == 'archived' %}selected{% endif %}>Archived</option>
+            {% endif %}
+          </select>
+        </div>
+        {% if user.role in ('admin', 'editor') %}
+        <div class="form-group">
+          <label for="published_at">Publish Date</label>
+          <input type="datetime-local" id="published_at" name="published_at"
+                 value="{{ article.published_at.strftime('%Y-%m-%dT%H:%M') if article and article.published_at else '' }}" />
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" id="is_featured" name="is_featured"
+                 {% if article and article.is_featured %}checked{% endif %} />
+          <label for="is_featured"><i class="bi bi-star"></i> Featured Article</label>
+        </div>
+        {% endif %}
+        <div class="panel-actions">
+          <button type="button" class="btn btn-ghost btn-sm" id="saveDraftBtn">
+            <i class="bi bi-floppy"></i> Save Draft
+          </button>
+          {% if user.role in ('admin', 'editor') %}
+          <button type="submit" class="btn btn-primary" id="publishBtn">
+            <i class="bi bi-send"></i> {% if article and article.status == 'published' %}Update{% else %}Publish{% endif %}
+          </button>
+          {% else %}
+          <button type="submit" class="btn btn-primary" id="publishBtn">
+            <i class="bi bi-floppy"></i> Save
+          </button>
+          {% endif %}
+        </div>
+        <div id="saveMessage" class="save-message" style="display:none"></div>
+      </div>
+
+      <!-- Category & Tags -->
+      <div class="sidebar-panel">
+        <h3 class="panel-title"><i class="bi bi-tag"></i> Classification</h3>
+        <div class="form-group">
+          <label for="category_id">Category</label>
+          <select id="category_id" name="category_id" class="form-select">
+            <option value="">— Uncategorized —</option>
+            {% for cat in categories %}
+            <option value="{{ cat.id }}"
+                    {% if article and article.category_id == cat.id %}selected{% endif %}>
+              {{ cat.name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tags">Tags <span class="help-text">comma-separated</span></label>
+          <input type="text" id="tags" name="tags"
+                 value="{{ article.tags|map(attribute='name')|join(', ') if article else '' }}"
+                 placeholder="e.g. politics, breaking, analysis" />
+        </div>
+      </div>
+
+      <!-- Featured image -->
+      <div class="sidebar-panel">
+        <h3 class="panel-title"><i class="bi bi-image"></i> Featured Image</h3>
+        <div class="form-group">
+          <label for="featured_image_url">Image URL <span class="help-text">from media server</span></label>
+          <div class="input-with-btn">
+            <input type="url" id="featured_image_url" name="featured_image_url"
+                   value="{{ article.featured_image_url if article else '' }}"
+                   placeholder="https://media.thedownundernews.it.com/…" />
+            <button type="button" class="btn btn-sm btn-outline" id="openMediaPickerBtn">
+              <i class="bi bi-images"></i>
+            </button>
+          </div>
+        </div>
+        <div id="featuredImagePreview" class="image-preview"
+             style="{% if not article or not article.featured_image_url %}display:none{% endif %}">
+          <img id="featuredImagePreviewImg"
+               src="{{ article.featured_image_url if article and article.featured_image_url else '' }}"
+               alt="Featured image preview" />
+          <button type="button" class="img-remove-btn" id="removeFeaturedImageBtn" aria-label="Remove image">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Media upload -->
+      <div class="sidebar-panel">
+        <h3 class="panel-title"><i class="bi bi-upload"></i> Upload Media</h3>
+        <div class="drop-zone" id="mediaDropZone">
+          <i class="bi bi-cloud-upload"></i>
+          <p>Drag & drop or <label for="mediaFileInput" class="drop-zone-link">browse</label></p>
+          <p class="text-muted">Images up to 10MB, PDFs up to 50MB</p>
+          <input type="file" id="mediaFileInput" accept="image/*,.pdf,.doc,.docx" class="visually-hidden" />
+        </div>
+        <div id="uploadProgress" class="upload-progress" style="display:none">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <span id="uploadStatus">Uploading…</span>
+        </div>
+        <div id="uploadResult" class="upload-result" style="display:none">
+          <input type="text" id="uploadedUrl" readonly />
+          <button type="button" class="btn btn-sm btn-outline" id="copyUrlBtn" title="Copy URL">
+            <i class="bi bi-clipboard"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-outline" id="setAsFeaturedBtn">
+            Use as featured
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</form>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// ============================================================
+// TinyMCE init
+// ============================================================
+tinymce.init({
+  selector: '#content',
+  plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+  toolbar: 'undo redo | blocks fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+  height: 500,
+  branding: false,
+  promotion: false,
+});
+
+// ============================================================
+// Article ID
+// ============================================================
+const ARTICLE_ID = {{ article.id if article else 'null' }};
+const IS_EDIT = ARTICLE_ID !== null;
+
+// ============================================================
+// Featured image preview
+// ============================================================
+const featuredUrlInput = document.getElementById('featured_image_url');
+const featuredPreview = document.getElementById('featuredImagePreview');
+const featuredPreviewImg = document.getElementById('featuredImagePreviewImg');
+
+featuredUrlInput.addEventListener('input', () => {
+  const url = featuredUrlInput.value.trim();
+  if (url) {
+    featuredPreviewImg.src = url;
+    featuredPreview.style.display = 'block';
+  } else {
+    featuredPreview.style.display = 'none';
+  }
+});
+
+document.getElementById('removeFeaturedImageBtn').addEventListener('click', () => {
+  featuredUrlInput.value = '';
+  featuredPreview.style.display = 'none';
+});
+
+// ============================================================
+// Media upload
+// ============================================================
+const dropZone = document.getElementById('mediaDropZone');
+const fileInput = document.getElementById('mediaFileInput');
+
+dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) uploadFile(file);
+});
+fileInput.addEventListener('change', () => {
+  if (fileInput.files[0]) uploadFile(fileInput.files[0]);
+});
+
+async function uploadFile(file) {
+  const progress = document.getElementById('uploadProgress');
+  const progressFill = document.getElementById('progressFill');
+  const uploadStatus = document.getElementById('uploadStatus');
+  const uploadResult = document.getElementById('uploadResult');
+
+  progress.style.display = 'block';
+  uploadResult.style.display = 'none';
+  progressFill.style.width = '30%';
+  uploadStatus.textContent = 'Uploading…';
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    progressFill.style.width = '60%';
+    const resp = await fetch('/api/admin/media/upload', {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin',
+    });
+    progressFill.style.width = '100%';
+    if (resp.ok) {
+      const data = await resp.json();
+      uploadStatus.textContent = 'Upload complete!';
+      document.getElementById('uploadedUrl').value = data.url;
+      uploadResult.style.display = 'flex';
+    } else {
+      const err = await resp.json();
+      uploadStatus.textContent = 'Error: ' + (err.error || 'Upload failed');
+    }
+  } catch (e) {
+    uploadStatus.textContent = 'Network error. Please try again.';
+  }
+}
+
+document.getElementById('copyUrlBtn').addEventListener('click', () => {
+  const url = document.getElementById('uploadedUrl').value;
+  navigator.clipboard.writeText(url);
+  document.getElementById('copyUrlBtn').innerHTML = '<i class="bi bi-check-lg"></i>';
+  setTimeout(() => { document.getElementById('copyUrlBtn').innerHTML = '<i class="bi bi-clipboard"></i>'; }, 1500);
+});
+
+document.getElementById('setAsFeaturedBtn').addEventListener('click', () => {
+  const url = document.getElementById('uploadedUrl').value;
+  featuredUrlInput.value = url;
+  featuredPreviewImg.src = url;
+  featuredPreview.style.display = 'block';
+});
+
+// ============================================================
+// Form submit
+// ============================================================
+function getFormData(status) {
+  const tags = document.getElementById('tags').value
+    .split(',')
+    .map(t => t.trim())
+    .filter(t => t.length > 0);
+
+  return {
+    title: document.getElementById('title').value.trim(),
+    subtitle: document.getElementById('subtitle').value.trim(),
+    content: tinymce.get('content') ? tinymce.get('content').getContent() : document.getElementById('content').value,
+    excerpt: document.getElementById('excerpt').value.trim(),
+    category_id: document.getElementById('category_id').value || null,
+    featured_image_url: document.getElementById('featured_image_url').value.trim() || null,
+    is_featured: document.getElementById('is_featured') ? document.getElementById('is_featured').checked : false,
+    status: status || document.getElementById('status').value,
+    published_at: document.getElementById('published_at') ? document.getElementById('published_at').value : null,
+    tags: tags,
+  };
+}
+
+async function saveArticle(statusOverride) {
+  const saveMsg = document.getElementById('saveMessage');
+  const data = getFormData(statusOverride);
+
+  if (!data.title) { alert('Title is required'); return; }
+  if (!data.content) { alert('Content is required'); return; }
+
+  saveMsg.style.display = 'none';
+
+  const url = IS_EDIT ? `/api/admin/articles/${ARTICLE_ID}` : '/api/admin/articles';
+  const method = IS_EDIT ? 'PUT' : 'POST';
+
+  try {
+    const resp = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(data),
+    });
+    const result = await resp.json();
+    if (resp.ok) {
+      saveMsg.textContent = '✓ Saved successfully';
+      saveMsg.className = 'save-message save-success';
+      saveMsg.style.display = 'block';
+      if (!IS_EDIT && result.article) {
+        window.location.href = `/admin/articles/${result.article.id}/edit`;
+      }
+    } else {
+      saveMsg.textContent = '✗ ' + (result.error || 'Save failed');
+      saveMsg.className = 'save-message save-error';
+      saveMsg.style.display = 'block';
+    }
+  } catch (e) {
+    saveMsg.textContent = '✗ Network error';
+    saveMsg.className = 'save-message save-error';
+    saveMsg.style.display = 'block';
+  }
+}
+
+document.getElementById('articleForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  saveArticle();
+});
+
+document.getElementById('saveDraftBtn').addEventListener('click', () => {
+  saveArticle('draft');
+});
+
+// Auto-save every 2 minutes
+setInterval(() => {
+  if (IS_EDIT) saveArticle();
+}, 120000);
+</script>
+{% endblock %}

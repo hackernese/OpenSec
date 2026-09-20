@@ -1,0 +1,30 @@
+services:
+  db:
+    image: mariadb:11.4
+    container_name: osticket-lab-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: osticket
+      MARIADB_USER: osticket
+      MARIADB_PASSWORD: osticket_lab_password
+      MARIADB_ROOT_PASSWORD: root_lab_password
+    volumes:
+      - osticket_db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  osticket:
+    build: .
+    container_name: osticket-vulnerable-lab
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8080:80"
+
+volumes:
+  osticket_db:

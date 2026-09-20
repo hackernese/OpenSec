@@ -1,0 +1,41 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  
+  "permission": "allow",
+
+  "mcp": {
+    "chrome-devtools": {
+      "type": "local",
+      "command": ["npx", "chrome-devtools-mcp@latest"],
+      "enabled": true
+    }
+  },
+
+  "provider": {
+    "anthropic": {
+      "options": {
+        // Required: Instructs OpenCode to inject Anthropic's "cache_control" breakpoints
+        "setCacheKey": true 
+      }
+    },
+    "deepseek": {
+      "options": {
+        // Keeps the message prefix string strictly uniform to prevent cache misses
+        "setCacheKey": true 
+      }
+    },
+    "gemini": {
+      "options": {
+        // Forces LiteLLM/OpenCode transport layer to pass context tracking IDs
+        "setCacheKey": true,
+        "promptCacheKey": true
+      }
+    },
+    "openai": {
+      "options": {
+        // Enables prompt hashing validation on the client-side proxy
+        "setCacheKey": true
+      }
+    }
+  }
+}

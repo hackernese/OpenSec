@@ -1,0 +1,16 @@
+# Company's detail
+
+- name: `DownUnderNewsz`
+- website: `https://www.thedownundernews.online/`
+- googleMap: `https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162,4993m/data=!3m1!1e3!4m6!3m5!1s0x6ad64373c62e4b65:0xa18b869d98def089!8m2!3d-37.7822756!4d145.0184129!16s%2Fg%2F11zdf88bv_?hl=en&authuser=0&entry=ttu&g_ep=EgoyMDI2MDkxNS4wIKXMDSoASAFQAw%3D%3D`
+- address: `22 Arthur St, Fairfield VIC 3078`
+- ownerName: `Vinh Dinh`
+- email: `dinh0087@flinders.edu.au`
+
+# Notes
+
+I made three dummy accounts so that you can test with:
+
+- admin: Admin@1234
+- writer: Admin@1234
+- editor: Admin@1234

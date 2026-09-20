@@ -1,0 +1,44 @@
+# Ignore backup folder completely
+backup/
+
+# Python artefacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+
+# Version control
+.git/
+.gitignore
+
+# Editor / OS
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Tests
+tests/
+*.test.py
+
+# Logs
+*.log
+
+# Docs
+README.md
+SPECS.md

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{% block meta_description %}The Down Under News – Australia's independent online newspaper.{% endblock %}" />
+  <title>{% block title %}The Down Under News{% endblock %}</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<!-- ===== BREAKING NEWS TICKER ===== -->
+<div class="breaking-bar" id="breakingBar">
+  <span class="breaking-label">BREAKING</span>
+  <div class="breaking-ticker">
+    <span id="breakingText">Loading latest headlines…</span>
+  </div>
+  <button class="breaking-close" onclick="document.getElementById('breakingBar').style.display='none'" aria-label="Close breaking news">&times;</button>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="container">
+      <div class="header-date">
+        <i class="bi bi-calendar3"></i>
+        <span id="headerDate"></span>
+      </div>
+      <div class="header-social">
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <a href="{{ url_for('public.index') }}" class="site-logo">
+        <div class="logo-text">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+      </a>
+      <div class="header-search">
+        <form action="{{ url_for('public.search') }}" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="{{ request.args.get('q', '') }}" aria-label="Search news" />
+          <button type="submit" aria-label="Submit search"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="{{ url_for('public.index') }}" {% if request.endpoint == 'public.index' %}class="active"{% endif %}>Home</a></li>
+        {% for cat in categories %}
+        <li>
+          <a href="{{ url_for('public.category', slug=cat.slug) }}"
+             {% if request.endpoint == 'public.category' and request.view_args.get('slug') == cat.slug %}class="active"{% endif %}>
+            {{ cat.name }}
+          </a>
+        </li>
+        {% endfor %}
+        <li><a href="{{ url_for('public.about') }}" {% if request.endpoint == 'public.about' %}class="active"{% endif %}>About</a></li>
+        <li><a href="{{ url_for('public.contact') }}" {% if request.endpoint == 'public.contact' %}class="active"{% endif %}>Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+        <p>Australia's trusted independent online newspaper, delivering accurate and timely news coverage across the nation and the world.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Sections</h4>
+        <ul>
+          {% for cat in categories[:4] %}
+          <li><a href="{{ url_for('public.category', slug=cat.slug) }}">{{ cat.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>More</h4>
+        <ul>
+          {% for cat in categories[4:] %}
+          <li><a href="{{ url_for('public.category', slug=cat.slug) }}">{{ cat.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="{{ url_for('public.about') }}">About Us</a></li>
+          <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Advertise With Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <span id="footerYear"></span> The Down Under News. All rights reserved.</p>
+      <p>Domain: <a href="https://thedownundernews.it.com">thedownundernews.it.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== BACK TO TOP ===== -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <i class="bi bi-chevron-up"></i>
+</button>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

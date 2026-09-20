@@ -1,0 +1,130 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard – Admin{% endblock %}
+{% block breadcrumb %}<i class="bi bi-chevron-right"></i><span>Dashboard</span>{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+  <h1>Dashboard</h1>
+  <p>Welcome back, <strong>{{ user.full_name }}</strong>!</p>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon stat-blue"><i class="bi bi-newspaper"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ total_articles }}</span>
+      <span class="stat-label">Total Articles</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon stat-green"><i class="bi bi-check-circle"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ published }}</span>
+      <span class="stat-label">Published</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon stat-yellow"><i class="bi bi-pencil"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ drafts }}</span>
+      <span class="stat-label">Drafts</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon stat-purple"><i class="bi bi-tag"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ categories|length }}</span>
+      <span class="stat-label">Categories</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon stat-red"><i class="bi bi-chat-dots"></i></div>
+    <div class="stat-info">
+      <span class="stat-value">{{ pending_comments }}</span>
+      <span class="stat-label">Pending Comments</span>
+    </div>
+  </div>
+</div>
+
+<!-- Quick actions -->
+<div class="dashboard-grid">
+  <section class="dashboard-section">
+    <div class="section-header-row">
+      <h2>Recent Articles</h2>
+      <a href="{{ url_for('admin.articles') }}" class="btn btn-sm btn-outline">View All</a>
+    </div>
+    {% if recent_articles %}
+    <div class="admin-table-wrapper">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for art in recent_articles %}
+          <tr>
+            <td class="table-title">
+              <a href="{{ url_for('admin.edit_article', article_id=art.id) }}">{{ art.title[:60] }}{% if art.title|length > 60 %}…{% endif %}</a>
+            </td>
+            <td>{{ art.category.name if art.category else '–' }}</td>
+            <td><span class="status-badge status-{{ art.status }}">{{ art.status }}</span></td>
+            <td>{{ art.created_at.strftime('%d %b %Y') if art.created_at else '–' }}</td>
+            <td class="table-actions">
+              <a href="{{ url_for('admin.edit_article', article_id=art.id) }}" class="action-btn" title="Edit"><i class="bi bi-pencil"></i></a>
+              {% if art.status == 'published' %}
+              <a href="{{ url_for('public.article', slug=art.slug) }}" class="action-btn" title="View" target="_blank"><i class="bi bi-eye"></i></a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state sm">
+      <i class="bi bi-newspaper"></i>
+      <p>No articles yet. <a href="{{ url_for('admin.new_article') }}">Create the first one!</a></p>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="dashboard-section dashboard-quick">
+    <h2>Quick Actions</h2>
+    <div class="quick-actions">
+      <a href="{{ url_for('admin.new_article') }}" class="quick-action-card">
+        <i class="bi bi-plus-circle"></i>
+        <span>New Article</span>
+      </a>
+      <a href="{{ url_for('admin.media') }}" class="quick-action-card">
+        <i class="bi bi-upload"></i>
+        <span>Upload Media</span>
+      </a>
+      <a href="{{ url_for('admin.categories') }}" class="quick-action-card">
+        <i class="bi bi-tags"></i>
+        <span>Categories</span>
+      </a>
+      <a href="{{ url_for('admin.comments') }}" class="quick-action-card {% if pending_comments > 0 %}has-badge{% endif %}">
+        <i class="bi bi-chat-dots"></i>
+        <span>Comments</span>
+        {% if pending_comments > 0 %}<span class="action-badge">{{ pending_comments }}</span>{% endif %}
+      </a>
+    </div>
+
+    <h2 class="mt-lg">Categories Overview</h2>
+    <ul class="category-overview">
+      {% for cat in categories %}
+      <li>
+        <a href="{{ url_for('admin.articles') }}?category={{ cat.id }}">{{ cat.name }}</a>
+        <span class="cat-count">{{ cat.articles.filter_by(status='published').count() }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+{% endblock %}

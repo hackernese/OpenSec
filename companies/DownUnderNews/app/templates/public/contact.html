@@ -1,0 +1,89 @@
+{% extends "public/base.html" %}
+{% block title %}Contact Us – The Down Under News{% endblock %}
+
+{% block content %}
+<div class="container">
+  <header class="page-header">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('public.index') }}">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span aria-current="page">Contact</span>
+    </nav>
+    <h1 class="page-title">Contact Us</h1>
+    <p class="page-subtitle">Get in touch with our editorial team.</p>
+  </header>
+
+  <div class="contact-layout">
+    <div class="contact-form-section">
+      <h2>Send Us a Message</h2>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact_name">Your Name <span class="required">*</span></label>
+            <input type="text" id="contact_name" name="name" required maxlength="150" placeholder="Full name" />
+          </div>
+          <div class="form-group">
+            <label for="contact_email">Email Address <span class="required">*</span></label>
+            <input type="email" id="contact_email" name="email" required maxlength="255" placeholder="your@email.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contact_subject">Subject <span class="required">*</span></label>
+          <select id="contact_subject" name="subject" required>
+            <option value="">Select a topic…</option>
+            <option value="news-tip">News Tip / Story Idea</option>
+            <option value="correction">Correction Request</option>
+            <option value="advertising">Advertising Enquiry</option>
+            <option value="general">General Enquiry</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="contact_message">Message <span class="required">*</span></label>
+          <textarea id="contact_message" name="message" rows="6" required maxlength="3000" placeholder="Tell us how we can help…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-send"></i> Send Message
+        </button>
+        <div id="contactSuccess" class="form-success" style="display:none">
+          <i class="bi bi-check-circle"></i> Thank you for your message. We'll be in touch soon.
+        </div>
+      </form>
+    </div>
+
+    <aside class="contact-info-section">
+      <div class="info-card">
+        <h3><i class="bi bi-envelope"></i> Editorial</h3>
+        <p><a href="mailto:editorial@thedownundernews.it.com">editorial@thedownundernews.it.com</a></p>
+      </div>
+      <div class="info-card">
+        <h3><i class="bi bi-megaphone"></i> Advertising</h3>
+        <p><a href="mailto:advertising@thedownundernews.it.com">advertising@thedownundernews.it.com</a></p>
+      </div>
+      <div class="info-card">
+        <h3><i class="bi bi-exclamation-triangle"></i> Corrections</h3>
+        <p>We are committed to accuracy. If you believe we have made an error, please <a href="mailto:corrections@thedownundernews.it.com">let us know</a> and we will investigate promptly.</p>
+      </div>
+      <div class="info-card">
+        <h3><i class="bi bi-share"></i> Follow Us</h3>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+{% block extra_scripts %}
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  document.getElementById('contactSuccess').style.display = 'flex';
+  this.reset();
+});
+</script>
+{% endblock %}
+{% endblock %}

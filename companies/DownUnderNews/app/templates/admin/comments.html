@@ -1,0 +1,120 @@
+{% extends "admin/base.html" %}
+{% block title %}Comments – Admin{% endblock %}
+{% block breadcrumb %}<i class="bi bi-chevron-right"></i><span>Comments</span>{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+  <h1>Comments</h1>
+</div>
+
+{% if pending %}
+<section>
+  <div class="section-header-row">
+    <h2><span class="badge badge-danger">{{ pending|length }}</span> Pending Approval</h2>
+  </div>
+  <div class="comments-admin-list">
+    {% for comment in pending %}
+    <div class="comment-admin-card" id="comment-{{ comment.id }}">
+      <div class="comment-admin-meta">
+        <strong>{{ comment.author_name }}</strong>
+        <span class="text-muted">{{ comment.author_email }}</span>
+        <time>{{ comment.created_at.strftime('%d %b %Y %H:%M') if comment.created_at else '' }}</time>
+        <a href="{{ url_for('public.article', slug=comment.article.slug) }}" class="text-link" target="_blank">
+          on: {{ comment.article.title[:50] }}…
+        </a>
+      </div>
+      <p class="comment-admin-text">{{ comment.content }}</p>
+      <div class="comment-admin-actions">
+        <button class="btn btn-sm btn-success" onclick="approveComment({{ comment.id }})">
+          <i class="bi bi-check-lg"></i> Approve
+        </button>
+        <button class="btn btn-sm btn-danger" onclick="deleteComment({{ comment.id }})">
+          <i class="bi bi-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+<div class="empty-state sm">
+  <i class="bi bi-chat-check"></i>
+  <p>No comments pending approval. Great!</p>
+</div>
+{% endif %}
+
+{% if approved %}
+<section class="mt-lg">
+  <div class="section-header-row">
+    <h2>Recently Approved</h2>
+  </div>
+  <div class="admin-table-wrapper">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Author</th>
+          <th>Comment</th>
+          <th>Article</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for comment in approved %}
+        <tr id="comment-{{ comment.id }}">
+          <td><strong>{{ comment.author_name }}</strong><br /><small>{{ comment.author_email }}</small></td>
+          <td>{{ comment.content[:100] }}{% if comment.content|length > 100 %}…{% endif %}</td>
+          <td>
+            <a href="{{ url_for('public.article', slug=comment.article.slug) }}" target="_blank">
+              {{ comment.article.title[:40] }}…
+            </a>
+          </td>
+          <td>{{ comment.created_at.strftime('%d %b %Y') if comment.created_at else '' }}</td>
+          <td class="table-actions">
+            <button class="action-btn action-btn-danger" title="Delete" onclick="deleteComment({{ comment.id }})">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+async function approveComment(id) {
+  try {
+    const resp = await fetch(`/api/admin/comments/${id}/approve`, {
+      method: 'PATCH', credentials: 'same-origin',
+    });
+    if (resp.ok) {
+      const el = document.getElementById(`comment-${id}`);
+      if (el) { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }
+    } else {
+      const d = await resp.json();
+      alert(d.error || 'Failed');
+    }
+  } catch(e) { alert('Network error'); }
+}
+
+async function deleteComment(id) {
+  if (!confirm('Delete this comment?')) return;
+  try {
+    const resp = await fetch(`/api/admin/comments/${id}`, {
+      method: 'DELETE', credentials: 'same-origin',
+    });
+    if (resp.ok) {
+      const el = document.getElementById(`comment-${id}`);
+      if (el) { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }
+    } else {
+      const d = await resp.json();
+      alert(d.error || 'Failed');
+    }
+  } catch(e) { alert('Network error'); }
+}
+</script>
+{% endblock %}

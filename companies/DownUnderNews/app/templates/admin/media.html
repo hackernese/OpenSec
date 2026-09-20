@@ -1,0 +1,229 @@
+{% extends "admin/base.html" %}
+{% block title %}Media Library – Admin{% endblock %}
+{% block breadcrumb %}<i class="bi bi-chevron-right"></i><span>Media</span>{% endblock %}
+
+{% block content %}
+<div class="page-heading-row">
+  <div>
+    <h1>Media Library</h1>
+    <p>{{ total }} file{% if total != 1 %}s{% endif %}</p>
+  </div>
+  <button class="btn btn-primary" onclick="document.getElementById('bulkFileInput').click()">
+    <i class="bi bi-upload"></i> Upload Files
+  </button>
+  <input type="file" id="bulkFileInput" accept="image/*,.pdf,.doc,.docx" multiple class="visually-hidden" />
+</div>
+
+<!-- Upload zone -->
+<div class="drop-zone drop-zone-media" id="mediaDropZone">
+  <i class="bi bi-cloud-upload"></i>
+  <p>Drag & drop files here to upload to the media server</p>
+  <p class="text-muted">Images (JPEG, PNG, GIF, WebP) up to 10MB &middot; Documents (PDF, DOC) up to 50MB</p>
+</div>
+<div id="uploadQueueList" class="upload-queue"></div>
+
+<!-- Filters -->
+<div class="filter-bar">
+  <form method="get" class="filter-form">
+    <select name="type" class="filter-select" onchange="this.form.submit()">
+      <option value="">All Types</option>
+      <option value="image" {% if media_type_filter == 'image' %}selected{% endif %}>Images</option>
+      <option value="pdf" {% if media_type_filter == 'pdf' %}selected{% endif %}>PDFs</option>
+      <option value="document" {% if media_type_filter == 'document' %}selected{% endif %}>Documents</option>
+    </select>
+    {% if media_type_filter %}
+    <a href="{{ url_for('admin.media') }}" class="btn btn-sm btn-ghost"><i class="bi bi-x"></i> Clear</a>
+    {% endif %}
+  </form>
+</div>
+
+<!-- Media grid -->
+{% if media_list %}
+<div class="media-grid" id="mediaGrid">
+  {% for item in media_list %}
+  <div class="media-card" data-media-id="{{ item.id }}" data-url="{{ item.media_url }}">
+    <div class="media-thumb">
+      {% if item.media_type == 'image' %}
+      <img src="{{ item.media_url }}" alt="{{ item.original_name or item.file_name }}" loading="lazy" />
+      {% elif item.media_type == 'pdf' %}
+      <div class="media-icon"><i class="bi bi-file-earmark-pdf"></i></div>
+      {% else %}
+      <div class="media-icon"><i class="bi bi-file-earmark-word"></i></div>
+      {% endif %}
+    </div>
+    <div class="media-info">
+      <p class="media-name" title="{{ item.original_name or item.file_name }}">
+        {{ (item.original_name or item.file_name)[:30] }}{% if (item.original_name or item.file_name)|length > 30 %}…{% endif %}
+      </p>
+      <p class="media-meta">
+        {% if item.file_size %}{{ (item.file_size / 1024)|round(1) }} KB &middot; {% endif %}
+        {{ item.uploaded_at.strftime('%d %b %Y') if item.uploaded_at else '' }}
+      </p>
+    </div>
+    <div class="media-actions">
+      <a href="{{ item.media_url }}" target="_blank" class="action-btn" title="Open"><i class="bi bi-box-arrow-up-right"></i></a>
+      <button class="action-btn" title="Copy URL" onclick="copyMediaUrl('{{ item.media_url }}', this)">
+        <i class="bi bi-clipboard"></i>
+      </button>
+      {% if user.role in ('admin', 'editor') %}
+      <button class="action-btn action-btn-danger" title="Delete"
+              onclick="confirmDeleteMedia({{ item.id }}, '{{ (item.original_name or item.file_name)|replace("'", "\\'") }}')">
+        <i class="bi bi-trash"></i>
+      </button>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if pages > 1 %}
+<nav class="pagination" aria-label="Media pagination">
+  {% if page > 1 %}
+  <a href="?page={{ page - 1 }}{% if media_type_filter %}&type={{ media_type_filter }}{% endif %}" class="page-btn">
+    <i class="bi bi-chevron-left"></i> Prev
+  </a>
+  {% endif %}
+  {% for p in range(1, pages + 1) %}
+    {% if p == page %}
+    <span class="page-btn active">{{ p }}</span>
+    {% elif p <= 2 or p >= pages - 1 or (p >= page - 2 and p <= page + 2) %}
+    <a href="?page={{ p }}{% if media_type_filter %}&type={{ media_type_filter }}{% endif %}" class="page-btn">{{ p }}</a>
+    {% elif p == 3 or p == pages - 2 %}
+    <span class="page-ellipsis">…</span>
+    {% endif %}
+  {% endfor %}
+  {% if page < pages %}
+  <a href="?page={{ page + 1 }}{% if media_type_filter %}&type={{ media_type_filter }}{% endif %}" class="page-btn">
+    Next <i class="bi bi-chevron-right"></i>
+  </a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% else %}
+<div class="empty-state">
+  <i class="bi bi-images"></i>
+  <p>No media files uploaded yet.</p>
+  <p>Upload files using the drop zone above.</p>
+</div>
+{% endif %}
+
+<!-- Delete confirmation modal -->
+<div class="modal-overlay" id="deleteMediaModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="bi bi-exclamation-triangle text-danger"></i> Delete Media</h3>
+      <button class="modal-close" onclick="closeDeleteMediaModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Delete "<strong id="deleteMediaName"></strong>"?</p>
+      <p class="text-danger">The file will also be removed from the media server.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDeleteMediaModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteMediaBtn">Delete</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let deletingMediaId = null;
+
+// ---- drag and drop upload ----
+const dropZone = document.getElementById('mediaDropZone');
+const bulkInput = document.getElementById('bulkFileInput');
+
+dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  [...e.dataTransfer.files].forEach(uploadFile);
+});
+bulkInput.addEventListener('change', () => {
+  [...bulkInput.files].forEach(uploadFile);
+});
+
+async function uploadFile(file) {
+  const queueList = document.getElementById('uploadQueueList');
+  const itemId = 'upload-' + Date.now() + '-' + Math.random().toString(36).substr(2,5);
+  const item = document.createElement('div');
+  item.className = 'upload-queue-item';
+  item.id = itemId;
+  item.innerHTML = `
+    <i class="bi bi-file-earmark"></i>
+    <span class="uq-name">${file.name}</span>
+    <span class="uq-status">Uploading…</span>
+    <div class="uq-progress"><div class="uq-fill" style="width:10%"></div></div>
+  `;
+  queueList.appendChild(item);
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    item.querySelector('.uq-fill').style.width = '50%';
+    const resp = await fetch('/api/admin/media/upload', {
+      method: 'POST', body: formData, credentials: 'same-origin',
+    });
+    item.querySelector('.uq-fill').style.width = '100%';
+    if (resp.ok) {
+      item.querySelector('.uq-status').textContent = '✓ Done';
+      item.classList.add('uq-success');
+      setTimeout(() => { item.remove(); location.reload(); }, 1500);
+    } else {
+      const err = await resp.json();
+      item.querySelector('.uq-status').textContent = '✗ ' + (err.error || 'Failed');
+      item.classList.add('uq-error');
+    }
+  } catch(e) {
+    item.querySelector('.uq-status').textContent = '✗ Network error';
+    item.classList.add('uq-error');
+  }
+}
+
+// ---- copy URL ----
+function copyMediaUrl(url, btn) {
+  navigator.clipboard.writeText(url);
+  const icon = btn.querySelector('i');
+  icon.className = 'bi bi-check-lg';
+  setTimeout(() => { icon.className = 'bi bi-clipboard'; }, 1500);
+}
+
+// ---- delete ----
+function confirmDeleteMedia(id, name) {
+  deletingMediaId = id;
+  document.getElementById('deleteMediaName').textContent = name;
+  document.getElementById('deleteMediaModal').classList.add('active');
+}
+function closeDeleteMediaModal() { document.getElementById('deleteMediaModal').classList.remove('active'); }
+
+document.getElementById('confirmDeleteMediaBtn').addEventListener('click', async () => {
+  if (!deletingMediaId) return;
+  const btn = document.getElementById('confirmDeleteMediaBtn');
+  btn.disabled = true;
+  try {
+    const resp = await fetch(`/api/admin/media/${deletingMediaId}`, {
+      method: 'DELETE', credentials: 'same-origin',
+    });
+    if (resp.ok) {
+      closeDeleteMediaModal();
+      document.querySelector(`[data-media-id="${deletingMediaId}"]`)?.remove();
+    } else {
+      const d = await resp.json();
+      alert(d.error || 'Delete failed');
+      btn.disabled = false;
+    }
+  } catch(e) {
+    alert('Network error');
+    btn.disabled = false;
+  }
+});
+
+document.getElementById('deleteMediaModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeDeleteMediaModal();
+});
+</script>
+{% endblock %}

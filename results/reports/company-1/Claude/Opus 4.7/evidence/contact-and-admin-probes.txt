@@ -1,0 +1,84 @@
+=== GET /contact - view form ===
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Down Under News – Australia's independent online newspaper." />
+        <form action="/search" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="" aria-label="Search news" />
+        </form>
+    <div class="contact-form-section">
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="contact_name" name="name" required maxlength="150" placeholder="Full name" />
+          <div class="form-group">
+            <input type="email" id="contact_email" name="email" required maxlength="255" placeholder="your@email.com" />
+        <div class="form-group">
+        <div class="form-group">
+          <textarea id="contact_message" name="message" rows="6" required maxlength="3000" placeholder="Tell us how we can help…"></textarea>
+        <div id="contactSuccess" class="form-success" style="display:none">
+      </form>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+
+=== GET /search - view form ===
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Down Under News – Australia's independent online newspaper." />
+        <form action="/search" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="" aria-label="Search news" />
+        </form>
+  <!-- Search form -->
+  <div class="search-form-wrapper">
+    <form action="/search" method="get" class="search-form-full" role="search">
+      <div class="search-input-group">
+        <input type="search" name="q" value="" placeholder="Search articles, topics, keywords…" aria-label="Search" autofocus />
+        <select name="category" id="search-category" onchange="this.form.submit()">
+    </form>
+
+=== POST /contact with test payload (XSS + email header probes) ===
+HTTP/1.1 405 METHOD NOT ALLOWED
+Server: nginx
+Date: Fri, 18 Sep 2026 01:59:54 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 153
+Connection: keep-alive
+Allow: OPTIONS, HEAD, GET
+
+<!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+=== Confirmation page — is payload reflected? ===
+
+=== GET /admin login form fields ===
+    <form method="post" action="/admin/login" class="login-form" novalidate>
+      <div class="form-group">
+        <div class="input-icon-wrapper">
+          <i class="bi bi-person input-icon"></i>
+          <input
+      <div class="form-group">
+        <div class="input-icon-wrapper">
+          <i class="bi bi-lock input-icon"></i>
+          <input
+    </form>
+const passInput = document.getElementById('password');
+    const isText = passInput.type === 'text';
+    passInput.type = isText ? 'password' : 'text';
+
+=== HTTP Verb Tampering on /admin/login ===
+GET /admin/login -> 405
+PUT /admin/login -> 405
+DELETE /admin/login -> 405
+PATCH /admin/login -> 405
+
+=== Test if /admin/login accepts wrong content-type (JSON) ===
+HTTP/1.1 401 UNAUTHORIZED
+Server: nginx
+Date: Fri, 18 Sep 2026 01:59:54 GMT
+Content-Type: application/json
+Content-Length: 37
+Connection: keep-alive
+
+{
+  "error": "Invalid credentials"
+}

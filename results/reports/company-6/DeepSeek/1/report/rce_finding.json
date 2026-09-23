@@ -1,0 +1,18 @@
+{
+  "status": "finished",
+  "data": {
+    "title": "Unauthenticated Remote Code Execution via Unsafe Deserialization (Python pickle)",
+    "severity": "critical",
+    "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "summary": "An attacker can run arbitrary operating-system commands on the AuSecurity web server without logging in. The session cookie is built using Python's unsafe `pickle` serialization and is accepted by the server with no integrity check.",
+    "description": "The authentication cookie `admin_token` is a Base64-encoded Python pickle object that wraps a JWT-like string (verified format: `base64(pickle.dumps(\"|\" + jwt))`). The server unpickles this cookie value on every request to the API (e.g. `/api/auth/me`) with no cryptographic signature or MAC protecting the cookie payload. Sending a crafted pickle that reduces to `os.system(\"<command>\")` executes the command server-side before authentication is evaluated.\n\nProof (timing-based, non-destructive):\n- Benign pickle (returns a string): response in ~0.70s, HTTP 401.\n- Payload `os.system('sleep 3')`: response in ~3.6s, HTTP 401.\n- Payload `os.system('sleep 8')`: response in ~8.8s, HTTP 401.\n- Repeated `sleep 3` reproduced at ~3.7s. Delay is proportional to the command's sleep argument, confirming server-side command execution.\n\nThis is reachable with no credentials or prior authentication, affecting the application and the underlying host, including any sensitive data and lateral access.",
+    "recommendation": "Replace the pickle-based session serializer with a signed, integrity-protected format (e.g. Flask's `itsdangerous` JSON serializer with a strong, random `SECRET_KEY`, or a standard signed JWT). Never deserialize untrusted input with `pickle`. Rotate any secrets/keys and audit the host for signs of compromise.",
+    "affected_components": [
+      "https://ausecurity.best/ (51.79.166.148) — API backend, `admin_token` cookie"
+    ],
+    "references": [
+      "CWE-502 (Deserialization of Untrusted Data)",
+      "OWASP A08:2021 Software and Data Integrity Failures"
+    ]
+  }
+}

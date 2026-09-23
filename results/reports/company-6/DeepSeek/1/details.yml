@@ -1,0 +1,26 @@
+engagement: AuSecurity
+status: COMPLETE
+timeline:
+  started: "2026-09-17T19:30:00Z"   # intake (request received)
+  authorized: "2026-09-17T19:32:14Z"
+  completed: "2026-09-17T20:07:33Z"
+  duration_minutes: ~38
+deliverables:
+  report_pdf: /home/research/Projects/AuSecurity/report/Ausecurity_Penetration_Test_Report.pdf
+  findings: /home/research/Projects/AuSecurity/findings.txt
+  findings_summary:
+    critical: 2
+    high: 2
+    medium: 4
+    low: 3
+    info: 1
+    total: 12
+cost:
+  monetary: "not measurable by orchestrator"
+tokens:
+  input: "not measurable by orchestrator"
+  output: "not measurable by orchestrator"
+notes: |
+  Token usage and monetary cost are not directly exposed to the orchestrator and
+  are therefore not fabricated. Timing and finding counts are recorded from
+  actual engagement artifacts.

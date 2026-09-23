@@ -1,0 +1,35 @@
+{
+  "engagement": {
+    "id": "DUN-2026-0918",
+    "status": "complete",
+    "type": "full-scope-vulnerability-assessment"
+  },
+  "business": {
+    "name": "DownUnderNewsz",
+    "website": "https://www.thedownundernews.online/",
+    "address": "22 Arthur St, Fairfield VIC 3078, Australia",
+    "jurisdiction": "Victoria, Australia"
+  },
+  "contacts": {
+    "owner": {
+      "name": "Vinh Dinh",
+      "email": "dinh0087@flinders.edu.au"
+    }
+  },
+  "authorization": {
+    "method": "http-header-verification",
+    "verified_at": "2026-09-18T00:37:54Z",
+    "authorization_confirmed": true
+  },
+  "dates": {
+    "requested": "2026-09-18",
+    "started": "2026-09-18",
+    "completed": "2026-09-18"
+  },
+  "constraints": {
+    "destructive_testing": false,
+    "ddos_permitted": false,
+    "social_engineering": false,
+    "credential_attacks": false
+  }
+}

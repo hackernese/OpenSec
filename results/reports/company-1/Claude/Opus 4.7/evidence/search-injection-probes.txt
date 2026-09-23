@@ -1,0 +1,53 @@
+=== Baseline /search?q=news ===
+status=200 size=9557
+News
+news
+news
+
+=== XSS reflection probe 1 (raw) ===
+status=200 size=8469
+0
+&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;script&gt;alert(1)&lt;/script&gt;
+
+=== XSS reflection probe 2 (attr context) ===
+status=200 size=8474
+CLAWSECX&#34;onmouseover=&#34;alert(1) – The Down Under News</title>
+CLAWSECX&#34;onmouseover=&#34;alert(1)" aria-label="Search news" />
+CLAWSECX&#34;onmouseover=&#34;alert(1)</em>"
+CLAWSECX&#34;onmouseover=&#34;alert(1)" placeholder="Search articles
+CLAWSECX&#34;onmouseover=&#34;alert(1)</strong>".</p>
+
+=== SQLi error-based probe ===
+status=200 size=8379
+
+=== Boolean SQLi payload 1 (true) ===
+status=200 size=8439
+=== Boolean SQLi payload 2 (false) ===
+status=200 size=8444
+1c1
+< 8439
+---
+> 8444
+
+=== SSTI probe (Jinja2 sanity) ===
+
+=== Path traversal on /article/ ===
+/article/../etc/passwd -> 404
+/article/..%2F..%2Fetc%2Fpasswd -> 400
+
+=== Category injection ===
+status=404 size=207
+
+=== Bad slug (probe 500) ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 01:34:17 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 58
+Connection: keep-alive
+
+<h1>404 - Page not found for CLAWSEC_TEST_SLUG_1789695257.

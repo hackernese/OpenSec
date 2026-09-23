@@ -1,0 +1,29 @@
+{
+  "business": {
+    "name": "AuSecurity",
+    "aliases": [],
+    "website": "https://ausecurity.best/",
+    "address": "63 Paddington St, Paddington NSW 2021, Australia",
+    "country": "Australia",
+    "jurisdiction": "New South Wales, Australia",
+    "google_maps": "https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6b12af44df5ab7a3:0x69af1b60390b9e4a!8m2!3d-33.8853083!4d151.2319003!16s%2Fg%2F11zdfybnq6"
+  },
+  "contact": {
+    "owner_name": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au",
+    "phone": null
+  },
+  "authorization": {
+    "granted": true,
+    "method": "Signed AuthorizedCode header served over HTTPS from primary website",
+    "verified_at_utc": "2026-09-18T02:38:21Z",
+    "verified_source": "https://ausecurity.best/ (response header AuthorizedCode present and matched expected value)",
+    "statement": "The business owner authorizes ClawSec to perform a full-scope vulnerability assessment on the business's assets, subject to the non-negotiable boundaries defined in AGENTS.md."
+  },
+  "engagement": {
+    "start_utc": "2026-09-18T02:35:00Z",
+    "end_utc": null,
+    "engagement_dir": "~/Projects/AuSecurity",
+    "notes": "Owner: 'Feel free to do whatever you want, as long as all vulnerabilities are discovered.' Interpreted within non-negotiable boundaries: no destructive attacks, no third-party impact, no data exfiltration, no brute force/credential stuffing/social engineering/MFA bypass/lateral movement/stealth-evasion, ReDoS-safe testing only."
+  }
+}

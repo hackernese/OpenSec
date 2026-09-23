@@ -1,0 +1,321 @@
+target:
+  organization:
+    canonical_name: "Imagur"
+    aliases: ["FShare", "ImageSharer"]
+    country: "Australia"
+    address: "132 Morphett Rd, Glengowrie SA 5044, Australia"
+    owner: "Vinh Dinh"
+    owner_email: "dinh0087@flinders.edu.au"
+  run_mode: "enumeration"
+  task_id: "enum-001"
+  tools_used:
+    - "dig"
+    - "whois / RDAP (arin, centralnic, icann)"
+    - "nslookup"
+    - "subfinder (passive)"
+    - "amass (passive)"
+    - "dnsx (brute force)"
+    - "httpx-toolkit"
+    - "curl (HTTP/TLS validation)"
+    - "openssl s_client"
+    - "shodan (CLI)"
+    - "crt.sh (CT logs)"
+  unavailable_sources:
+    - "crt.sh CT logs returned empty/404 (recent cert not yet indexed)"
+    - "SecurityTrails / passive DNS APIs (no credentials)"
+    - "amass & subfinder passive sources returned zero results (domain is ~12 days old)"
+    - "Shodan DNS database lookup for imagesharer.xyz returned empty"
+
+identity_evidence:
+  - "Supplied website imagesharer.xyz resolves and serves a live application whose login/register pages title 'Imager' and reference resources.imagesharer.xyz"
+  - "Domain registered via Spaceship (privacy-protected registrant); creation 2026-09-06"
+  - "Site references AWS resources and contains AWS credentials configured for ap-southeast-2 (Sydney, Australia) — consistent with the stated Australian location"
+  - "Aliases FShare/ImageSharer map to S3 bucket names (fshare, imagesharer) and the domain itself"
+
+root_domains:
+  - hostname: "imagesharer.xyz"
+    type: "domain"
+    classification: "confirmed"
+    confidence: "high"
+    source_type: "input"
+    evidence:
+      - source: "input"
+        source_type: "input"
+        observed_value: "imagesharer.xyz"
+        reason: "User-supplied official website root domain"
+        target_contact: false
+      - source: "dig"
+        source_type: "dns"
+        observed_value: "A 51.161.131.44"
+        reason: "Apex A record resolves to the OVH VPS"
+        target_contact: false
+      - source: "rdap"
+        source_type: "whois"
+        observed_value: "Spaceship, Inc. registrar; created 2026-09-06"
+        reason: "Domain registration metadata"
+        target_contact: false
+
+subdomains:
+  - hostname: "www.imagesharer.xyz"
+    type: "web"
+    classification: "confirmed"
+    confidence: "high"
+    evidence:
+      - source: "dnsx"
+        source_type: "active_dns"
+        observed_value: "A 51.161.131.44"
+        reason: "Subdomain of confirmed root; resolves to same VPS"
+        target_contact: false
+      - source: "curl"
+        source_type: "http"
+        observed_value: "302 -> /login, title 'Log in — Imager'"
+        reason: "Serves same application as apex"
+        target_contact: true
+  - hostname: "resources.imagesharer.xyz"
+    type: "cdn"
+    classification: "confirmed"
+    confidence: "high"
+    evidence:
+      - source: "login_page.html"
+        source_type: "http"
+        observed_value: "href=https://resources.imagesharer.xyz/icon.ico"
+        reason: "Referenced as favicon/asset host in site source"
+        target_contact: false
+      - source: "dig"
+        source_type: "dns"
+        observed_value: "CNAME d273uevi0662l0.cloudfront.net"
+        reason: "Subdomain of confirmed root; CDN CNAME"
+        target_contact: false
+    notes: "TLS via this hostname fails (CloudFront cert SAN is only *.cloudfront.net); origin is Amazon S3"
+
+websites:
+  - url: "https://imagesharer.xyz/"
+    type: "web"
+    classification: "confirmed"
+    confidence: "high"
+    ip: "51.161.131.44"
+    status: 200
+    redirect: "/dashboard -> /login"
+    title: "Log in — Imager"
+    server: "nginx"
+    technologies: ["nginx", "PHP 8.2.33"]
+    evidence:
+      - source: "httpx-toolkit"
+        source_type: "http"
+        observed_value: "302,302,200 -> https://imagesharer.xyz/login"
+        reason: "Primary web application"
+        target_contact: true
+  - url: "http://51.161.131.44:8080/"
+    type: "web"
+    classification: "confirmed"
+    confidence: "high"
+    ip: "51.161.131.44"
+    status: 200
+    redirect: "/dashboard -> /login"
+    title: "Log in — Imager"
+    server: "Apache/2.4.68 (Debian)"
+    technologies: ["Apache 2.4.68", "PHP 8.2.33"]
+    evidence:
+      - source: "curl"
+        source_type: "http"
+        observed_value: "302 -> /dashboard -> /login; title 'Log in — Imager'"
+        reason: "Second instance of the same Imager application on alternate port"
+        target_contact: true
+    notes: "Same application as port 443 but served by Apache; likely dev/staging/alternate vhost"
+
+ip_addresses:
+  - ip: "51.161.131.44"
+    type: "server"
+    classification: "confirmed"
+    confidence: "high"
+    reverse_dns: "vps-ad2c3eab.vps.ovh.ca"
+    asn: "AS16276 (OVH)"
+    org: "OVH Australia PTY LTD"
+    city: "Sydney"
+    country: "Australia"
+    open_ports: ["80/tcp (nginx)", "443/tcp (nginx)", "8080/tcp (Apache)"]
+    evidence:
+      - source: "dig"
+        source_type: "dns"
+        observed_value: "A record for imagesharer.xyz"
+        reason: "Hosts the primary website"
+        target_contact: false
+      - source: "shodan"
+        source_type: "passive_osint"
+        observed_value: "OVH Australia PTY LTD, Sydney"
+        reason: "Independent hosting attribution"
+        target_contact: false
+
+asns:
+  - asn: "AS16276"
+    name: "OVH"
+    classification: "cloud_cdn"
+    confidence: "high"
+    evidence:
+      - source: "hackertarget/aslookup"
+        source_type: "passive_osint"
+        observed_value: "AS16276 OVH, FR"
+        reason: "ASN for the hosting IP"
+        target_contact: false
+
+netblocks:
+  - cidr: "51.161.128.0/17"
+    name: "OVH (VPS-SYD2 region)"
+    classification: "cloud_cdn"
+    confidence: "high"
+    evidence:
+      - source: "rdap/hackertarget"
+        source_type: "passive_osint"
+        observed_value: "51.161.128.0/17 AS16276"
+        reason: "BGP prefix for hosting IP"
+        target_contact: false
+  - cidr: "51.161.130.0/23"
+    name: "VPS-SYD2 (OVH Sydney VPS pool)"
+    classification: "cloud_cdn"
+    confidence: "medium"
+    evidence:
+      - source: "rdap.arin.net"
+        source_type: "whois"
+        observed_value: "NET-51-161-130-0-1, VPS-SYD2"
+        reason: "Specific OVH VPS allocation containing target IP"
+        target_contact: false
+
+dns_mail_infrastructure:
+  - hostname: "launch1.spaceship.net"
+    type: "dns"
+    classification: "third_party"
+    confidence: "high"
+    evidence:
+      - source: "dig"
+        source_type: "dns"
+        observed_value: "NS record"
+        reason: "Authoritative nameserver (Spaceship DNS provider)"
+        target_contact: false
+  - hostname: "launch2.spaceship.net"
+    type: "dns"
+    classification: "third_party"
+    confidence: "high"
+    evidence:
+      - source: "dig"
+        source_type: "dns"
+        observed_value: "NS record"
+        reason: "Authoritative nameserver (Spaceship DNS provider)"
+        target_contact: false
+  - note: "No MX records found — no self-hosted mail infrastructure detected on imagesharer.xyz"
+
+cloud_cdn:
+  - hostname: "d273uevi0662l0.cloudfront.net"
+    type: "cdn"
+    classification: "cloud_cdn"
+    confidence: "high"
+    evidence:
+      - source: "dig"
+        source_type: "dns"
+        observed_value: "CNAME target of resources.imagesharer.xyz"
+        reason: "Amazon CloudFront distribution serving static assets"
+        target_contact: false
+      - source: "curl"
+        source_type: "http"
+        observed_value: "server: AmazonS3, 'Error from cloudfront'"
+        reason: "CloudFront with S3 origin"
+        target_contact: true
+  - bucket: "imagesharer"
+    type: "s3"
+    classification: "likely"
+    confidence: "medium"
+    region: "ap-northeast-1"
+    evidence:
+      - source: "curl"
+        source_type: "http"
+        observed_value: "imagesharer.s3.amazonaws.com -> 403 AccessDenied (region ap-northeast-1)"
+        reason: "S3 bucket name matches confirmed domain; likely CloudFront origin"
+        target_contact: true
+    notes: "403 confirms existence but not ownership; name + CloudFront S3 origin strongly suggests business asset"
+  - bucket: "fshare"
+    type: "s3"
+    classification: "candidate"
+    confidence: "low"
+    region: "eu-west-1"
+    evidence:
+      - source: "curl"
+        source_type: "http"
+        observed_value: "fshare.s3.amazonaws.com -> 403 AccessDenied (region eu-west-1)"
+        reason: "S3 bucket name matches business alias 'FShare'"
+        target_contact: true
+    notes: "'FShare' is a generic name (also a Vietnamese file-sharing brand); requires validation before scope"
+  - aws_region: "ap-southeast-2"
+    type: "aws_account_indicator"
+    classification: "likely"
+    confidence: "medium"
+    evidence:
+      - source: "/js/awsvalid.js"
+        source_type: "http"
+        observed_value: "hardcoded AWS access key + secret + region ap-southeast-2"
+        reason: "Client-side code ships AWS credentials for Sydney region (matches Australia location)"
+        target_contact: true
+    notes: "SECURITY FINDING: hardcoded AWS credentials exposed in client-side JS. NOT used for authentication during enumeration."
+
+third_party:
+  - hostname: "encrypted-tbn0.gstatic.com"
+    type: "image_cdn"
+    classification: "third_party"
+    confidence: "high"
+    evidence:
+      - source: "login_page.html"
+        source_type: "http"
+        observed_value: "avatar image URL"
+        reason: "Google-hosted static asset (user avatar placeholder)"
+        target_contact: false
+  - org: "Spaceship, Inc."
+    type: "registrar"
+    classification: "third_party"
+    confidence: "high"
+    evidence:
+      - source: "rdap"
+        source_type: "whois"
+        observed_value: "registrar IANA 3862"
+        reason: "Domain registrar and DNS provider"
+        target_contact: false
+  - org: "Let's Encrypt"
+    type: "tls_cert_issuer"
+    classification: "third_party"
+    confidence: "high"
+    evidence:
+      - source: "openssl"
+        source_type: "tls"
+        observed_value: "issuer C=US, O=Let's Encrypt, CN=YE2"
+        reason: "TLS certificate issuer"
+        target_contact: true
+
+rejected:
+  - item: "Neighboring OVH VPS co-tenants in 51.161.131.0/24"
+    reason: "Unrelated OVH customers (actualisedesign.com, vapexpro.fr, ecitizenproject.com, nanonator.com, aussiewave.au, many vps-*.vps.ovh.ca). Shared hosting pool only; no business attribution."
+    evidence:
+      - source: "shodan"
+        source_type: "passive_osint"
+        observed_value: "net:51.161.131.0/24 results"
+        reason: "Co-tenants on same OVH /24, not attributable to Imagur"
+        target_contact: false
+  - item: "imagur.s3.amazonaws.com"
+    reason: "404 — bucket does not exist"
+  - item: "imagesharer-resources.s3.amazonaws.com"
+    reason: "404 — bucket does not exist"
+  - item: "resources-imagesharer.s3.amazonaws.com"
+    reason: "404 — bucket does not exist"
+
+warnings:
+  - "Domain is ~12 days old; limited passive DNS/CT history"
+  - "crt.sh returned no CT log entries (certificate not yet indexed)"
+  - "Subfinder/amass passive sources returned no results"
+  - "Shodan only observed port 80 (stale); 443/8080 confirmed via direct HTTP"
+  - "Hardcoded AWS credentials found in /js/awsvalid.js (refer to finding; not used)"
+  - "S3 buckets 'imagesharer'/'fshare' existence (403) does not prove ownership; treat as likely/candidate"
+  - "resources.imagesharer.xyz TLS SAN mismatch (CloudFront custom domain not fully configured)"
+
+summary_counts:
+  confirmed_assets: 6
+  likely_assets: 2
+  candidate_assets: 1
+  cloud_cdn_assets: 3
+  third_party_assets: 3
+  rejected_assets: 4

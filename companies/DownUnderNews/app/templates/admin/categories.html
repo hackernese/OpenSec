@@ -1,0 +1,245 @@
+{% extends "admin/base.html" %}
+{% block title %}Categories – Admin{% endblock %}
+{% block breadcrumb %}<i class="bi bi-chevron-right"></i><span>Categories</span>{% endblock %}
+
+{% block content %}
+<div class="page-heading-row">
+  <div>
+    <h1>Categories</h1>
+    <p>{{ categories|length }} categor{% if categories|length != 1 %}ies{% else %}y{% endif %}</p>
+  </div>
+  <button class="btn btn-primary" onclick="openCategoryModal()">
+    <i class="bi bi-plus-lg"></i> New Category
+  </button>
+</div>
+
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Order</th>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Description</th>
+        <th>Articles</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="categoriesTableBody">
+      {% for cat in categories %}
+      <tr data-cat-id="{{ cat.id }}">
+        <td>{{ cat.display_order }}</td>
+        <td><strong>{{ cat.name }}</strong></td>
+        <td><code>{{ cat.slug }}</code></td>
+        <td>{{ cat.description or '–' }}</td>
+        <td>{{ cat.articles.filter_by(status='published').count() }}</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory({{ cat.id }}, '{{ cat.name|replace("'", "\\'") }}', '{{ cat.slug }}', '{{ (cat.description or '')|replace("'", "\\'") }}', {{ cat.display_order }})"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory({{ cat.id }}, '{{ cat.name|replace("'", "\\'") }}')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if not categories %}
+<div class="empty-state">
+  <i class="bi bi-tags"></i>
+  <p>No categories yet.</p>
+  <button class="btn btn-primary" onclick="openCategoryModal()">Create First Category</button>
+</div>
+{% endif %}
+
+<!-- Category modal -->
+<div class="modal-overlay" id="categoryModal" role="dialog" aria-modal="true" aria-labelledby="categoryModalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="categoryModalTitle">New Category</h3>
+      <button class="modal-close" onclick="closeCategoryModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="categoryForm" novalidate>
+        <input type="hidden" id="catId" value="" />
+        <div class="form-group">
+          <label for="catName">Name <span class="required">*</span></label>
+          <input type="text" id="catName" required maxlength="100" placeholder="Category name" />
+        </div>
+        <div class="form-group">
+          <label for="catSlug">Slug <span class="help-text">URL-friendly identifier</span></label>
+          <input type="text" id="catSlug" maxlength="120" placeholder="auto-generated" />
+        </div>
+        <div class="form-group">
+          <label for="catDescription">Description</label>
+          <textarea id="catDescription" rows="3" maxlength="500" placeholder="Brief description…"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="catOrder">Display Order</label>
+          <input type="number" id="catOrder" value="0" min="0" max="999" />
+        </div>
+        <div id="catFormError" class="form-error" style="display:none"></div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeCategoryModal()">Cancel</button>
+      <button class="btn btn-primary" id="saveCategoryBtn">
+        <i class="bi bi-floppy"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete modal -->
+<div class="modal-overlay" id="deleteCatModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="bi bi-exclamation-triangle text-danger"></i> Delete Category</h3>
+      <button class="modal-close" onclick="closeDeleteCatModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Delete category "<strong id="deleteCatName"></strong>"?</p>
+      <p class="text-danger">Articles in this category will become uncategorized.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDeleteCatModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteCatBtn">Delete</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let editingCatId = null;
+let deletingCatId = null;
+
+// ---- helpers ----
+function slugify(text) {
+  return text.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_-]+/g,'-').replace(/^-+|-+$/g,'');
+}
+document.getElementById('catName').addEventListener('input', function() {
+  if (!editingCatId) document.getElementById('catSlug').value = slugify(this.value);
+});
+
+// ---- open/close ----
+function openCategoryModal() {
+  editingCatId = null;
+  document.getElementById('categoryModalTitle').textContent = 'New Category';
+  document.getElementById('catId').value = '';
+  document.getElementById('catName').value = '';
+  document.getElementById('catSlug').value = '';
+  document.getElementById('catDescription').value = '';
+  document.getElementById('catOrder').value = '0';
+  document.getElementById('catFormError').style.display = 'none';
+  document.getElementById('categoryModal').classList.add('active');
+  document.getElementById('catName').focus();
+}
+
+function editCategory(id, name, slug, desc, order) {
+  editingCatId = id;
+  document.getElementById('categoryModalTitle').textContent = 'Edit Category';
+  document.getElementById('catId').value = id;
+  document.getElementById('catName').value = name;
+  document.getElementById('catSlug').value = slug;
+  document.getElementById('catDescription').value = desc;
+  document.getElementById('catOrder').value = order;
+  document.getElementById('catFormError').style.display = 'none';
+  document.getElementById('categoryModal').classList.add('active');
+}
+
+function closeCategoryModal() {
+  document.getElementById('categoryModal').classList.remove('active');
+}
+
+function confirmDeleteCategory(id, name) {
+  deletingCatId = id;
+  document.getElementById('deleteCatName').textContent = name;
+  document.getElementById('deleteCatModal').classList.add('active');
+}
+
+function closeDeleteCatModal() {
+  document.getElementById('deleteCatModal').classList.remove('active');
+}
+
+// ---- save ----
+document.getElementById('saveCategoryBtn').addEventListener('click', async () => {
+  const name = document.getElementById('catName').value.trim();
+  if (!name) { showCatError('Name is required'); return; }
+
+  const data = {
+    name,
+    slug: document.getElementById('catSlug').value.trim() || slugify(name),
+    description: document.getElementById('catDescription').value.trim(),
+    display_order: parseInt(document.getElementById('catOrder').value) || 0,
+  };
+
+  const isEdit = editingCatId !== null;
+  const url = isEdit ? `/api/admin/categories/${editingCatId}` : '/api/admin/categories';
+  const method = isEdit ? 'PUT' : 'POST';
+
+  try {
+    const resp = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(data),
+    });
+    const result = await resp.json();
+    if (resp.ok) {
+      closeCategoryModal();
+      location.reload();
+    } else {
+      showCatError(result.error || 'Save failed');
+    }
+  } catch(e) {
+    showCatError('Network error');
+  }
+});
+
+function showCatError(msg) {
+  const el = document.getElementById('catFormError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ---- delete ----
+document.getElementById('confirmDeleteCatBtn').addEventListener('click', async () => {
+  if (!deletingCatId) return;
+  const btn = document.getElementById('confirmDeleteCatBtn');
+  btn.disabled = true;
+  try {
+    const resp = await fetch(`/api/admin/categories/${deletingCatId}`, {
+      method: 'DELETE',
+      credentials: 'same-origin',
+    });
+    if (resp.ok) {
+      closeDeleteCatModal();
+      location.reload();
+    } else {
+      const data = await resp.json();
+      alert(data.error || 'Delete failed');
+      btn.disabled = false;
+    }
+  } catch(e) {
+    alert('Network error');
+    btn.disabled = false;
+  }
+});
+
+// close on overlay click
+['categoryModal', 'deleteCatModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      e.currentTarget.classList.remove('active');
+    }
+  });
+});
+</script>
+{% endblock %}

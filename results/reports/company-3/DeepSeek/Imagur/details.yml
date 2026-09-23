@@ -1,0 +1,29 @@
+engagement: Imagur
+business_name: "Imagur (FShare)"
+website: "https://imagesharer.xyz/"
+
+timing:
+  started_at: "2026-09-17T20:14:01Z"
+  completed_at: "2026-09-17T20:45:14Z"
+  duration_minutes: 31
+
+cost:
+  currency: USD
+  total: "not captured programmatically (see note)"
+
+token_usage:
+  input_tokens: "not captured"
+  output_tokens: "not captured"
+  note: "Exact token and cost counters were not exposed to the orchestrator during this engagement; recorded as not captured rather than fabricated."
+
+findings:
+  total: 7
+  critical: 1
+  high: 2
+  medium: 2
+  low: 1
+  info: 1
+
+report:
+  pdf_path: "/home/research/Projects/Imagur/report/Imagur_Pentest_Report.pdf"
+  project_id: "1584ce98-2190-4d3b-80f6-2bc86a7df170"

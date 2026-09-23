@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html >
+<head>
+    <title>osTicket Installer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="css/wizard.css?8d38b06"/>
+    <link type="text/css" rel="stylesheet" href="/css/flags.css?8d38b06"/>
+</head>
+<body>
+    <div id="wizard">
+                <div id="header">
+            <img id="logo" src="./images/logo.png" alt="osTicket">
+            <div class="info">Installing osTicket v1.18.4</div>
+            <br/>
+            <ul class="links">
+                <li>
+                   <a target="_blank" href="https://docs.osticket.com/en/latest/Getting%20Started/Installation.html">Installation Guide</a> &mdash; <a target="_blank" href="https://osticket.com/support">Get Professional Help</a> &mdash;                     <a target="_blank" href="https://osticket.com/contact-us">Contact Us</a>
+                </li>
+            </ul>
+            <div class="flags">
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="content">
+
+    <div id="main">
+            <h2>Thank You for Choosing osTicket!</h2>
+            <div id="intro">
+             <p>We are delighted you have chosen osTicket for your customer support ticketing system!</p>
+            <p>The installer will guide you every step of the way in the installation process. You're minutes away from your awesome customer support system!</p>
+            </div>
+            <h2>Prerequisites</h3>
+            <p>Before we begin, we'll check your server configuration to make sure you meet the minimum requirements to run the latest version of osTicket.</p>
+            <h3>Required: <font color="red"></font></h3>
+            These items are necessary in order to install and use osTicket.            <ul class="progress">
+                <li class="yes">
+                <span class="ltr">PHP v8.2</span> or greater &mdash; <small class="ltr">(<b>8.2.33</b>)</small></li>
+                <li class="yes">
+                MySQLi extension for PHP &mdash; <small><b>module loaded</b></small></li>
+            </ul>
+            <h3>Recommended:</h3>
+            You can use osTicket without these, but you may not be able to use all features.            <ul class="progress">
+                <li class="yes">Gdlib Extension</li>
+                <li class="yes">PHP ICONV Extension &mdash; <em>Useful for email processing</em></li>
+                <li class="no">PHP IMAP Extension &mdash; <em>Useful for email processing</em></li>
+                <li class="yes">PHP CTYPE Extension &mdash; <em>Required for email fetching</em></li>
+                <li class="yes">PHP XML Extension &mdash; Required for XML API</li>
+                <li class="yes">PHP XML-DOM Extension &mdash; Useful for HTML email processing</li>
+                <li class="yes">PHP JSON Extension &mdash; Recommended for faster performance</li>
+                <li class="yes">Mbstring Extension &mdash; Recommended for all installations</li>
+                <li class="yes">Phar Extension &mdash; Recommended for plugins and language packs</li>
+                <li class="yes">Intl Extension &mdash; Recommended for improved localization</li>
+                <li class="no">APCu Extension &mdash; Recommended for faster performance</li>
+                <li class="yes">Zend OPcache Extension &mdash; Recommended for faster performance</li>
+            </ul>
+            <div id="bar">
+                <form method="post" action="install.php">
+                    <input type="hidden" name="s" value="prereq">
+                    <input class="btn"  type="submit" name="submit" value="Continue &raquo;">
+                </form>
+            </div>
+    </div>
+    <div id="sidebar">
+            <h3>Need Help?</h3>
+            <p>
+            If you are looking for a greater level of support, we provide <u>professional installation services</u> and commercial support with guaranteed response times, and access to the core development team. We can also help customize osTicket or even add new features to the system to meet your unique needs. <a target="_blank" href="https://osticket.com/support">Learn More!</a>
+            </p>
+    </div>
+
+            <div class="clear"></div>
+        </div> <!-- content -->
+    </div> <!-- wizard -->
+    <div id="footer" class="centered">Copyright &copy; 2026 <a target="_blank" href="https://osticket.com">osTicket.com</a></div>
+
+    <script type="text/javascript" src="../js/jquery-3.7.0.min.js?8d38b06"></script>
+    <script type="text/javascript" src="../js/jstz.min.js?8d38b06"></script>
+    <script type="text/javascript" src="js/setup.js?8d38b06"></script>
+    <script type="text/javascript" src="js/tips.js?8d38b06"></script>
+</body>
+</html>

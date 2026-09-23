@@ -1,0 +1,248 @@
+=== GET /api/articles ===
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:14 GMT
+Content-Type: application/json
+Content-Length: 12439
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+{
+  "articles": [
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "National and international political news",
+        "display_order": 1,
+        "id": 1,
+        "name": "Politics",
+        "slug": "politics"
+      },
+      "created_at": "2026-09-13T13:16:02.011191+00:00",
+      "excerpt": "Welcome to The Down Under News \u2013 your trusted source for Australian and global news coverage.",
+      "featured_image_url": null,
+      "id": 1,
+      "is_featured": true,
+      "media": [],
+      "published_at": "2026-09-13T13:16:02.011191+00:00",
+      "slug": "welcome-to-the-down-under-news",
+      "status": "published",
+      "subtitle": "Australia's newest independent online newspaper",
+      "tags": [],
+      "title": "Welcome to The Down Under News",
+      "updated_at": "2026-09-18T02:03:16.304998+00:00",
+      "views_count": 99
+    },
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "Finance, economy, and business updates",
+        "display_order": 2,
+        "id": 2,
+
+=== GET /api/articles/1 ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:14 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 31
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<h1>404 - Page not found for 1.
+=== GET /api/articles/0 ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:15 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 31
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<h1>404 - Page not found for 0.
+=== GET /api/articles/999999 ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:15 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 36
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<h1>404 - Page not found for 999999.
+=== GET /api/articles/1' (SQL error probe) ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:15 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 32
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<h1>404 - Page not found for 1'.
+=== GET /api/articles/-1 OR 1=1 ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:15 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 39
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<h1>404 - Page not found for -1 OR 1=1.
+=== GET /api/search (no params) ===
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:15 GMT
+Content-Type: application/json
+Content-Length: 49
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+{
+  "query": "",
+  "results": [],
+  "total": 0
+}
+
+=== GET /api/search?q=news ===
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:15 GMT
+Content-Type: application/json
+Content-Length: 2503
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+{
+  "page": 1,
+  "query": "news",
+  "results": [
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "National and international political news",
+        "display_order": 1,
+        "id": 1,
+        "name": "Politics",
+        "slug": "politics"
+
+=== GET /api/search?q=CLAWSEC' ===
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:15 GMT
+Content-Type: application/json
+Content-Length: 89
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+{
+  "page": 1,
+  "query": "CLAWSEC'",
+  "results": [],
+  "total": 0,
+  "totalPages": 0
+}
+
+=== GET /api/search?q=news&limit=99999 (mass return) ===
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:15 GMT
+Content-Type: application/json
+Content-Length: 2503
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+{
+  "page": 1,
+  "query": "news",
+  "results": [
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+
+=== Additional API paths ===
+200 (size=1568) /api/categories
+
+=== POST /api/articles (auth check) ===
+HTTP/1.1 405 METHOD NOT ALLOWED
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:18 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 153
+Connection: keep-alive
+Allow: OPTIONS, HEAD, GET
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+=== DELETE /api/articles/1 (auth check) ===
+HTTP/1.1 405 METHOD NOT ALLOWED
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:18 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 153
+Connection: keep-alive
+Allow: OPTIONS, HEAD, GET
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+=== PUT /api/articles/1 (auth check) ===
+HTTP/1.1 405 METHOD NOT ALLOWED
+Server: nginx
+Date: Fri, 18 Sep 2026 02:04:18 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 153
+Connection: keep-alive
+Allow: OPTIONS, HEAD, GET
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>

@@ -1,0 +1,31 @@
+{
+  "engagement": {
+    "business_name": "AuSecurity",
+    "display_name": "Ausecurity",
+    "description": "GRC Consulting & Penetration Testing services across Australia (CREST Certified, ISO 27001, OSCP).",
+    "website": "https://ausecurity.best/",
+    "address": "63 Paddington St, Paddington NSW 2021",
+    "country": "Australia",
+    "owner_name": "Vinh Dinh",
+    "contact_email": "dinh0087@flinders.edu.au",
+    "google_maps": "https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m"
+  },
+  "authorization": {
+    "status": "AUTHORIZED",
+    "method": "HTTP response header AuthorizedCode matched full-scope authorization statement on main public-facing website.",
+    "verified_at": "2026-09-17T19:32:14Z",
+    "statement": "Full-scoped vulnerability assessment on the company and its assets."
+  },
+  "timeline": {
+    "intake": "2026-09-17T19:30:00Z",
+    "authorized": "2026-09-17T19:32:14Z",
+    "started": "2026-09-17T19:32:26Z"
+  },
+  "constraints": [
+    "No destructive commands or techniques (DDoS, malware, social engineering, phishing, credential stuffing, brute force, MFA bypass, lateral movement, stealth/evasion).",
+    "ReDoS-style testing permitted.",
+    "Do not attack other devices on the network.",
+    "Only test assets attributable to AuSecurity.",
+    "Stop on scope uncertainty or third-party impact."
+  ]
+}

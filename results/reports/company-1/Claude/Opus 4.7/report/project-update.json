@@ -1,0 +1,73 @@
+{
+  "name": "DownUnderNewsz - Vulnerability Assessment Report",
+  "project_type": "4f4e6711-70c8-4eea-80d3-4df9fb61ecc0",
+  "language": "en-US",
+  "tags": [
+    "research"
+  ],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "finished",
+      "data": {
+        "executive_summary": "DownUnderNewsz is a recently launched Australian online news publication. A one-day, full-scope, non-destructive vulnerability assessment was carried out against the public web application, its supporting JSON API, the newsroom's email/DNS configuration, and the two OVH-hosted Sydney VPS instances that back the platform.\n\nIn total, **16 findings** were identified and confirmed: **4 High**, **7 Medium**, **4 Low**, and **1 Informational**. No critical remote-code-execution or authentication-bypass vulnerabilities were found, and the Werkzeug debug console was verified to be safely disabled.\n\nThe four High-severity issues represent the most urgent business risk and should be remediated within **one to two weeks**:\n\n1. **Anonymous FTP on the media host** (`51.161.131.195`) currently allows anyone on the Internet to list and download files without credentials. Four files are exposed today, including an HTML file carrying an active JavaScript payload that would trigger a Stored Cross-Site Scripting condition if the media subdomain were restored.\n2. **The public contact form silently discards every reader message** while displaying a fake \"message sent\" confirmation. Reader tips, right-of-reply requests, legal notices and advertiser enquiries are all being lost with no audit trail.\n3. **The public JSON API leaks the administrator's identity** \u2014 real email address, username, internal user id, role, and account-active status \u2014 on unauthenticated endpoints, giving attackers everything they need to seed targeted phishing and credential-guessing attacks.\n4. **The admin login endpoint has no rate limiting, lockout, MFA, or CAPTCHA**, allowing an attacker who already knows the admin username (leaked by the API above) to run automated password-guessing attacks at network speed.\n\nThe seven Medium-severity findings are largely hardening opportunities: missing HTTP security headers, missing anti-CSRF protection on state-changing forms, a TLS certificate that does not cover the `www` hostname (triggering full-page browser warnings), the Flask application being directly reachable on port 5000 (bypassing the nginx reverse proxy and its protections), session cookies missing the `Secure` and `SameSite` attributes, an unhandled 500 error on the comment endpoint, and an email domain lacking DMARC and DKIM that leaves the newsroom trivially spoofable.\n\nThe four Low findings and one Informational finding cover a missing CAA DNS record, legacy SHA-1 MAC algorithms still offered by SSH, loose content-type handling on the login endpoint, the broken `media` subdomain (HTTP 502), and minor information-disclosure/hygiene items.\n\n**Highest-priority actions for the business:**\n\n1. Disable anonymous FTP on `51.161.131.195` (or firewall port 21 from the Internet) and delete the four files it currently exposes \u2014 in particular the HTML file carrying an `alert()` payload.\n2. Implement a real server-side handler for the `/contact` form so reader messages are actually received.\n3. Redact the administrator author object in the `/api/articles`, `/api/search`, and `/api/categories` responses so no admin email, username, role, user id, or `is_active` flag is exposed.\n4. Add per-IP and per-account rate limiting, plus multi-factor authentication, to `/admin/login`.\n5. Reissue the TLS certificate to include both the apex and `www` hostnames as Subject Alternative Names.\n\nOnce the four High-severity findings are remediated and the Medium-severity hardening items adopted, the DownUnderNewsz platform will be in a materially stronger security posture than at the time of this assessment."
+      }
+    },
+    {
+      "id": "scope",
+      "status": "finished",
+      "data": {
+        "scope": "This engagement was a **one-day, full-scope, non-destructive vulnerability assessment** of the DownUnderNewsz public-facing infrastructure.\n\n**In-scope assets (authorised for active testing):**\n\n* `thedownundernews.online` (root domain)\n* `www.thedownundernews.online`\n* `media.thedownundernews.online`\n* `51.161.130.70` (OVH Sydney VPS \u2014 main website host)\n* `51.161.131.195` (OVH Sydney VPS \u2014 media / FTP host)\n\n**Explicitly out of scope:**\n\n* Spaceship (registrar, authoritative DNS, mail-forwarding infrastructure)\n* OVH infrastructure beyond the two VPS IPs listed above\n* Cloudflare, jsDelivr, Google Fonts, Let's Encrypt (third-party CDNs / CAs)\n* Flinders University assets\n* `thedownundernews.it.com` (referenced by the application but not owned by the business)\n\n**Methodology:**\n\n* **OWASP WSTG** for the web application and API layer.\n* **PTES** for perimeter and network testing.\n* Passive OSINT and DNS/certificate-transparency enumeration first, then non-destructive active probing of the authorised assets only.\n\n**Rules of engagement / limitations:**\n\n* No denial-of-service testing.\n* No credential brute-forcing or password spraying.\n* No destructive payloads, no data-destroying operations, no data exfiltration beyond the minimum needed to prove impact.\n* No social engineering, no phishing, no lateral movement.\n* Testing confined to the five authorised assets above; every out-of-scope asset was left untouched.\n\n**Coverage summary:**\n\n* 1 root domain, 2 subdomains, 2 IPs.\n* Full 65 535-port TCP sweep on both IPs, plus service/version detection and safe NSE scripts on all open ports.\n* Full TLS analysis on 3 HTTPS endpoints (no weak ciphers, no legacy protocols observed).\n* SSH algorithm audit on both hosts (only weak MACs are legacy SHA-1 variants \u2014 Low severity).\n* DNS / email records reviewed (SPF, DMARC, DKIM, CAA, MX, DNSKEY).\n* Web-application fingerprinting, HTTP security-header review, endpoint enumeration (ffuf, common wordlist), Nuclei scan (~10 000 templates), Nikto scan.\n* Manual application testing across the discovered endpoints: reflected XSS, SQLi (error-based and boolean-based), SSTI, path traversal, HTTP verb tampering, Content-Type confusion, CORS misconfiguration, IDOR, mass-assignment, admin login flow (CSRF / username-enumeration / rate-limit / JSON accept), comment endpoint (storage / moderation / CSRF / HTML encoding).\n* Anonymous FTP enumeration on `51.161.131.195` with download and metadata analysis of exposed files.\n\n**Unverified candidate (called out for the site owner to test manually):** Stored XSS on the article comment field could not be conclusively verified within the engagement window due to tooling constraints. It is not counted as a confirmed finding but should be validated when the comment moderation workflow is reviewed.",
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18",
+        "duration": "1 person day",
+        "provided_users": "No user accounts were provided. All testing was performed unauthenticated against the public-facing surface."
+      }
+    },
+    {
+      "id": "customer",
+      "status": "finished",
+      "data": {
+        "customer_name": "DownUnderNewsz",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "status": "finished",
+      "data": {
+        "title": "DownUnderNewsz - Vulnerability Assessment Report",
+        "report_date": "2026-09-18",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "description": "Initial report",
+            "date": "2026-09-18",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Tools used during the assessment",
+            "content": "The following tools were used during the engagement. All were run from a Kali Linux workstation against the authorised in-scope assets only, in a non-destructive configuration.\n\n* **nmap** \u2014 TCP port sweeps, service/version detection, and safe NSE scripts (including `ssh2-enum-algos`, `http-slowloris-check`, `vulners`).\n* **ffuf** \u2014 HTTP endpoint enumeration against the web application using a common wordlist.\n* **nuclei** \u2014 Template-based vulnerability scanning (~10 000 templates) against the public web endpoints.\n* **nikto** \u2014 Web-server misconfiguration and header hygiene scan.\n* **whatweb** \u2014 Web technology fingerprinting.\n* **sslscan** \u2014 TLS configuration and cipher-suite review on the three HTTPS endpoints.\n* **dig** \u2014 DNS record enumeration (A, AAAA, MX, TXT/SPF, TXT/DMARC, TXT/DKIM selectors, CAA, DNSKEY).\n* **openssl s_client** \u2014 Manual TLS certificate inspection (issuer, SANs, validity, chain).\n* **curl** \u2014 Manual HTTP request crafting, header inspection, verb-tampering and content-type probing.\n* **exiftool** \u2014 Metadata extraction from files retrieved from the anonymous FTP service.\n* **pdfinfo / pdftotext** \u2014 Metadata and text extraction from the PDF file retrieved from the anonymous FTP service."
+          },
+          {
+            "title": "Prerequisites and testing limitations",
+            "content": "* Testing was time-boxed to a single day. Areas noted as unverified (in particular Stored XSS on the article comment field) should be revisited during the remediation phase.\n* No credentials were provided; the assessment covered only the unauthenticated attack surface. An authenticated review of the `/admin` panel is recommended once rate-limiting and MFA are in place.\n* Denial-of-service, brute-force, social-engineering, and destructive techniques were explicitly excluded by the rules of engagement. The `http-slowloris-check` NSE result for port 5000 is a *candidate* only \u2014 it was not actively confirmed.\n* OpenSSH CVE matches reported by nmap `vulners` are version-string matches and do not reflect the Debian-patched build; they are called out as candidates for follow-up review against the Debian security tracker, not as confirmed findings.\n* Out-of-scope assets (Spaceship, other OVH infrastructure, Cloudflare, jsDelivr, Google Fonts, Let's Encrypt, Flinders University, `thedownundernews.it.com`) were not tested."
+          }
+        ]
+      }
+    }
+  ]
+}

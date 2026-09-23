@@ -1,0 +1,25 @@
+# Technology Stack Analysis
+
+## Web Application (thedownundernews.online)
+- Web Server: nginx (reverse proxy)
+- Backend: Gunicorn (Python WSGI server on port 5000)
+- Framework: Likely Flask/Django (Python)
+- SSL: Let's Encrypt
+- Operating System: Debian 13
+
+## Frontend Technologies
+- Bootstrap Icons (CDN: cdn.jsdelivr.net)
+- Google Fonts (Playfair Display, Source Sans 3)
+- Custom CSS (/static/css/style.css)
+- Custom JavaScript (/static/js/main.js)
+
+## Media Server (media.thedownundernews.online)
+- Web Server: nginx
+- FTP Server: vsftpd 3.0.5
+- Operating System: Debian 13
+- Status: Currently 502 Bad Gateway
+
+## Infrastructure
+- Hosting: OVH Australia PTY LTD
+- Location: Sydney, Australia
+- VPS Type: OVH VPS

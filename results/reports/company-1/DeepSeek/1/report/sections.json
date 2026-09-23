@@ -1,0 +1,62 @@
+{
+  "sections": [
+    {
+      "id": "executive_summary",
+      "data": {
+        "executive_summary": "## Overview\n\nDownUnderNewsz (trading as \"The Down Under News\") engaged ClawSec to perform an authorized, full-scope (black-box) vulnerability assessment of its public-facing web assets. Testing took place from 17 to 18 September 2026 and was limited to non-destructive techniques.\n\nThe assessment identified **11 findings**: 1 critical, 3 medium, 4 low, and 3 informational. The most serious issue is a server-side template injection (SSTI) vulnerability in the public search feature of the news website. This flaw allows an anonymous attacker to make the web server evaluate code supplied in the search box, which on this type of application can be escalated to full remote control of the web server.\n\n## What this means for the business\n\nThe critical vulnerability in the search feature is the top priority to fix. In plain terms, a remote attacker could potentially take over the news website, read or alter all published content, and access sensitive application configuration and secrets. This should be remediated immediately.\n\nA number of supporting issues further weaken the overall security posture: the site does not enforce secure transport (HTTPS) for administrator sessions, its email domain can be impersonated by attackers, and its media server exposes uploaded files to anonymous visitors over FTP.\n\n## Findings summary\n\n| Severity | Count |\n|:---|:---:|\n| Critical | 1 |\n| High | 0 |\n| Medium | 3 |\n| Low | 4 |\n| Informational | 3 |\n\n## Top recommendations\n\n1. Fix the search feature so that user input is never evaluated as server-side code (immediate priority).\n2. Enable HTTPS enforcement (HSTS) and mark the administrator session cookie as `Secure` and `SameSite`.\n3. Disable anonymous FTP access on the media server and restrict it to the application network.\n4. Correct the TLS certificate so `www` is covered, and strengthen email authentication (SPF/DMARC/DKIM).\n5. Remove direct internet exposure of the application port (5000) and bind it to localhost.\n\nA detailed technical description and remediation guidance for each finding is provided in the body of this report.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "data": {
+        "scope": "## In-scope assets\n\n| Asset | Type | IP / Technology |\n|:---|:---|:---|\n| thedownundernews.online | Main news website | 51.161.130.70 - Flask/Jinja2 behind nginx + Gunicorn |\n| www.thedownundernews.online | Main website alias | 51.161.130.70 |\n| media.thedownundernews.online | Media server | 51.161.131.195 - nginx + vsftpd + OpenSSH |\n\n## Out of scope / excluded\n\nThe following were explicitly excluded from testing: OVH hosting infrastructure (AS16276), Spaceship Inc (registrar/DNS/email), jsDelivr, Google Fonts, the unregistered candidate domain `thedownundernews.it.com`, and all other third-party and network devices.\n\n## Engagement type\n\nAuthorized, full-scope (black-box) vulnerability assessment of public-facing web assets. Authorization was verified via a signed authorization header returned by the main website.\n\n## Methodology\n\nPassive and active reconnaissance (DNS/WHOIS, certificate transparency, Shodan), fast full-port TCP discovery, service and version detection, web application testing (authentication/authorization, IDOR/access control, injection including SSTI/XSS/SQLi, API review, session/cookie/CSRF, security headers, TLS), JWT configuration testing (`alg=none` and a bounded common-secret check), and FTP review. All testing was non-destructive.\n",
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-18",
+        "duration": "2 days",
+        "provided_users": "The owner provided three test accounts (admin, editor, writer) for authorized authenticated testing of the admin panel and API.\n"
+      }
+    },
+    {
+      "id": "customer",
+      "data": {
+        "customer_name": "DownUnderNewsz",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "data": {
+        "title": "DownUnderNewsz - Penetration Test Report",
+        "report_date": "2026-09-18",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "version": "1.0",
+            "date": "2026-09-18",
+            "description": "Initial report release"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Limitations & Constraints",
+            "content": "The following limitations applied to this engagement:\n\n* Stored cross-site scripting via the article body was not tested, as this would have required creating content on the production system.\n* The JWT signing secret was not brute-forced beyond a bounded list of common secrets (per engagement rules).\n* No destructive, denial-of-service, or lateral-movement testing was performed.\n* A phone number for the business was not available at the time of reporting.\n\nAll testing was performed within the approved scope and without destructive impact.\n"
+          },
+          {
+            "title": "Severity Classification",
+            "content": "Findings are rated on the following scale:\n\n| Severity | Meaning |\n|:---|:---|\n| Critical | Immediate action required; can lead to full system compromise. |\n| High | Serious issue that can compromise significant functionality or data. |\n| Medium | Notable weakness requiring prompt remediation. |\n| Low | Minor weakness that reduces defense-in-depth. |\n| Informational | No direct exploitability; noted for awareness and hardening. |\n\nWhere an explicit CVSS v3.1 vector was provided in the source findings, it is recorded on the finding. Findings without a CVSS vector are shown as \"N/A\" in the CVSS-driven scoring, while their assessed severity is stated in each finding and in the executive summary.\n"
+          }
+        ]
+      }
+    }
+  ]
+}

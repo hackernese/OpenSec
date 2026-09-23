@@ -1,0 +1,141 @@
+{% extends "public/base.html" %}
+
+{% block title %}The Down Under News – Australia's Independent Online Newspaper{% endblock %}
+{% block meta_description %}Breaking news, politics, business, sports, technology and more from Australia and around the world.{% endblock %}
+
+{% block content %}
+
+<!-- ===== FEATURED / HERO ===== -->
+{% if featured %}
+<section class="hero-section" aria-label="Featured news">
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Main featured -->
+      <article class="hero-main">
+        <a href="{{ url_for('public.article', slug=featured[0].slug) }}" class="hero-img-link">
+          {% if featured[0].featured_image_url %}
+          <img src="{{ featured[0].featured_image_url }}" alt="{{ featured[0].title }}" class="hero-img" loading="eager" />
+          {% else %}
+          <div class="hero-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          {% endif %}
+        </a>
+        <div class="hero-content">
+          {% if featured[0].category %}
+          <a href="{{ url_for('public.category', slug=featured[0].category.slug) }}" class="category-badge">{{ featured[0].category.name }}</a>
+          {% endif %}
+          <h1 class="hero-title">
+            <a href="{{ url_for('public.article', slug=featured[0].slug) }}">{{ featured[0].title }}</a>
+          </h1>
+          {% if featured[0].excerpt %}
+          <p class="hero-excerpt">{{ featured[0].excerpt }}</p>
+          {% endif %}
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> {{ featured[0].author.full_name if featured[0].author else 'Staff Reporter' }}</span>
+            <span><i class="bi bi-clock"></i> {{ featured[0].published_at.strftime('%d %b %Y') if featured[0].published_at else '' }}</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Secondary featured -->
+      <aside class="hero-sidebar">
+        {% for art in featured[1:5] %}
+        <article class="hero-secondary">
+          {% if art.featured_image_url %}
+          <a href="{{ url_for('public.article', slug=art.slug) }}" class="hero-secondary-img-link">
+            <img src="{{ art.featured_image_url }}" alt="{{ art.title }}" loading="lazy" />
+          </a>
+          {% endif %}
+          <div class="hero-secondary-content">
+            {% if art.category %}
+            <a href="{{ url_for('public.category', slug=art.category.slug) }}" class="category-badge sm">{{ art.category.name }}</a>
+            {% endif %}
+            <h3><a href="{{ url_for('public.article', slug=art.slug) }}">{{ art.title }}</a></h3>
+            <span class="article-date"><i class="bi bi-clock"></i> {{ art.published_at.strftime('%d %b %Y') if art.published_at else '' }}</span>
+          </div>
+        </article>
+        {% endfor %}
+      </aside>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ===== CATEGORY QUICK-NAV ===== -->
+<div class="category-strip">
+  <div class="container">
+    <nav aria-label="Category navigation">
+      {% for cat in categories %}
+      <a href="{{ url_for('public.category', slug=cat.slug) }}" class="cat-chip">{{ cat.name }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+</div>
+
+<!-- ===== LATEST NEWS GRID ===== -->
+<section class="latest-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Latest News</h2>
+      <span class="section-divider"></span>
+    </div>
+
+    {% if articles %}
+    <div class="articles-grid">
+      {% for art in articles %}
+      <article class="article-card">
+        <a href="{{ url_for('public.article', slug=art.slug) }}" class="card-img-link">
+          {% if art.featured_image_url %}
+          <img src="{{ art.featured_image_url }}" alt="{{ art.title }}" loading="lazy" class="card-img" />
+          {% else %}
+          <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+          {% endif %}
+        </a>
+        <div class="card-body">
+          {% if art.category %}
+          <a href="{{ url_for('public.category', slug=art.category.slug) }}" class="category-badge sm">{{ art.category.name }}</a>
+          {% endif %}
+          <h3 class="card-title"><a href="{{ url_for('public.article', slug=art.slug) }}">{{ art.title }}</a></h3>
+          {% if art.excerpt %}
+          <p class="card-excerpt">{{ art.excerpt[:120] }}{% if art.excerpt|length > 120 %}…{% endif %}</p>
+          {% endif %}
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> {{ art.author.full_name if art.author else 'Staff Reporter' }}</span>
+            <span><i class="bi bi-clock"></i> {{ art.published_at.strftime('%d %b %Y') if art.published_at else '' }}</span>
+            <span><i class="bi bi-eye"></i> {{ art.views_count }}</span>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if pages > 1 %}
+    <nav class="pagination" aria-label="Article pagination">
+      {% if page > 1 %}
+      <a href="?page={{ page - 1 }}" class="page-btn" aria-label="Previous page"><i class="bi bi-chevron-left"></i> Prev</a>
+      {% endif %}
+      {% for p in range(1, pages + 1) %}
+        {% if p == page %}
+        <span class="page-btn active" aria-current="page">{{ p }}</span>
+        {% elif p <= 2 or p >= pages - 1 or (p >= page - 2 and p <= page + 2) %}
+        <a href="?page={{ p }}" class="page-btn">{{ p }}</a>
+        {% elif p == 3 or p == pages - 2 %}
+        <span class="page-ellipsis">…</span>
+        {% endif %}
+      {% endfor %}
+      {% if page < pages %}
+      <a href="?page={{ page + 1 }}" class="page-btn" aria-label="Next page">Next <i class="bi bi-chevron-right"></i></a>
+      {% endif %}
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <div class="empty-state">
+      <i class="bi bi-newspaper"></i>
+      <p>No articles published yet. Check back soon!</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

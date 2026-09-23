@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Down Under News – Australia's independent online newspaper." />
+  <title>About Us – The Down Under News</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  
+</head>
+<body>
+
+<!-- ===== BREAKING NEWS TICKER ===== -->
+<div class="breaking-bar" id="breakingBar">
+  <span class="breaking-label">BREAKING</span>
+  <div class="breaking-ticker">
+    <span id="breakingText">Loading latest headlines…</span>
+  </div>
+  <button class="breaking-close" onclick="document.getElementById('breakingBar').style.display='none'" aria-label="Close breaking news">&times;</button>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="container">
+      <div class="header-date">
+        <i class="bi bi-calendar3"></i>
+        <span id="headerDate"></span>
+      </div>
+      <div class="header-social">
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <a href="/" class="site-logo">
+        <div class="logo-text">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+      </a>
+      <div class="header-search">
+        <form action="/search" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="" aria-label="Search news" />
+          <button type="submit" aria-label="Submit search"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/" >Home</a></li>
+        
+        <li>
+          <a href="/category/politics"
+             >
+            Politics
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/business"
+             >
+            Business
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/technology"
+             >
+            Technology
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/sports"
+             >
+            Sports
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/entertainment"
+             >
+            Entertainment
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/science"
+             >
+            Science
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/world"
+             >
+            World
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/opinion"
+             >
+            Opinion
+          </a>
+        </li>
+        
+        <li><a href="/about" class="active">About</a></li>
+        <li><a href="/contact" >Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="main-content">
+  
+<div class="container">
+  <header class="page-header">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span aria-current="page">About Us</span>
+    </nav>
+    <h1 class="page-title">About The Down Under News</h1>
+  </header>
+
+  <div class="static-content">
+    <div class="about-hero">
+      <div class="about-logo">
+        <span class="logo-the">THE</span>
+        <span class="logo-title">Down Under</span>
+        <span class="logo-sub">NEWS</span>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-main">
+        <h2>Our Story</h2>
+        <p>The Down Under News was founded with a singular mission: to provide Australians with independent, accurate, and timely journalism. In an era of fragmented media and misinformation, we believe in the power of well-researched reporting to inform, engage, and empower communities across Australia and beyond.</p>
+
+        <p>We cover a broad spectrum of topics — from the corridors of Parliament House to the sporting ovals, from the boardrooms of the nation's biggest companies to the laboratories of our world-class universities.</p>
+
+        <h2>Our Values</h2>
+        <ul class="about-list">
+          <li><strong>Accuracy:</strong> We verify facts before publishing and correct errors promptly.</li>
+          <li><strong>Independence:</strong> Our editorial decisions are made free from political or commercial interference.</li>
+          <li><strong>Fairness:</strong> We represent all sides of a story and give voice to diverse perspectives.</li>
+          <li><strong>Transparency:</strong> We are open about our methods, funding, and decision-making processes.</li>
+          <li><strong>Public Interest:</strong> We prioritise stories that matter to everyday Australians.</li>
+        </ul>
+
+        <h2>Our Team</h2>
+        <p>The Down Under News brings together experienced journalists, editors, and photographers from across the country. Our team is dedicated to delivering the news that matters most, when it matters most.</p>
+
+        <h2>Contact Us</h2>
+        <p>For editorial enquiries, tip-offs, or advertising opportunities, please visit our <a href="/contact">Contact page</a>.</p>
+      </div>
+
+      <aside class="about-sidebar">
+        <div class="info-card">
+          <h3>Publication Details</h3>
+          <dl>
+            <dt>Domain</dt><dd>thedownundernews.it.com</dd>
+            <dt>Established</dt><dd>2026</dd>
+            <dt>Focus</dt><dd>Australian & International News</dd>
+            <dt>Format</dt><dd>Online-only newspaper</dd>
+          </dl>
+        </div>
+        <div class="info-card">
+          <h3>Sections</h3>
+          <ul class="cat-list">
+            
+            <li><a href="/category/politics">Politics</a></li>
+            
+            <li><a href="/category/business">Business</a></li>
+            
+            <li><a href="/category/technology">Technology</a></li>
+            
+            <li><a href="/category/sports">Sports</a></li>
+            
+            <li><a href="/category/entertainment">Entertainment</a></li>
+            
+            <li><a href="/category/science">Science</a></li>
+            
+            <li><a href="/category/world">World</a></li>
+            
+            <li><a href="/category/opinion">Opinion</a></li>
+            
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+        <p>Australia's trusted independent online newspaper, delivering accurate and timely news coverage across the nation and the world.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Sections</h4>
+        <ul>
+          
+          <li><a href="/category/politics">Politics</a></li>
+          
+          <li><a href="/category/business">Business</a></li>
+          
+          <li><a href="/category/technology">Technology</a></li>
+          
+          <li><a href="/category/sports">Sports</a></li>
+          
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>More</h4>
+        <ul>
+          
+          <li><a href="/category/entertainment">Entertainment</a></li>
+          
+          <li><a href="/category/science">Science</a></li>
+          
+          <li><a href="/category/world">World</a></li>
+          
+          <li><a href="/category/opinion">Opinion</a></li>
+          
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Advertise With Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <span id="footerYear"></span> The Down Under News. All rights reserved.</p>
+      <p>Domain: <a href="https://thedownundernews.it.com">thedownundernews.it.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== BACK TO TOP ===== -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <i class="bi bi-chevron-up"></i>
+</button>
+
+<script src="/static/js/main.js"></script>
+
+</body>
+</html>

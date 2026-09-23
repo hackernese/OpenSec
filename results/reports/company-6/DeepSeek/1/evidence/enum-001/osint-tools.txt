@@ -1,0 +1,24 @@
+# Passive OSINT tool results (enum-001)
+
+## subfinder -d ausecurity.best
+blog.ausecurity.best
+ticket.ausecurity.best
+
+## assetfinder --subs-only ausecurity.best
+ausecurity.best
+blog.ausecurity.best
+ticket.ausecurity.best
+
+## amass enum -passive -d ausecurity.best
+(no results returned)
+
+## Shodan
+- 51.79.166.148: No information available
+- 51.79.166.209: No information available
+- 51.79.167.208:
+    Hostname: vps-d64a720c.vps.ovh.ca ; blog.ausecurity.best
+    City/Country: Singapore
+    Org: OVH Singapore PTE. LTD
+    Open ports: 22/tcp (OpenSSH 9.2p1 Debian), 443/tcp (nginx 1.22.1)
+    Reported CVEs: CVE-2023-44487, CVE-2025-23419
+    (note: current live headers report Apache/2.4.68 on 443 — Shodan data 2026-09-15)

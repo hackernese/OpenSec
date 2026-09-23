@@ -1,0 +1,46 @@
+{
+  "approved_at": "2026-09-18T00:38:30Z",
+  "in_scope": [
+    {
+      "id": "asset-001",
+      "type": "domain",
+      "identifier": "thedownundernews.online",
+      "ip": "51.161.130.70"
+    },
+    {
+      "id": "asset-002", 
+      "type": "subdomain",
+      "identifier": "www.thedownundernews.online",
+      "ip": "51.161.130.70"
+    },
+    {
+      "id": "asset-003",
+      "type": "subdomain",
+      "identifier": "media.thedownundernews.online",
+      "ip": "51.161.131.195"
+    },
+    {
+      "id": "asset-004",
+      "type": "server",
+      "identifier": "51.161.130.70",
+      "ports": [22, 80, 443, 5000]
+    },
+    {
+      "id": "asset-005",
+      "type": "server",
+      "identifier": "51.161.131.195",
+      "ports": [21, 22, 80, 443]
+    }
+  ],
+  "out_of_scope": [],
+  "third_party": [
+    {
+      "identifier": "OVH Infrastructure",
+      "note": "Hosting provider - do not attack OVH management interfaces"
+    },
+    {
+      "identifier": "Let's Encrypt",
+      "note": "SSL provider - do not attack"
+    }
+  ]
+}

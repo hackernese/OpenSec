@@ -1,0 +1,22 @@
+{
+  "task_id": "enum-001",
+  "business": "DownUnderNewsz",
+  "status": "initial_discovery",
+  "confirmed": [
+    {"asset": "thedownundernews.online", "type": "domain", "ip": "51.161.130.70", "role": "main_website"},
+    {"asset": "www.thedownundernews.online", "type": "subdomain", "ip": "51.161.130.70", "role": "main_website_alias"},
+    {"asset": "media.thedownundernews.online", "type": "subdomain", "ip": "51.161.131.195", "role": "media_server"},
+    {"asset": "51.161.130.70", "type": "ip", "hosting": "OVH AS16276", "role": "main_web_vps"},
+    {"asset": "51.161.131.195", "type": "ip", "hosting": "OVH AS16276", "role": "media_vps"}
+  ],
+  "candidate": [
+    {"asset": "thedownundernews.it.com", "type": "domain", "status": "unregistered", "note": "Referenced in site footer/emails; NOT approved for testing"}
+  ],
+  "third_party": [
+    "OVH AS16276 (hosting)",
+    "Spaceship Inc (registrar/DNS/email)",
+    "cdn.jsdelivr.net",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com"
+  ]
+}

@@ -1,0 +1,300 @@
+{% extends "admin/base.html" %}
+{% block title %}Users – Admin{% endblock %}
+{% block breadcrumb %}<i class="bi bi-chevron-right"></i><span>Users</span>{% endblock %}
+
+{% block content %}
+<div class="page-heading-row">
+  <div>
+    <h1>User Management</h1>
+    <p>{{ all_users|length }} user{% if all_users|length != 1 %}s{% endif %}</p>
+  </div>
+  <button class="btn btn-primary" onclick="openUserModal()">
+    <i class="bi bi-person-plus"></i> New User
+  </button>
+</div>
+
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Joined</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in all_users %}
+      <tr data-user-id="{{ u.id }}">
+        <td><strong>{{ u.full_name }}</strong></td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.email }}</td>
+        <td><span class="role-badge role-{{ u.role }}">{{ u.role }}</span></td>
+        <td>
+          {% if u.is_active %}
+          <span class="status-badge status-published">Active</span>
+          {% else %}
+          <span class="status-badge status-archived">Inactive</span>
+          {% endif %}
+        </td>
+        <td>{{ u.created_at.strftime('%d %b %Y') if u.created_at else '–' }}</td>
+        <td class="table-actions">
+          <button class="action-btn" title="Edit"
+                  onclick="editUser({{ u.id }}, '{{ u.username }}', '{{ u.email }}', '{{ u.role }}', '{{ u.first_name or '' }}', '{{ u.last_name or '' }}', {{ 'true' if u.is_active else 'false' }})">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn" title="Reset Password"
+                  onclick="openResetPasswordModal({{ u.id }}, '{{ u.username }}')">
+            <i class="bi bi-key"></i>
+          </button>
+          {% if u.id != user.id %}
+          <button class="action-btn action-btn-danger" title="Delete"
+                  onclick="confirmDeleteUser({{ u.id }}, '{{ u.username }}')">
+            <i class="bi bi-trash"></i>
+          </button>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- User modal -->
+<div class="modal-overlay" id="userModal" role="dialog" aria-modal="true">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h3 id="userModalTitle">New User</h3>
+      <button class="modal-close" onclick="closeUserModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="userForm" novalidate>
+        <input type="hidden" id="userId" value="" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userFirstName">First Name</label>
+            <input type="text" id="userFirstName" maxlength="100" placeholder="First name" />
+          </div>
+          <div class="form-group">
+            <label for="userLastName">Last Name</label>
+            <input type="text" id="userLastName" maxlength="100" placeholder="Last name" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userUsername">Username <span class="required">*</span></label>
+            <input type="text" id="userUsername" required maxlength="80" placeholder="username" />
+          </div>
+          <div class="form-group">
+            <label for="userEmail">Email <span class="required">*</span></label>
+            <input type="email" id="userEmail" required maxlength="255" placeholder="user@example.com" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userRole">Role</label>
+            <select id="userRole">
+              <option value="writer">Writer</option>
+              <option value="editor">Editor</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="userActive">Status</label>
+            <select id="userActive">
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" id="passwordGroup">
+          <label for="userPassword">Password <span class="required">*</span> <span class="help-text">min. 8 characters</span></label>
+          <input type="password" id="userPassword" minlength="8" placeholder="Set a secure password" autocomplete="new-password" />
+        </div>
+        <div id="userFormError" class="form-error" style="display:none"></div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeUserModal()">Cancel</button>
+      <button class="btn btn-primary" id="saveUserBtn">
+        <i class="bi bi-floppy"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Reset Password modal -->
+<div class="modal-overlay" id="resetPasswordModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="bi bi-key"></i> Reset Password</h3>
+      <button class="modal-close" onclick="closeResetPasswordModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Set a new password for <strong id="resetPasswordUsername"></strong>:</p>
+      <input type="hidden" id="resetUserId" />
+      <div class="form-group">
+        <label for="newPassword">New Password</label>
+        <input type="password" id="newPassword" minlength="8" placeholder="Min. 8 characters" autocomplete="new-password" />
+      </div>
+      <div id="resetPasswordError" class="form-error" style="display:none"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeResetPasswordModal()">Cancel</button>
+      <button class="btn btn-primary" id="confirmResetBtn">Reset Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete User modal -->
+<div class="modal-overlay" id="deleteUserModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="bi bi-exclamation-triangle text-danger"></i> Delete User</h3>
+      <button class="modal-close" onclick="closeDeleteUserModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Delete user "<strong id="deleteUserName"></strong>"?</p>
+      <p class="text-danger">This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDeleteUserModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteUserBtn">Delete</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let editingUserId = null;
+let deletingUserId = null;
+
+function openUserModal() {
+  editingUserId = null;
+  document.getElementById('userModalTitle').textContent = 'New User';
+  document.getElementById('userId').value = '';
+  document.getElementById('userFirstName').value = '';
+  document.getElementById('userLastName').value = '';
+  document.getElementById('userUsername').value = '';
+  document.getElementById('userEmail').value = '';
+  document.getElementById('userRole').value = 'writer';
+  document.getElementById('userActive').value = 'true';
+  document.getElementById('userPassword').value = '';
+  document.getElementById('userPassword').required = true;
+  document.getElementById('passwordGroup').style.display = 'block';
+  document.getElementById('userFormError').style.display = 'none';
+  document.getElementById('userModal').classList.add('active');
+}
+
+function editUser(id, username, email, role, fname, lname, isActive) {
+  editingUserId = id;
+  document.getElementById('userModalTitle').textContent = 'Edit User';
+  document.getElementById('userId').value = id;
+  document.getElementById('userUsername').value = username;
+  document.getElementById('userEmail').value = email;
+  document.getElementById('userRole').value = role;
+  document.getElementById('userFirstName').value = fname;
+  document.getElementById('userLastName').value = lname;
+  document.getElementById('userActive').value = isActive ? 'true' : 'false';
+  document.getElementById('userPassword').value = '';
+  document.getElementById('userPassword').required = false;
+  document.getElementById('passwordGroup').style.display = 'none';
+  document.getElementById('userFormError').style.display = 'none';
+  document.getElementById('userModal').classList.add('active');
+}
+
+function closeUserModal() { document.getElementById('userModal').classList.remove('active'); }
+
+document.getElementById('saveUserBtn').addEventListener('click', async () => {
+  const isEdit = editingUserId !== null;
+  const data = {
+    first_name: document.getElementById('userFirstName').value.trim(),
+    last_name: document.getElementById('userLastName').value.trim(),
+    email: document.getElementById('userEmail').value.trim(),
+    role: document.getElementById('userRole').value,
+    is_active: document.getElementById('userActive').value === 'true',
+  };
+  if (!isEdit) {
+    data.username = document.getElementById('userUsername').value.trim();
+    data.password = document.getElementById('userPassword').value;
+    if (!data.username || !data.email || !data.password) {
+      showUserError('Username, email and password are required'); return;
+    }
+  }
+
+  const url = isEdit ? `/api/admin/users/${editingUserId}` : '/api/admin/users';
+  const method = isEdit ? 'PUT' : 'POST';
+
+  try {
+    const resp = await fetch(url, {
+      method, headers: {'Content-Type': 'application/json'},
+      credentials: 'same-origin', body: JSON.stringify(data),
+    });
+    const result = await resp.json();
+    if (resp.ok) { closeUserModal(); location.reload(); }
+    else showUserError(result.error || 'Save failed');
+  } catch(e) { showUserError('Network error'); }
+});
+
+function showUserError(msg) {
+  const el = document.getElementById('userFormError');
+  el.textContent = msg; el.style.display = 'block';
+}
+
+function openResetPasswordModal(id, username) {
+  document.getElementById('resetUserId').value = id;
+  document.getElementById('resetPasswordUsername').textContent = username;
+  document.getElementById('newPassword').value = '';
+  document.getElementById('resetPasswordError').style.display = 'none';
+  document.getElementById('resetPasswordModal').classList.add('active');
+}
+function closeResetPasswordModal() { document.getElementById('resetPasswordModal').classList.remove('active'); }
+
+document.getElementById('confirmResetBtn').addEventListener('click', async () => {
+  const id = document.getElementById('resetUserId').value;
+  const pw = document.getElementById('newPassword').value;
+  if (pw.length < 8) { showResetError('Password must be at least 8 characters'); return; }
+  try {
+    const resp = await fetch(`/api/admin/users/${id}/reset-password`, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      credentials: 'same-origin', body: JSON.stringify({new_password: pw}),
+    });
+    const result = await resp.json();
+    if (resp.ok) { closeResetPasswordModal(); alert('Password reset successfully'); }
+    else showResetError(result.error || 'Failed');
+  } catch(e) { showResetError('Network error'); }
+});
+function showResetError(msg) {
+  const el = document.getElementById('resetPasswordError');
+  el.textContent = msg; el.style.display = 'block';
+}
+
+function confirmDeleteUser(id, username) {
+  deletingUserId = id;
+  document.getElementById('deleteUserName').textContent = username;
+  document.getElementById('deleteUserModal').classList.add('active');
+}
+function closeDeleteUserModal() { document.getElementById('deleteUserModal').classList.remove('active'); }
+
+document.getElementById('confirmDeleteUserBtn').addEventListener('click', async () => {
+  if (!deletingUserId) return;
+  try {
+    const resp = await fetch(`/api/admin/users/${deletingUserId}`, {
+      method: 'DELETE', credentials: 'same-origin',
+    });
+    if (resp.ok) { closeDeleteUserModal(); location.reload(); }
+    else { const d = await resp.json(); alert(d.error || 'Delete failed'); }
+  } catch(e) { alert('Network error'); }
+});
+
+['userModal','resetPasswordModal','deleteUserModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+  });
+});
+</script>
+{% endblock %}

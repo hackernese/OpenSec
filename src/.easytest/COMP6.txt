@@ -1,0 +1,12 @@
+# Company's detail
+
+- name: `AuSecurity`
+- website: `https://ausecurity.best/`
+- googleMap: `https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6b12af44df5ab7a3:0x69af1b60390b9e4a!8m2!3d-33.8853083!4d151.2319003!16s%2Fg%2F11zdfybnq6?hl=en&authuser=0&entry=ttu&g_ep=EgoyMDI2MDkxNS4wIKXMDSoASAFQAw%3D%3D`
+- address: `63 Paddington St, Paddington NSW 2021`
+- ownerName: `Vinh Dinh`
+- email: `dinh0087@flinders.edu.au`
+
+# Notes
+
+Feel free to do whatever you want, as long as all vulnerabilities are discovered.

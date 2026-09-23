@@ -1,0 +1,201 @@
+{% extends "public/base.html" %}
+
+{% block title %}{{ article.title }} – The Down Under News{% endblock %}
+{% block meta_description %}{{ article.excerpt or article.title }}{% endblock %}
+
+{% block extra_head %}
+<!-- Open Graph -->
+<meta property="og:title" content="{{ article.title }}" />
+<meta property="og:description" content="{{ article.excerpt or '' }}" />
+{% if article.featured_image_url %}
+<meta property="og:image" content="{{ article.featured_image_url }}" />
+{% endif %}
+<meta property="og:type" content="article" />
+{% endblock %}
+
+{% block content %}
+<div class="container article-layout">
+  <div class="article-main">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('public.index') }}">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      {% if article.category %}
+      <a href="{{ url_for('public.category', slug=article.category.slug) }}">{{ article.category.name }}</a>
+      <i class="bi bi-chevron-right"></i>
+      {% endif %}
+      <span aria-current="page">{{ article.title[:60] }}{% if article.title|length > 60 %}…{% endif %}</span>
+    </nav>
+
+    <!-- Article header -->
+    <header class="article-header">
+      {% if article.category %}
+      <a href="{{ url_for('public.category', slug=article.category.slug) }}" class="category-badge lg">{{ article.category.name }}</a>
+      {% endif %}
+      <h1 class="article-title">{{ article.title }}</h1>
+      {% if article.subtitle %}
+      <p class="article-subtitle">{{ article.subtitle }}</p>
+      {% endif %}
+      <div class="article-byline">
+        <div class="byline-info">
+          <span class="byline-author"><i class="bi bi-person-circle"></i> <strong>{{ article.author.full_name if article.author else 'Staff Reporter' }}</strong></span>
+          {% if article.published_at %}
+          <time datetime="{{ article.published_at.isoformat() }}" class="byline-date">
+            <i class="bi bi-calendar3"></i>
+            {{ article.published_at.strftime('%A, %d %B %Y') }}
+          </time>
+          {% endif %}
+          <span class="byline-views"><i class="bi bi-eye"></i> {{ article.views_count }} views</span>
+        </div>
+        <div class="share-buttons">
+          <span>Share:</span>
+          <a href="https://twitter.com/intent/tweet?text={{ article.title|urlencode }}&url={{ request.url|urlencode }}" target="_blank" rel="noopener" aria-label="Share on Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|urlencode }}" target="_blank" rel="noopener" aria-label="Share on Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.linkedin.com/shareArticle?url={{ request.url|urlencode }}&title={{ article.title|urlencode }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <button onclick="navigator.clipboard.writeText('{{ request.url }}')" aria-label="Copy link" title="Copy link"><i class="bi bi-link-45deg"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured image -->
+    {% if article.featured_image_url %}
+    <figure class="article-featured-image">
+      <img src="{{ article.featured_image_url }}" alt="{{ article.title }}" loading="eager" />
+    </figure>
+    {% endif %}
+
+    <!-- Article content -->
+    <div class="article-body prose">
+      {{ article.content|safe }}
+    </div>
+
+    <!-- Article media / attachments -->
+    {% set docs = article.media|selectattr('media_type', 'in', ['document', 'pdf'])|list %}
+    {% if docs %}
+    <section class="article-attachments" aria-label="Article attachments">
+      <h3><i class="bi bi-paperclip"></i> Attachments</h3>
+      <ul>
+        {% for media in docs %}
+        <li>
+          <a href="{{ media.media_url }}" target="_blank" rel="noopener" class="attachment-link">
+            <i class="bi bi-file-earmark-{% if media.media_type == 'pdf' %}pdf{% else %}word{% endif %}"></i>
+            {{ media.file_name or 'Download' }}
+            {% if media.file_size %}<span class="file-size">({{ (media.file_size / 1024)|round(1) }} KB)</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    <!-- Tags -->
+    {% if article.tags %}
+    <div class="article-tags">
+      <span>Tags:</span>
+      {% for tag in article.tags %}
+      <span class="tag-chip">{{ tag.name }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Comments section -->
+    <section class="comments-section" id="comments" aria-label="Comments">
+      <h3 class="comments-title">
+        <i class="bi bi-chat-dots"></i>
+        Comments <span class="comments-count">({{ comments|length }})</span>
+      </h3>
+
+      <!-- Flash messages (comment submission feedback) -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+          <div class="comment-flash comment-flash--{{ category }}" role="alert">
+            {% if category == 'success' %}
+              <i class="bi bi-check-circle-fill"></i>
+            {% else %}
+              <i class="bi bi-exclamation-triangle-fill"></i>
+            {% endif %}
+            {{ message }}
+          </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% if comments %}
+      <div class="comments-list">
+        {% for comment in comments %}
+        <div class="comment-card">
+          <div class="comment-header">
+            <span class="comment-author"><i class="bi bi-person-circle"></i> {{ comment.author_name }}</span>
+            <time class="comment-date">{{ comment.created_at.strftime('%d %b %Y') if comment.created_at else '' }}</time>
+          </div>
+          <p class="comment-text">{{ comment.content }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="no-comments">No comments yet. Be the first to comment!</p>
+      {% endif %}
+
+      <!-- Comment form -->
+      <div class="comment-form-wrapper">
+        <h4>Leave a Comment</h4>
+        <p class="comment-notice">All fields are required. Your comment will appear immediately.</p>
+        <form action="{{ url_for('public.submit_comment', slug=article.slug) }}" method="post" class="comment-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="author_name">Name <span class="required">*</span></label>
+              <input type="text" id="author_name" name="author_name" required maxlength="150" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="author_email">Email <span class="required">*</span></label>
+              <input type="email" id="author_email" name="author_email" required maxlength="255" placeholder="your@email.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="content">Comment <span class="required">*</span></label>
+            <textarea id="content" name="content" rows="5" required maxlength="2000" placeholder="Share your thoughts…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="article-sidebar">
+    <!-- Related articles -->
+    {% if related %}
+    <div class="sidebar-widget">
+      <h3 class="widget-title">Related Articles</h3>
+      <div class="related-list">
+        {% for rel in related %}
+        <article class="related-card">
+          {% if rel.featured_image_url %}
+          <a href="{{ url_for('public.article', slug=rel.slug) }}" class="related-img-link">
+            <img src="{{ rel.featured_image_url }}" alt="{{ rel.title }}" loading="lazy" />
+          </a>
+          {% endif %}
+          <div class="related-content">
+            <h4><a href="{{ url_for('public.article', slug=rel.slug) }}">{{ rel.title }}</a></h4>
+            <span class="article-date">{{ rel.published_at.strftime('%d %b %Y') if rel.published_at else '' }}</span>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Category box -->
+    {% if article.category %}
+    <div class="sidebar-widget">
+      <h3 class="widget-title">More in {{ article.category.name }}</h3>
+      <a href="{{ url_for('public.category', slug=article.category.slug) }}" class="btn btn-outline btn-full">
+        View All {{ article.category.name }} <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+    {% endif %}
+  </aside>
+</div>
+{% endblock %}

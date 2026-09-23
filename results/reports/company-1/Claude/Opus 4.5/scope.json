@@ -1,0 +1,42 @@
+{
+  "scope_version": "1.0",
+  "approved_at": "2026-09-18T00:38:30Z",
+  "allowlist": {
+    "domains": [
+      "thedownundernews.online",
+      "www.thedownundernews.online",
+      "media.thedownundernews.online"
+    ],
+    "ip_addresses": [
+      "51.161.130.70",
+      "51.161.131.195"
+    ],
+    "ports": {
+      "51.161.130.70": [22, 80, 443, 5000],
+      "51.161.131.195": [21, 22, 80, 443]
+    }
+  },
+  "denylist": {
+    "domains": [],
+    "ip_addresses": [],
+    "notes": "Do not attack OVH management, Let's Encrypt, or any third-party services"
+  },
+  "method_permissions": {
+    "port_scanning": true,
+    "vulnerability_scanning": true,
+    "web_application_testing": true,
+    "api_testing": true,
+    "ssl_tls_testing": true,
+    "ftp_testing": true,
+    "authentication_testing": true,
+    "injection_testing": true,
+    "file_inclusion_testing": true,
+    "xxe_testing": true,
+    "ssrf_testing": true,
+    "brute_force": false,
+    "ddos": false,
+    "social_engineering": false,
+    "physical_access": false,
+    "credential_stuffing": false
+  }
+}

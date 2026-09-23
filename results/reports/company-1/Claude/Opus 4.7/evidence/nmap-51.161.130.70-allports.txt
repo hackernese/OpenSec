@@ -1,0 +1,12 @@
+# Nmap 7.99 scan initiated Fri Sep 18 10:56:07 2026 as: /usr/lib/nmap/nmap --privileged -sS -Pn -T4 --min-rate 2000 -p- --open -oN /home/research/Projects/DownUnderNewsz/evidence/nmap-51.161.130.70-allports.txt 51.161.130.70
+Nmap scan report for vps-8d3f63bd.vps.ovh.ca (51.161.130.70)
+Host is up (0.025s latency).
+Not shown: 65224 closed tcp ports (reset), 307 filtered tcp ports (no-response)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+443/tcp  open  https
+5000/tcp open  upnp
+
+# Nmap done at Fri Sep 18 10:56:19 2026 -- 1 IP address (1 host up) scanned in 11.64 seconds

@@ -1,0 +1,69 @@
+{% extends "public/base.html" %}
+{% block title %}About Us – The Down Under News{% endblock %}
+
+{% block content %}
+<div class="container">
+  <header class="page-header">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('public.index') }}">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span aria-current="page">About Us</span>
+    </nav>
+    <h1 class="page-title">About The Down Under News</h1>
+  </header>
+
+  <div class="static-content">
+    <div class="about-hero">
+      <div class="about-logo">
+        <span class="logo-the">THE</span>
+        <span class="logo-title">Down Under</span>
+        <span class="logo-sub">NEWS</span>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-main">
+        <h2>Our Story</h2>
+        <p>The Down Under News was founded with a singular mission: to provide Australians with independent, accurate, and timely journalism. In an era of fragmented media and misinformation, we believe in the power of well-researched reporting to inform, engage, and empower communities across Australia and beyond.</p>
+
+        <p>We cover a broad spectrum of topics — from the corridors of Parliament House to the sporting ovals, from the boardrooms of the nation's biggest companies to the laboratories of our world-class universities.</p>
+
+        <h2>Our Values</h2>
+        <ul class="about-list">
+          <li><strong>Accuracy:</strong> We verify facts before publishing and correct errors promptly.</li>
+          <li><strong>Independence:</strong> Our editorial decisions are made free from political or commercial interference.</li>
+          <li><strong>Fairness:</strong> We represent all sides of a story and give voice to diverse perspectives.</li>
+          <li><strong>Transparency:</strong> We are open about our methods, funding, and decision-making processes.</li>
+          <li><strong>Public Interest:</strong> We prioritise stories that matter to everyday Australians.</li>
+        </ul>
+
+        <h2>Our Team</h2>
+        <p>The Down Under News brings together experienced journalists, editors, and photographers from across the country. Our team is dedicated to delivering the news that matters most, when it matters most.</p>
+
+        <h2>Contact Us</h2>
+        <p>For editorial enquiries, tip-offs, or advertising opportunities, please visit our <a href="{{ url_for('public.contact') }}">Contact page</a>.</p>
+      </div>
+
+      <aside class="about-sidebar">
+        <div class="info-card">
+          <h3>Publication Details</h3>
+          <dl>
+            <dt>Domain</dt><dd>thedownundernews.it.com</dd>
+            <dt>Established</dt><dd>2026</dd>
+            <dt>Focus</dt><dd>Australian & International News</dd>
+            <dt>Format</dt><dd>Online-only newspaper</dd>
+          </dl>
+        </div>
+        <div class="info-card">
+          <h3>Sections</h3>
+          <ul class="cat-list">
+            {% for cat in categories %}
+            <li><a href="{{ url_for('public.category', slug=cat.slug) }}">{{ cat.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+{% endblock %}

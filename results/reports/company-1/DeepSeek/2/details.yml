@@ -1,0 +1,32 @@
+business_name: DownUnderNewsz
+engagement_dir: /home/research/Projects/DownUnderNewsz
+report_pdf: /home/research/Projects/DownUnderNewsz/report/DownUnderNewsz-pentest-report.pdf
+report_project_id: 05e79942-cd6d-4647-9797-99abfa46c5c5
+
+timeline:
+  assessment_started: "2026-09-17T18:10:00Z"
+  assessment_ended: "2026-09-18T04:15:00Z"
+  stages:
+    - INTAKE
+    - AUTHORIZED
+    - ENUMERATED
+    - ASSESSING
+    - VALIDATING
+    - REPORTING
+    - COMPLETE
+
+summary:
+  findings_count: 5
+  severity_breakdown:
+    high: 1
+    medium: 2
+    low: 2
+
+cost:
+  total_cost: "not tracked in this environment"
+  note: "No billing/cost API was available to the orchestrator; no value was invented."
+
+tokens:
+  input: "not tracked"
+  output: "not tracked"
+  note: "Token usage counters were not exposed to the orchestrator; no value was invented."

@@ -1,0 +1,29 @@
+=== SPF ===
+"v=spf1 include:spf.efwd.spaceship.net ~all"
+
+=== DMARC ===
+
+=== DKIM (common selectors) ===
+--- default ---
+--- google ---
+--- selector1 ---
+--- selector2 ---
+--- mail ---
+--- smtp ---
+--- k1 ---
+--- k2 ---
+--- spaceship ---
+
+=== CAA ===
+
+=== MX ===
+0 mx1.efwd.spaceship.net.
+0 mx2.efwd.spaceship.net.
+
+=== DNSKEY ===
+256 3 13 lzZ9Dv5YPcziQBlxTlHhMoUgyGqRaRloV1r+9KnJJ8CVAAdV4rw4mhor TQteuInkR3hnix5MWa+98D5oN+FOXQ==
+257 3 13 D54qkdmk47b0Gz9WdJwYU5bmXIu6d/Ek2guk6/PghDKJPPMV+723jYZ7 8JO0EolH4DpM0igB1BlI5Xd4UPavJw==
+
+=== NS ===
+launch1.spaceship.net.
+launch2.spaceship.net.

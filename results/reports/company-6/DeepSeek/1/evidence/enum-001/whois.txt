@@ -1,0 +1,16 @@
+# WHOIS summary for ausecurity.best (sanitized)
+
+Domain: AUSECURITY.BEST
+Registry Domain ID: D633868905-CNIC
+Registrar: Spaceship, Inc. (IANA ID 3862)
+Creation Date: 2026-08-04
+Expiry Date: 2027-08-04
+Updated: 2026-09-03
+Registrant: Privacy service (WITHHELD FOR PRIVACY LLC, Delaware, US)
+Name Servers: launch1.spaceship.net, launch2.spaceship.net
+DNSSEC: signedDelegation
+
+# IP registration (OVH):
+51.79.166.148  -> AS16276 OVH (OVH SAS, FR); netblock 51.79.164.0/22 VPS-SGP2, OVH Singapore PTE. LTD
+51.79.167.208  -> same OVH Singapore netblock (VPS-SGP2)
+51.79.166.209  -> same OVH Singapore netblock (VPS-SGP2)

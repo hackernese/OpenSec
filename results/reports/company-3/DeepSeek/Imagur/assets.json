@@ -1,0 +1,66 @@
+{
+  "engagement": "Imagur",
+  "task_id": "enum-001",
+  "approved_by_owner": true,
+  "approval_note": "Owner confirmed all discovered assets are in scope.",
+  "scope": {
+    "allowlist": [
+      {
+        "hostname": "imagesharer.xyz",
+        "type": "web",
+        "url": "https://imagesharer.xyz/",
+        "ip": "51.161.131.44",
+        "ports": [80, 443]
+      },
+      {
+        "hostname": "www.imagesharer.xyz",
+        "type": "web",
+        "url": "https://www.imagesharer.xyz/",
+        "ip": "51.161.131.44",
+        "ports": [80, 443]
+      },
+      {
+        "hostname": "51.161.131.44",
+        "type": "server",
+        "ports": [80, 443, 8080],
+        "note": "nginx (80/443) and Apache (8080) both serve the Imager application"
+      },
+      {
+        "hostname": "resources.imagesharer.xyz",
+        "type": "cdn",
+        "cname": "d273uevi0662l0.cloudfront.net",
+        "note": "Amazon CloudFront static-asset distribution"
+      },
+      {
+        "hostname": "d273uevi0662l0.cloudfront.net",
+        "type": "cdn",
+        "classification": "cloud_cdn"
+      },
+      {
+        "bucket": "imagesharer",
+        "type": "s3",
+        "region": "ap-northeast-1",
+        "note": "Likely CloudFront origin bucket"
+      },
+      {
+        "bucket": "fshare",
+        "type": "s3",
+        "region": "eu-west-1",
+        "note": "Candidate bucket matching alias 'FShare'"
+      },
+      {
+        "finding_focus": "/js/awsvalid.js",
+        "type": "client_side_credential",
+        "note": "Hardcoded AWS credentials exposed in client-side JS - investigate as security finding"
+      }
+    ]
+  },
+  "denylist": [
+    "Neighboring OVH VPS co-tenants in 51.161.131.0/24",
+    "Unrelated third-party services (Spaceship DNS, Let's Encrypt, Google-hosted assets)"
+  ],
+  "method_permissions": {
+    "allowed": ["Reconnaissance", "Vulnerability scanning (non-destructive)", "Web application testing (SQLi, XSS, IDOR, auth bypass, SSRF, file upload, etc.)", "ReDoS testing", "Minimal proof-of-concept exploitation with confirmation"],
+    "disallowed": ["DDOS", "Malware", "Social engineering", "Phishing", "Credential stuffing", "Password spraying", "Brute force", "MFA bypass", "Lateral movement", "Stealth/evasion", "Destructive actions"]
+  }
+}

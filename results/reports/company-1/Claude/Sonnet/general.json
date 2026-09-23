@@ -1,0 +1,154 @@
+{
+  "id": "94e51aa0-4502-411c-84e3-f9f6ed8d66d6",
+  "created": "2026-09-18T00:10:02.628031Z",
+  "updated": "2026-09-18T00:10:02.628369Z",
+  "name": "DownUnderNewsz",
+  "project_type": "72d2ff30-e058-4077-8c90-e0b637d09bfb",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/94e51aa0-4502-411c-84e3-f9f6ed8d66d6",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/94e51aa0-4502-411c-84e3-f9f6ed8d66d6/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/94e51aa0-4502-411c-84e3-f9f6ed8d66d6/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-09-18T00:10:02.635833Z",
+      "updated": "2026-09-18T00:10:02.637670Z",
+      "project": "94e51aa0-4502-411c-84e3-f9f6ed8d66d6",
+      "project_type": "72d2ff30-e058-4077-8c90-e0b637d09bfb",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "executive_summary": "## Overview\n\nDownUnderNewsz engaged an external security assessment of its public-facing internet presence: the main news website (thedownundernews.online and its www version) and a separate media/asset server used to host images and files. Both are run on dedicated servers hosted by OVH in Australia. The assessment was conducted over a single day on 18 September 2026, with explicit authorization confirmed directly with the business beforehand.\n\n## What we found\n\nThe good news first: **no critical or high-severity issues were confirmed.** The website and its infrastructure are, overall, a small and manageable footprint, and nothing found during this assessment indicates that customer data or the website's core content has already been compromised.\n\nTwo issues deserve prompt attention:\n\n1. **An unprotected file-sharing service on the media server.** The server that hosts images and other media files has a file-transfer service (FTP) configured to allow anyone on the internet to connect and download files without a username or password. At the time of testing this only exposed a handful of non-sensitive files, but the lack of any access control means anything placed there in the future\u2014intentionally or by mistake\u2014would be publicly accessible to anyone who knows where to look.\n\n2. **A backend \"side door\" that skips the website's normal encryption.** The main website is properly protected with HTTPS (the padlock icon visitors expect), but the underlying application server can also be reached directly over an unencrypted connection on a separate port. This means the encryption protecting the site\u2014including the administrator login page\u2014can be bypassed entirely if someone knows this alternate path exists, exposing login attempts and other traffic in plain, readable text.\n\nThe remaining four findings are lower-priority \"hardening\" items: the website is missing some standard browser security protections, the security certificate does not cover the \"www\" version of the site (causing a browser warning for some visitors), the domain has no protection in place against attackers sending fake emails that appear to come from @thedownundernews.online, and the administrator login page is reachable by anyone on the internet without any extra layer of restriction.\n\n## Business impact, in plain terms\n\nNone of these issues show evidence of a past or ongoing breach. However, left unaddressed, the two medium-severity items in particular increase the chance that a determined attacker could intercept administrator credentials or access files that should not be public. All identified issues have practical, low-cost fixes that a web hosting administrator or developer can implement, most within a few hours of work.\n\n## Recommended priorities\n\n1. Turn off anonymous access on the media server's file-transfer service.\n2. Block public internet access to the backend application port so all traffic is forced through the encrypted website.\n3. Add standard browser security headers, fix the certificate for the \"www\" address, publish an email anti-spoofing (DMARC) record, and restrict access to the admin login page.\n\nFull technical detail, evidence, and step-by-step remediation guidance for each item is provided in the findings section of this report.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-09-18T00:10:02.635887Z",
+      "updated": "2026-09-18T00:10:02.637675Z",
+      "project": "94e51aa0-4502-411c-84e3-f9f6ed8d66d6",
+      "project_type": "72d2ff30-e058-4077-8c90-e0b637d09bfb",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "scope": "This was an external network and web application security assessment covering DownUnderNewsz's confirmed internet-facing assets:\n\n| Asset | Type | Notes |\n|:---|:---|:---|\n| thedownundernews.online | Root domain / main website | Primary news website |\n| www.thedownundernews.online | Subdomain | www alias of main website |\n| media.thedownundernews.online | Subdomain | Media/asset server |\n| 51.161.130.70 | Server (OVH, Australia) | Hosts the main website/application |\n| 51.161.131.195 | Server (OVH, Australia) | Hosts the media server |\n\n**Out of scope / excluded from testing:** third-party DNS and mail-relay infrastructure operated by the domain registrar (spaceship.net nameservers and efwd.spaceship.net mail relay), third-party content delivery networks (Google Fonts, jsDelivr), an unresolvable legacy domain alias (thedownundernews.it.com) referenced only in the site footer, and the broader OVH network block (AS16276) beyond the two confirmed servers above. These are noted for context only and were not tested.\n\n## Methodology\n\nTesting combined passive and light-touch reconnaissance (DNS records, certificate transparency logs, WHOIS, and Shodan) to confirm the asset inventory, followed by network service enumeration (nmap), review of TLS/SSL certificate configuration, review of HTTP security headers, web content discovery, and targeted, non-destructive testing of discovered functionality (search, contact form, administrative login page, and anonymous FTP access) for common vulnerability classes including cross-site scripting, SQL injection, CORS misconfiguration, information disclosure, and authentication/access-control weaknesses.\n\n## Limitations\n\n- Anonymous FTP **read** access on the media server was confirmed; **write/delete** capability could not be safely validated within the engagement's safety controls and remains an open question the business should verify directly.\n- media.thedownundernews.online returned a 502 Bad Gateway error during testing, indicating its backend application was down or misconfigured; deeper application-level testing of this subdomain beyond confirming the outage was not possible.\n- No credential brute-forcing, password spraying, social engineering, phishing, denial-of-service, or other destructive/prohibited techniques were performed, per the engagement's rules of engagement.\n- Subdomain discovery relied on subfinder, assetfinder, crt.sh, and Shodan (the `amass` tool was unavailable in the assessment environment).\n",
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18",
+        "duration": "1 person-day",
+        "provided_users": "No credentials or user accounts were provided by the client. All testing was performed from an unauthenticated, external attacker's perspective."
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-09-18T00:10:02.635935Z",
+      "updated": "2026-09-18T00:10:02.637680Z",
+      "project": "94e51aa0-4502-411c-84e3-f9f6ed8d66d6",
+      "project_type": "72d2ff30-e058-4077-8c90-e0b637d09bfb",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "customer_name": "DownUnderNewsz",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-09-18T00:10:02.635770Z",
+      "updated": "2026-09-18T00:10:02.637665Z",
+      "project": "94e51aa0-4502-411c-84e3-f9f6ed8d66d6",
+      "project_type": "72d2ff30-e058-4077-8c90-e0b637d09bfb",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "title": "DownUnderNewsz \u2014 External Network & Web Application Penetration Test Report",
+        "report_date": "2026-09-18",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-09-18",
+            "version": "1.0",
+            "description": "Initial report version"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-09-18T00:10:02.635641Z",
+      "updated": "2026-09-18T00:10:02.637657Z",
+      "project": "94e51aa0-4502-411c-84e3-f9f6ed8d66d6",
+      "project_type": "72d2ff30-e058-4077-8c90-e0b637d09bfb",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

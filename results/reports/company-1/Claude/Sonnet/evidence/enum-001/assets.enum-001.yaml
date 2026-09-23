@@ -1,0 +1,174 @@
+task_id: enum-001
+business: DownUnderNewsz
+aliases: ["Down Under Newsz", "The Down Under News"]
+supplied_website: https://www.thedownundernews.online/
+run_mode: passive_and_light_active
+sources_used:
+  - whois (domain + IP RDAP)
+  - dig (A/AAAA/NS/MX/TXT/CNAME)
+  - subfinder (passive)
+  - assetfinder (passive)
+  - crt.sh (certificate transparency)
+  - shodan host / shodan search (API)
+  - openssl s_client (TLS SAN inspection)
+  - curl (authorized HTTP header check + homepage source review)
+  - whois.cymru.com / ARIN route object (ASN attribution)
+sources_unavailable:
+  - amass (blocked: sandbox requires interactive sudo password)
+  - general web search for aliases (blocked: Google JS-redirect page via webfetch)
+  - SecurityTrails / VirusTotal / Censys (no API keys configured)
+
+assets:
+  confirmed:
+    - asset: thedownundernews.online
+      type: root_domain
+      evidence: >
+        Root domain supplied by owner. Direct authorized GET with header
+        'IsAuthorized: true' returned the exact expected 'AuthorizedCode'
+        response header, cryptographically confirming this is the
+        owner-controlled, authorized asset. Evidence:
+        evidence/enum-001/headers_root_authcheck.txt
+      confidence: 100
+      target_contact: true
+
+    - asset: 51.161.130.70
+      type: ip
+      evidence: >
+        A record for thedownundernews.online and www subdomain. Shodan
+        host confirms nginx serving "The Down Under News" title, TLS cert
+        CN=thedownundernews.online, reverse DNS vps-8d3f63bd.vps.ovh.ca
+        (dedicated OVH VPS, not shared CDN edge). Evidence:
+        evidence/enum-001/shodan_51.161.130.70.txt
+      confidence: 98
+      target_contact: false
+
+    - asset: www.thedownundernews.online
+      type: subdomain
+      evidence: >
+        Resolves to same IP (51.161.130.70) and serves identical homepage
+        content as the authorized root domain. Note: TLS certificate only
+        covers CN=thedownundernews.online (no SAN for www), causing cert
+        validation failure over HTTPS for this hostname — a configuration
+        gap worth flagging in the assessment, not an ownership doubt.
+      confidence: 95
+      target_contact: true
+
+    - asset: media.thedownundernews.online
+      type: subdomain
+      evidence: >
+        Discovered independently by subfinder passive enumeration.
+        Resolves to a separate dedicated OVH VPS (51.161.131.195) with its
+        own Let's Encrypt certificate issued specifically for
+        CN=media.thedownundernews.online, and reverse DNS
+        vps-edee2c79.vps.ovh.ca. Confirmed live via direct HTTP request
+        (301 redirect to HTTPS) and Shodan hostname index. Evidence:
+        evidence/enum-001/subfinder.txt, shodan_51.161.131.195.txt,
+        media_http_headers.txt
+      confidence: 92
+      target_contact: true
+
+    - asset: 51.161.131.195
+      type: ip
+      evidence: >
+        A record for media.thedownundernews.online; dedicated OVH VPS with
+        host-specific TLS cert (CN=media.thedownundernews.online).
+        Backend currently returns HTTPS 502 Bad Gateway (app/service
+        issue, noted for assessment but not exploited).
+      confidence: 92
+      target_contact: false
+
+  likely:
+    - asset: AS16276 (OVH SAS / OVH Australia Pty Ltd)
+      type: asn
+      evidence: >
+        Both confirmed IPs (51.161.130.70, 51.161.131.195) route through
+        AS16276 per whois.cymru.com and ARIN route object for
+        51.161.128.0/17 (RPKI-valid). Provided as hosting-infrastructure
+        context; the ASN/netblock itself is OVH-owned shared provider
+        space, not exclusively the business's, so it is noted for context
+        rather than as a directly testable owned asset.
+      confidence: 70
+      target_contact: false
+
+    - asset: thedownundernews.it.com
+      type: domain (alias, unresolvable)
+      evidence: >
+        Explicitly self-declared by the target's own official homepage
+        footer: "Domain: thedownundernews.it.com" (first-party evidence
+        from authorized site content). However, DNS resolution failed via
+        local resolver, 8.8.8.8, and 1.1.1.1 (no A/AAAA/NS records), no
+        crt.sh certificate history exists, and direct HTTP/HTTPS requests
+        received no response. Likely an aspirational/legacy alias or
+        template remnant rather than live infrastructure — kept as
+        "likely" ownership but NOT technically testable/in-scope until it
+        resolves. Evidence: evidence/enum-001/whois_thedownundernews.it.com.txt,
+        homepage_source.html
+      confidence: 65
+      target_contact: false
+
+  candidate: []
+
+  rejected: []
+
+  cloud_cdn:
+    - asset: cdn.jsdelivr.net
+      type: third_party_cdn
+      evidence: >
+        Referenced as a static-asset CDN script/style source in the
+        authorized homepage HTML source. Shared multi-tenant public CDN,
+        not attributable infrastructure per scope rules.
+      confidence: n/a
+      target_contact: false
+
+    - asset: fonts.googleapis.com / fonts.gstatic.com
+      type: third_party_cdn
+      evidence: >
+        Google Fonts resources referenced in homepage HTML source. Shared
+        Google-owned infrastructure, out of scope per non-negotiable
+        operating rules.
+      confidence: n/a
+      target_contact: false
+
+  third_party:
+    - asset: launch1.spaceship.net / launch2.spaceship.net
+      type: dns_nameserver
+      evidence: >
+        Authoritative nameservers per WHOIS for thedownundernews.online.
+        Registrar-operated shared DNS platform (Spaceship, Inc.) — not an
+        owned/testable asset.
+      target_contact: false
+
+    - asset: mx1.efwd.spaceship.net / mx2.efwd.spaceship.net
+      type: mail_infrastructure
+      evidence: >
+        MX records for thedownundernews.online, resolving to
+        162.255.118.11/.12. Registrar-provided email-forwarding service
+        (Spaceship efwd). SPF record confirms
+        "include:spf.efwd.spaceship.net". No DMARC record present (gap to
+        note, not to test destructively). Third-party shared mail relay,
+        not directly owned infrastructure.
+      target_contact: false
+
+    - asset: Google Maps Business Listing (DownUnderNewsz)
+      type: social_directory_listing
+      evidence: >
+        Business listing URL supplied by owner. Used only for identity
+        corroboration (name/address match); not a testable technical
+        asset per scope rules.
+      target_contact: false
+
+warnings:
+  - "amass passive enumeration could not run in this sandbox (requires interactive sudo password); coverage relies on subfinder + assetfinder + crt.sh + Shodan cross-validation, which independently agreed on the same single extra subdomain (media)."
+  - "General web search for organizational aliases was blocked by Google's JS-redirect interstitial via the available webfetch tool; no alternate search API/key was available to substitute."
+  - "www.thedownundernews.online has no TLS certificate SAN covering 'www' — HTTPS clients will hit a certificate validation error against this hostname even though content is identical to the authorized root domain. Recommend the owner add 'www' to the certificate SAN list (operational hygiene note, not a vulnerability finding at this stage)."
+  - "media.thedownundernews.online currently returns HTTPS 502 Bad Gateway — backend/application appears down or misconfigured on that host. Flagged for the assessment phase to check service health (non-intrusively) rather than assume compromise."
+  - "thedownundernews.it.com is self-declared by the business's own site but does not currently resolve in DNS; kept as 'likely' for attribution purposes only. No live testing possible against this name."
+  - "No SecurityTrails, VirusTotal, or Censys API credentials were available in this environment; Shodan was available and used for IP/host corroboration."
+
+summary_counts:
+  confirmed: 5
+  likely: 2
+  candidate: 0
+  rejected: 0
+  cloud_cdn: 2
+  third_party: 3

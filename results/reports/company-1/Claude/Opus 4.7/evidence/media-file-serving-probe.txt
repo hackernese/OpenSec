@@ -1,0 +1,66 @@
+502  https://media.thedownundernews.online/37550846eae5457d93ddd8e1d2faeaca.html
+502  https://media.thedownundernews.online/58e75939c3d24841806d3a069e919576.png
+502  https://media.thedownundernews.online/66ea642847be4ef0a800fb8cb8432d79.png
+502  https://media.thedownundernews.online/d2273a1a2576489fb419cc1049c4c62f.pdf
+301  http://51.161.131.195/37550846eae5457d93ddd8e1d2faeaca.html
+301  http://51.161.131.195/58e75939c3d24841806d3a069e919576.png
+301  http://51.161.131.195/66ea642847be4ef0a800fb8cb8432d79.png
+301  http://51.161.131.195/d2273a1a2576489fb419cc1049c4c62f.pdf
+301  http://51.161.131.195/media/37550846eae5457d93ddd8e1d2faeaca.html
+301  http://51.161.131.195/media/58e75939c3d24841806d3a069e919576.png
+301  http://51.161.131.195/media/66ea642847be4ef0a800fb8cb8432d79.png
+301  http://51.161.131.195/media/d2273a1a2576489fb419cc1049c4c62f.pdf
+301  http://51.161.131.195/files/37550846eae5457d93ddd8e1d2faeaca.html
+301  http://51.161.131.195/files/58e75939c3d24841806d3a069e919576.png
+301  http://51.161.131.195/files/66ea642847be4ef0a800fb8cb8432d79.png
+301  http://51.161.131.195/files/d2273a1a2576489fb419cc1049c4c62f.pdf
+
+=== If the HTML is served, capture content-type and body ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Fri, 18 Sep 2026 01:59:42 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 01:59:42 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 01:59:42 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+
+=== Test article listing / homepage for references to file hash ===
+
+=== Test each article page for media references ===
+--- /article/welcome-to-the-down-under-news ---
+href="#"
+href="/"
+href="/about"
+href="/article/high-speed-rail-sydney-melbourne-2031"
+href="/category/business"
+href="/category/entertainment"
+href="/category/opinion"
+href="/category/politics"
+href="/category/science"
+href="/category/sports"
+href="/category/technology"
+href="/category/world"
+href="/contact"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+href="https://fonts.googleapis.com"
+href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap"
+href="https://fonts.gstatic.com"
+href="https://thedownundernews.it.com"
+href="https://twitter.com/intent/tweet?text=Welcome%20to%20The%20Down%20Under%20News&url=http%3A//www.thedownundernews.online/article/welcome-to-the-down-under-news"
+href="https://www.facebook.com/sharer/sharer.php?u=http%3A//www.thedownundernews.online/article/welcome-to-the-down-under-news"

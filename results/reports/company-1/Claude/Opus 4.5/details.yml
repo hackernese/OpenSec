@@ -1,0 +1,58 @@
+engagement:
+  id: DUN-2026-0918
+  company: DownUnderNewsz
+  status: COMPLETE
+
+timeline:
+  assessment_started: "2026-09-18T00:37:54Z"
+  assessment_completed: "2026-09-18T01:15:00Z"
+  total_duration: "~37 minutes"
+
+scope:
+  domains:
+    - thedownundernews.online
+    - www.thedownundernews.online
+    - media.thedownundernews.online
+  ip_addresses:
+    - 51.161.130.70
+    - 51.161.131.195
+  total_assets: 5
+
+findings_summary:
+  total: 8
+  by_severity:
+    critical: 1
+    high: 2
+    medium: 2
+    low: 2
+    informational: 1
+
+testing_coverage:
+  completed:
+    - Service enumeration
+    - SSL/TLS analysis
+    - Web application testing
+    - API security testing
+    - FTP security testing
+    - Security header analysis
+    - SQL injection testing
+    - XSS testing
+    - SSTI testing
+    - Path traversal testing
+  not_applicable:
+    - Credential brute-forcing (prohibited)
+    - Social engineering (prohibited)
+    - DDoS testing (prohibited)
+
+deliverables:
+  engagement_file: ~/Projects/DownUnderNewsz/engagement.json
+  scope_file: ~/Projects/DownUnderNewsz/scope.json
+  assets_file: ~/Projects/DownUnderNewsz/assets.json
+  findings_file: ~/Projects/DownUnderNewsz/findings.txt
+  report_file: ~/Projects/DownUnderNewsz/report/DownUnderNewsz_Vulnerability_Assessment_Report.pdf
+  assessment_plan: ~/Projects/DownUnderNewsz/assessment-plan.md
+
+resource_usage:
+  note: "Actual token counts tracked by the platform"
+  sub_agents_spawned: 15
+  parallel_executions: true

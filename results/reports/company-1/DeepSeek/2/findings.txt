@@ -1,0 +1,138 @@
+# Finding: Stored Cross-Site Scripting (XSS) via Article Content
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N
+Affected: https://thedownundernews.online/ (article content, public + admin)
+References: https://owasp.org/www-community/attacks/xss/
+
+Summary:
+Any user who can publish an article (the "editor" role) can inject arbitrary
+JavaScript that runs in the browser of every visitor to the news site. There is
+no server-side sanitisation of the article body.
+
+Description:
+The article "content" field is rendered as raw HTML on public article pages
+(rendered with a "safe"/Markup filter), while the create/update API
+(POST/PUT /api/admin/articles) stores the field verbatim with no sanitisation.
+Verified end-to-end during the assessment: a payload of
+<script>alert(document.domain)</script><img src=x onerror=alert(1)> was stored
+byte-for-byte, the article was published by an editor account, and the payload
+was returned unescaped on the public article page (executable). Writer accounts
+cannot publish (server enforces draft), so exploitation requires an editor or
+admin account. Impact is high because the stored script executes in the context
+of every visitor, including logged-in administrators, allowing session abuse
+(e.g. issuing authenticated requests) and full compromise of the application's
+security boundary.
+
+Recommendation:
+Sanitise/allowlist HTML on the server side before storing article content
+(e.g. Bleach/nh3 or a strict allowlist), or render content with an HTML
+sanitiser. Do not rely on the client-side TinyMCE editor for security. Consider
+restricting the "publish" permission and applying a Content-Security-Policy.
+
+---
+
+# Finding: Anonymous FTP Read Access to Media Files
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: 51.161.131.195 (media.thedownundernews.online) — vsftpd 3.0.5 on port 21
+References: https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/03-Testing_for_Weak_Authentication
+
+Summary:
+The dedicated media server exposes its stored media files to anonymous
+(unauthenticated) FTP users. Anyone on the internet can list and read the files
+the CMS uploads.
+
+Description:
+The media VPS (51.161.131.195, vsftpd 3.0.5) permits anonymous login. A
+directory listing returned media files including a PDF document:
+58e75939c3d24841806d3a069e919576.png, 66ea642847be4ef0a800fb8cb8432d79.png, and
+d2273a1a2576489fb419cc1049c4c62f.pdf. Anonymous write (upload) was tested and
+correctly denied, so the exposure is read-only. Files that are intended to be
+internal (e.g. drafts, documents) may be exposed without authentication.
+
+Recommendation:
+Disable anonymous FTP access (set anonymous_enable=NO in vsftpd.conf). Serve
+media only over authenticated/authorised HTTP(S) channels, and restrict access
+at the network level to the application server if media must remain private.
+
+---
+
+# Finding: Missing CSRF Protection on Administrative Endpoints
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N
+Affected: https://thedownundernews.online/ (all /api/admin/* and /admin/* state-changing endpoints)
+References: https://owasp.org/www-community/attacks/csrf
+
+Summary:
+The admin panel performs no Cross-Site Request Forgery (CSRF) defence: no CSRF
+tokens, no Origin/Referer validation, and the session cookie carries no SameSite
+attribute.
+
+Description:
+Every admin form and API call relies solely on the session cookie
+(access_token_cookie, a JWT) with no CSRF token. Verified during the assessment:
+a state-changing POST /api/admin/articles carrying a cross-origin Origin and
+Referer header (evil.example.com) and no CSRF token succeeded with 201 Created.
+The session cookie also has no SameSite attribute. Modern browsers default to
+SameSite=Lax, which partially mitigates cross-site POST requests, but the
+application itself provides no CSRF defence and this relies entirely on
+browser-default behaviour. Affected operations include creating/updating/deleting
+articles, deleting media, resetting user passwords, and deleting users.
+
+Recommendation:
+Implement synchronizer-token CSRF protection on all state-changing endpoints and
+forms, set SameSite=Lax (or Strict) on the session cookie, and validate the
+Origin/Referer header for state-changing requests.
+
+---
+
+# Finding: Session Cookie Missing Secure and SameSite Flags
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N
+Affected: https://thedownundernews.online/ (access_token_cookie and session cookies)
+References: https://owasp.org/www-community/controls/SecureCookieAttribute
+
+Summary:
+The authentication cookie is not marked Secure, and neither it nor the Flask
+session cookie carries a SameSite attribute.
+
+Description:
+The login response sets access_token_cookie with HttpOnly and Path=/ only — no
+Secure and no SameSite attribute. Port 80 is open (it returns a 301 redirect to
+HTTPS). Because the cookie is not marked Secure, a browser would transmit the
+session token in cleartext if a plain-HTTP request were triggered (e.g. HTTPS
+stripping or a malicious link), enabling session theft by a network attacker
+before the redirect occurs. The missing SameSite attribute is also a factor in
+the CSRF finding above.
+
+Recommendation:
+Set Secure and SameSite=Lax on the access_token_cookie (and session cookie).
+Consider enabling HSTS so browsers always use HTTPS.
+
+---
+
+# Finding: Missing HTTP Security Headers
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N
+Affected: https://thedownundernews.online/ and https://media.thedownundernews.online/
+References: https://owasp.org/www-project-secure-headers/
+
+Summary:
+The web application and media host do not set common security-related HTTP
+response headers.
+
+Description:
+Responses from the main site contain only Server, Date, Content-Type,
+Content-Length and Connection. The following security headers are absent:
+Strict-Transport-Security (HSTS), Content-Security-Policy, X-Content-Type-Options,
+X-Frame-Options, Referrer-Policy, and Permissions-Policy. The absence of
+X-Frame-Options / CSP frame-ancestors permits clickjacking of pages (including
+the admin panel). The absence of HSTS leaves initial connections and redirects
+vulnerable to downgrade. The absence of CSP reduces defence-in-depth against the
+stored XSS described in the first finding.
+
+Recommendation:
+Add the missing headers at the nginx layer, at minimum: Strict-Transport-Security,
+X-Content-Type-Options: nosniff, X-Frame-Options: DENY (or CSP frame-ancestors),
+and a Content-Security-Policy. Set Referrer-Policy and Permissions-Policy as
+appropriate.

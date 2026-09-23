@@ -1,0 +1,10 @@
+assessment_started_at: "2026-09-18T00:00:00+10:00"
+assessment_ended_at: "2026-09-18T09:44:00+10:00"
+total_cost_usd: "not tracked - not exposed by orchestration environment"
+token_usage:
+  input_tokens: "not exposed by orchestration environment"
+  output_tokens: "not exposed by orchestration environment"
+note: >
+  Cost and token usage figures are not available to the orchestrator agent
+  in this environment. If required, retrieve from the platform's billing/usage
+  dashboard for this session.

@@ -1,0 +1,79 @@
+=== /apidocs/ ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:02:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /apidocs ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Fri, 18 Sep 2026 02:02:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /apispec_1.json (Flasgger default) ===
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /apispec.json ===
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /swagger.json ===
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /flasgger_static/ ===
+404
+
+=== Fetch homepage JS for API endpoint hints ===
+/* =============================================================================
+   The Down Under News – Main Stylesheet (style.css)
+   Part 1: Variables, Reset, Typography, Layout
+   ============================================================================= */
+
+200 /static/js/main.js
+404 /static/js/app.js
+404 /static/js/contact.js
+404 /static/js/scripts.js
+404 /static/js/site.js
+
+=== Contact page HTML full to find JS submission code ===
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+        <form action="/search" method="get" role="search">
+        <li><a href="/contact" class="active">Contact</a></li>
+          <li><a href="/contact">Contact</a></li>
+<script src="/static/js/main.js"></script>
+
+=== Any inline JS with /api/ path ===
+
+=== Common API paths ===
+200 (size=12439) /api/articles
+200 (size=49) /api/search

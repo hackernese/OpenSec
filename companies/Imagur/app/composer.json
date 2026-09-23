@@ -1,0 +1,24 @@
+{
+    "name": "imager/imager",
+    "description": "Multi-account image hosting platform",
+    "type": "project",
+    "require": {
+        "php": ">=8.2",
+        "firebase/php-jwt": "^6.10",
+        "aws/aws-sdk-php": "^3.321"
+    },
+    "autoload": {
+        "psr-4": {
+            "Imager\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "audit": {
+            "ignore": [
+                "PKSA-y2cr-5h3j-g3ys"
+            ]
+        }
+    }
+}

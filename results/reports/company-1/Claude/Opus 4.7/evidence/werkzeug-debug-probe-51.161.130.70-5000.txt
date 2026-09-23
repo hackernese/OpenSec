@@ -1,0 +1,155 @@
+=== ROOT (http port 5000) ===
+HTTP/1.1 200 OK
+Server: gunicorn
+Date: Fri, 18 Sep 2026 01:27:58 GMT
+Connection: keep-alive
+Content-Type: text/html; charset=utf-8
+Content-Length: 23011
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Breaking news, politics, business, sports, technology and more from Australia and around the world." />
+  <title>The Down Under News – Australia's Independent Online Newspaper</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  
+</head>
+<body>
+
+<!-- ===== BREAKING NEWS TICKER ===== -->
+<div class="breaking-bar" id="breakingBar">
+  <span class="breaking-label">BREAKING</span>
+  <div class="breaking-ticker">
+    <span id="breakingText">Loading latest headlines…</span>
+  </div>
+  <button class="breaking-close" onclick="document.getElementById('breakingBar').style.display='none'" aria-label="Close breaking news">&times;</button>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="container">
+      <div class="header-date">
+        <i class="bi bi-calendar3"></i>
+        <span id="headerDate"></span>
+      </div>
+      <div class="header-social">
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <a href="/" class="site-logo">
+        <div class="logo-text">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+      </a>
+      <div class="header-search">
+        <form action="/search" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="" aria-label="Search news" />
+          <button type="submit" aria-label="Submit search"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+    <div class="container">
+      <ul class="nav-list">
+
+=== ROOT (https port 5000) ===
+
+=== /console (debug console path) ===
+HTTP/1.1 404 NOT FOUND
+Server: gunicorn
+Date: Fri, 18 Sep 2026 01:28:08 GMT
+Connection: keep-alive
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /console (https) ===
+
+=== /nonexistent (trigger 404 for Werkzeug fingerprint) ===
+HTTP/1.1 404 NOT FOUND
+Server: gunicorn
+Date: Fri, 18 Sep 2026 01:28:19 GMT
+Connection: keep-alive
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /?__debugger__=yes&cmd=resource&f=style.css ===
+HTTP/1.1 200 OK
+Server: gunicorn
+Date: Fri, 18 Sep 2026 01:28:19 GMT
+Connection: keep-alive
+Content-Type: text/html; charset=utf-8
+Content-Length: 23011
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Breaking news, politics, business, sports, technology and more from Australia and around the world." />
+  <title>The Down Under News – Australia's Independent Online Newspaper</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  
+</head>
+<body>
+
+<!-- ===== BREAKING NEWS TICKER ===== -->
+<div class="breaking-bar" id="breakingBar">
+  <span class="breaking-label">BREAKING</span>
+  <div class="breaking-ticker">
+    <span id="breakingText">Loading latest headlines…</span>
+  </div>
+  <button class="breaking-close" onclick="document.getElementById('breakingBar').style.display='none'" aria-label="Close breaking news">&times;</button>
+</div>
+
+<!-- ===== HEADER ===== -->

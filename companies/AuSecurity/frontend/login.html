@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — Ausecurity</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      padding: 2rem 1rem;
+    }
+
+    .login-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    }
+
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy);
+      text-decoration: none;
+      margin-bottom: 1.75rem;
+      justify-content: center;
+    }
+
+    .login-brand span { color: var(--blue); }
+
+    .login-card h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.25rem;
+      text-align: center;
+    }
+
+    .login-subtitle {
+      font-size: 0.875rem;
+      color: var(--slate);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: var(--navy);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid #D1D5DB;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--navy);
+      background: var(--bg);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,168,232,0.15);
+    }
+
+    .form-group input.error {
+      border-color: #e53e3e;
+    }
+
+    .field-error {
+      font-size: 0.8rem;
+      color: #e53e3e;
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    .field-error.visible { display: block; }
+
+    .btn-login {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      justify-content: center;
+    }
+
+    #login-error {
+      background: #FFF5F5;
+      border: 1px solid #FEB2B2;
+      color: #C53030;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+
+    #login-error.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+
+      <a href="index.html" class="login-brand" aria-label="Ausecurity home">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+
+      <h1>Admin Login</h1>
+      <p class="login-subtitle">Sign in to access the admin panel</p>
+
+      <div id="login-error" role="alert" aria-live="polite"></div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            autocomplete="username"
+            required
+            aria-required="true"
+            aria-describedby="username-error"
+          />
+          <div id="username-error" class="field-error" role="alert"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            required
+            aria-required="true"
+            aria-describedby="password-error"
+          />
+          <div id="password-error" class="field-error" role="alert"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-login">Sign In</button>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

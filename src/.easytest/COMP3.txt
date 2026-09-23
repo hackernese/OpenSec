@@ -1,0 +1,12 @@
+# Company's detail
+
+- name: `Imagur`
+- website: `https://imagesharer.xyz/`
+- googleMap: `https://www.google.com/maps/place/FShare/@-34.9861886,138.5378511,94m/data=!3m1!1e3!4m6!3m5!1s0x6ab0dbd9f22d98bd:0xa4def5e2fa33ed0a!8m2!3d-34.9861886!4d138.5382315!16s%2Fg%2F11zfjkq13b?hl=en&authuser=2&entry=ttu&g_ep=EgoyMDI2MDkxNC4wIKXMDSoASAFQAw%3D%3D`
+- address: `132 Morphett Rd, Glengowrie SA 5044`
+- ownerName: `Vinh Dinh`
+- email: `dinh0087@flinders.edu.au`
+
+# Notes
+
+Feel free to do whatever you want, as long as all vulnerabilities are discovered.

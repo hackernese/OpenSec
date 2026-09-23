@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Down Under News – Australia's independent online newspaper." />
+  <title>Search: test – The Down Under News</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  
+</head>
+<body>
+
+<!-- ===== BREAKING NEWS TICKER ===== -->
+<div class="breaking-bar" id="breakingBar">
+  <span class="breaking-label">BREAKING</span>
+  <div class="breaking-ticker">
+    <span id="breakingText">Loading latest headlines…</span>
+  </div>
+  <button class="breaking-close" onclick="document.getElementById('breakingBar').style.display='none'" aria-label="Close breaking news">&times;</button>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="container">
+      <div class="header-date">
+        <i class="bi bi-calendar3"></i>
+        <span id="headerDate"></span>
+      </div>
+      <div class="header-social">
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <a href="/" class="site-logo">
+        <div class="logo-text">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+      </a>
+      <div class="header-search">
+        <form action="/search" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="test" aria-label="Search news" />
+          <button type="submit" aria-label="Submit search"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/" >Home</a></li>
+        
+        <li>
+          <a href="/category/politics"
+             >
+            Politics
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/business"
+             >
+            Business
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/technology"
+             >
+            Technology
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/sports"
+             >
+            Sports
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/entertainment"
+             >
+            Entertainment
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/science"
+             >
+            Science
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/world"
+             >
+            World
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/opinion"
+             >
+            Opinion
+          </a>
+        </li>
+        
+        <li><a href="/about" >About</a></li>
+        <li><a href="/contact" >Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="main-content">
+  
+<div class="container">
+  <header class="page-header">
+    <h1 class="page-title">
+      
+        Results for "<em>test</em>"
+      
+    </h1>
+    
+    <p class="page-count">1 result found</p>
+    
+  </header>
+
+  <!-- Search form -->
+  <div class="search-form-wrapper">
+    <form action="/search" method="get" class="search-form-full" role="search">
+      <div class="search-input-group">
+        <input type="search" name="q" value="test" placeholder="Search articles, topics, keywords…" aria-label="Search" autofocus />
+        <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+      </div>
+      <div class="search-filters">
+        <label for="search-category">Category:</label>
+        <select name="category" id="search-category" onchange="this.form.submit()">
+          <option value="">All Categories</option>
+          
+          <option value="politics" >Politics</option>
+          
+          <option value="business" >Business</option>
+          
+          <option value="technology" >Technology</option>
+          
+          <option value="sports" >Sports</option>
+          
+          <option value="entertainment" >Entertainment</option>
+          
+          <option value="science" >Science</option>
+          
+          <option value="world" >World</option>
+          
+          <option value="opinion" >Opinion</option>
+          
+        </select>
+      </div>
+    </form>
+  </div>
+
+  
+    
+    <div class="search-results">
+      
+      <article class="search-result-card">
+        
+        <div class="result-content">
+          
+          <a href="/category/sports" class="category-badge sm">Sports</a>
+          
+          <h3><a href="/article/australia-wins-back-to-back-test-series-england">Australia Wins Back-to-Back Test Series Against England</a></h3>
+          
+          <p>Australia retains the Ashes 3-1 with a dominant Test series win, as Cummins claims five wickets in the decider.</p>
+          
+          <div class="article-meta">
+            <span><i class="bi bi-person"></i> Site Administrator</span>
+            <span><i class="bi bi-clock"></i> 10 Sep 2026</span>
+          </div>
+        </div>
+      </article>
+      
+    </div>
+
+    
+
+    
+  
+</div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+        <p>Australia's trusted independent online newspaper, delivering accurate and timely news coverage across the nation and the world.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Sections</h4>
+        <ul>
+          
+          <li><a href="/category/politics">Politics</a></li>
+          
+          <li><a href="/category/business">Business</a></li>
+          
+          <li><a href="/category/technology">Technology</a></li>
+          
+          <li><a href="/category/sports">Sports</a></li>
+          
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>More</h4>
+        <ul>
+          
+          <li><a href="/category/entertainment">Entertainment</a></li>
+          
+          <li><a href="/category/science">Science</a></li>
+          
+          <li><a href="/category/world">World</a></li>
+          
+          <li><a href="/category/opinion">Opinion</a></li>
+          
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Advertise With Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <span id="footerYear"></span> The Down Under News. All rights reserved.</p>
+      <p>Domain: <a href="https://thedownundernews.it.com">thedownundernews.it.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== BACK TO TOP ===== -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <i class="bi bi-chevron-up"></i>
+</button>
+
+<script src="/static/js/main.js"></script>
+
+</body>
+</html>

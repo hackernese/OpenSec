@@ -1,0 +1,6 @@
+############### 51.161.130.70:22 ###############
+/bin/bash: line 1: ssh-audit: command not found
+
+############### 51.161.131.195:22 ###############
+/bin/bash: line 1: ssh-audit: command not found
+

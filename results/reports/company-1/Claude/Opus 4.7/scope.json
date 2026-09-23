@@ -1,0 +1,52 @@
+{
+  "approved_at": "2026-09-18",
+  "approved_by": "Vinh Dinh (owner)",
+  "in_scope": {
+    "domains": [
+      "thedownundernews.online",
+      "www.thedownundernews.online",
+      "media.thedownundernews.online"
+    ],
+    "ipv4": [
+      "51.161.130.70",
+      "51.161.131.195"
+    ]
+  },
+  "out_of_scope": {
+    "reason_third_party_or_not_owned": [
+      "Spaceship (registrar, NS, mail forwarding infrastructure)",
+      "OVH Australia (all IPs except the two listed above)",
+      "Cloudflare",
+      "jsdelivr.net",
+      "Google Fonts (fonts.googleapis.com, fonts.gstatic.com)",
+      "Let's Encrypt",
+      "Flinders University domains"
+    ],
+    "reason_not_live": [
+      "thedownundernews.it.com (footer-referenced, no DNS zone; owner opted to exclude)"
+    ]
+  },
+  "method_permissions": {
+    "allowed": [
+      "Passive OSINT",
+      "Active but non-destructive port scanning",
+      "Web application testing (safe payloads: XSS reflection, SQLi error/boolean, IDOR probes, path traversal, SSRF probes, LFI, open redirect)",
+      "Directory/endpoint enumeration (rate-limited)",
+      "Vulnerability scanners (nuclei, nikto) with default/non-intrusive templates",
+      "TLS/SSH cipher enumeration",
+      "Anonymous service probes (e.g., FTP anonymous login check)",
+      "Werkzeug DEBUG PIN check (read-only)"
+    ],
+    "forbidden": [
+      "DDoS / stress testing",
+      "Password brute force / credential stuffing / password spraying",
+      "MFA bypass",
+      "Social engineering / phishing",
+      "Malware / persistent implants",
+      "Lateral movement",
+      "Data exfiltration beyond minimal proof-of-concept",
+      "Destructive payloads that modify data or state",
+      "Testing any asset not listed in in_scope"
+    ]
+  }
+}

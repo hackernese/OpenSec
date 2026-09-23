@@ -1,0 +1,8 @@
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.22.1
+Date: Fri, 18 Sep 2026 02:52:32 GMT
+Content-Type: text/html
+Content-Length: 169
+Connection: keep-alive
+Location: https://51.79.166.148/
+

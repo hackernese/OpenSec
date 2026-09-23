@@ -1,0 +1,63 @@
+{
+  "enumeration_task": "enum-001",
+  "enumerated_at": "2026-09-18T00:38:00Z",
+  "assets": [
+    {
+      "id": "asset-001",
+      "type": "domain",
+      "identifier": "thedownundernews.online",
+      "ip": "51.161.130.70",
+      "confidence": "confirmed",
+      "evidence": ["DNS A record resolves to 51.161.130.70", "SSL certificate valid for domain"]
+    },
+    {
+      "id": "asset-002",
+      "type": "subdomain",
+      "identifier": "www.thedownundernews.online",
+      "ip": "51.161.130.70",
+      "confidence": "confirmed",
+      "evidence": ["DNS CNAME to root domain", "Same SSL certificate"]
+    },
+    {
+      "id": "asset-003",
+      "type": "subdomain",
+      "identifier": "media.thedownundernews.online",
+      "ip": "51.161.131.195",
+      "confidence": "confirmed",
+      "evidence": ["DNS A record", "SSL certificate includes this subdomain", "Same registrant"]
+    },
+    {
+      "id": "asset-004",
+      "type": "server",
+      "identifier": "51.161.130.70",
+      "hostname": "vps-8d3f63bd.vps.ovh.ca",
+      "provider": "OVH Australia",
+      "confidence": "confirmed",
+      "open_ports": [22, 80, 443, 5000],
+      "evidence": ["Hosts main website", "Reverse DNS confirms VPS"]
+    },
+    {
+      "id": "asset-005",
+      "type": "server",
+      "identifier": "51.161.131.195",
+      "hostname": "vps-edee2c79.vps.ovh.ca",
+      "provider": "OVH Australia",
+      "confidence": "confirmed",
+      "open_ports": [21, 22, 80, 443],
+      "evidence": ["Hosts media subdomain", "Reverse DNS confirms VPS"]
+    }
+  ],
+  "technology_stack": {
+    "web_server": "nginx",
+    "backend": "Gunicorn (Python WSGI)",
+    "os": "Debian 13",
+    "ssl": "Let's Encrypt",
+    "ftp": "vsftpd 3.0.5"
+  },
+  "warnings": [
+    "Port 5000 exposed on main server - backend directly accessible",
+    "FTP service running on media server",
+    "Media server returning 502 Bad Gateway",
+    "No robots.txt or security.txt found"
+  ]
+}

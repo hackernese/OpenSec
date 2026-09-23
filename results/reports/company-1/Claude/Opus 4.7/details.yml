@@ -1,0 +1,41 @@
+engagement:
+  business: DownUnderNewsz
+  owner: Vinh Dinh
+  primary_website: https://www.thedownundernews.online/
+  engagement_directory: /home/research/Projects/DownUnderNewsz
+
+timing:
+  start_utc: "2026-09-18T00:44:00Z"   # intake received / project directory created
+  end_utc:   "2026-09-18T01:49:00Z"   # PDF report finalised
+  duration_minutes: 65
+
+findings:
+  total: 16
+  by_severity:
+    high: 4
+    medium: 7
+    low: 4
+    info: 1
+
+deliverables:
+  findings_file: /home/research/Projects/DownUnderNewsz/findings.txt
+  report_pdf: /home/research/Projects/DownUnderNewsz/report/DownUnderNewsz-Assessment-Report.pdf
+  sysreptor_project_id: 7a4fd86b-704d-4cff-9fd3-73eab79b7d77
+  sysreptor_project_url: http://localhost:8000/projects/7a4fd86b-704d-4cff-9fd3-73eab79b7d77
+
+cost_and_token_usage:
+  note: |
+    Exact cost and token usage figures are not directly retrievable by the primary orchestrator
+    from within this session. They are visible on the OpenCode session dashboard and in the
+    per-turn usage logs. Populate the fields below from that source when closing the engagement.
+  total_cost_usd: null
+  input_tokens: null
+  output_tokens: null
+  cache_read_tokens: null
+  cache_write_tokens: null
+
+limitations_recorded:
+  - "Stored XSS on the /article/{slug}/comment content field could not be verified: execution sub-agents refused all POST requests carrying HTML/script payloads (including benign <b>...</b>). Comments are stored immediately without moderation; recommend manual browser-based verification by the site owner."
+  - "Slowloris DoS on port 5000: nmap script http-slowloris-check flagged 'LIKELY VULNERABLE' but no active DoS test was performed per rules of engagement."
+  - "OpenSSH 'vulners' NSE reported ~18 candidate 2026-vintage CVE identifiers matched to the observed banner. These were treated as unverified candidates and excluded from confirmed findings; recommend a follow-up check against the Debian security tracker."
+  - "Authenticated admin-panel testing (paths under /admin/{dashboard,users,articles,media,logout}) was not performed - no credentials, no credential-guessing permitted."

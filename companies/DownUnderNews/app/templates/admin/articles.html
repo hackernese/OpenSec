@@ -1,0 +1,198 @@
+{% extends "admin/base.html" %}
+{% block title %}Articles – Admin{% endblock %}
+{% block breadcrumb %}<i class="bi bi-chevron-right"></i><span>Articles</span>{% endblock %}
+
+{% block content %}
+<div class="page-heading-row">
+  <div>
+    <h1>Articles</h1>
+    <p>{{ total }} article{% if total != 1 %}s{% endif %} total</p>
+  </div>
+  <a href="{{ url_for('admin.new_article') }}" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> New Article
+  </a>
+</div>
+
+<!-- Filters -->
+<div class="filter-bar">
+  <form method="get" class="filter-form" id="filterForm">
+    <div class="filter-group">
+      <i class="bi bi-search filter-search-icon"></i>
+      <input type="search" name="search" value="{{ search_q }}" placeholder="Search articles…" class="filter-search" />
+    </div>
+    <select name="status" class="filter-select" onchange="this.form.submit()">
+      <option value="">All Statuses</option>
+      <option value="published" {% if status_filter == 'published' %}selected{% endif %}>Published</option>
+      <option value="draft" {% if status_filter == 'draft' %}selected{% endif %}>Draft</option>
+      <option value="archived" {% if status_filter == 'archived' %}selected{% endif %}>Archived</option>
+    </select>
+    <button type="submit" class="btn btn-sm btn-outline"><i class="bi bi-funnel"></i> Filter</button>
+    {% if status_filter or search_q %}
+    <a href="{{ url_for('admin.articles') }}" class="btn btn-sm btn-ghost">
+      <i class="bi bi-x"></i> Clear
+    </a>
+    {% endif %}
+  </form>
+</div>
+
+{% if articles %}
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Featured</th>
+        <th>Published</th>
+        <th>Views</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for art in articles %}
+      <tr data-article-id="{{ art.id }}">
+        <td class="table-title">
+          <a href="{{ url_for('admin.edit_article', article_id=art.id) }}">
+            {{ art.title[:70] }}{% if art.title|length > 70 %}…{% endif %}
+          </a>
+        </td>
+        <td>{{ art.author.full_name if art.author else '–' }}</td>
+        <td>{{ art.category.name if art.category else '–' }}</td>
+        <td>
+          <span class="status-badge status-{{ art.status }}">{{ art.status }}</span>
+        </td>
+        <td>
+          {% if art.is_featured %}
+          <i class="bi bi-star-fill text-yellow" title="Featured"></i>
+          {% else %}
+          <i class="bi bi-star text-muted"></i>
+          {% endif %}
+        </td>
+        <td>{{ art.published_at.strftime('%d %b %Y') if art.published_at else '–' }}</td>
+        <td>{{ art.views_count }}</td>
+        <td class="table-actions">
+          <a href="{{ url_for('admin.edit_article', article_id=art.id) }}" class="action-btn" title="Edit">
+            <i class="bi bi-pencil"></i>
+          </a>
+          {% if art.status == 'published' %}
+          <a href="{{ url_for('public.article', slug=art.slug) }}" class="action-btn" title="View live" target="_blank">
+            <i class="bi bi-eye"></i>
+          </a>
+          {% endif %}
+          {% if user.role in ('admin', 'editor') %}
+          <button class="action-btn action-btn-danger" title="Delete"
+                  onclick="confirmDelete({{ art.id }}, '{{ art.title|replace("'", "\\'") }}')">
+            <i class="bi bi-trash"></i>
+          </button>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if pages > 1 %}
+<nav class="pagination" aria-label="Article list pagination">
+  {% if page > 1 %}
+  <a href="?page={{ page - 1 }}&status={{ status_filter }}&search={{ search_q }}" class="page-btn">
+    <i class="bi bi-chevron-left"></i> Prev
+  </a>
+  {% endif %}
+  {% for p in range(1, pages + 1) %}
+    {% if p == page %}
+    <span class="page-btn active">{{ p }}</span>
+    {% elif p <= 2 or p >= pages - 1 or (p >= page - 2 and p <= page + 2) %}
+    <a href="?page={{ p }}&status={{ status_filter }}&search={{ search_q }}" class="page-btn">{{ p }}</a>
+    {% elif p == 3 or p == pages - 2 %}
+    <span class="page-ellipsis">…</span>
+    {% endif %}
+  {% endfor %}
+  {% if page < pages %}
+  <a href="?page={{ page + 1 }}&status={{ status_filter }}&search={{ search_q }}" class="page-btn">
+    Next <i class="bi bi-chevron-right"></i>
+  </a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% else %}
+<div class="empty-state">
+  <i class="bi bi-newspaper"></i>
+  <p>No articles found{% if status_filter or search_q %} matching your filters{% endif %}.</p>
+  <a href="{{ url_for('admin.new_article') }}" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> Create Article
+  </a>
+</div>
+{% endif %}
+
+<!-- Delete confirmation modal -->
+<div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="deleteModalTitle"><i class="bi bi-exclamation-triangle text-danger"></i> Delete Article</h3>
+      <button class="modal-close" onclick="closeDeleteModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to delete "<strong id="deleteModalArticleTitle"></strong>"?</p>
+      <p class="text-danger"><strong>This action cannot be undone.</strong></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let deleteArticleId = null;
+
+function confirmDelete(id, title) {
+  deleteArticleId = id;
+  document.getElementById('deleteModalArticleTitle').textContent = title;
+  document.getElementById('deleteModal').classList.add('active');
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('active');
+  deleteArticleId = null;
+}
+
+document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+  if (!deleteArticleId) return;
+  const btn = document.getElementById('confirmDeleteBtn');
+  btn.disabled = true;
+  btn.textContent = 'Deleting…';
+  try {
+    const resp = await fetch(`/api/admin/articles/${deleteArticleId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+    });
+    if (resp.ok) {
+      const row = document.querySelector(`tr[data-article-id="${deleteArticleId}"]`);
+      if (row) row.remove();
+      closeDeleteModal();
+    } else {
+      const data = await resp.json();
+      alert(data.error || 'Delete failed');
+      btn.disabled = false;
+      btn.textContent = 'Delete';
+    }
+  } catch (e) {
+    alert('Network error. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Delete';
+  }
+});
+
+document.getElementById('deleteModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeDeleteModal();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "public/base.html" %}
+
+{% block title %}{{ category.name }} – The Down Under News{% endblock %}
+{% block meta_description %}Latest {{ category.name }} news – {{ category.description or 'Stay up to date with the latest ' + category.name + ' coverage.' }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- Category header -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ url_for('public.index') }}">Home</a>
+        <i class="bi bi-chevron-right"></i>
+        <span aria-current="page">{{ category.name }}</span>
+      </nav>
+      <h1 class="page-title">{{ category.name }}</h1>
+      {% if category.description %}
+      <p class="page-subtitle">{{ category.description }}</p>
+      {% endif %}
+      <p class="page-count">{{ total }} article{% if total != 1 %}s{% endif %}</p>
+    </div>
+  </header>
+
+  {% if articles %}
+  <div class="articles-grid">
+    {% for art in articles %}
+    <article class="article-card">
+      <a href="{{ url_for('public.article', slug=art.slug) }}" class="card-img-link">
+        {% if art.featured_image_url %}
+        <img src="{{ art.featured_image_url }}" alt="{{ art.title }}" loading="lazy" class="card-img" />
+        {% else %}
+        <div class="card-img placeholder-img"><i class="bi bi-newspaper"></i></div>
+        {% endif %}
+      </a>
+      <div class="card-body">
+        <h3 class="card-title"><a href="{{ url_for('public.article', slug=art.slug) }}">{{ art.title }}</a></h3>
+        {% if art.excerpt %}
+        <p class="card-excerpt">{{ art.excerpt[:120] }}{% if art.excerpt|length > 120 %}…{% endif %}</p>
+        {% endif %}
+        <div class="article-meta">
+          <span><i class="bi bi-person"></i> {{ art.author.full_name if art.author else 'Staff Reporter' }}</span>
+          <span><i class="bi bi-clock"></i> {{ art.published_at.strftime('%d %b %Y') if art.published_at else '' }}</span>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if pages > 1 %}
+  <nav class="pagination" aria-label="Category pagination">
+    {% if page > 1 %}
+    <a href="?page={{ page - 1 }}" class="page-btn"><i class="bi bi-chevron-left"></i> Prev</a>
+    {% endif %}
+    {% for p in range(1, pages + 1) %}
+      {% if p == page %}
+      <span class="page-btn active">{{ p }}</span>
+      {% elif p <= 2 or p >= pages - 1 or (p >= page - 2 and p <= page + 2) %}
+      <a href="?page={{ p }}" class="page-btn">{{ p }}</a>
+      {% elif p == 3 or p == pages - 2 %}
+      <span class="page-ellipsis">…</span>
+      {% endif %}
+    {% endfor %}
+    {% if page < pages %}
+    <a href="?page={{ page + 1 }}" class="page-btn">Next <i class="bi bi-chevron-right"></i></a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  {% else %}
+  <div class="empty-state">
+    <i class="bi bi-folder-x"></i>
+    <p>No articles in this category yet.</p>
+    <a href="{{ url_for('public.index') }}" class="btn btn-primary">Back to Home</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

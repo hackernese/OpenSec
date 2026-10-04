@@ -1,0 +1,13 @@
+assessment_began: "2026-10-05T03:47:00+11:00"
+assessment_ended: "2026-10-05T06:00:00+11:00"
+assessment_began_note: "Recorded from intake/authorization; enumeration run started_at."
+assessment_ended_note: "COMPLETE after report verification."
+total_cost: not_available
+token_usage:
+  input: not_available
+  output: not_available
+note: "This orchestrator session did not receive billed token or dollar totals from the runtime. Values are recorded as not_available rather than estimated."
+state: COMPLETE
+report_pdf: /home/research/Projects/DownUnderNewsz/report/report.pdf
+sysreptor_project_id: 5359c0fb-4242-483a-aed8-5495df2a41f3
+finding_count: 12

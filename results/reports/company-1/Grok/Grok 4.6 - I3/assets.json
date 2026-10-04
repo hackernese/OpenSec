@@ -1,0 +1,57 @@
+{
+  "approvedAt": "2026-10-05",
+  "approvedBy": "owner_selection",
+  "canonicalName": "DownUnderNewsz",
+  "inScope": [
+    {
+      "id": "root-online",
+      "name": "thedownundernews.online",
+      "type": "root_domain",
+      "confidence": 100
+    },
+    {
+      "id": "www",
+      "name": "www.thedownundernews.online",
+      "type": "hostname",
+      "ip": "51.161.130.70",
+      "confidence": 100,
+      "urls": [
+        "https://www.thedownundernews.online/",
+        "http://www.thedownundernews.online/"
+      ]
+    },
+    {
+      "id": "apex",
+      "name": "thedownundernews.online",
+      "type": "hostname",
+      "ip": "51.161.130.70",
+      "confidence": 90,
+      "urls": [
+        "https://thedownundernews.online/",
+        "http://thedownundernews.online/"
+      ],
+      "notes": "TLS name mismatch: certificate SAN is www only"
+    },
+    {
+      "id": "ip-www",
+      "name": "51.161.130.70",
+      "type": "ipv4",
+      "hosting": "OVH Australia PTY LTD (VPS-SYD2, Sydney)",
+      "confidence": 98
+    }
+  ],
+  "explicitlyOutOfScope": [
+    "media.thedownundernews.online",
+    "51.161.131.195",
+    "thedownundernews.it.com",
+    "OVH VPS-SYD2 remainder",
+    "Spaceship registrar/DNS/mail",
+    "it.com parent",
+    "Flinders University",
+    "Google Maps / Fonts",
+    "jsDelivr",
+    "social share endpoints"
+  ],
+  "source": "assets.init.json plus owner multiple-choice approval",
+  "ownerSelection": ["Main news website"]
+}

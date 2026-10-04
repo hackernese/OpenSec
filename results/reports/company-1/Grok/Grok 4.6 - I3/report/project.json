@@ -1,0 +1,82 @@
+{
+  "id": "5359c0fb-4242-483a-aed8-5495df2a41f3",
+  "name": "DownUnderNewsz",
+  "project_type": "a8900ae2-e7df-4598-9cb3-751fc9612a60",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "override_finding_order": false,
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "finished",
+      "data": {
+        "executive_summary": "# Executive Summary\n\n**The Down Under News** (DownUnderNewsz) is Australia's independent online-only newspaper, established in 2026. It publishes news across politics, business, technology, sports, entertainment, science, world, and opinion. This report covers an authorized security assessment of the public news website, performed on 5 October 2026.\n\n## Overall result\n\nThe assessment confirmed **12 findings**. Scored with CVSS v3.1, they are **1 critical**, **1 high**, **8 medium**, and **2 informational**. (Three items — unauthenticated comments, the apex TLS name mismatch, and missing DMARC — were noted as low in the qualitative source write-up; this report keeps the original CVSS vectors, which score those items as medium.)\n\nThe most serious issue is in the public search page. Anyone on the internet can type special text that the website treats as programming instructions rather than a normal search. During testing, this exposed internal application settings, including the site's secret signing key (the key value is **not** included in this report). That combination can allow an attacker to forge staff sessions and likely take over the server.\n\n## What this means for the business\n\n* **Immediate takeover risk.** The search-page flaw is reachable without logging in. It should be treated as an emergency fix.\n* **Secrets already exposed.** Because the signing key was disclosed during testing, existing login sessions should be treated as untrustworthy until the key is rotated and sessions are reset.\n* **Developer mode is on in production.** The live site is running with debug enabled. That setting is meant for local testing and can leak internal errors and secrets.\n* **Weaker admin protections.** After login, the session cookie can travel over unencrypted HTTP and has no SameSite restriction. Admin actions also lack CSRF tokens.\n* **Staff details are public.** The public articles API returns staff emails, usernames, roles, and account status — more than a reader needs.\n* **A side door around the website.** The application server is also reachable on port 5000, bypassing the main website's nginx front door.\n* **Smaller issues** include missing browser security headers, unauthenticated comments that publish immediately, a TLS name mismatch for visitors who omit \"www\", no DMARC email policy, public SSH, and a contact form that never actually sends messages.\n\n## Highest-priority actions\n\n1. Take the search template injection offline or fix it immediately so user input is never executed as a template.\n2. Rotate the Flask secret key and invalidate all sessions.\n3. Disable DEBUG in production.\n4. Bind Gunicorn to localhost only and block port 5000 from the internet.\n5. Add Secure/SameSite cookie flags, CSRF protection, and standard HTTP security headers.\n\nA technical write-up of each finding, with remediation steps for the development team, follows in this report.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "status": "finished",
+      "data": {
+        "scope": "This assessment covered only owner-approved, in-scope assets for the main news website. Testing was performed on 5 October 2026 after authorization was verified via the main public website.\n\n**In-scope (owner approved \"Main news website\")**\n\n| System | Description |\n|:---|:---|\n| thedownundernews.online | Apex hostname of the news website |\n| www.thedownundernews.online | www hostname of the news website |\n| 51.161.130.70 | OVH Australia VPS (Sydney) hosting the site |\n| https://www.thedownundernews.online/ | Primary HTTPS site |\n| https://thedownundernews.online/ | Apex HTTPS site |\n\n**Enumerated but excluded from testing by owner selection**\n\n* media.thedownundernews.online / 51.161.131.195\n* claimed domain thedownundernews.it.com (NXDOMAIN; listed on the site)\n\n**Third-party exclusions (not tested)**\n\nOVH netblock remainder, Spaceship DNS/mail, Google Fonts, jsDelivr, Flinders University, social networks, and the it.com parent.\n\n**Allowed methods**\n\nPort discovery, TLS inspection, web crawling, authenticated testing with owner-provided dummy accounts (admin / writer / editor), and non-destructive injection tests.\n\n**Forbidden methods**\n\nDDoS, malware, phishing, brute force, credential stuffing, password spraying, MFA bypass, lateral movement, and destructive changes.\n",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 person day",
+        "provided_users": "Owner-provided dummy accounts were used for authenticated CMS review (no passwords are included in this report):\n\n* admin\n* writer\n* editor\n"
+      }
+    },
+    {
+      "id": "customer",
+      "status": "finished",
+      "data": {
+        "customer_name": "DownUnderNewsz (The Down Under News)",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "status": "finished",
+      "data": {
+        "title": "DownUnderNewsz Vulnerability Assessment Report",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-10-05",
+            "description": "Final report",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Methodology",
+            "content": "The assessment followed a phased, non-destructive methodology:\n\n1. Authorization check on the main public-facing website before any testing.\n2. OSINT, DNS, and HTTP enumeration of company-related assets.\n3. Owner confirmation of in-scope versus excluded assets.\n4. Port discovery on 51.161.130.70 (top ports), then version detection on open ports only.\n5. TLS inspection and HTTP security-header review.\n6. Directory and API mapping of the public site and `/admin` CMS.\n7. Authenticated review of the Flask/Gunicorn/nginx CMS using owner-provided dummy accounts (admin, writer, editor).\n8. Targeted, non-destructive injection tests on search, API, and forms.\n\nNo denial-of-service, malware, phishing, brute force, credential stuffing, password spraying, MFA bypass, lateral movement, or destructive changes were used.\n"
+          },
+          {
+            "title": "Limitations",
+            "content": "The following limitations apply to this assessment:\n\n* The media host (`media.thedownundernews.online` / 51.161.131.195) and the claimed `thedownundernews.it.com` domain were out of scope by owner selection.\n* SQL injection automated scanning was not completed.\n* Server-side template injection testing stopped at minimum proof. No remote-code-execution payload was used.\n* The production secret key value was observed during testing and is **not** included in this report. It must be rotated.\n* Testing was performed from a single vantage point on a single day (5 October 2026).\n* Third-party infrastructure (OVH remainder, Spaceship DNS/mail, Google Fonts, jsDelivr, Flinders University, social networks, it.com parent) was excluded.\n"
+          },
+          {
+            "title": "Coverage",
+            "content": "Open ports identified on 51.161.130.70:\n\n* 22/tcp — SSH (OpenSSH 10.0p2)\n* 80/tcp — HTTP (nginx)\n* 443/tcp — HTTPS (nginx)\n* 5000/tcp — HTTP (Gunicorn)\n\nWeb application coverage:\n\n* Public news website and `/admin` CMS (Flask / Gunicorn / nginx)\n* Roles tested with owner-provided dummy accounts: admin, writer, editor\n* Public search, articles API, comments, contact form, TLS, cookies, and security headers were reviewed on in-scope hosts\n"
+          }
+        ]
+      }
+    }
+  ]
+}

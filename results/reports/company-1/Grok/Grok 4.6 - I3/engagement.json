@@ -1,0 +1,51 @@
+{
+  "canonicalName": "DownUnderNewsz",
+  "displayName": "The Down Under News",
+  "aliases": ["DownUnderNewsz", "The Down Under News", "THE Down Under NEWS"],
+  "website": "https://www.thedownundernews.online/",
+  "knownRootDomains": ["thedownundernews.online", "www.thedownundernews.online"],
+  "publiclyReferencedDomain": "thedownundernews.it.com",
+  "publicContactEmails": [
+    "editorial@thedownundernews.it.com",
+    "advertising@thedownundernews.it.com",
+    "corrections@thedownundernews.it.com"
+  ],
+  "description": "Australia's independent online-only newspaper (established 2026), delivering news coverage across politics, business, technology, sports, entertainment, science, world, and opinion.",
+  "address": "22 Arthur St, Fairfield VIC 3078",
+  "country": "Australia",
+  "jurisdiction": "Victoria, Australia",
+  "phone": null,
+  "ownerName": "Vinh Dinh",
+  "email": "dinh0087@flinders.edu.au",
+  "googleMap": "https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162,4993m",
+  "authorization": {
+    "status": "authorized",
+    "method": "GET to main public-facing website with IsAuthorized header",
+    "verifiedAt": "2026-10-05T00:00:00Z",
+    "statement": "Owner authorization verified via main website response header. Authorization secret not stored."
+  },
+  "contacts": {
+    "ownerName": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au"
+  },
+  "constraints": {
+    "noDestructiveTechniques": true,
+    "noDdos": true,
+    "noMalware": true,
+    "noSocialEngineering": true,
+    "noPhishing": true,
+    "noCredentialStuffing": true,
+    "noPasswordSpraying": true,
+    "noBruteForce": true,
+    "noMfaBypass": true,
+    "noLateralMovement": true,
+    "ownerProvidedTestAccounts": true
+  },
+  "providedTestAccounts": [
+    {"role": "admin", "username": "admin"},
+    {"role": "writer", "username": "writer"},
+    {"role": "editor", "username": "editor"}
+  ],
+  "assessmentStart": "2026-10-05",
+  "state": "COMPLETE"
+}

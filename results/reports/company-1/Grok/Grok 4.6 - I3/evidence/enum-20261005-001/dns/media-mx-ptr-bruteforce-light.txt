@@ -1,0 +1,20 @@
+===== media =====
+media.thedownundernews.online. 1800 IN	A	51.161.131.195
+===== MX hosts =====
+-- mx1.efwd.spaceship.net --
+162.255.118.11
+-- mx2.efwd.spaceship.net --
+162.255.118.12
+-- launch1.spaceship.net --
+162.159.26.38
+2400:cb00:2049:1::a29f:1a26
+-- launch2.spaceship.net --
+162.159.27.32
+2400:cb00:2049:1::a29f:1b20
+===== PTR =====
+70.130.161.51.in-addr.arpa. 72959 IN	PTR	vps-8d3f63bd.vps.ovh.ca.
+===== NS hosts =====
+162.159.26.38
+162.159.27.32
+===== common extra names =====
+api.thedownundernews.online -> CNAME: admin.thedownundernews.online -> CNAME: mail.thedownundernews.online -> CNAME: smtp.thedownundernews.online -> CNAME: ftp.thedownundernews.online -> CNAME: blog.thedownundernews.online -> CNAME: staging.thedownundernews.online -> CNAME: dev.thedownundernews.online -> CNAME: test.thedownundernews.online -> CNAME: shop.thedownundernews.online -> CNAME: news.thedownundernews.online -> CNAME: cdn.thedownundernews.online -> CNAME: static.thedownundernews.online -> CNAME: img.thedownundernews.online -> CNAME: images.thedownundernews.online -> CNAME: assets.thedownundernews.online -> CNAME: app.thedownundernews.online -> CNAME: portal.thedownundernews.online -> CNAME: login.thedownundernews.online -> CNAME: cpanel.thedownundernews.online -> CNAME: webmail.thedownundernews.online -> CNAME: ns1.thedownundernews.online -> CNAME: ns2.thedownundernews.online -> CNAME: origin.thedownundernews.online -> CNAME: 

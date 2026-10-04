@@ -1,0 +1,111 @@
+===== related (short timeout) =====
+----- thedownundernews.com -----
+----- thedownundernews.com.au -----
+----- thedownundernews.net -----
+----- thedownundernews.org -----
+----- downundernewsz.com -----
+----- downundernewsz.com.au -----
+----- downundernewsz.online -----
+----- thedownundernews.news -----
+===== DMARC/DKIM/autodiscover =====
+
+; <<>> DiG 9.20.27-1-Debian <<>> +time=2 +tries=1 TXT _dmarc.thedownundernews.online
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 62258
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; QUESTION SECTION:
+;_dmarc.thedownundernews.online.	IN	TXT
+
+;; AUTHORITY SECTION:
+thedownundernews.online. 899	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+
+;; Query time: 263 msec
+;; SERVER: 10.48.0.31#53(10.48.0.31) (UDP)
+;; WHEN: Mon Oct 05 03:52:22 AEDT 2026
+;; MSG SIZE  rcvd: 137
+
+
+; <<>> DiG 9.20.27-1-Debian <<>> +time=2 +tries=1 TXT default._domainkey.thedownundernews.online
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 14269
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; QUESTION SECTION:
+;default._domainkey.thedownundernews.online. IN TXT
+
+;; AUTHORITY SECTION:
+thedownundernews.online. 900	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+
+;; Query time: 491 msec
+;; SERVER: 10.48.0.31#53(10.48.0.31) (UDP)
+;; WHEN: Mon Oct 05 03:52:23 AEDT 2026
+;; MSG SIZE  rcvd: 149
+
+
+; <<>> DiG 9.20.27-1-Debian <<>> +time=2 +tries=1 CNAME autodiscover.thedownundernews.online
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 12464
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; QUESTION SECTION:
+;autodiscover.thedownundernews.online. IN CNAME
+
+;; AUTHORITY SECTION:
+thedownundernews.online. 900	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+
+;; Query time: 283 msec
+;; SERVER: 10.48.0.31#53(10.48.0.31) (UDP)
+;; WHEN: Mon Oct 05 03:52:23 AEDT 2026
+;; MSG SIZE  rcvd: 143
+
+
+; <<>> DiG 9.20.27-1-Debian <<>> +time=2 +tries=1 TXT _dmarc.thedownundernews.it.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 28921
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; QUESTION SECTION:
+;_dmarc.thedownundernews.it.com.	IN	TXT
+
+;; AUTHORITY SECTION:
+it.com.			899	IN	SOA	ns5.it.com. hostmaster.it.com. 2026100867 10800 3600 604800 3600
+
+;; Query time: 795 msec
+;; SERVER: 10.48.0.31#53(10.48.0.31) (UDP)
+;; WHEN: Mon Oct 05 03:52:24 AEDT 2026
+;; MSG SIZE  rcvd: 110
+
+===== extra TXT =====
+
+; <<>> DiG 9.20.27-1-Debian <<>> +time=2 +tries=1 TXT thedownundernews.online
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 38086
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; QUESTION SECTION:
+;thedownundernews.online.	IN	TXT
+
+;; ANSWER SECTION:
+thedownundernews.online. 955	IN	TXT	"v=spf1 include:spf.efwd.spaceship.net ~all"
+
+;; Query time: 7 msec
+;; SERVER: 10.48.0.31#53(10.48.0.31) (UDP)
+;; WHEN: Mon Oct 05 03:52:24 AEDT 2026
+;; MSG SIZE  rcvd: 107
+

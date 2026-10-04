@@ -1,0 +1,98 @@
+[
+  {
+    "retest_status": "",
+    "title": "Contact form does not send messages",
+    "affected_components": "https://www.thedownundernews.online/contact",
+    "cvss__score": "0.0",
+    "cvss__severity": "None",
+    "cvss__vector": ""
+  },
+  {
+    "retest_status": "",
+    "title": "SSH reachable on the public web server",
+    "affected_components": "51.161.130.70:22",
+    "cvss__score": "0.0",
+    "cvss__severity": "None",
+    "cvss__vector": ""
+  },
+  {
+    "retest_status": "",
+    "title": "No DMARC policy for the corporate domain",
+    "affected_components": "thedownundernews.online",
+    "cvss__score": "5.3",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "TLS certificate does not cover the apex hostname",
+    "affected_components": "https://thedownundernews.online/",
+    "cvss__score": "4.2",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Unauthenticated comments publish immediately",
+    "affected_components": "https://www.thedownundernews.online/article/welcome-to-the-down-under-news",
+    "cvss__score": "5.3",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Missing HTTP security headers",
+    "affected_components": "https://www.thedownundernews.online/",
+    "cvss__score": "5.4",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Application server exposed on port 5000",
+    "affected_components": "51.161.130.70:5000",
+    "cvss__score": "6.5",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Public articles API exposes staff account details",
+    "affected_components": "https://www.thedownundernews.online/api/articles",
+    "cvss__score": "5.3",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Missing CSRF protection on login and admin APIs",
+    "affected_components": "https://www.thedownundernews.online/admin/login, /api/admin/users, /api/admin/articles, /api/admin/media/upload, /api/admin/comments",
+    "cvss__score": "6.5",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Session cookie missing Secure and SameSite flags",
+    "affected_components": "https://www.thedownundernews.online/admin/login",
+    "cvss__score": "5.9",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Flask debug mode enabled in production",
+    "affected_components": "https://www.thedownundernews.online/",
+    "cvss__score": "8.2",
+    "cvss__severity": "High",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Server-side template injection in search",
+    "affected_components": "https://www.thedownundernews.online/search",
+    "cvss__score": "10.0",
+    "cvss__severity": "Critical",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+  }
+]

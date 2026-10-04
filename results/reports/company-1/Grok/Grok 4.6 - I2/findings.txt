@@ -1,0 +1,175 @@
+# Finding: Server-side template injection in article 404 handler
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+Affected: https://www.thedownundernews.online/article/<slug>
+References: https://owasp.org/www-community/attacks/Server-Side_Template_Injection, https://cwe.mitre.org/data/definitions/1336.html
+
+Summary:
+Missing article pages evaluate attacker-controlled template expressions. A request using {{7*7}} in the article path returned HTML saying the page was not found for 49, proving the server executed the expression. This class of flaw in a Python/Jinja application commonly leads to full server takeover. Further exploitation was stopped once this proof was obtained.
+
+Description:
+Unauthenticated GET https://www.thedownundernews.online/article/{{7*7}} returned HTTP 404 with Content-Type text/html and body exactly: <h1>404 - Page not found for 49.
+The arithmetic was evaluated server-side rather than echoed as the literal string {{7*7}}. Combined with HTML rendering of the same slug (see reflected XSS finding), the 404 handler treats the article name as a template, not as plain text. An attacker who can request a crafted URL can run template code on the newspaper website without logging in.
+
+Recommendation:
+Stop rendering user-supplied path text through the template engine. Use a static 404 template and pass the slug as a safely escaped variable only. Patch and redeploy immediately, then review all other user-influenced strings for the same pattern.
+
+---
+
+# Finding: Reflected cross-site scripting in article 404 handler
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+Affected: https://www.thedownundernews.online/article/<slug>
+References: https://owasp.org/www-community/attacks/xss/, https://cwe.mitre.org/data/definitions/79.html
+
+Summary:
+If someone visits a crafted missing-article link, the site inserts that link text into the page as live HTML. A proof request placed a raw image tag with JavaScript in the 404 heading. Session cookies are HttpOnly so they cannot be read by script, but the script still runs in the visitor's browser on the newspaper site.
+
+Description:
+GET https://www.thedownundernews.online/article/xss-test"><img src=x onerror=alert(1)> returned HTTP 404 text/html with body: <h1>404 - Page not found for xss-test"><img src=x onerror=alert(1)>.
+The payload was not encoded. Search pages do encode the same characters, so this is specific to the article 404 path. Same root cause as the template injection finding: unsanitised slug output.
+
+Recommendation:
+HTML-encode all user-controlled text in error pages. Add a Content-Security-Policy that disallows inline script. Fix together with the template injection issue.
+
+---
+
+# Finding: Media upload accepts HTML when declared as an image
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N
+Affected: https://www.thedownundernews.online/api/admin/media/upload
+References: https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload, https://cwe.mitre.org/data/definitions/434.html
+
+Summary:
+Staff upload is supposed to allow images and documents only. Sending a small HTML file while labelling it as PNG was accepted and stored with a .html name. Direct HTML was rejected. A logged-in writer can therefore plant HTML that the media library will treat as a file. Execution of that HTML on the separate media host was not verified because that host was out of this assessment's approved scope.
+
+Description:
+POST /api/admin/media/upload as the writer account:
+- file type text/html was rejected with File type 'text/html' is not allowed
+- image/svg+xml was rejected
+- the same HTML bytes with Content-Type image/png and filename clawsec-proof.html returned HTTP 201 and a URL ending in .html on the media host
+The Media Library UI already listed prior xss.html and xss.svg files, which is consistent with dangerous types having been stored. The in-scope issue is the www upload API trusting the client content type instead of inspecting content and extension.
+
+Recommendation:
+Allow only a fixed list of types after server-side content inspection, not the client Content-Type. Do not keep the original .html extension. Serve uploaded files from a different domain with Content-Disposition: attachment and a restrictive CSP. Remove existing html/svg uploads after review.
+
+---
+
+# Finding: Public articles API discloses staff account details
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://www.thedownundernews.online/api/articles
+References: https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/, https://cwe.mitre.org/data/definitions/213.html
+
+Summary:
+The public news feed includes each author's email address, username, role, and whether the account is active. Anyone can collect staff identities and mailbox names without logging in. That helps phishing and password-guessing against the admin panel.
+
+Description:
+Unauthenticated GET /api/articles?limit=5 returned JSON for published articles. Each author object included email, username, role (admin), is_active, first_name, last_name, id, and created_at. Example fields observed for the site administrator account (email not repeated here). This is more than a public byline requires. CORS allows https://thedownundernews.online without credentials; origins are not reflected.
+
+Recommendation:
+Return only public byline fields (display name). Keep email, username, role, and account status for authenticated admin APIs. Review other public JSON endpoints the same way.
+
+---
+
+# Finding: Session cookies missing Secure and SameSite
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N
+Affected: https://www.thedownundernews.online/admin/login
+References: https://owasp.org/www-community/controls/SecureCookieAttribute, https://cwe.mitre.org/data/definitions/1275.html, https://cwe.mitre.org/data/definitions/614.html
+
+Summary:
+After login, the site sets an access token cookie that is HttpOnly but not marked Secure or SameSite. A Flask flash session cookie used after posting a comment has the same gap. The token can be sent over plain HTTP and used in cross-site requests.
+
+Description:
+POST /admin/login with a valid test account returned Set-Cookie: access_token_cookie=...; HttpOnly; Path=/ with no Secure and no SameSite. HTTP http://www.thedownundernews.online/ redirects to HTTPS (301) but does not send HSTS. Comment posting set a session cookie as HttpOnly; Path=/ only. JWT algorithm observed on the access cookie was HS256 (value not recorded in this report).
+
+Recommendation:
+Set Secure; SameSite=Lax or Strict; HttpOnly on all session cookies. Enable HSTS on HTTPS responses. Keep cookie names and paths as they are so existing logout still works.
+
+---
+
+# Finding: Unmoderated public comments with no CSRF protection
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+Affected: https://www.thedownundernews.online/article/welcome-to-the-down-under-news/comment
+References: https://owasp.org/www-community/attacks/csrf, https://cwe.mitre.org/data/definitions/352.html
+
+Summary:
+Anyone can post a comment that shows on the article immediately. There is no login, no captcha, no CSRF token, and the page tells users comments appear at once. HTML in the comment was encoded, so this is not stored scripting, but names can be faked and the article can be spammed.
+
+Description:
+The article page form POSTs to /article/<slug>/comment with author_name, author_email, and content. No hidden token. POST of a proof comment as ClawSecAssess redirected to #comments with a success flash. The published page showed the name and encoded comment text; the email was not displayed. The notice text says comments appear immediately. Writer role received 403 on /admin/comments; editor can open the comments admin page.
+
+Recommendation:
+Require moderation before comments go live, or at least rate-limit and captcha. Add a CSRF token. Consider hiding the form from unauthenticated users if that matches editorial policy.
+
+---
+
+# Finding: Missing HTTP security headers
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N
+Affected: https://www.thedownundernews.online/
+References: https://owasp.org/www-project-secure-headers/, https://cwe.mitre.org/data/definitions/693.html
+
+Summary:
+The live site does not send the usual browser protections: no HSTS, no Content-Security-Policy, no clickjacking header, no nosniff, and no Referrer-Policy. Homepage responses only included Server, Date, Content-Type, Content-Length, and Connection.
+
+Description:
+GET https://www.thedownundernews.online/ returned HTTP 200 with nginx and no Content-Security-Policy, Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, or Permissions-Policy. This makes reflected XSS and clickjacking easier and allows HTTP reuse without HSTS pinning.
+
+Recommendation:
+Add HSTS, CSP, X-Frame-Options or frame-ancestors, X-Content-Type-Options: nosniff, and Referrer-Policy in nginx or the application. Start CSP in report-only if needed, then enforce.
+
+---
+
+# Finding: Admin login form has no CSRF token
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N
+Affected: https://www.thedownundernews.online/admin/login
+References: https://owasp.org/www-community/attacks/csrf, https://cwe.mitre.org/data/definitions/352.html
+
+Summary:
+The staff login page posts username and password with no anti-CSRF field. Together with cookies that lack SameSite, a visitor who is tricked into submitting a login form from another site could have a session created in their browser.
+
+Description:
+GET /admin returned the Admin Login page. The form posts to /admin/login with username and password only. Successful login is 302 to /admin/dashboard and sets access_token_cookie. JSON admin APIs use Content-Type application/json, which browsers do not send as simple form CSRF; the login endpoint is a conventional form POST and is the practical CSRF risk.
+
+Recommendation:
+Add a CSRF token to /admin/login and all cookie-authenticated form posts. Set SameSite on the session cookie as in the cookie finding.
+
+---
+
+# Finding: Contact form never sends a message
+Severity: info
+CVSS:
+Affected: https://www.thedownundernews.online/contact
+References:
+
+Summary:
+The Contact Us form only shows a thank-you message in the browser. It does not send data to the server, so reader messages are not actually received.
+
+Description:
+/contact includes a form with name, email, subject, and message. Inline script calls preventDefault, displays #contactSuccess, and resets the form. No fetch or POST to an API. This is a reliability/integrity issue for a public contact channel, not an injection flaw.
+
+Recommendation:
+Wire the form to a server endpoint with CSRF protection, validation, and spam controls, or replace it with a working mailbox link only.
+
+---
+
+# Finding: Framework 404 pages reveal Flask/Werkzeug
+Severity: info
+CVSS:
+Affected: https://www.thedownundernews.online/
+References:
+
+Summary:
+Some missing URLs return the default Flask/Werkzeug not-found page, which tells an attacker the site is a Python Flask app.
+
+Description:
+Requests such as /robots.txt, /api/users, and several unknown paths returned HTML: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again. Custom article 404s are different one-line HTML. Server header is nginx.
+
+Recommendation:
+Replace default framework error pages with the site's own 404 page. Do not expose stack traces in production.
+
+---

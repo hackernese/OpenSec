@@ -1,0 +1,54 @@
+===== shodan domain =====
+THEDOWNUNDERNEWS.ONLINE
+
+                         A      51.161.130.70
+                         MX     mx1.efwd.spaceship.net
+                         MX     mx2.efwd.spaceship.net
+                         NS     launch1.spaceship.net
+                         NS     launch2.spaceship.net
+                         SOA    launch1.spaceship.net
+                         TXT    v=spf1 include:spf.efwd.spaceship.net ~all
+media                    A      51.161.131.195
+www                      A      51.161.130.70
+
+===== shodan host 51.161.130.70 =====
+51.161.130.70
+Hostnames:               vps-8d3f63bd.vps.ovh.ca;www.thedownundernews.online
+City:                    Sydney
+Country:                 Australia
+Organization:            OVH Australia PTY LTD
+Updated:                 2026-10-03T04:43:02.809587
+Number of open ports:    2
+
+Ports:
+     80/tcp nginx 
+	|-- HTTP title: 301 Moved Permanently
+    443/tcp nginx 
+	|-- HTTP title: 502 Bad Gateway
+	|-- Cert Issuer: C=US, CN=YE2, O=Let's Encrypt
+	|-- Cert Subject: CN=www.thedownundernews.online
+	|-- SSL Versions: -SSLv2, -SSLv3, -TLSv1, -TLSv1.1, TLSv1.2, TLSv1.3
+
+===== shodan host 51.161.131.195 =====
+51.161.131.195
+Hostnames:               vps-edee2c79.vps.ovh.ca;media.thedownundernews.online
+City:                    Sydney
+Country:                 Australia
+Organization:            OVH Australia PTY LTD
+Updated:                 2026-10-03T01:31:45.737469
+Number of open ports:    3
+
+Ports:
+     21/tcp  
+     80/tcp nginx 
+	|-- HTTP title: 301 Moved Permanently
+    443/tcp nginx 
+	|-- HTTP title: 502 Bad Gateway
+	|-- Cert Issuer: C=US, CN=YE2, O=Let's Encrypt
+	|-- Cert Subject: CN=media.thedownundernews.online
+	|-- SSL Versions: -SSLv2, -SSLv3, -TLSv1, -TLSv1.1, TLSv1.2, TLSv1.3
+
+===== shodan search hostname =====
+51.161.130.70	443	www.thedownundernews.online;vps-8d3f63bd.vps.ovh.ca	HTTP/1.1 502 Bad Gateway\r\nServer: nginx\r\nDate: Sat, 03 Oct 2026 04:43:02 GMT\r\nContent-Type: text/html\r\nContent-Length: 552\r\nConnection: keep-alive\r\n\r\n	
+51.161.131.195	443	vps-edee2c79.vps.ovh.ca;media.thedownundernews.online	HTTP/1.1 502 Bad Gateway\r\nServer: nginx\r\nDate: Sat, 03 Oct 2026 01:31:45 GMT\r\nContent-Type: text/html\r\nContent-Length: 552\r\nConnection: keep-alive\r\n\r\n	
+

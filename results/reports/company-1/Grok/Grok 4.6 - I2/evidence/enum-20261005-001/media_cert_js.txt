@@ -1,0 +1,20 @@
+===== cert media.thedownundernews.online =====
+subject=CN=media.thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE2
+notBefore=Sep 16 12:43:26 2026 GMT
+notAfter=Dec 15 12:43:25 2026 GMT
+X509v3 Subject Alternative Name: 
+    DNS:media.thedownundernews.online
+
+===== GET /static/js/main.js headers =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 04 Oct 2026 16:08:04 GMT
+Content-Type: text/javascript; charset=utf-8
+Content-Length: 3396
+Connection: keep-alive
+Content-Disposition: inline; filename=main.js
+Last-Modified: Thu, 27 Aug 2026 18:12:51 GMT
+Cache-Control: no-cache
+ETag: "1787854371.0831928-3396-2125203843"
+

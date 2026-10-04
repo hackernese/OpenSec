@@ -1,0 +1,27 @@
+===== media.thedownundernews.online =====
+media.thedownundernews.online. 1800 IN	A	51.161.131.195
+
+===== mail-related =====
+-- mail.thedownundernews.online --
+-- smtp.thedownundernews.online --
+-- imap.thedownundernews.online --
+-- pop.thedownundernews.online --
+-- autodiscover.thedownundernews.online --
+-- autoconfig.thedownundernews.online --
+-- webmail.thedownundernews.online --
+
+===== extra records =====
+-- api.thedownundernews.online --
+-- admin.thedownundernews.online --
+-- staging.thedownundernews.online --
+-- dev.thedownundernews.online --
+-- app.thedownundernews.online --
+-- cdn.thedownundernews.online --
+-- static.thedownundernews.online --
+-- img.thedownundernews.online --
+-- images.thedownundernews.online --
+-- assets.thedownundernews.online --
+-- blog.thedownundernews.online --
+-- shop.thedownundernews.online --
+-- login.thedownundernews.online --
+-- portal.thedownundernews.online --

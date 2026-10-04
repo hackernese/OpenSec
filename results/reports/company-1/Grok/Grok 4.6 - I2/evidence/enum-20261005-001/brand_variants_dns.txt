@@ -1,0 +1,20 @@
+-- downundernewsz.com --
+-- downundernewsz.com.au --
+-- thedownundernews.com --
+-- thedownundernews.com.au --
+-- thedownundernews.net --
+-- downundernews.com --
+A ;; communications error to 10.48.0.31#53: timed out
+A ;; communications error to 10.48.1.42#53: timed out
+A ;; no servers could be reached
+NS ;; communications error to 10.48.0.31#53: timed out
+NS ;; communications error to 10.48.1.42#53: timed out
+NS ;; no servers could be reached
+SOA ;; communications error to 10.48.0.31#53: timed out
+SOA ;; communications error to 10.48.1.42#53: timed out
+SOA ;; no servers could be reached
+-- downundernews.com.au --
+-- downundernewsz.online --
+-- the-down-under-news.com --
+-- thedownundernews.org --
+-- thedownundernews.it.com --

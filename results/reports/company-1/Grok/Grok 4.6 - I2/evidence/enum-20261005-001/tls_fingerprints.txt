@@ -1,0 +1,19 @@
+===== www cert details =====
+sha256 Fingerprint=F0:12:4B:C5:D5:6C:4F:B0:AD:55:FC:5A:56:1B:E2:4A:03:81:73:F0:88:54:09:A6:55:CD:38:6A:57:12:65:58
+serial=05817AC5DC598B737945883C62449E02F4CB
+subject=CN=www.thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE1
+notBefore=Oct  4 11:51:02 2026 GMT
+notAfter=Jan  2 11:51:01 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:www.thedownundernews.online
+
+===== media cert details =====
+sha256 Fingerprint=1C:8A:9F:3D:7D:05:25:0C:C9:3B:15:79:23:8C:E6:2D:BE:C7:BE:A2:FF:22:4A:4F:B4:C1:1A:3E:CE:61:6C:C6
+serial=0660DD18F34C69A21EDBE8D99FD4BCBF99D3
+subject=CN=media.thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE2
+notBefore=Sep 16 12:43:26 2026 GMT
+notAfter=Dec 15 12:43:25 2026 GMT
+X509v3 Subject Alternative Name: 
+    DNS:media.thedownundernews.online

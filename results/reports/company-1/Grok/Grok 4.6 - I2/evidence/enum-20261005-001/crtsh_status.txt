@@ -1,0 +1,6 @@
+===== crt.sh json =====
+http=502 size=150
+===== crt.sh it.com =====
+http=502 size=150
+===== crt.sh identity wildcard html =====
+http=502 size=150

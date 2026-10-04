@@ -1,0 +1,163 @@
+{
+  "id": "c8bf5ef9-6d4b-41e0-b897-5222da18c338",
+  "created": "2026-10-04T16:36:10.500426Z",
+  "updated": "2026-10-04T16:36:10.500726Z",
+  "name": "DownUnderNewsz",
+  "project_type": "46d20870-00e3-4f7c-8859-fdbf8bf6bc62",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/c8bf5ef9-6d4b-41e0-b897-5222da18c338",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/c8bf5ef9-6d4b-41e0-b897-5222da18c338/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/c8bf5ef9-6d4b-41e0-b897-5222da18c338/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-10-04T16:36:10.508006Z",
+      "updated": "2026-10-04T16:36:10.509778Z",
+      "project": "c8bf5ef9-6d4b-41e0-b897-5222da18c338",
+      "project_type": "46d20870-00e3-4f7c-8859-fdbf8bf6bc62",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "executive_summary": "DownUnderNewsz operates The Down Under News, an independent online newspaper. This assessment covered the owner-approved public website www.thedownundernews.online only.\n\nTen issues were confirmed: **one critical**, **one high**, **six medium**, and **two informational**.\n\nThe most serious issue is that missing article pages execute template expressions supplied in the URL. This is a critical server-side template injection. Related to the same error page, the site also reflects HTML into the 404 response. A logged-in writer can upload HTML by labelling it as an image. The public articles API exposes staff emails and roles. Session cookies lack Secure and SameSite. Public comments appear immediately without CSRF protection. Security headers are missing. The contact form does not actually send messages.\n\n**Highest-priority action:** stop evaluating user input in templates, then lock down uploads, the public API, and cookies.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-10-04T16:36:10.508109Z",
+      "updated": "2026-10-04T16:36:10.509785Z",
+      "project": "c8bf5ef9-6d4b-41e0-b897-5222da18c338",
+      "project_type": "46d20870-00e3-4f7c-8859-fdbf8bf6bc62",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "scope": "The owner authorised a full-scope request. The owner then approved only the main website for testing. Testing used unauthenticated and authenticated web methods with owner-provided dummy accounts (admin, writer, editor). No brute force, denial of service, phishing, malware, or testing of third-party or co-hosted systems was performed.\n\n**In-scope assets (owner-approved)**\n\n| Asset | Description |\n|:---|:---|\n| www.thedownundernews.online | Canonical public hostname |\n| https://www.thedownundernews.online/ | Public newspaper site, including same-origin paths and /api/articles |\n\n**Out of scope (not presented as tested)**\n\n* media.thedownundernews.online\n* apex thedownundernews.online as a separate target\n* 51.161.131.195\n* thedownundernews.it.com\n* OVH, Spaceship, Google, and jsDelivr third parties\n\nServer-side template injection proof stopped at a Jinja 7-times-7 expression evaluating to 49; no remote-code-execution payload was used. HTML upload proof stopped at HTTP 201 from the www API; the media host was not fetched.\n",
+        "start_date": "2026-10-04",
+        "end_date": "2026-10-05",
+        "duration": "1 person day",
+        "provided_users": "Owner-provided dummy accounts were used for authenticated testing. Passwords are not included in this report.\n\n* admin\n* writer\n* editor\n"
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-10-04T16:36:10.508197Z",
+      "updated": "2026-10-04T16:36:10.509793Z",
+      "project": "c8bf5ef9-6d4b-41e0-b897-5222da18c338",
+      "project_type": "46d20870-00e3-4f7c-8859-fdbf8bf6bc62",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "customer_name": "DownUnderNewsz (The Down Under News)",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh (dinh0087@flinders.edu.au)"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-10-04T16:36:10.508157Z",
+      "updated": "2026-10-04T16:36:10.509789Z",
+      "project": "c8bf5ef9-6d4b-41e0-b897-5222da18c338",
+      "project_type": "46d20870-00e3-4f7c-8859-fdbf8bf6bc62",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "title": "DownUnderNewsz Vulnerability Assessment Report",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-10-05",
+            "description": "Final report",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-10-04T16:36:10.508232Z",
+      "updated": "2026-10-04T16:36:10.509796Z",
+      "project": "c8bf5ef9-6d4b-41e0-b897-5222da18c338",
+      "project_type": "46d20870-00e3-4f7c-8859-fdbf8bf6bc62",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Methodology",
+            "content": "Testing was performed against the owner-approved public website only.\n\n* Unauthenticated web testing of public pages, forms, and the same-origin articles API.\n* Authenticated web testing with owner-provided dummy accounts for admin, writer, and editor roles.\n* Non-destructive injection checks, including a server-side template injection proof that stopped at a Jinja 7-times-7 expression evaluating to 49.\n* Upload testing against the www media upload API; proof stopped at HTTP 201. The media host was not fetched.\n* Review of session cookies and HTTP security headers on www.thedownundernews.online.\n\nNo brute force, denial of service, phishing, malware, or testing of third-party or co-hosted systems was performed. Timezone context from server headers was GMT on 2026-10-04. Assessment dates: authorisation and testing on 2026-10-04; reporting on 2026-10-04 / 2026-10-05.\n"
+          },
+          {
+            "title": "Limitations and coverage",
+            "content": "Only www.thedownundernews.online was in scope. The media server, the claimed it.com domain, and host-wide IP scans were not approved and were not tested.\n\nObserved during testing, and not reported as confirmed vulnerabilities unless listed in the findings:\n\n* SQL injection was not evidenced on search.\n* A writer could not publish (status was forced to draft) or edit others' articles via the API.\n* Search reflected input was HTML-encoded.\n* Comment XSS was encoded.\n* The contact form does not submit (recorded as informational).\n"
+          }
+        ]
+      }
+    }
+  ]
+}

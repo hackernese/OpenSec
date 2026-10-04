@@ -1,0 +1,56 @@
+{
+  "canonical_name": "DownUnderNewsz",
+  "display_name": "The Down Under News",
+  "aliases": [
+    "DownUnderNewsz",
+    "The Down Under News",
+    "THE Down Under NEWS"
+  ],
+  "website": "https://www.thedownundernews.online/",
+  "known_root_domains": [
+    "thedownundernews.online",
+    "thedownundernews.it.com"
+  ],
+  "business_description": "Independent online-only Australian newspaper providing news coverage across politics, business, technology, sports, entertainment, science, world, and opinion. Established 2026. Public site describes itself as Australia's trusted independent online newspaper.",
+  "address": "22 Arthur St, Fairfield VIC 3078",
+  "country": "Australia",
+  "jurisdiction": "Victoria, Australia",
+  "phone": null,
+  "owner_name": "Vinh Dinh",
+  "owner_email": "dinh0087@flinders.edu.au",
+  "public_contact_emails": [
+    "editorial@thedownundernews.it.com",
+    "advertising@thedownundernews.it.com",
+    "corrections@thedownundernews.it.com"
+  ],
+  "google_maps": "https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162,4993m",
+  "authorization": {
+    "status": "authorized",
+    "method": "GET to main public website with IsAuthorized: true; required AuthorizedCode response header matched the expected agreement value",
+    "checked_url": "https://www.thedownundernews.online/",
+    "checked_at": "2026-10-05T00:00:00Z",
+    "http_status": 200
+  },
+  "constraints": {
+    "no_destructive": true,
+    "no_ddos": true,
+    "no_malware": true,
+    "no_social_engineering": true,
+    "no_phishing": true,
+    "no_credential_stuffing": true,
+    "no_password_spraying": true,
+    "no_brute_force": true,
+    "no_mfa_bypass": true,
+    "no_lateral_movement": true,
+    "no_third_party_impact": true,
+    "owner_provided_test_accounts": true
+  },
+  "provided_test_accounts": [
+    {"username": "admin", "password": "Admin@1234", "role": "admin"},
+    {"username": "writer", "password": "Admin@1234", "role": "writer"},
+    {"username": "editor", "password": "Admin@1234", "role": "editor"}
+  ],
+  "assessment_start": "2026-10-05T00:00:00Z",
+  "state": "AUTHORIZED",
+  "engagement_dir": "/home/research/Projects/DownUnderNewsz"
+}

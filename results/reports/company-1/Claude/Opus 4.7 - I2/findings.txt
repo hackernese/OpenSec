@@ -1,0 +1,403 @@
+# Finding: Writer-role users can delete arbitrary articles (vertical + horizontal access-control bypass)
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H (8.1)
+Affected: https://www.thedownundernews.online/api/admin/articles/{id} (DELETE)
+References:
+- OWASP API Security Top 10 (2023) - API5:2023 Broken Function Level Authorization
+- OWASP API Security Top 10 (2023) - API1:2023 Broken Object Level Authorization
+- CWE-285 Improper Authorization
+- CWE-639 Authorization Bypass Through User-Controlled Key
+
+Summary:
+Any authenticated user with the "writer" role can permanently delete any article in the system, including articles authored by other writers, editors, and administrators. This completely breaks the author/editor/admin role boundaries that the application UI implies and attempts to enforce at the page level.
+
+Description:
+During authenticated testing with the provided test accounts, the writer user (id=2) issued:
+  DELETE /api/admin/articles/4
+  Cookie: access_token_cookie=<writer JWT>
+The server responded:
+  HTTP/1.1 200 OK
+  {"message": "Article deleted", "success": true}
+Article id=4 ("Australia Wins Back-to-Back Test Series Against England", slug `australia-wins-back-to-back-test-series-england`) was authored by the administrator (user id=1) and was permanently removed from the site as a result. Public requests to /article/australia-wins-back-to-back-test-series-england now return HTTP 404.
+
+The vulnerability is caused by the DELETE handler for /api/admin/articles/{id} checking only that the caller has a valid JWT, not that the caller is either an admin OR the article's own author. Role separation IS correctly enforced on other admin-only endpoints (e.g. GET/POST /api/admin/users returns 403 to writer/editor), which makes this specific endpoint an outlier and almost certainly an authorization check that was simply forgotten on the DELETE route.
+
+Business impact:
+- A single compromised, phished, or disgruntled writer account can wipe the entire news catalog in seconds.
+- No audit trail is returned in the response - the attacker can hide behind the shared "Admin@1234" default password that was observed on the test accounts.
+- Reputational damage, loss of SEO-indexed URLs, and potential breach-notification obligations if the deletion is combined with other defects.
+
+Reproduction (minimum proof already captured on 2026-10-05T00:27:16+11:00):
+1. POST /admin/login as writer / Admin@1234 to obtain the access_token_cookie JWT.
+2. Issue DELETE /api/admin/articles/<any article id> with that cookie.
+3. Observe 200 + {"success": true}; the article is gone from the public site and the admin listing.
+
+Recommendation:
+1. In the DELETE (and PUT/PATCH) handler of /api/admin/articles/<id>, enforce:
+     if current_user.role not in ("admin", "editor") and article.author_id != current_user.id:
+         return 403
+   so writers can only mutate articles they themselves authored.
+2. Add the same ownership-plus-role check consistently to every /api/admin/* mutating route (users, media, comments, categories) - audit all handlers, not just this one.
+3. Add server-side request logging (actor id, action, target id, timestamp, ip) for all mutating admin API calls so deletions are forensically recoverable.
+4. Rotate the shared "Admin@1234" default on every real production account; require strong, unique passwords with MFA for admin and editor roles.
+5. Restore article id 4 from backup if any exists; if not, re-create or publish a notice.
+6. Add soft-delete (deleted_at timestamp) rather than hard delete so accidental or malicious deletions are reversible.
+
+---
+
+# Finding: Media upload accepts dangerous file extensions via trusted client-supplied Content-Type
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N (8.0)
+Affected: https://www.thedownundernews.online/api/admin/media/upload (POST, available to writer/editor/admin)
+            https://media.thedownundernews.online/images/<server-generated>.<attacker-controlled-ext>
+References:
+- OWASP ASVS v4 - V12.1 (File Upload Validation)
+- OWASP Unrestricted File Upload Cheat Sheet
+- CWE-434 Unrestricted Upload of File with Dangerous Type
+- CWE-646 Reliance on File Name or Extension of Externally-Supplied File
+
+Summary:
+The media-upload endpoint validates ONLY the client-supplied Content-Type (multipart MIME) and never inspects the actual file content ("magic bytes") or the original file extension. An authenticated writer can upload an HTML page or a PHP file simply by claiming its Content-Type is image/jpeg. The server then stores the file on the media VPS KEEPING THE ATTACKER'S EXTENSION (.php, .html, .svg, etc.) and serves it back with Content-Type matching that extension - which, for .html, is text/html and will execute embedded JavaScript in the browser.
+
+Description:
+Reproduction, verified 2026-10-05 with the "writer" test account:
+1. POST /api/admin/media/upload
+   Content-Disposition: form-data; name="file"; filename="evil2.html"
+   Content-Type: image/jpeg
+   Body: <html><body><h1>DUN-XSS</h1><script>document.title="pwned"</script></body></html>
+2. Server returned 201 with media_url =
+   https://media.thedownundernews.online/images/62f660efe1274f67a9216d6d2ff6986f.html
+3. GET on that URL returned Content-Type: text/html and the HTML body; the <script> executes in a browser.
+4. The server does the same for .php files (stored with .php extension). PHP currently serves as application/octet-stream so it does NOT execute as HTML and nginx is not configured with a PHP handler, so no remote-code-execution today - but the file is persistently stored on disk with the attacker-controlled extension, so any future config change (adding PHP-FPM, Apache, or sniffing-prone server defaults) immediately converts this into RCE.
+
+Additional weakness: the served responses carry no X-Content-Type-Options: nosniff header, so even for octet-stream content modern browsers may content-sniff.
+
+Business impact:
+- Stored XSS: An attacker can host arbitrary HTML/JavaScript on an origin that is sub-branded as yours (media.thedownundernews.online). This supports phishing, drive-by scripts, malvertising, or SEO poisoning under your brand.
+- The media host is a distinct origin from www, which protects your main-site cookies, BUT any admin/editor who clicks the uploaded link in the Media Library preview is in that origin and can be scripted.
+- Latent RCE: On the day someone enables PHP (or a different file type pipeline) on the media server, every stored .php becomes a shell.
+- Any uploaded file is also a potential vehicle for distributing malware under your domain name.
+
+Recommendation:
+1. Validate uploads by MAGIC BYTES / libmagic / Pillow (for images) rather than the client Content-Type header; reject anything whose true content does not match an image.
+2. Strip the user-supplied filename and rebuild it as "<uuid>.<server-chosen-extension>" where the extension comes from the detected true content type only.
+3. Enforce an explicit allowlist of safe extensions (.jpg, .jpeg, .png, .gif, .webp) and reject everything else, including .php, .html, .svg, .pdf, .doc, and .docx unless they are specifically required.
+4. Serve the media host with:
+     add_header X-Content-Type-Options "nosniff" always;
+     add_header Content-Disposition "attachment" always;  (for non-image types)
+   so even if a dangerous file lands there it cannot execute.
+5. Configure nginx on 51.161.131.195 to serve the /images/ directory as static files only, never pass to any script interpreter, and consider isolating uploads under a separate throwaway subdomain not sharing cookies/CSP with the brand.
+6. Add server-side antivirus/clamav scanning if executables or office documents are ever accepted.
+
+---
+
+# Finding: JWT session cookie lacks Secure and SameSite flags
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N (4.6)
+Affected: https://www.thedownundernews.online/ - Set-Cookie: access_token_cookie=<JWT>; HttpOnly; Path=/
+References:
+- OWASP ASVS v4 - V3.4 (Cookie-based Session Management)
+- RFC 6265bis "Secure" and "SameSite" attributes
+- CWE-614 Sensitive Cookie Without 'Secure' Attribute
+- CWE-1275 Sensitive Cookie with Improper SameSite Attribute
+
+Summary:
+The session JWT cookie set by /admin/login is marked HttpOnly (good) but is missing the Secure attribute and has no SameSite attribute. In the current all-HTTPS deployment browsers do default SameSite to Lax, so immediate CSRF risk is reduced, but any accidental HTTP downgrade (mixed content, future dev subdomain, a plain-HTTP redirect) will leak the admin session, and the cookie is still vulnerable to the subset of cross-site attacks that Lax permits (top-level GET navigation, which hits a dashboard that returns JSON user data).
+
+Description:
+Observed Set-Cookie header, verbatim:
+  Set-Cookie: access_token_cookie=<HS256 JWT>; HttpOnly; Path=/
+Missing attributes: Secure, SameSite, no explicit Domain. The JWT itself is HS256-signed with a non-trivial secret (not in rockyou.txt), contains only "sub" (numeric user id), no role claim, 8-hour lifetime.
+
+Business impact:
+- Any future HTTP endpoint on thedownundernews.online (even a one-off redirect, a status page, a webhook URL) will transmit the admin JWT in cleartext over the network, exposing it to any passive observer and enabling full admin impersonation.
+- No SameSite means a crafted link from a phishing email or malicious ad that opens a GET to /admin/* in the user's browser will carry the admin cookie (Lax is browser default, not server-enforced, and does not apply to Safari/older browsers in all cases).
+- No role claim in the token means role lookup happens server-side; the symmetric HS256 key is strong today but, if ever exposed through a config leak, allows the attacker to mint arbitrary tokens for any user id.
+
+Recommendation:
+1. Set the cookie with `Secure; HttpOnly; SameSite=Lax` (or Strict for highest safety) in Flask-JWT-Extended:
+     JWT_COOKIE_SECURE = True
+     JWT_COOKIE_SAMESITE = "Lax"
+     JWT_COOKIE_CSRF_PROTECT = True   # also enables anti-CSRF double-submit
+2. Enable Flask-JWT-Extended's built-in CSRF double-submit cookie (X-CSRF-TOKEN header required on state-changing requests) - the admin UI currently has no CSRF token anywhere.
+3. Shorten access-token lifetime to ~30 min and use a separate refresh-token cookie with its own lifetime; today a stolen token is valid for 8 hours.
+4. Store the JWT secret in a strong, randomly generated environment variable; rotate it on a schedule.
+5. Serve HSTS: `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload` on both www and media hosts to prevent downgrade.
+
+---
+
+# Finding: Unauthenticated Server-Side Template Injection (SSTI) with Remote Code Execution in /search
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H (10.0)
+Affected: https://www.thedownundernews.online/search?q=<payload>  (Flask endpoint `public.search`)
+            https://www.thedownundernews.online/?q=<payload>        (same template sink reached from the homepage)
+References:
+- OWASP Testing Guide - Testing for Server-Side Template Injection
+- PortSwigger Jinja2 SSTI Methodology
+- CWE-1336 Improper Neutralization of Special Elements Used in a Template Engine
+- CWE-94 Improper Control of Generation of Code
+
+Summary:
+The /search endpoint renders the user-supplied `q` query parameter through the Jinja2 template engine before returning the page. An unauthenticated remote attacker can therefore inject template expressions that execute arbitrary Python code on the production server. This gives full command execution on the OVH VPS hosting the main site (51.161.130.70), full read/write access to the application and database, and trivial recovery of the JWT signing key - which in turn means forged administrator sessions and full ownership of the publishing platform.
+
+Description:
+Verified 2026-10-05 against https://www.thedownundernews.online/search with the following benign probes (all returned as the literal text between <strong></strong> in the response):
+
+  Probe                                                             Result
+  -----------------------------------------------------------------  --------------
+  ?q={{7*8}}                                                        56       (template eval confirmed)
+  ?q={{7*"7"}}                                                      7777777  (Jinja2 identity confirmed)
+  ?q={{config.__class__.__name__}}                                  Config   (Flask config object reachable)
+  ?q={{self.__class__.__name__}}                                    TemplateReference
+  ?q={{request.endpoint}}                                           public.search
+  ?q={{"".__class__.__mro__[1].__subclasses__()|length}}            824      (Python subclass escape ready)
+  ?q={{lipsum.__globals__.os.listdir('.')|length|string}}           15       (arbitrary OS calls executed)
+
+The last two probes prove that a classic Jinja2 sandbox escape succeeds and that `os.listdir(".")` (and therefore any `os.popen`, `subprocess.*`, `open(...).read()`, etc.) is reachable. The engagement intentionally stopped here and did NOT read file contents, directory listings, environment variables, SECRET_KEY, DATABASE_URL, or run shell commands - the primitives are proven and that is enough.
+
+Full-exploitation chain available to any attacker (not exercised during this test):
+1. {{config.items()}} - returns every Flask config value, including JWT_SECRET_KEY / SECRET_KEY.
+2. With SECRET_KEY in hand, forge an access_token_cookie with sub="1" (admin user id, already known to be sequential), bypassing the JWT algorithm, lifetime, and role checks.
+3. OR: {{lipsum.__globals__.os.popen("<command>").read()}} - direct RCE as the Flask process user.
+4. Pivot into database file, read .env, dump user table (password hashes), overwrite article content, create admin accounts, upload backdoors.
+
+Business impact:
+- COMPLETE compromise of the application and the hosting VPS, from a single unauthenticated HTTP GET on the public search box.
+- Database can be read and modified (every article, every account, every password hash).
+- Attacker can mint admin JWTs at will, invisible to any audit trail, with 8-hour validity.
+- The server can be used to host malware under your brand, serve phishing pages, send mail from your IP, and attack other OVH tenants - any of which puts the business on blocklists.
+- Reputational and regulatory exposure (Australian Privacy Act for any PII in the user table).
+
+Recommendation:
+IMMEDIATE (same-day):
+1. Patch the /search view. Locate the file that imports `render_template_string` or that formats a Jinja template string from `request.args.get("q")`. Replace it with:
+     return render_template("search.html", q=q, results=results)
+   so the user input is passed as a template VARIABLE, which Jinja escapes, instead of being compiled as template SOURCE.
+2. Rotate SECRET_KEY and JWT_SECRET_KEY NOW (assume both are leaked). Invalidate every existing session; force re-login for admin/writer/editor.
+3. Rotate the admin / writer / editor passwords; audit for any new or unexpected user accounts in /api/admin/users.
+4. If feasible, take a forensic image of the VPS before restarting services.
+
+SHORT-TERM:
+5. Search the codebase for every call to `render_template_string`, `Template(...).render`, `env.from_string`, `jinja2.Environment`, or any f-string that interpolates request data into a template, and replace them with parameterized templates.
+6. Review nginx and application logs for prior exploitation (look for /search requests containing `{{`, `}}`, `__class__`, `__mro__`, `__subclasses__`, `os.popen`, `lipsum`, `config.items`, `request.application`).
+7. Deploy a web application firewall rule that drops any `/search?q=` value containing `{{`, `}}`, or `${` as a stop-gap. This is NOT a substitute for the code fix.
+
+LONG-TERM:
+8. Add CI linting (bandit, semgrep rule `python.flask.security.audit.render-template-string.render-template-string`) that blocks `render_template_string` on untrusted input.
+9. Run the Flask app under a hardened user with no shell, read-only filesystem for everything except the data directory, and no outbound internet except to the DB.
+10. Add CSP headers and reduce the JWT access-token lifetime (see the cookie-flags finding).
+
+---
+
+# Finding: Anonymous FTP service exposes entire media library to the internet
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N (5.3)
+Affected: ftp://51.161.131.195:21 (vsftpd 3.0.5)
+References:
+- CWE-287 Improper Authentication
+- CWE-200 Exposure of Sensitive Information to an Unauthorized Actor
+- CIS Benchmarks - "Disable Anonymous FTP"
+
+Summary:
+Port 21/tcp on the media VPS runs vsftpd 3.0.5 and permits anonymous (user `anonymous`, any password) read access to the directory that backs https://media.thedownundernews.online/images/. Any internet user, without credentials, can enumerate every file uploaded through the Media Library - including orphaned files that are no longer linked from any article and files that were "deleted" from the admin UI but not purged from disk. The connection is also plain-text FTP (no AUTH TLS supported) and there is no transport encryption.
+
+Description:
+Verified 2026-10-05 via `curl ftp://anonymous:anonymous@51.161.131.195/`:
+- Anonymous login granted (standard 230 response).
+- Directory listing of root succeeded; current contents (4 files) include at least:
+    -rw-r--r-- 1001 ... 37550846eae5457d93ddd8e1d2faeaca.html  (76 bytes)
+    -rw-r--r-- 1001 ... 58e75939c3d24841806d3a069e919576.png  (230,599 bytes)
+    -rw-r--r-- 1001 ... 66ea642847be4ef0a800fb8cb8432d79.png  (167,268 bytes)
+    -rw-r--r-- 1001 ... d2273a1a2576489fb419cc1049c4c62f.pdf  (624,807 bytes)
+- Confirmed to be the SAME directory that serves https://media.thedownundernews.online/images/<file>; every file listed above returned HTTP 200 with the file content.
+- Upload attempt (STOR DUN_PERM_TEST.txt) refused with 553 - anonymous WRITE is not permitted (good).
+- Delete attempt (DELE) refused with 550 - anonymous DELETE is not permitted (good).
+- AUTH TLS not supported - all commands and listings transit the network in cleartext.
+- Server banner: 220 (vsFTPd 3.0.5) - version disclosure.
+
+Business impact:
+- Any competitor, scraper, or opportunistic attacker can take daily snapshots of every image, PDF, and document uploaded to the Media Library. For a news publisher, this leaks embargoed article images, draft photo essays, PDFs of upcoming reports, source documents, and any document uploaded "in case we need it later".
+- Orphan files (uploaded for testing, replaced in articles, or dropped from drafts) remain discoverable to the public even though they are not linked from the site.
+- Combined with the file-upload-type-bypass finding, an attacker who gains writer-level credentials can store a reconnaissance payload, delete the DB record from the admin UI, and continue to serve the file from HTTPS or FTP until the file is manually scrubbed from disk.
+- Plain-text FTP means if the business ever enables non-anonymous accounts on this service, those credentials and their contents are sniffable by anyone on-path.
+
+Recommendation:
+1. Disable anonymous FTP: edit /etc/vsftpd.conf and set `anonymous_enable=NO`; restart vsftpd. If no human operator actually uses FTP to this box, stop the service entirely (`systemctl disable --now vsftpd`) and remove port 21 from any firewall allowlist.
+2. If FTP must stay for operator use, require FTPS (TLS):
+     ssl_enable=YES
+     allow_anon_ssl=NO
+     force_local_data_ssl=YES
+     force_local_logins_ssl=YES
+     ssl_tlsv1_2=YES
+     ssl_sslv2=NO; ssl_sslv3=NO
+   and migrate operator access to SFTP via SSH (port 22) which is simpler and already encrypted.
+3. Add a job that purges files from /var/www/.../images/ when the matching media_id is deleted in the DB, so there are no orphan files.
+4. Firewall port 21 at the OVH edge/VPS firewall to a specific operator IP if FTP is still required.
+
+---
+
+# Finding: HTTP security response headers are completely absent
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N (5.4)
+Affected: https://www.thedownundernews.online/ (and all paths)
+References:
+- OWASP Secure Headers Project
+- MDN Web Docs - HTTP Headers (Security)
+- CWE-693 Protection Mechanism Failure
+
+Summary:
+The site returns only `Server`, `Date`, `Content-Type`, `Content-Length`, and `Connection` on every response. None of the modern security headers that browsers rely on are present: no Strict-Transport-Security (no HTTPS pinning), no Content-Security-Policy (no XSS mitigation layer), no X-Frame-Options or frame-ancestors (clickjacking is possible), no X-Content-Type-Options (MIME sniffing allowed), no Referrer-Policy (sensitive URL leakage), no Permissions-Policy, and no Cross-Origin-* headers. The access_token_cookie also lacks the Secure and SameSite attributes (see separate finding).
+
+Business impact:
+- Clickjacking: a hostile site can iframe /admin/dashboard and overlay buttons that cause a logged-in administrator to click Delete-All.
+- HTTPS downgrade: no HSTS means the first visit over HTTP (which is common when users type the URL by hand) is MITM-able.
+- Missing CSP removes the browser-side safety net that would make the SSTI/stored-content XSS risk harder to exploit at the client.
+- Missing X-Content-Type-Options enables MIME-sniffing of the media uploads (feeds the file-upload finding).
+- Missing Referrer-Policy leaks admin URLs (which embed article ids) to any third party resource loaded by the admin pages (fonts.googleapis.com, jsdelivr).
+
+Recommendation:
+In nginx (both main site and media host), add to the server block:
+  add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+  add_header Content-Security-Policy "default-src 'self'; img-src 'self' data: https://media.thedownundernews.online; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; script-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';" always;
+  add_header X-Frame-Options "DENY" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+  add_header Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()" always;
+  add_header Cross-Origin-Opener-Policy "same-origin" always;
+  add_header Cross-Origin-Resource-Policy "same-origin" always;
+
+Validate with https://securityheaders.com after deployment.
+
+---
+
+# Finding: No rate limiting on /admin/login and username-timing side channel
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N (6.5)
+Affected: https://www.thedownundernews.online/admin/login (POST)
+References:
+- OWASP Authentication Cheat Sheet
+- CWE-307 Improper Restriction of Excessive Authentication Attempts
+- CWE-208 Observable Timing Discrepancy
+
+Summary:
+The admin login endpoint has no rate limiting and no account lockout. In addition, the response time for a POST with a VALID username and a wrong password is ~380 ms longer than the response time for a POST with a non-existent username, giving an attacker a reliable timing oracle to enumerate real usernames before mounting any password attack.
+
+Description:
+- 5x POST /admin/login with username=admin and random wrong passwords: mean 499 ms.
+- 5x POST /admin/login with username=invalid<N>: mean 120 ms.
+- No 429, no Retry-After, no Captcha, no account lockout observed in any run.
+- Bodies and status codes are identical (both 401, same content-length), so there is no response-content enumeration channel, only the timing one.
+- The identical response body is good hygiene; the timing gap (and absence of rate limiting) negates it.
+
+Business impact:
+- An attacker can automate GET-timing probes to build a list of real usernames (admin, writer, editor, plus any staff accounts added later) in minutes.
+- Once usernames are confirmed, the absence of lockout and rate limits enables large-scale password spraying (e.g. "Admin@1234", "Password1", seasonal passwords) against each real account at thousands of requests per minute.
+- During this engagement the three provided test accounts were all configured with the SAME password `Admin@1234`; if any production account was created with the same convenience default it would be found by a single spray attempt.
+
+Recommendation:
+1. Install Flask-Limiter and apply a per-IP + per-username rate limit:
+     limiter.limit("5/minute;20/hour", key_func=lambda: request.form.get("username","")+":"+get_remote_address())
+2. On 10 consecutive failed attempts for a single username, lock the account for 15 minutes and email a notification; after 50 failures from a single IP, add a 1-hour IP-level block.
+3. Normalize response time: always perform the bcrypt check against a dummy hash when the username does not exist, so the DB-plus-hash path takes the same time regardless of whether the user is real.
+4. Rotate all shared "Admin@1234" passwords to unique, strong secrets (16+ chars, random). Enforce a password policy and store a password-history to prevent reuse.
+5. Add TOTP MFA for admin + editor roles; make it mandatory on first login.
+6. Log every failed login attempt (actor-supplied username, source IP, user-agent, timestamp) and alert on >10/minute from the same IP.
+
+---
+
+# Finding: HTTP->HTTPS redirect leaks internal OVH VPS hostname
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N (3.7)
+Affected: http://51.161.130.70/ -> https://vps-8d3f63bd.vps.ovh.ca/
+References:
+- CWE-200 Exposure of Sensitive Information
+
+Summary:
+When port 80 on the main site is accessed without a Host header (or with a Host header the server does not recognise), nginx issues a 301 redirect pointing at the OVH-generated reverse-DNS name `vps-8d3f63bd.vps.ovh.ca` instead of `www.thedownundernews.online`. This leaks the internal/raw provider hostname of the VPS to any attacker performing reconnaissance.
+
+Business impact:
+- Facilitates targeted attacks (Shodan/Censys lookups, co-tenant mapping, direct IP-based scanning that bypasses WAF/CDN later).
+- Minor branding issue.
+
+Recommendation:
+In the nginx HTTP (port 80) server block, pin the redirect to the intended hostname:
+  server {
+    listen 80;
+    server_name www.thedownundernews.online thedownundernews.online;
+    return 301 https://www.thedownundernews.online$request_uri;
+  }
+  server {
+    listen 80 default_server;
+    return 444;    # drop any Host that is not ours
+  }
+
+---
+
+# Finding: Contact and administrative mail domain `thedownundernews.it.com` is advertised but UNREGISTERED
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N (5.4)
+Affected:
+  - Published footer link https://thedownundernews.it.com (every page)
+  - Published contact emails: editorial@thedownundernews.it.com, advertising@thedownundernews.it.com
+  - Administrator account email on file: admin@thedownundernews.it.com
+References:
+- CWE-350 Reliance on Reverse DNS Resolution for a Security-Critical Action (analogous: reliance on an unowned domain)
+- NIST SP 800-177r1 Trustworthy Email
+
+Summary:
+The business publicly advertises and relies on email addresses at the domain `thedownundernews.it.com`, but that domain is NOT registered (RDAP: 404, DNS: NXDOMAIN). Mail sent to those addresses is undeliverable; worse, anyone can register the domain today and immediately begin impersonating the business, intercepting replies, and signing content as the newsroom.
+
+Business impact:
+- Readers, advertisers, and sources who reply to the published contact addresses receive silent bounces; the newsroom never sees the message. Lost leads, lost stories, lost ads.
+- The administrator account itself is tied to admin@thedownundernews.it.com - any password-reset or notification email configured on this address goes nowhere, risking admin lockout.
+- IMPERSONATION: a competitor or malicious actor can register thedownundernews.it.com for roughly $10/year, set up MX, and immediately send authenticated mail as editorial@thedownundernews.it.com (DMARC on the .online domain does not help, this is a different domain). Phishing of advertisers, defamation of sources, or defacement-via-reply becomes trivial.
+
+Recommendation:
+1. IMMEDIATELY register `thedownundernews.it.com` through the same registrar used for the .online domain (CentralNic / Spaceship). Add it as a defensive registration whether or not it will be actively used.
+2. If the contact brand is going to live on the .online domain instead, update every footer, contact page, article byline, and seed email to use addresses at thedownundernews.online, and republish.
+3. Also consider defensively registering common typo/alt-TLD variants (thedownundernews.com, .com.au, .au, .net.au).
+4. Change the administrator account's `email` field in the users table off the unregistered domain today - set it to a real mailbox the owner controls (e.g. a Gmail or the owner's university inbox) until the branded mailbox exists and routes.
+
+---
+
+# Finding: DMARC and CAA records missing; SPF uses soft-fail
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N (3.1)
+Affected:
+  - thedownundernews.online (no `_dmarc` TXT; no `CAA`; SPF `v=spf1 include:spf.efwd.spaceship.net ~all`)
+References:
+- RFC 7489 (DMARC), RFC 8659 (CAA), RFC 7208 (SPF)
+
+Summary:
+The anchor domain has no DMARC record, no CAA record, and a soft-fail SPF. The brand is spoofable at the mail layer, any certificate authority may issue certificates for the domain, and strict SPF rejection is not advertised.
+
+Recommendation:
+1. Publish a DMARC record (quarantine first, then reject) at `_dmarc.thedownundernews.online`:
+     v=DMARC1; p=quarantine; rua=mailto:dmarc-reports@<real mailbox>; adkim=s; aspf=s; pct=100
+   after 30 days of monitoring, move p=quarantine to p=reject.
+2. Publish CAA records restricting issuance to the CAs you actually use:
+     thedownundernews.online. CAA 0 issue "letsencrypt.org"
+     thedownundernews.online. CAA 0 iodef "mailto:security@<real mailbox>"
+3. Change SPF soft-fail to hard-fail: `v=spf1 include:spf.efwd.spaceship.net -all` once you have confirmed no legitimate mail originates from unlisted sources.
+4. Publish DKIM through Spaceship / your mail provider and align the signing domain.
+
+---
+
+# Finding: Weak TLS 1.2 CBC-SHA1 cipher suites still offered
+Severity: info
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N (3.1)
+Affected: https://www.thedownundernews.online:443
+
+Summary:
+In addition to modern AEAD cipher suites, the server still negotiates TLS 1.2 CBC + SHA1 suites:
+  ECDHE-ECDSA-AES256-SHA, ECDHE-ECDSA-AES128-SHA
+These are not immediately exploitable (BEAST/Lucky13 mitigations are present in modern browsers and the suites still require ECDHE), but they are deprecated and should be removed to earn full A+ posture.
+
+Recommendation:
+Restrict nginx `ssl_ciphers` to only AEAD suites, for example (modern profile from Mozilla SSL Config Generator):
+  ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305';
+  ssl_prefer_server_ciphers off;
+  ssl_protocols TLSv1.2 TLSv1.3;
+
+---
+

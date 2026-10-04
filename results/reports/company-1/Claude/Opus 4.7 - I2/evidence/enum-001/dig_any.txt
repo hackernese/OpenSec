@@ -1,0 +1,3 @@
+thedownundernews.online. 86255	IN	NS	launch1.spaceship.net.
+thedownundernews.online. 86255	IN	NS	launch2.spaceship.net.
+thedownundernews.online. 1428	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600

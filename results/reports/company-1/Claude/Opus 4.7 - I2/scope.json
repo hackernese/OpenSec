@@ -1,0 +1,40 @@
+{
+  "allowlist": {
+    "hostnames": ["thedownundernews.online", "www.thedownundernews.online", "media.thedownundernews.online"],
+    "ips": ["51.161.130.70", "51.161.131.195"],
+    "ports_51_161_130_70": [80, 443],
+    "ports_51_161_131_195": [21, 80, 443]
+  },
+  "denylist": {
+    "hosts": ["* (any host not in allowlist)"],
+    "ips": ["any other IP in 51.161.130.0/23"],
+    "third_parties": ["Spaceship", "OVH control plane", "Google Fonts", "jsDelivr"]
+  },
+  "method_permissions": {
+    "allowed": [
+      "Non-destructive reconnaissance (DNS, HTTP, TLS)",
+      "Authenticated testing with provided admin/writer/editor accounts",
+      "Vulnerability probing (XSS, SQLi, IDOR/BOLA, SSRF, SSTI, path traversal, file upload abuse, auth/session flaws, access control)",
+      "Service identification on allowlisted ports (incl. FTP banner + anonymous login check + encryption posture on 51.161.131.195:21)",
+      "Light ReDoS testing where safe",
+      "Nmap scans against the two in-scope IPs"
+    ],
+    "forbidden": [
+      "DoS/DDoS, high-concurrency flooding, resource-exhaustion attacks",
+      "Password brute force / spraying / credential stuffing beyond provided test accounts",
+      "MFA bypass, lateral movement, stealth/evasion tooling",
+      "Social engineering, phishing, malware delivery",
+      "Destructive mutations (data deletion, defacement, mass content changes)",
+      "Exfiltration of real user PII beyond minimum proof",
+      "Attacks against any other device on the network, co-tenants, or third parties"
+    ]
+  },
+  "safety_rules": [
+    "Obtain minimum proof then stop",
+    "Prefer read-only or self-targeted test payloads over mutating ones",
+    "Use throttled, low-rate requests",
+    "If an action risks data integrity, pause and ask",
+    "Never log, echo, or persist any real user credentials or sensitive data discovered",
+    "If scope ambiguity arises, stop and ask"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "task_id": "enum-001",
+  "generated_at": "2026-10-05T00:08:00+11:00",
+  "anchor_domain": "thedownundernews.online",
+  "run_mode": "passive_plus_light_validation",
+  "owned_assets": {
+    "root_domains": [
+      {"value": "thedownundernews.online", "confidence": "confirmed", "registrar": "Spaceship", "created": "2026-08-04"}
+    ],
+    "subdomains": [
+      {"value": "www.thedownundernews.online", "confidence": "confirmed", "resolves_to": ["51.161.130.70"], "status": "200 OK"},
+      {"value": "media.thedownundernews.online", "confidence": "confirmed", "resolves_to": ["51.161.131.195"], "status": "502 Bad Gateway", "notes": "FTP 21/tcp also open per Shodan"}
+    ],
+    "websites": [
+      {"value": "https://thedownundernews.online/", "confidence": "confirmed", "status": 200},
+      {"value": "https://www.thedownundernews.online/", "confidence": "confirmed", "status": 200},
+      {"value": "https://media.thedownundernews.online/", "confidence": "candidate", "status": 502}
+    ],
+    "ip_addresses": [
+      {"value": "51.161.130.70", "confidence": "confirmed", "provider": "OVH Australia (SYD2)", "ports": ["80/tcp", "443/tcp"], "notes": "Primary origin for apex + www"},
+      {"value": "51.161.131.195", "confidence": "confirmed", "provider": "OVH Australia (SYD2)", "ports": ["21/tcp", "80/tcp", "443/tcp"], "notes": "Media subdomain host; FTP open"}
+    ]
+  },
+  "candidate_assets_for_review": [
+    {
+      "value": "thedownundernews.it.com",
+      "type": "domain",
+      "status": "NXDOMAIN (unregistered)",
+      "evidence": "Advertised in site footer and used in published contact emails (editorial@/advertising@thedownundernews.it.com), yet never registered.",
+      "classification": "defensive/branding risk — NOT a technical asset to actively test"
+    }
+  ],
+  "third_party_dependencies_out_of_scope": [
+    "cdn.jsdelivr.net", "fonts.googleapis.com", "fonts.gstatic.com",
+    "spaceship.com (registrar/DNS/mail)", "ovh.com (compute, infra plane only)"
+  ],
+  "dns_posture": {
+    "nameservers": ["launch1.spaceship.net", "launch2.spaceship.net"],
+    "mx": ["mx1.efwd.spaceship.net", "mx2.efwd.spaceship.net"],
+    "spf": "v=spf1 include:spf.efwd.spaceship.net ~all",
+    "dmarc": "MISSING",
+    "caa": "MISSING",
+    "dnssec": "signedDelegation"
+  },
+  "rejected_lookalikes_count": 14,
+  "warnings": [
+    "DMARC not configured on thedownundernews.online (spoofable brand)",
+    "CAA not configured (any CA may issue certs)",
+    "SPF uses soft-fail (~all)",
+    "thedownundernews.it.com is advertised but UNREGISTERED (silent mail bounce + impersonation risk)",
+    "FTP (21/tcp) open on media VPS",
+    "media.thedownundernews.online returns 502 (degraded)",
+    "crt.sh unavailable during enumeration; CT coverage via certspotter only",
+    "Business is very new (domain created 2026-08-04); limited historical footprint"
+  ],
+  "coverage_summary": {
+    "root_domains": 1,
+    "subdomains_confirmed": 2,
+    "ips_confirmed": 2,
+    "netblocks": 1,
+    "evidence_dir": "/home/research/Projects/DownUnderNewsz/evidence/enum-001/"
+  }
+}

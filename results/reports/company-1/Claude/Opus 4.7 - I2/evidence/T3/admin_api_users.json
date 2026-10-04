@@ -1,0 +1,42 @@
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 04 Oct 2026 13:25:38 GMT
+Content-Type: application/json
+Content-Length: 837
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+{
+  "users": [
+    {
+      "created_at": "2026-10-04T12:51:11.197606+00:00",
+      "email": "admin@thedownundernews.it.com",
+      "first_name": "Site",
+      "id": 1,
+      "is_active": true,
+      "last_name": "Administrator",
+      "role": "admin",
+      "username": "admin"
+    },
+    {
+      "created_at": "2026-10-04T12:51:11.197606+00:00",
+      "email": "writer@thedownundernews.it.com",
+      "first_name": "Steve",
+      "id": 2,
+      "is_active": true,
+      "last_name": "Harvey",
+      "role": "writer",
+      "username": "writer"
+    },
+    {
+      "created_at": "2026-10-04T12:51:11.197606+00:00",
+      "email": "editor@thedoAdministratorwnundernews.it.com",
+      "first_name": "Editor",
+      "id": 3,
+      "is_active": true,
+      "last_name": "Admin",
+      "role": "editor",
+      "username": "editor"
+    }
+  ]
+}

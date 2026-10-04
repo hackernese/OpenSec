@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+  
+</head>
+<body class="admin-body">
+
+<div class="admin-layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="admin-sidebar" id="adminSidebar" aria-label="Admin navigation">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="logo-dot"></span>
+        <span class="sidebar-logo-text">DUN Admin</span>
+      </div>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Admin navigation">
+      <ul>
+        <li>
+          <a href="/admin/dashboard" class="sidebar-link ">
+            <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-section-label">Content</li>
+        <li>
+          <a href="/admin/articles" class="sidebar-link active">
+            <i class="bi bi-newspaper"></i><span>Articles</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/articles/new" class="sidebar-link ">
+            <i class="bi bi-plus-square"></i><span>New Article</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/categories" class="sidebar-link ">
+            <i class="bi bi-tag"></i><span>Categories</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/media" class="sidebar-link ">
+            <i class="bi bi-images"></i><span>Media Library</span>
+          </a>
+        </li>
+        <li class="nav-section-label">Moderation</li>
+        <li>
+          <a href="/admin/comments" class="sidebar-link ">
+            <i class="bi bi-chat-dots"></i><span>Comments</span>
+          </a>
+        </li>
+        
+        <li class="nav-section-label">Account</li>
+        <li>
+          <a href="/admin/profile" class="sidebar-link ">
+            <i class="bi bi-person-circle"></i><span>My Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="/" class="sidebar-link" target="_blank">
+            <i class="bi bi-box-arrow-up-right"></i><span>View Site</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/logout" class="sidebar-link sidebar-logout">
+            <i class="bi bi-box-arrow-left"></i><span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="admin-main">
+    <!-- Top bar -->
+    <header class="admin-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <i class="bi bi-list"></i>
+      </button>
+      <nav class="topbar-breadcrumb" aria-label="Admin breadcrumb">
+        <a href="/admin/dashboard">Admin</a>
+        <i class="bi bi-chevron-right"></i><span>Articles</span>
+      </nav>
+      <div class="topbar-user">
+        
+        <span class="user-badge user-role-writer">writer</span>
+        <span class="topbar-username">Steve Harvey</span>
+        
+        <a href="/admin/logout" class="topbar-logout" title="Logout">
+          <i class="bi bi-box-arrow-right"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <div class="admin-content">
+      
+        
+      
+
+      
+<div class="page-heading-row">
+  <div>
+    <h1>Articles</h1>
+    <p>0 articles total</p>
+  </div>
+  <a href="/admin/articles/new" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> New Article
+  </a>
+</div>
+
+<!-- Filters -->
+<div class="filter-bar">
+  <form method="get" class="filter-form" id="filterForm">
+    <div class="filter-group">
+      <i class="bi bi-search filter-search-icon"></i>
+      <input type="search" name="search" value="" placeholder="Search articles…" class="filter-search" />
+    </div>
+    <select name="status" class="filter-select" onchange="this.form.submit()">
+      <option value="">All Statuses</option>
+      <option value="published" >Published</option>
+      <option value="draft" >Draft</option>
+      <option value="archived" >Archived</option>
+    </select>
+    <button type="submit" class="btn btn-sm btn-outline"><i class="bi bi-funnel"></i> Filter</button>
+    
+  </form>
+</div>
+
+
+<div class="empty-state">
+  <i class="bi bi-newspaper"></i>
+  <p>No articles found.</p>
+  <a href="/admin/articles/new" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> Create Article
+  </a>
+</div>
+
+
+<!-- Delete confirmation modal -->
+<div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="deleteModalTitle"><i class="bi bi-exclamation-triangle text-danger"></i> Delete Article</h3>
+      <button class="modal-close" onclick="closeDeleteModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to delete "<strong id="deleteModalArticleTitle"></strong>"?</p>
+      <p class="text-danger"><strong>This action cannot be undone.</strong></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Overlay for mobile sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script src="/static/js/admin.js"></script>
+
+<script>
+let deleteArticleId = null;
+
+function confirmDelete(id, title) {
+  deleteArticleId = id;
+  document.getElementById('deleteModalArticleTitle').textContent = title;
+  document.getElementById('deleteModal').classList.add('active');
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('active');
+  deleteArticleId = null;
+}
+
+document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+  if (!deleteArticleId) return;
+  const btn = document.getElementById('confirmDeleteBtn');
+  btn.disabled = true;
+  btn.textContent = 'Deleting…';
+  try {
+    const resp = await fetch(`/api/admin/articles/${deleteArticleId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+    });
+    if (resp.ok) {
+      const row = document.querySelector(`tr[data-article-id="${deleteArticleId}"]`);
+      if (row) row.remove();
+      closeDeleteModal();
+    } else {
+      const data = await resp.json();
+      alert(data.error || 'Delete failed');
+      btn.disabled = false;
+      btn.textContent = 'Delete';
+    }
+  } catch (e) {
+    alert('Network error. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Delete';
+  }
+});
+
+document.getElementById('deleteModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeDeleteModal();
+});
+</script>
+
+</body>
+</html>

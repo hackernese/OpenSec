@@ -1,0 +1,37 @@
+{
+  "article": {
+    "author": {
+      "created_at": "2026-10-04T12:51:11.197606+00:00",
+      "email": "writer@thedownundernews.it.com",
+      "first_name": "Steve",
+      "id": 2,
+      "is_active": true,
+      "last_name": "Harvey",
+      "role": "writer",
+      "username": "writer"
+    },
+    "category": {
+      "article_count": 2,
+      "description": "National and international political news",
+      "display_order": 1,
+      "id": 1,
+      "name": "Politics",
+      "slug": "politics"
+    },
+    "content": "<p>DUN-BODY-1791121616 <img src=x onerror=1> {{7*8}}</p>",
+    "created_at": "2026-10-04T13:46:56.705650+00:00",
+    "excerpt": "DUN-EXC-1791121616 <img src=x onerror=1>",
+    "featured_image_url": null,
+    "id": 15,
+    "is_featured": false,
+    "media": [],
+    "published_at": null,
+    "slug": "dun-test-1791121616-img-srcx-onerror1-78",
+    "status": "draft",
+    "subtitle": null,
+    "tags": [],
+    "title": "DUN-TEST-1791121616 <img src=x onerror=1> {{7*8}}",
+    "updated_at": "2026-10-04T13:46:56.705654+00:00",
+    "views_count": 0
+  }
+}

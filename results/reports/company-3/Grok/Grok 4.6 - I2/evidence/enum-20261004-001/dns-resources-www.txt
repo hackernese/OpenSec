@@ -1,0 +1,21 @@
+===== RESOURCES A/CNAME/AAAA =====
+resources.imagesharer.xyz. 1800	IN	CNAME	d273uevi0662l0.cloudfront.net.
+d273uevi0662l0.cloudfront.net. 60 IN	A	13.32.126.132
+d273uevi0662l0.cloudfront.net. 60 IN	A	13.32.126.182
+d273uevi0662l0.cloudfront.net. 60 IN	A	13.32.126.59
+d273uevi0662l0.cloudfront.net. 60 IN	A	13.32.126.107
+resources.imagesharer.xyz. 1800	IN	CNAME	d273uevi0662l0.cloudfront.net.
+resources.imagesharer.xyz. 1799	IN	CNAME	d273uevi0662l0.cloudfront.net.
+d273uevi0662l0.cloudfront.net. 60 IN	AAAA	2600:9000:2084:a400:d:6b3e:2500:21
+d273uevi0662l0.cloudfront.net. 60 IN	AAAA	2600:9000:2084:9600:d:6b3e:2500:21
+d273uevi0662l0.cloudfront.net. 60 IN	AAAA	2600:9000:2084:f400:d:6b3e:2500:21
+d273uevi0662l0.cloudfront.net. 60 IN	AAAA	2600:9000:2084:de00:d:6b3e:2500:21
+d273uevi0662l0.cloudfront.net. 60 IN	AAAA	2600:9000:2084:8200:d:6b3e:2500:21
+d273uevi0662l0.cloudfront.net. 60 IN	AAAA	2600:9000:2084:2600:d:6b3e:2500:21
+d273uevi0662l0.cloudfront.net. 60 IN	AAAA	2600:9000:2084:1800:d:6b3e:2500:21
+d273uevi0662l0.cloudfront.net. 60 IN	AAAA	2600:9000:2084:4e00:d:6b3e:2500:21
+===== WWW =====
+www.imagesharer.xyz.	1679	IN	A	51.161.131.44
+===== NS IPs =====
+162.159.26.38
+162.159.27.32

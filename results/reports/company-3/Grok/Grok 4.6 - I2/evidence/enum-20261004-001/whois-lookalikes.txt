@@ -1,0 +1,114 @@
+===== WHOIS imager.xyz =====
+Domain Name: IMAGER.XYZ
+Registry Domain ID: D183972789-CNIC
+Registrar WHOIS Server: whois.hkdns.hk
+Registrar URL: http://www.hkdns.hk
+Updated Date: 2026-08-17T09:58:11.0Z
+Creation Date: 2020-04-24T03:14:03.0Z
+Registry Expiry Date: 2028-04-24T23:59:59.0Z
+Registrar: West263 International Limited
+Registrar IANA ID: 1915
+Domain Status: ok https://icann.org/epp#ok
+Name Server: LAUNCH1.SPACESHIP.NET
+Name Server: LAUNCH2.SPACESHIP.NET
+DNSSEC: unsigned
+Registrar Abuse Contact Email: abuse@hkdns.hk
+Registrar Abuse Contact Phone: +852.30697963
+URL of the ICANN Whois Inaccuracy Complaint Form: https://www.icann.org/wicf/
+>>> Last update of WHOIS database: 2026-10-04T22:38:39.0Z <<<
+
+For more information on Whois status codes, please visit https://icann.org/epp
+
+The registration data available in this service is limited. Additional
+data may be available at https://lookup.icann.org
+
+The Whois and RDAP services are provided by CentralNic, and contain
+information pertaining to Internet domain names registered by our
+our customers. By using this service you are agreeing (1) not to use any
+information presented here for any purpose other than determining
+ownership of domain names, (2) not to store or reproduce this data in
+any way, (3) not to use any high-volume, automated, electronic processes
+to obtain data from this service. Abuse of this service is monitored and
+actions in contravention of these terms will result in being permanently
+blacklisted. All data is (c) CentralNic Ltd (https://www.centralnicregistry.com)
+
+Access to the Whois and RDAP services is rate limited. For more
+information, visit https://centralnicregistry.com/policies/whois-guidance.
+===== WHOIS imagur.xyz =====
+Domain Name: IMAGUR.XYZ
+Registry Domain ID: D635652570-CNIC
+Registrar WHOIS Server: whois.namecheap.com
+Registrar URL: https://namecheap.com
+Updated Date: 2026-08-28T01:57:25.0Z
+Creation Date: 2026-08-28T01:57:21.0Z
+Registry Expiry Date: 2027-08-28T23:59:59.0Z
+Registrar: NameCheap, Inc.
+Registrar IANA ID: 1068
+Domain Status: serverTransferProhibited https://icann.org/epp#serverTransferProhibited
+Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+Name Server: DNS1.REGISTRAR-SERVERS.COM
+Name Server: DNS2.REGISTRAR-SERVERS.COM
+DNSSEC: unsigned
+Registrar Abuse Contact Email: abuse@namecheap.com
+Registrar Abuse Contact Phone: +1.9854014545
+URL of the ICANN Whois Inaccuracy Complaint Form: https://www.icann.org/wicf/
+>>> Last update of WHOIS database: 2026-10-04T22:38:39.0Z <<<
+
+For more information on Whois status codes, please visit https://icann.org/epp
+
+The registration data available in this service is limited. Additional
+data may be available at https://lookup.icann.org
+
+The Whois and RDAP services are provided by CentralNic, and contain
+information pertaining to Internet domain names registered by our
+our customers. By using this service you are agreeing (1) not to use any
+information presented here for any purpose other than determining
+ownership of domain names, (2) not to store or reproduce this data in
+any way, (3) not to use any high-volume, automated, electronic processes
+to obtain data from this service. Abuse of this service is monitored and
+actions in contravention of these terms will result in being permanently
+blacklisted. All data is (c) CentralNic Ltd (https://www.centralnicregistry.com)
+
+Access to the Whois and RDAP services is rate limited. For more
+information, visit https://centralnicregistry.com/policies/whois-guidance.
+===== WHOIS imagesharer.net =====
+   Domain Name: IMAGESHARER.NET
+   Registry Domain ID: 2646328507_DOMAIN_NET-VRSN
+   Registrar WHOIS Server: whois.namecheap.com
+   Registrar URL: http://www.namecheap.com
+   Updated Date: 2025-09-08T07:44:37Z
+   Creation Date: 2021-10-08T07:22:20Z
+   Registry Expiry Date: 2026-10-08T07:22:20Z
+   Registrar: NameCheap, Inc.
+   Registrar IANA ID: 1068
+   Registrar Abuse Contact Email: abuse@namecheap.com
+   Registrar Abuse Contact Phone: +1.6613102107
+   Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+   Name Server: DNS1.REGISTRAR-SERVERS.COM
+   Name Server: DNS2.REGISTRAR-SERVERS.COM
+   DNSSEC: unsigned
+   URL of the ICANN Whois Inaccuracy Complaint Form: https://www.icann.org/wicf/
+>>> Last update of whois database: 2026-10-04T22:38:31Z <<<
+
+For more information on Whois status codes, please visit https://icann.org/epp
+
+NOTICE: The expiration date displayed in this record is the date the
+registrar's sponsorship of the domain name registration in the registry is
+currently set to expire. This date does not necessarily reflect the expiration
+date of the domain name registrant's agreement with the sponsoring
+registrar.  Users may consult the sponsoring registrar's Whois database to
+view the registrar's reported date of expiration for this registration.
+
+TERMS OF USE: You are not authorized to access or query our Whois
+database through the use of electronic processes that are high-volume and
+automated except as reasonably necessary to register domain names or
+modify existing registrations; the Data in VeriSign Global Registry
+Services' ("VeriSign") Whois database is provided by VeriSign for
+information purposes only, and to assist persons in obtaining information
+about or related to a domain name registration record. VeriSign does not
+guarantee its accuracy. By submitting a Whois query, you agree to abide
+by the following terms of use: You agree that you may use this Data only
+for lawful purposes and that under no circumstances will you use this Data
+to: (1) allow, enable, or otherwise support the transmission of mass
+unsolicited, commercial advertising or solicitations via e-mail, telephone,
+or facsimile; or (2) enable high volume, automated, electronic processes

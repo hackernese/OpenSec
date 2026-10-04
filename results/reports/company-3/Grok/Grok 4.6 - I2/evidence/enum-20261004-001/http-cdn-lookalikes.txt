@@ -1,0 +1,48 @@
+===== resources icon -k =====
+HTTP/1.1 403 Forbidden
+Server: CloudFront
+Date: Sun, 04 Oct 2026 22:39:06 GMT
+Content-Type: text/html
+Content-Length: 915
+Connection: keep-alive
+X-Cache: Error from cloudfront
+Via: 1.1 c79a289a4607d47816b0958d5b8b04f6.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: MEL61-P1
+X-Amz-Cf-Id: qcrrczMRgUN-c5C5Rvwu_1v65e9HTCwnlqPHcyUZ_FMN6PDtZ7yDcA==
+
+icon bytes:
+915 /tmp/icon.ico
+/tmp/icon.ico: HTML document, ASCII text
+===== resources / -k =====
+HTTP/1.1 403 Forbidden
+Server: CloudFront
+Date: Sun, 04 Oct 2026 22:39:06 GMT
+Content-Type: text/html
+Content-Length: 915
+Connection: keep-alive
+X-Cache: Error from cloudfront
+Via: 1.1 e1bbf3c0ea5eec49c01c856575733d7c.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: MEL61-P1
+X-Amz-Cf-Id: irr14pfQh828V7lk4JpTFh5yXJ4ZJUeiLbkQjyVXhiNM-xRNr_5yeQ==
+
+===== cloudfront direct =====
+HTTP/2 404 
+content-type: application/xml
+server: AmazonS3
+date: Sun, 04 Oct 2026 22:39:06 GMT
+x-cache: Error from cloudfront
+via: 1.1 dd689df8703878001e50251db1b207e4.cloudfront.net (CloudFront)
+x-amz-cf-pop: MEL61-P1
+x-amz-cf-id: sfnHyIEpP7Pd5-wZBWhHE360D3-e0oOQp6svTQZSmg4EhvSCr3TZJQ==
+
+===== imagur.xyz http =====
+HTTP/1.1 404 Not Found
+Date: Sun, 04 Oct 2026 22:39:06 GMT
+Content-Type: text/html; charset=UTF-8
+Server: ghs
+Content-Length: 1561
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+
+===== imagur.xyz https -k =====
+curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading

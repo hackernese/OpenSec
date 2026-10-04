@@ -1,0 +1,269 @@
+{
+  "task_id": "enum-20261004-001",
+  "generated_at": "2026-10-04T22:34:05Z",
+  "canonical_name": "Imagur",
+  "root_domains": ["imagesharer.xyz"],
+  "unavailable_sources": [
+    "crt.sh (HTTP 404/502/429; no CT names retrieved)",
+    "censys (no API ID/secret configured)",
+    "whois.spaceship.com (hostname did not resolve)",
+    "rdap.org/domain/imagesharer.xyz (empty/unusable response)",
+    "amass enum (CLI flag mismatch; not used)",
+    "urlscan.io domain search (HTTP 429)"
+  ],
+  "warnings": [
+    "Certificate Transparency (crt.sh) was unavailable; subdomain inventory may be incomplete.",
+    "Censys API credentials were not configured.",
+    "51.161.131.44 also answers for cataierc.com via likely default vhost. Shared-IP neighbors were rejected; owner should confirm they do not own cataierc.com.",
+    "www.imagesharer.xyz and resources.imagesharer.xyz lack matching TLS SANs.",
+    "FShare Google Maps listing at the supplied address has no DNS/web evidence tying it to Imagur.",
+    "Public JS /js/awsvalid.js contains commented cloud credential material; recorded as cloud-usage evidence only and not exercised.",
+    "Provider netblock 51.161.130.0/23 and CloudFront anycast addresses were not expanded.",
+    "Shodan CVE labels on the IP were ignored as unverified scanner noise."
+  ],
+  "assets": [
+    {
+      "id": "AST-001",
+      "type": "root_domain",
+      "value": "imagesharer.xyz",
+      "classification": "confirmed",
+      "confidence": 98,
+      "status": "confirmed",
+      "notes": "Registrable root for the official site. Created 2026-09-06, registrar Spaceship, Inc."
+    },
+    {
+      "id": "AST-002",
+      "type": "website",
+      "value": "https://imagesharer.xyz/",
+      "classification": "confirmed",
+      "confidence": 99,
+      "status": "confirmed",
+      "notes": "Canonical Imager login/register application on nginx + PHP/8.2.34."
+    },
+    {
+      "id": "AST-003",
+      "type": "subdomain",
+      "value": "www.imagesharer.xyz",
+      "classification": "confirmed",
+      "confidence": 90,
+      "status": "confirmed",
+      "notes": "Same IP as apex. TLS certificate SAN is only imagesharer.xyz."
+    },
+    {
+      "id": "AST-004",
+      "type": "website",
+      "value": "https://www.imagesharer.xyz/",
+      "classification": "confirmed",
+      "confidence": 88,
+      "status": "confirmed",
+      "notes": "Alternate hostname for the same application. TLS name mismatch."
+    },
+    {
+      "id": "AST-005",
+      "type": "subdomain",
+      "value": "resources.imagesharer.xyz",
+      "classification": "confirmed",
+      "confidence": 93,
+      "status": "confirmed",
+      "notes": "Org-controlled static resources hostname. CNAME to CloudFront."
+    },
+    {
+      "id": "AST-006",
+      "type": "ip_address",
+      "value": "51.161.131.44",
+      "classification": "confirmed",
+      "confidence": 96,
+      "status": "confirmed",
+      "notes": "Origin IPv4 for imagesharer.xyz on OVH Australia VPS-SYD2. Shared-IP neighbor cataierc.com rejected."
+    },
+    {
+      "id": "AST-007",
+      "type": "service",
+      "value": "51.161.131.44:5432/tcp (PostgreSQL)",
+      "classification": "confirmed",
+      "confidence": 88,
+      "status": "confirmed",
+      "notes": "PostgreSQL banner observed passively by Shodan on the origin IP. Not probed."
+    },
+    {
+      "id": "AST-008",
+      "type": "cdn_hostname",
+      "value": "d273uevi0662l0.cloudfront.net",
+      "classification": "cloud/CDN",
+      "confidence": 92,
+      "status": "confirmed",
+      "notes": "AWS CloudFront distribution used by resources.imagesharer.xyz. Provider-owned hostname."
+    },
+    {
+      "id": "AST-009",
+      "type": "cloud_storage",
+      "value": "Amazon S3 origin behind d273uevi0662l0.cloudfront.net (bucket name unknown)",
+      "classification": "cloud/CDN",
+      "confidence": 72,
+      "status": "likely",
+      "notes": "CloudFront origin fingerprint is Amazon S3. Bucket name not disclosed."
+    },
+    {
+      "id": "AST-010",
+      "type": "cloud_account_indicator",
+      "value": "AWS usage (ap-southeast-2 hinted; IAM key material in public JS comment)",
+      "classification": "cloud/CDN",
+      "confidence": 70,
+      "status": "likely",
+      "notes": "First-party JS indicates AWS IAM/STS use. Credentials not used."
+    },
+    {
+      "id": "AST-011",
+      "type": "asn",
+      "value": "AS16276",
+      "classification": "third-party",
+      "confidence": 95,
+      "status": "confirmed",
+      "notes": "OVH SAS hosting ASN. Provider infrastructure."
+    },
+    {
+      "id": "AST-012",
+      "type": "netblock",
+      "value": "51.161.130.0/23",
+      "classification": "third-party",
+      "confidence": 95,
+      "status": "confirmed",
+      "notes": "OVH Australia VPS-SYD2 block. Do not include other IPs."
+    },
+    {
+      "id": "AST-013",
+      "type": "nameserver",
+      "value": "launch1.spaceship.net",
+      "classification": "third-party",
+      "confidence": 95,
+      "status": "confirmed",
+      "notes": "Registrar DNS. Out of scope."
+    },
+    {
+      "id": "AST-014",
+      "type": "nameserver",
+      "value": "launch2.spaceship.net",
+      "classification": "third-party",
+      "confidence": 95,
+      "status": "confirmed",
+      "notes": "Registrar DNS. Out of scope."
+    },
+    {
+      "id": "AST-015",
+      "type": "ptr_hostname",
+      "value": "vps-ad2c3eab.vps.ovh.ca",
+      "classification": "third-party",
+      "confidence": 95,
+      "status": "confirmed",
+      "notes": "OVH reverse DNS. Provider hostname."
+    },
+    {
+      "id": "AST-016",
+      "type": "email_contact",
+      "value": "dinh0087@flinders.edu.au",
+      "classification": "third-party",
+      "confidence": 95,
+      "status": "confirmed",
+      "notes": "Owner mailbox on Flinders University. University infrastructure out of scope."
+    },
+    {
+      "id": "AST-017",
+      "type": "third_party_resource",
+      "value": "encrypted-tbn0.gstatic.com",
+      "classification": "third-party",
+      "confidence": 90,
+      "status": "confirmed",
+      "notes": "Google thumbnail used as favicon. Not org-owned."
+    },
+    {
+      "id": "AST-018",
+      "type": "domain",
+      "value": "cataierc.com",
+      "classification": "rejected",
+      "confidence": 25,
+      "status": "rejected",
+      "notes": "Shares origin IP via likely default vhost. No Imagur branding. Pending owner claim."
+    },
+    {
+      "id": "AST-019",
+      "type": "domain",
+      "value": "www.cataierc.com",
+      "classification": "rejected",
+      "confidence": 20,
+      "status": "rejected",
+      "notes": "Shared-IP neighbor."
+    },
+    {
+      "id": "AST-020",
+      "type": "domain",
+      "value": "mail.cataierc.com",
+      "classification": "rejected",
+      "confidence": 20,
+      "status": "rejected",
+      "notes": "Shared-IP neighbor. imagesharer.xyz has no MX."
+    },
+    {
+      "id": "AST-021",
+      "type": "domain",
+      "value": "imager.xyz",
+      "classification": "rejected",
+      "confidence": 15,
+      "status": "rejected",
+      "notes": "Parked for-sale lookalike."
+    },
+    {
+      "id": "AST-022",
+      "type": "domain",
+      "value": "imagur.xyz",
+      "classification": "rejected",
+      "confidence": 12,
+      "status": "rejected",
+      "notes": "Unconfigured lookalike."
+    },
+    {
+      "id": "AST-023",
+      "type": "domain",
+      "value": "imagur.com",
+      "classification": "rejected",
+      "confidence": 10,
+      "status": "rejected",
+      "notes": "Parking nameservers. No tie."
+    },
+    {
+      "id": "AST-024",
+      "type": "domain",
+      "value": "imagesharer.net",
+      "classification": "rejected",
+      "confidence": 12,
+      "status": "rejected",
+      "notes": "Unrelated Kestrel 404 site."
+    },
+    {
+      "id": "AST-025",
+      "type": "domain",
+      "value": "fshare.xyz",
+      "classification": "rejected",
+      "confidence": 8,
+      "status": "rejected",
+      "notes": "Maps listing name FShare. Domain does not resolve."
+    },
+    {
+      "id": "AST-026",
+      "type": "domain",
+      "value": "imagur.com.au",
+      "classification": "rejected",
+      "confidence": 5,
+      "status": "rejected",
+      "notes": "No DNS records."
+    },
+    {
+      "id": "AST-027",
+      "type": "domain",
+      "value": "imagesharer.com",
+      "classification": "rejected",
+      "confidence": 5,
+      "status": "rejected",
+      "notes": "No DNS records."
+    }
+  ]
+}

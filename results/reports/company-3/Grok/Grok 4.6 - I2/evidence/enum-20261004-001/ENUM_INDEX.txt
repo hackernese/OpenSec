@@ -1,0 +1,32 @@
+enum-20261004-001 supporting evidence index
+Target: Imagur / Imager / imagesharer.xyz
+Mode: passive OSINT + light active DNS/HTTP (no exploit, no auth, no port scan, no content fuzz)
+
+Files:
+- dns-imagesharer.xyz.txt          apex/www A/NS/SOA (no MX/TXT/AAAA)
+- dns-resources-www.txt            resources CNAME -> CloudFront
+- dns-common-subs.txt              light DNS for common labels; only www + resources answered
+- dns-mail-shodan-extra.txt        no SPF/DMARC/MX; Shodan host summary
+- whois-imagesharer.xyz.txt        Spaceship registrar, created 2026-09-06
+- whois-lookalikes.txt             imager.xyz / imagur.xyz / imagesharer.net
+- ip-51.161.131.44.txt             PTR vps-ad2c3eab.vps.ovh.ca
+- ip-arin-asn.txt                  OVH Australia VPS-SYD2 51.161.130.0/23 AS16276
+- tls-imagesharer.xyz.txt          LE cert SAN imagesharer.xyz only
+- http-homepage.txt                / -> /dashboard -> /login, title Log in — Imager
+- homepage.html                    login HTML; footer Imager — your images, your control
+- js-awsvalid.js / headers         public JS; commented IAM material + ap-southeast-2 (do not use)
+- css-app.css                      no extra hosts
+- http-related-hosts.txt           www/resources cert mismatch; HTTP 301 to HTTPS
+- http-cdn-lookalikes.txt          CloudFront/S3 403/404; imagur.xyz ghs 404
+- httpx.json                       httpx-toolkit validation of 3 hostnames
+- shodan.txt                       80/443/5432; hostname imagesharer.xyz
+- subfinder-imagesharer.txt        empty
+- assetfinder-imagesharer.txt      apex only
+- theharvester.txt                 no hosts
+- passive-apis.txt                 hackertarget reverse IP listed cataierc.com
+- shared-ip-cataierc.txt           cataierc.com A=51.161.131.44; cert still CN=imagesharer.xyz
+- related-name-dns.txt             lookalike resolutions
+- imager.xyz.body.html             Spaceship for-sale page
+- crtsh*                           crt.sh unavailable (404/502/429)
+
+Not used as org assets: registrar NS, OVH netblock siblings, CloudFront anycast IPs, Google thumbnail host, Flinders mail.

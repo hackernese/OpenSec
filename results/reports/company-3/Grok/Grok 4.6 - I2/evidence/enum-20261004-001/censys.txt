@@ -1,0 +1,35 @@
+===== CENSYS HELP =====
+usage: censys [-h] [-v] {account,asm,config,hnri,search,subdomains,view} ...
+
+positional arguments:
+  {account,asm,config,hnri,search,subdomains,view}
+    account             check Censys account details and quota
+    asm                 interact with ASM
+    config              configure Censys search API settings
+    hnri                home network risk identifier
+    search              query Censys search
+    subdomains          enumerate subdomains
+    view                view document
+
+options:
+  -h, --help            show this help message and exit
+  -v, --version         display version
+===== CENSYS SEARCH =====
+Traceback (most recent call last):
+  File "/home/research/.local/bin/censys", line 6, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/research/.local/share/pipx/venvs/censys/lib/python3.14/site-packages/censys/cli/__init__.py", line 29, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/home/research/.local/share/pipx/venvs/censys/lib/python3.14/site-packages/censys/cli/commands/search.py", line 85, in cli_search
+    c = SearchClient(**censys_args)
+  File "/home/research/.local/share/pipx/venvs/censys/lib/python3.14/site-packages/censys/search/client.py", line 69, in __init__
+    self.v1 = self._V1(**kwargs)
+              ~~~~~~~~^^^^^^^^^^
+  File "/home/research/.local/share/pipx/venvs/censys/lib/python3.14/site-packages/censys/search/client.py", line 37, in __init__
+    self.data = CensysData(*args, **kwargs)
+                ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/research/.local/share/pipx/venvs/censys/lib/python3.14/site-packages/censys/search/v1/api.py", line 60, in __init__
+    raise CensysException("No API ID or API secret configured.")
+censys.common.exceptions.CensysException: No API ID or API secret configured.

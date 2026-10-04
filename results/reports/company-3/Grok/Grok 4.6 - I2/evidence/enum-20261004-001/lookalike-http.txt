@@ -1,0 +1,32 @@
+===== imager.xyz =====
+HTTP/1.1 200 OK
+Server: openresty
+Date: Sun, 04 Oct 2026 22:38:38 GMT
+Content-Type: text/html
+Content-Length: 23806
+Connection: keep-alive
+Vary: Accept-Encoding
+Last-Modified: Sun, 27 Sep 2026 13:16:52 GMT
+ETag: "f27dc228c71544bf8a1c96bb18cbf1aa"
+X-Frame-Options: SAMEORIGIN
+Content-Security-Policy: frame-ancestors 'self'
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+TITLE:
+Imager.xyz for sale | Spaceship.com
+len 23797
+===== imagur.xyz =====
+curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading
+TITLE:
+===== imagesharer.net =====
+HTTP/2 404 
+date: Sun, 04 Oct 2026 22:38:40 GMT
+content-type: application/problem+json; charset=utf-8
+server: Kestrel
+
+TITLE:
+none
+len 162

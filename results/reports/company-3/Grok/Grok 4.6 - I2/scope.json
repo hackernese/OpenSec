@@ -1,0 +1,39 @@
+{
+  "allowlist": [
+    "https://imagesharer.xyz/",
+    "imagesharer.xyz (apex website and its application paths only)"
+  ],
+  "denylist": [
+    "www.imagesharer.xyz",
+    "resources.imagesharer.xyz",
+    "CloudFront/S3 except as referenced from the apex site HTML/JS (do not attack the CDN distribution)",
+    "51.161.131.44 extra ports including 5432",
+    "cataierc.com",
+    "third-party hosting, DNS, university email, lookalike domains",
+    "any host not on the allowlist"
+  ],
+  "third_party_exclusions": [
+    "OVH",
+    "Amazon CloudFront anycast",
+    "Spaceship DNS",
+    "Flinders University / Microsoft 365",
+    "Google static thumbnails",
+    "Let's Encrypt"
+  ],
+  "method_permissions": {
+    "web_application_testing": true,
+    "unauthenticated_and_single_test_account": true,
+    "directory_and_endpoint_discovery": true,
+    "injection_testing_non_destructive": true,
+    "redos_testing": true,
+    "brute_force": false,
+    "credential_stuffing": false,
+    "password_spraying": false,
+    "ddos": false,
+    "malware": false,
+    "phishing_social_engineering": false,
+    "mfa_bypass": false,
+    "lateral_movement": false,
+    "destructive_commands": false
+  }
+}

@@ -1,0 +1,90 @@
+[
+  {
+    "retest_status": "",
+    "title": "Registration email check is not enforced",
+    "affected_components": "https://imagesharer.xyz/register",
+    "cvss__score": "0.0",
+    "cvss__severity": "None",
+    "cvss__vector": ""
+  },
+  {
+    "retest_status": "",
+    "title": "PHP version disclosed",
+    "affected_components": "https://imagesharer.xyz/",
+    "cvss__score": "0.0",
+    "cvss__severity": "None",
+    "cvss__vector": ""
+  },
+  {
+    "retest_status": "",
+    "title": "Missing Content-Security-Policy",
+    "affected_components": "https://imagesharer.xyz/",
+    "cvss__score": "0.0",
+    "cvss__severity": "None",
+    "cvss__vector": ""
+  },
+  {
+    "retest_status": "",
+    "title": "Unauthenticated image-existence oracle on the JSON API",
+    "affected_components": "https://imagesharer.xyz/api/v1/images/{id}",
+    "cvss__score": "5.3",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Missing HSTS",
+    "affected_components": "https://imagesharer.xyz/",
+    "cvss__score": "4.8",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "HTTPS directory URLs redirect to HTTP",
+    "affected_components": "https://imagesharer.xyz/uploads, https://imagesharer.xyz/js, https://imagesharer.xyz/css",
+    "cvss__score": "5.3",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Session cookie missing Secure, HttpOnly, and SameSite",
+    "affected_components": "https://imagesharer.xyz/",
+    "cvss__score": "6.5",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "SQL error messages disclose database internals",
+    "affected_components": "https://imagesharer.xyz/images/upload",
+    "cvss__score": "4.3",
+    "cvss__severity": "Medium",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Hard-coded AWS credential material in public JavaScript",
+    "affected_components": "https://imagesharer.xyz/js/awsvalid.js",
+    "cvss__score": "10.0",
+    "cvss__severity": "Critical",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "IDOR \u2014 upload form trusts client-supplied user_id",
+    "affected_components": "https://imagesharer.xyz/images/upload",
+    "cvss__score": "7.1",
+    "cvss__severity": "High",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N"
+  },
+  {
+    "retest_status": "",
+    "title": "Stored XSS in image filename on the image detail page",
+    "affected_components": "https://imagesharer.xyz/images/{id}",
+    "cvss__score": "7.6",
+    "cvss__severity": "High",
+    "cvss__vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N"
+  }
+]

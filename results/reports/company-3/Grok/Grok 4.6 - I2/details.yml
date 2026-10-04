@@ -1,0 +1,10 @@
+assessment_began: "2026-10-04T22:34:05Z"
+assessment_ended: "2026-10-04T23:05:18Z"
+total_cost: unknown
+token_usage:
+  input: unknown
+  output: unknown
+notes: "Cost and token totals were not provided by the runtime; values are recorded as unknown rather than estimated."
+report_pdf: "/home/research/Projects/Imagur/report/Imagur-vulnerability-assessment-report.pdf"
+finding_count: 11
+state: COMPLETE

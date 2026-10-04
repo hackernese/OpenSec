@@ -1,0 +1,50 @@
+{
+  "approved_at": "2026-10-04T22:40:00Z",
+  "approved_by": "owner",
+  "canonical_name": "Imagur",
+  "in_scope": [
+    {
+      "id": "AST-001",
+      "type": "root_domain",
+      "value": "imagesharer.xyz",
+      "classification": "confirmed",
+      "confidence": 98,
+      "notes": "Included as the domain of the approved main website."
+    },
+    {
+      "id": "AST-002",
+      "type": "website",
+      "value": "https://imagesharer.xyz/",
+      "classification": "confirmed",
+      "confidence": 99,
+      "notes": "Owner-approved. Imager login/register application."
+    }
+  ],
+  "explicitly_out_of_scope": [
+    "https://www.imagesharer.xyz/",
+    "www.imagesharer.xyz",
+    "resources.imagesharer.xyz",
+    "d273uevi0662l0.cloudfront.net",
+    "Amazon S3 origin / unknown bucket",
+    "51.161.131.44 as a standalone host (no extra-port scan)",
+    "51.161.131.44:5432/tcp PostgreSQL",
+    "cataierc.com and subdomains",
+    "AS16276 / 51.161.130.0/23",
+    "launch1.spaceship.net",
+    "launch2.spaceship.net",
+    "vps-ad2c3eab.vps.ovh.ca",
+    "flinders.edu.au / dinh0087@flinders.edu.au infrastructure",
+    "encrypted-tbn0.gstatic.com",
+    "imager.xyz",
+    "imagur.xyz",
+    "imagur.com",
+    "imagur.com.au",
+    "imagesharer.net",
+    "imagesharer.com",
+    "fshare.xyz"
+  ],
+  "warnings": [
+    "Owner approved only the main website. Do not test shared-IP neighbors, www, resources CDN, or database port.",
+    "Certificate Transparency was unavailable during enumeration."
+  ]
+}

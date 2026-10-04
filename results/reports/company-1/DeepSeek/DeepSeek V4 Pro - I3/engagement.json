@@ -1,0 +1,41 @@
+{
+  "engagement_id": "ENG-20260919-DOWNUNDERNEWSZ",
+  "business": {
+    "canonical_name": "DownUnderNewsz",
+    "display_name": "DownUnderNewsz",
+    "aliases": ["Down Under Newsz", "DownUnder News"],
+    "website": "https://www.thedownundernews.online/",
+    "google_maps_url": "https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162,4993m/data=!3m1!1e3!4m6!3m5!1s0x6ad64373c62e4b65:0xa18b869d98def089!8m2!3d-37.7822756!4d145.0184129!16s%2Fg%2F11zdf88bv_?hl=en",
+    "address": "22 Arthur St, Fairfield VIC 3078, Australia",
+    "description": "Australian news publication",
+    "owner_name": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au",
+    "phone": ""
+  },
+  "authorization": {
+    "status": "authorized",
+    "method": "AuthorizedCode HTTP response header on main public-facing website",
+    "verified_at": "2026-09-19T02:29:00Z",
+    "statement": "I AGREE TO ALLOW CLAWSEC TO PERFORM A FULL-SCOPED VULNERABILITY ASSESSMENT ON MY COMPANY AND MY ASSETS."
+  },
+  "timeline": {
+    "received_at": "2026-09-19",
+    "authorized_at": "2026-09-19T02:29:00Z"
+  },
+  "constraints": {
+    "destructive": "not permitted",
+    "ddos": "not permitted",
+    "social_engineering": "not permitted",
+    "brute_force": "not permitted",
+    "lateral_movement": "not permitted",
+    "redos": "permitted (non-destructive)"
+  },
+  "test_credentials": {
+    "note": "Owner-provided dummy accounts for authenticated testing",
+    "accounts": [
+      { "role": "admin", "username": "admin" },
+      { "role": "writer", "username": "writer" },
+      { "role": "editor", "username": "editor" }
+    ]
+  }
+}

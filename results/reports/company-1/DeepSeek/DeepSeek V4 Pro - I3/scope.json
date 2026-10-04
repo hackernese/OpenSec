@@ -1,0 +1,37 @@
+{
+  "approved_date": "2026-09-19",
+  "approval_method": "business owner validation",
+  "in_scope": {
+    "domains": [
+      { "name": "thedownundernews.online", "classification": "confirmed", "confidence": 1.0, "in_scope": true },
+      { "name": "www.thedownundernews.online", "classification": "confirmed", "confidence": 0.95, "in_scope": true },
+      { "name": "media.thedownundernews.online", "classification": "confirmed", "confidence": 0.95, "in_scope": true }
+    ],
+    "ip_addresses": [
+      { "name": "51.161.130.70", "classification": "confirmed", "confidence": 0.95, "in_scope": true, "role": "web/API/admin origin" },
+      { "name": "51.161.131.195", "classification": "confirmed", "confidence": 0.95, "in_scope": true, "role": "media/FTP server" }
+    ],
+    "web_endpoints": [
+      "https://thedownundernews.online/",
+      "https://thedownundernews.online/about",
+      "https://thedownundernews.online/contact",
+      "https://thedownundernews.online/search?q=",
+      "https://thedownundernews.online/category/{slug}",
+      "https://thedownundernews.online/article/{slug}",
+      "https://thedownundernews.online/api/articles",
+      "https://thedownundernews.online/api/articles/{slug}",
+      "https://thedownundernews.online/api/categories",
+      "https://thedownundernews.online/admin",
+      "https://thedownundernews.online/admin/login"
+    ]
+  },
+  "excluded": {
+    "candidate_domains": ["thedownundernews.it.com"],
+    "third_party": ["OVH AS16276 (shared hosting infra)", "Spaceship, Inc.", "cdn.jsdelivr.net", "fonts.googleapis.com/gstatic.com", "Let's Encrypt"],
+    "netblocks": ["51.161.130.0/23 (do not expand scope)"]
+  },
+  "method_permissions": {
+    "allowed": ["passive enumeration", "light-active HTTP/DNS/TLS review", "authenticated testing with owner-provided dummy accounts", "SQL injection / XSS / IDOR / authz / misconfig testing", "ReDoS testing"],
+    "denied": ["destructive actions", "DoS/DDoS", "brute force / password spraying / credential stuffing", "social engineering / phishing", "lateral movement", "MFA bypass"]
+  }
+}

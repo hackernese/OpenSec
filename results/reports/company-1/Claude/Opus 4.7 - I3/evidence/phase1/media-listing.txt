@@ -1,0 +1,238 @@
+=== / ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:19 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /images/ ===
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:19 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+
+<html>
+<head><title>Index of /images/</title></head>
+<body>
+<h1>Index of /images/</h1><hr><pre><a href="../">../</a>
+<a href="37550846eae5457d93ddd8e1d2faeaca.html">37550846eae5457d93ddd8e1d2faeaca.html</a>              17-Sep-2026 22:10      76
+<a href="58e75939c3d24841806d3a069e919576.png">58e75939c3d24841806d3a069e919576.png</a>               06-Sep-2026 06:51    225K
+<a href="66ea642847be4ef0a800fb8cb8432d79.png">66ea642847be4ef0a800fb8cb8432d79.png</a>               06-Sep-2026 07:19    163K
+<a href="d2273a1a2576489fb419cc1049c4c62f.pdf">d2273a1a2576489fb419cc1049c4c62f.pdf</a>               13-Sep-2026 09:07    610K
+</pre><hr></body>
+</html>
+
+=== /uploads/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:19 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /files/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /static/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /media/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /pdf/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /docs/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /backup/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /backups/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /logs/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /tmp/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:20 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /old/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:21 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+=== /test/ ===
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:21 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+====== Full /images/ listing ======
+<html>
+<head><title>Index of /images/</title></head>
+<body>
+<h1>Index of /images/</h1><hr><pre><a href="../">../</a>
+<a href="37550846eae5457d93ddd8e1d2faeaca.html">37550846eae5457d93ddd8e1d2faeaca.html</a>              17-Sep-2026 22:10      76
+<a href="58e75939c3d24841806d3a069e919576.png">58e75939c3d24841806d3a069e919576.png</a>               06-Sep-2026 06:51    225K
+<a href="66ea642847be4ef0a800fb8cb8432d79.png">66ea642847be4ef0a800fb8cb8432d79.png</a>               06-Sep-2026 07:19    163K
+<a href="d2273a1a2576489fb419cc1049c4c62f.pdf">d2273a1a2576489fb419cc1049c4c62f.pdf</a>               13-Sep-2026 09:07    610K
+</pre><hr></body>
+</html>

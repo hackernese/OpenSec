@@ -1,0 +1,7 @@
+51.161.130.70
+launch2.spaceship.net.
+launch1.spaceship.net.
+0 mx1.efwd.spaceship.net.
+0 mx2.efwd.spaceship.net.
+"v=spf1 include:spf.efwd.spaceship.net ~all"
+51.161.130.70

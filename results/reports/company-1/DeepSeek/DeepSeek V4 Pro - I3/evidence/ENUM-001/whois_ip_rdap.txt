@@ -1,0 +1,41 @@
+# WHOIS thedownundernews.online (sanitized)
+Domain Name: thedownundernews.online
+Registry Domain ID: DO_26ae80aa086acce855699374c7db0fd5-RADIX
+Registrar WHOIS Server: whois.spaceship.com
+Registrar URL: https://www.spaceship.com/
+Updated Date: 2026-08-09T08:15:52.547Z
+Creation Date: 2026-08-04T08:14:46.715Z
+Registry Expiry Date: 2027-08-04T08:14:46.715Z
+Registrar: Spaceship, Inc.
+Registrar IANA ID: 3862
+Registrar Abuse Contact Email: abuse@spaceship.com
+Registrar Abuse Contact Phone: +1.9854014545
+Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+Name Server: launch2.spaceship.net
+Name Server: launch1.spaceship.net
+For more information on domain status codes, please visit https://icann.org/epp
+that send queries or data to the systems of any Registrar or any
+Registry except as reasonably necessary to register domain names or
+modify existing domain name registrations.
+
+# RDAP IP 51.161.130.70 (key fields)
+{
+  "handle": "NET-51-161-130-0-1",
+  "startAddress": "51.161.130.0",
+  "endAddress": "51.161.131.255",
+  "name": "VPS-SYD2",
+  "entities": [
+    [
+      [
+        "fn",
+        {},
+        "text",
+        "OVH Australia PTY LTD"
+      ]
+    ]
+  ]
+}
+
+# ASN route
+route: 51.161.128.0/17 origin AS16276 (OVH Hosting route)
+# Netblock: 51.161.130.0/23 (VPS-SYD2) per ARIN RDAP

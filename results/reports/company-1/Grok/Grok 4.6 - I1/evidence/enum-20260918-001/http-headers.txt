@@ -1,0 +1,52 @@
+===== apex https =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Sep 2026 05:52:29 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 23012
+Connection: keep-alive
+
+===== apex http =====
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Fri, 18 Sep 2026 05:52:29 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Location: https://thedownundernews.online/
+
+===== www http =====
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Fri, 18 Sep 2026 05:52:29 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Location: https://www.thedownundernews.online/
+
+===== media https =====
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Fri, 18 Sep 2026 05:52:30 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+===== media http =====
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Fri, 18 Sep 2026 05:52:30 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Location: https://media.thedownundernews.online/
+
+===== api CORS =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Sep 2026 05:52:30 GMT
+Content-Type: application/json
+Content-Length: 1231
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+

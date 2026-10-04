@@ -1,0 +1,43 @@
+# TLS Review Summary
+
+## www.thedownundernews.online
+- **TLS Versions Supported:** TLSv1.2, TLSv1.3
+- **Legacy/Weak Protocols:** None (SSLv2/3, TLS 1.0/1.1 disabled)
+- **Weak Cipher Suites:** None (RC4, 3DES, NULL, EXPORT, anonymous not supported)
+- **Vulnerabilities:** No Heartbleed, No ROBOT, secure renegotiation supported, TLS fallback SCSV supported, compression disabled
+- **Certificate Details:** 
+  - **Issuer:** YE1
+  - **SANs:** www.thedownundernews.online
+  - **Expiry:** 2027-01-02
+  - **Key Size:** 256
+  - **Signature Algorithm:** sha384
+- **Apex SAN Missing:** Yes
+- **Supported Elliptic Curves:** X25519, X448, secp256r1, secp384r1, secp521r1
+
+## thedownundernews.online
+- **TLS Versions Supported:** TLSv1.2, TLSv1.3
+- **Legacy/Weak Protocols:** None (SSLv2/3, TLS 1.0/1.1 disabled)
+- **Weak Cipher Suites:** None (RC4, 3DES, NULL, EXPORT, anonymous not supported)
+- **Vulnerabilities:** No Heartbleed, No ROBOT, secure renegotiation supported, TLS fallback SCSV supported, compression disabled
+- **Certificate Details:** 
+  - **Issuer:** YE1
+  - **SANs:** www.thedownundernews.online
+  - **Expiry:** 2027-01-02
+  - **Key Size:** 256
+  - **Signature Algorithm:** sha384
+- **Apex SAN Missing:** Yes
+- **Supported Elliptic Curves:** X25519, X448, secp256r1, secp384r1, secp521r1
+
+## media.thedownundernews.online
+- **TLS Versions Supported:** TLSv1.2, TLSv1.3
+- **Legacy/Weak Protocols:** None (SSLv2/3, TLS 1.0/1.1 disabled)
+- **Weak Cipher Suites:** None (RC4, 3DES, NULL, EXPORT, anonymous not supported)
+- **Vulnerabilities:** No Heartbleed, No ROBOT, secure renegotiation supported, TLS fallback SCSV supported, compression disabled
+- **Certificate Details:** 
+  - **Issuer:** YE2
+  - **SANs:** media.thedownundernews.online
+  - **Expiry:** 2026-12-15
+  - **Key Size:** 256
+  - **Signature Algorithm:** sha384
+- **Apex SAN Missing:** No
+- **Supported Elliptic Curves:** X25519, X448, secp256r1, secp384r1, secp521r1

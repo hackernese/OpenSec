@@ -1,0 +1,6 @@
+=== thedownundernews.online ===
+51.161.130.70
+=== www.thedownundernews.online ===
+51.161.130.70
+=== media.thedownundernews.online ===
+51.161.131.195

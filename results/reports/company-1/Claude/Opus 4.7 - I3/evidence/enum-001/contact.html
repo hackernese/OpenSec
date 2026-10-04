@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Down Under News – Australia's independent online newspaper." />
+  <title>Contact Us – The Down Under News</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  
+</head>
+<body>
+
+<!-- ===== BREAKING NEWS TICKER ===== -->
+<div class="breaking-bar" id="breakingBar">
+  <span class="breaking-label">BREAKING</span>
+  <div class="breaking-ticker">
+    <span id="breakingText">Loading latest headlines…</span>
+  </div>
+  <button class="breaking-close" onclick="document.getElementById('breakingBar').style.display='none'" aria-label="Close breaking news">&times;</button>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="container">
+      <div class="header-date">
+        <i class="bi bi-calendar3"></i>
+        <span id="headerDate"></span>
+      </div>
+      <div class="header-social">
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <a href="/" class="site-logo">
+        <div class="logo-text">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+      </a>
+      <div class="header-search">
+        <form action="/search" method="get" role="search">
+          <input type="search" name="q" placeholder="Search news…" value="" aria-label="Search news" />
+          <button type="submit" aria-label="Submit search"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/" >Home</a></li>
+        
+        <li>
+          <a href="/category/politics"
+             >
+            Politics
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/business"
+             >
+            Business
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/technology"
+             >
+            Technology
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/sports"
+             >
+            Sports
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/entertainment"
+             >
+            Entertainment
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/science"
+             >
+            Science
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/world"
+             >
+            World
+          </a>
+        </li>
+        
+        <li>
+          <a href="/category/opinion"
+             >
+            Opinion
+          </a>
+        </li>
+        
+        <li><a href="/about" >About</a></li>
+        <li><a href="/contact" class="active">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="main-content">
+  
+<div class="container">
+  <header class="page-header">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span aria-current="page">Contact</span>
+    </nav>
+    <h1 class="page-title">Contact Us</h1>
+    <p class="page-subtitle">Get in touch with our editorial team.</p>
+  </header>
+
+  <div class="contact-layout">
+    <div class="contact-form-section">
+      <h2>Send Us a Message</h2>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact_name">Your Name <span class="required">*</span></label>
+            <input type="text" id="contact_name" name="name" required maxlength="150" placeholder="Full name" />
+          </div>
+          <div class="form-group">
+            <label for="contact_email">Email Address <span class="required">*</span></label>
+            <input type="email" id="contact_email" name="email" required maxlength="255" placeholder="your@email.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contact_subject">Subject <span class="required">*</span></label>
+          <select id="contact_subject" name="subject" required>
+            <option value="">Select a topic…</option>
+            <option value="news-tip">News Tip / Story Idea</option>
+            <option value="correction">Correction Request</option>
+            <option value="advertising">Advertising Enquiry</option>
+            <option value="general">General Enquiry</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="contact_message">Message <span class="required">*</span></label>
+          <textarea id="contact_message" name="message" rows="6" required maxlength="3000" placeholder="Tell us how we can help…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-send"></i> Send Message
+        </button>
+        <div id="contactSuccess" class="form-success" style="display:none">
+          <i class="bi bi-check-circle"></i> Thank you for your message. We'll be in touch soon.
+        </div>
+      </form>
+    </div>
+
+    <aside class="contact-info-section">
+      <div class="info-card">
+        <h3><i class="bi bi-envelope"></i> Editorial</h3>
+        <p><a href="mailto:editorial@thedownundernews.it.com">editorial@thedownundernews.it.com</a></p>
+      </div>
+      <div class="info-card">
+        <h3><i class="bi bi-megaphone"></i> Advertising</h3>
+        <p><a href="mailto:advertising@thedownundernews.it.com">advertising@thedownundernews.it.com</a></p>
+      </div>
+      <div class="info-card">
+        <h3><i class="bi bi-exclamation-triangle"></i> Corrections</h3>
+        <p>We are committed to accuracy. If you believe we have made an error, please <a href="mailto:corrections@thedownundernews.it.com">let us know</a> and we will investigate promptly.</p>
+      </div>
+      <div class="info-card">
+        <h3><i class="bi bi-share"></i> Follow Us</h3>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  document.getElementById('contactSuccess').style.display = 'flex';
+  this.reset();
+});
+</script>
+
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-the">THE</span>
+          <span class="logo-title">Down Under</span>
+          <span class="logo-sub">NEWS</span>
+        </div>
+        <p>Australia's trusted independent online newspaper, delivering accurate and timely news coverage across the nation and the world.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Sections</h4>
+        <ul>
+          
+          <li><a href="/category/politics">Politics</a></li>
+          
+          <li><a href="/category/business">Business</a></li>
+          
+          <li><a href="/category/technology">Technology</a></li>
+          
+          <li><a href="/category/sports">Sports</a></li>
+          
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>More</h4>
+        <ul>
+          
+          <li><a href="/category/entertainment">Entertainment</a></li>
+          
+          <li><a href="/category/science">Science</a></li>
+          
+          <li><a href="/category/world">World</a></li>
+          
+          <li><a href="/category/opinion">Opinion</a></li>
+          
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Advertise With Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <span id="footerYear"></span> The Down Under News. All rights reserved.</p>
+      <p>Domain: <a href="https://thedownundernews.it.com">thedownundernews.it.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== BACK TO TOP ===== -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <i class="bi bi-chevron-up"></i>
+</button>
+
+<script src="/static/js/main.js"></script>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  document.getElementById('contactSuccess').style.display = 'flex';
+  this.reset();
+});
+</script>
+
+</body>
+</html>

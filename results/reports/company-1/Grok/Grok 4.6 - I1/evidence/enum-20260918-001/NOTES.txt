@@ -1,0 +1,10 @@
+enum-20260918-001 notes
+- Homepage/about/contact brand: The Down Under News
+- Canonical org name from intake: DownUnderNewsz
+- Live site explicitly lists Domain thedownundernews.it.com and mailboxes on that domain
+- thedownundernews.it.com did not resolve (no A/NS/WHOIS/CT) at enumeration time
+- Public JSON API /api/articles returned author email admin@thedownundernews.it.com (public, not a secret)
+- Do not treat OVH 51.161.128.0/17 or 51.161.130.0/23 as organization-owned
+- www certificate SAN contains only thedownundernews.online (hostname mismatch)
+- Social profile hrefs are placeholders (#)
+- Owner mailbox dinh0087@flinders.edu.au is a university account (third-party), not an org domain

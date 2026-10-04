@@ -1,0 +1,172 @@
+{
+  "id": "befa5901-5ff7-4267-944e-ad01e112b8d2",
+  "created": "2026-09-19T03:35:11.195880Z",
+  "updated": "2026-09-19T03:35:11.196192Z",
+  "name": "DownUnderNewsz - Penetration Test Report",
+  "project_type": "2ae8a3c9-5093-4436-93b4-b0ee539322c0",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/befa5901-5ff7-4267-944e-ad01e112b8d2",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/befa5901-5ff7-4267-944e-ad01e112b8d2/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/befa5901-5ff7-4267-944e-ad01e112b8d2/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-09-19T03:35:11.201498Z",
+      "updated": "2026-09-19T03:35:11.202699Z",
+      "project": "befa5901-5ff7-4267-944e-ad01e112b8d2",
+      "project_type": "2ae8a3c9-5093-4436-93b4-b0ee539322c0",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "executive_summary": "## Overview\n\nDownUnderNewsz — an independent Australian online news publication — engaged ClawSec to perform an authorized, single-day vulnerability assessment of its public-facing news platform (thedownundernews.online and media.thedownundernews.online). Testing was completed on 19 September 2026 using non-destructive techniques throughout.\n\nThe assessment identified **9 findings**: 1 high, 4 medium, 3 low, and 1 informational. No critical-severity issues were found.\n\n## What this means for the business\n\nThe most important issue is **stored cross-site scripting (XSS)**. The article editor does not filter out embedded scripts, so a low-privileged user (a \"writer\") could inject code that runs in the browser of every visitor — and, because the site also lacks CSRF protection, this could ultimately lead to a full administrative takeover. This should be treated as the top priority.\n\nSeveral supporting issues further weaken the platform: the media server allows anonymous FTP downloads of media assets, administrator identity is exposed through the public API, session cookies lack important security flags, weak/shared credentials are in use, the www certificate is misconfigured, and standard security headers are absent. On the positive side, role-based access control held up well — the writer role was correctly denied administrative functions.\n\n## Findings summary\n\n| Severity | Count |\n|:---|:---:|\n| Critical | 0 |\n| High | 1 |\n| Medium | 4 |\n| Low | 3 |\n| Informational | 1 |\n\n## Top recommendations\n\n1. Sanitize article content (and uploaded HTML) so scripts cannot run in visitors' browsers (immediate priority).\n2. Add CSRF protection and set Secure/SameSite flags on the session cookie.\n3. Disable anonymous FTP on the media server and restrict uploads to safe file types.\n4. Remove internal author details (email, username, role) from public API responses.\n5. Reissue the TLS certificate to cover www, and add standard security headers.\n\nA detailed technical description and remediation guidance for each finding is provided in the body of this report.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-09-19T03:35:11.201552Z",
+      "updated": "2026-09-19T03:35:11.202701Z",
+      "project": "befa5901-5ff7-4267-944e-ad01e112b8d2",
+      "project_type": "2ae8a3c9-5093-4436-93b4-b0ee539322c0",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "scope": "## In-scope assets\n\n| Asset | Type | Technology |\n|:---|:---|:---|\n| thedownundernews.online (apex + www) | Main news website / CMS | 51.161.130.70 (OVH VPS) — nginx + Python/Flask news CMS, JSON API, admin panel |\n| media.thedownundernews.online | Media storage | 51.161.131.195 (OVH VPS) — nginx, anonymous FTP |\n\n## Out of scope / excluded\n\nThe following were explicitly excluded: `thedownundernews.it.com` (no DNS resolution), and all third-party infrastructure (OVH hosting, Spaceship registrar/DNS/MX, jsdelivr/Google Fonts CDNs, Let's Encrypt).\n\n## Engagement type\n\nAuthorized, full-scope vulnerability assessment of public-facing web assets. Single-day engagement (19 September 2026).\n\n## Methodology\n\nPassive and light-active enumeration (DNS, WHOIS/RDAP, subdomain enumeration, certificate transparency, TLS inspection, HTTP header/content review), manual web-application security testing of the JSON API and admin panel, authenticated testing using business-owner-provided dummy accounts (admin/writer/editor), FTP service review, and TLS/security-header review. All testing was non-destructive throughout; no denial-of-service, no brute force/password spraying, and no social engineering were performed.\n",
+        "start_date": "2026-09-19",
+        "end_date": "2026-09-19",
+        "duration": "1 day",
+        "provided_users": "The business owner provided three dummy test accounts (admin, writer, editor) for authorized authenticated testing of the admin panel and API. Credential values are intentionally omitted from this report.\n"
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-09-19T03:35:11.201600Z",
+      "updated": "2026-09-19T03:35:11.202703Z",
+      "project": "befa5901-5ff7-4267-944e-ad01e112b8d2",
+      "project_type": "2ae8a3c9-5093-4436-93b4-b0ee539322c0",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "customer_name": "DownUnderNewsz",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-09-19T03:35:11.201438Z",
+      "updated": "2026-09-19T03:35:11.202696Z",
+      "project": "befa5901-5ff7-4267-944e-ad01e112b8d2",
+      "project_type": "2ae8a3c9-5093-4436-93b4-b0ee539322c0",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "title": "DownUnderNewsz - Penetration Test Report",
+        "report_date": "2026-09-19",
+        "report_version": "1.1",
+        "list_of_changes": [
+          {
+            "date": "2026-09-19",
+            "version": "1.0",
+            "description": "Initial report release"
+          },
+          {
+            "date": "2026-09-19",
+            "version": "1.1",
+            "description": "Corrected CVSS/severity consistency: Sensitive Information Disclosure via Unauthenticated API re-rated to Medium; Weak and Shared Administrator/User Credentials re-rated to Low with CVSS removed."
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-09-19T03:35:11.201328Z",
+      "updated": "2026-09-19T03:35:11.202693Z",
+      "project": "befa5901-5ff7-4267-944e-ad01e112b8d2",
+      "project_type": "2ae8a3c9-5093-4436-93b4-b0ee539322c0",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Limitations & Constraints",
+            "content": "The following limitations applied to this engagement:\n\n* The admin dashboard intermittently returned 504/slow responses under load.\n* A small number of API paths timed out during light probing and were not exhaustively tested.\n* No automated scanner was used (manual testing only).\n* The referenced email domain `thedownundernews.it.com` does not resolve and was not assessed.\n* Authenticated testing was limited to the three owner-provided dummy accounts (admin, writer, editor).\n\nAll testing was performed within the approved scope and without destructive impact.\n"
+          },
+          {
+            "title": "Coverage Summary",
+            "content": "The following surfaces were reviewed during the engagement:\n\n* 2 origin IP addresses (51.161.130.70 and 51.161.131.195).\n* 2 subdomains (apex/www and media).\n* Approximately 12 web/API endpoints.\n* The full admin panel (dashboard, articles, categories, media library, comments, users, profile).\n* The FTP service on the media host.\n"
+          },
+          {
+            "title": "Severity Classification",
+            "content": "Findings are rated on the following scale:\n\n| Severity | Meaning |\n|:---|:---|\n| Critical | Immediate action required; can lead to full system compromise. |\n| High | Serious issue that can compromise significant functionality or data. |\n| Medium | Notable weakness requiring prompt remediation. |\n| Low | Minor weakness that reduces defense-in-depth. |\n| Informational | No direct exploitability; noted for awareness and hardening. |\n\nWhere an explicit CVSS v3.1 vector was provided in the source findings, it is recorded on the finding. Findings without a CVSS vector are shown as \"N/A\" in the CVSS-driven scoring, while their assessed severity is stated in each finding and in the executive summary.\n"
+          }
+        ]
+      }
+    }
+  ]
+}

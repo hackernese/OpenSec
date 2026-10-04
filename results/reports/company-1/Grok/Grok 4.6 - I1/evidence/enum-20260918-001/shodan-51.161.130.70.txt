@@ -1,0 +1,15 @@
+51.161.130.70
+Hostnames:               vps-8d3f63bd.vps.ovh.ca;thedownundernews.online
+City:                    Sydney
+Country:                 Australia
+Organization:            OVH Australia PTY LTD
+Updated:                 2026-09-08T18:55:00.337071
+Number of open ports:    2
+
+Ports:
+     22/tcp OpenSSH (10.0p2 Debian 7+deb13u4)
+    443/tcp nginx 
+	|-- HTTP title: The Down Under News – Australia's Independent Online Newspaper
+	|-- Cert Issuer: C=US, CN=YE2, O=Let's Encrypt
+	|-- Cert Subject: CN=thedownundernews.online
+	|-- SSL Versions: -SSLv2, -SSLv3, -TLSv1, -TLSv1.1, TLSv1.2, TLSv1.3

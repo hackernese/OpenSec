@@ -1,0 +1,28 @@
+{
+  "business_name": "DownUnderNewsz",
+  "website": "https://www.thedownundernews.online/",
+  "google_map": "https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162,4993m/",
+  "address": "22 Arthur St, Fairfield VIC 3078",
+  "country": "Australia",
+  "jurisdiction": "Victoria, Australia",
+  "owner_name": "Vinh Dinh",
+  "owner_email": "dinh0087@flinders.edu.au",
+  "phone": null,
+  "description": "News media business (DownUnderNewsz)",
+  "authorization_statement": "AuthorizedCode header verified on https://thedownundernews.online/",
+  "authorization_status": "confirmed",
+  "authorization_date": "2026-09-18",
+  "constraints": {
+    "non_destructive": true,
+    "no_ddos": true,
+    "no_malware": true,
+    "no_social_engineering": true,
+    "no_credential_stuffing": true,
+    "no_password_spraying": true,
+    "no_brute_force": true,
+    "no_mfa_bypass": true,
+    "no_lateral_movement": true,
+    "no_stealth_evasion": true
+  },
+  "notes": "Owner provided three dummy accounts for testing: admin/writer/editor (password: Admin@1234)"
+}

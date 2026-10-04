@@ -1,0 +1,1 @@
+{"title":"ClawSec XSS Probe","subtitle":"ignore","content":"<p>benign</p><script>document.title='CLAWSEC_SCRIPT'</script><img src=x onerror=\"document.title='CLAWSEC_IMG'\"><svg onload=\"document.title='CLAWSEC_SVG'\"></svg>","excerpt":"ignore","status":"draft","category_id":1,"tags":["test"]}

@@ -1,0 +1,53 @@
+{
+  "approved_at_utc": "2026-09-18T06:00:00Z",
+  "source": "assets.init.json plus owner validation",
+  "confirmed_in_scope": [
+    {
+      "type": "domain",
+      "value": "thedownundernews.online",
+      "ip": "51.161.130.70"
+    },
+    {
+      "type": "host",
+      "value": "www.thedownundernews.online",
+      "ip": "51.161.130.70",
+      "notes": "TLS certificate hostname mismatch"
+    },
+    {
+      "type": "host",
+      "value": "media.thedownundernews.online",
+      "ip": "51.161.131.195",
+      "notes": "HTTPS 502 at enumeration"
+    },
+    {
+      "type": "ip",
+      "value": "51.161.130.70",
+      "hosts": ["thedownundernews.online", "www.thedownundernews.online"]
+    },
+    {
+      "type": "ip",
+      "value": "51.161.131.195",
+      "hosts": ["media.thedownundernews.online"]
+    }
+  ],
+  "candidate_excluded": [
+    "thedownundernews.it.com"
+  ],
+  "denylist": [
+    "*.spaceship.net",
+    "*.spaceship.com",
+    "*.ovh.ca",
+    "*.ovh.net",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+    "cdn.jsdelivr.net",
+    "flinders.edu.au",
+    "51.161.128.0/17",
+    "51.161.130.0/23"
+  ],
+  "warnings_preserved": [
+    "www TLS hostname mismatch",
+    "media HTTPS 502 at enumeration",
+    "OVH netblocks not in scope; only the two confirmed IPs"
+  ]
+}

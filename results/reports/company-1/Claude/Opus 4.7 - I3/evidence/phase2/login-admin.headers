@@ -1,0 +1,17 @@
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:39:37 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 219
+Connection: keep-alive
+Location: /admin/dashboard
+Set-Cookie: access_token_cookie=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc5MTEyNDc3NywianRpIjoiYzljMzEwYjgtOTgwZC00ZWRlLTkxNjUtOGMwNGMwMjc0MTU3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3OTExMjQ3NzcsImV4cCI6MTc5MTE1MzU3N30.gtUlyKTuaNpjMVleWR1cgAAn8KghQrkDuwY-nry9WLo; HttpOnly; Path=/
+
+HTTP/1.1 405 METHOD NOT ALLOWED
+Server: nginx
+Date: Sun, 04 Oct 2026 14:39:37 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 153
+Connection: keep-alive
+Allow: OPTIONS, HEAD, GET
+

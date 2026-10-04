@@ -1,0 +1,1 @@
+No DMARC; SPF present (soft-fail); registrar: Spaceship

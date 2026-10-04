@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categories – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+  
+</head>
+<body class="admin-body">
+
+<div class="admin-layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="admin-sidebar" id="adminSidebar" aria-label="Admin navigation">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="logo-dot"></span>
+        <span class="sidebar-logo-text">DUN Admin</span>
+      </div>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Admin navigation">
+      <ul>
+        <li>
+          <a href="/admin/dashboard" class="sidebar-link ">
+            <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-section-label">Content</li>
+        <li>
+          <a href="/admin/articles" class="sidebar-link ">
+            <i class="bi bi-newspaper"></i><span>Articles</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/articles/new" class="sidebar-link ">
+            <i class="bi bi-plus-square"></i><span>New Article</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/categories" class="sidebar-link active">
+            <i class="bi bi-tag"></i><span>Categories</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/media" class="sidebar-link ">
+            <i class="bi bi-images"></i><span>Media Library</span>
+          </a>
+        </li>
+        <li class="nav-section-label">Moderation</li>
+        <li>
+          <a href="/admin/comments" class="sidebar-link ">
+            <i class="bi bi-chat-dots"></i><span>Comments</span>
+          </a>
+        </li>
+        
+        <li class="nav-section-label">Account</li>
+        <li>
+          <a href="/admin/profile" class="sidebar-link ">
+            <i class="bi bi-person-circle"></i><span>My Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="/" class="sidebar-link" target="_blank">
+            <i class="bi bi-box-arrow-up-right"></i><span>View Site</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/logout" class="sidebar-link sidebar-logout">
+            <i class="bi bi-box-arrow-left"></i><span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="admin-main">
+    <!-- Top bar -->
+    <header class="admin-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <i class="bi bi-list"></i>
+      </button>
+      <nav class="topbar-breadcrumb" aria-label="Admin breadcrumb">
+        <a href="/admin/dashboard">Admin</a>
+        <i class="bi bi-chevron-right"></i><span>Categories</span>
+      </nav>
+      <div class="topbar-user">
+        
+        <span class="user-badge user-role-editor">editor</span>
+        <span class="topbar-username">Editor Admin</span>
+        
+        <a href="/admin/logout" class="topbar-logout" title="Logout">
+          <i class="bi bi-box-arrow-right"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <div class="admin-content">
+      
+        
+      
+
+      
+<div class="page-heading-row">
+  <div>
+    <h1>Categories</h1>
+    <p>8 categories</p>
+  </div>
+  <button class="btn btn-primary" onclick="openCategoryModal()">
+    <i class="bi bi-plus-lg"></i> New Category
+  </button>
+</div>
+
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Order</th>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Description</th>
+        <th>Articles</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="categoriesTableBody">
+      
+      <tr data-cat-id="1">
+        <td>1</td>
+        <td><strong>Politics</strong></td>
+        <td><code>politics</code></td>
+        <td>National and international political news</td>
+        <td>2</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory(1, 'Politics', 'politics', 'National and international political news', 1)"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory(1, 'Politics')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      
+      <tr data-cat-id="2">
+        <td>2</td>
+        <td><strong>Business</strong></td>
+        <td><code>business</code></td>
+        <td>Finance, economy, and business updates</td>
+        <td>2</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory(2, 'Business', 'business', 'Finance, economy, and business updates', 2)"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory(2, 'Business')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      
+      <tr data-cat-id="3">
+        <td>3</td>
+        <td><strong>Technology</strong></td>
+        <td><code>technology</code></td>
+        <td>Tech industry news and innovations</td>
+        <td>2</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory(3, 'Technology', 'technology', 'Tech industry news and innovations', 3)"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory(3, 'Technology')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      
+      <tr data-cat-id="4">
+        <td>4</td>
+        <td><strong>Sports</strong></td>
+        <td><code>sports</code></td>
+        <td>Australian and international sports coverage</td>
+        <td>0</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory(4, 'Sports', 'sports', 'Australian and international sports coverage', 4)"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory(4, 'Sports')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      
+      <tr data-cat-id="5">
+        <td>5</td>
+        <td><strong>Entertainment</strong></td>
+        <td><code>entertainment</code></td>
+        <td>Movies, music, culture, and lifestyle</td>
+        <td>1</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory(5, 'Entertainment', 'entertainment', 'Movies, music, culture, and lifestyle', 5)"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory(5, 'Entertainment')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      
+      <tr data-cat-id="6">
+        <td>6</td>
+        <td><strong>Science</strong></td>
+        <td><code>science</code></td>
+        <td>Science, environment, and discovery</td>
+        <td>2</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory(6, 'Science', 'science', 'Science, environment, and discovery', 6)"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory(6, 'Science')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      
+      <tr data-cat-id="7">
+        <td>7</td>
+        <td><strong>World</strong></td>
+        <td><code>world</code></td>
+        <td>International news and global affairs</td>
+        <td>1</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory(7, 'World', 'world', 'International news and global affairs', 7)"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory(7, 'World')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      
+      <tr data-cat-id="8">
+        <td>8</td>
+        <td><strong>Opinion</strong></td>
+        <td><code>opinion</code></td>
+        <td>Editorials and opinion pieces</td>
+        <td>1</td>
+        <td class="table-actions">
+          <button class="action-btn" onclick="editCategory(8, 'Opinion', 'opinion', 'Editorials and opinion pieces', 8)"
+                  title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="action-btn action-btn-danger"
+                  onclick="confirmDeleteCategory(8, 'Opinion')"
+                  title="Delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+
+
+
+<!-- Category modal -->
+<div class="modal-overlay" id="categoryModal" role="dialog" aria-modal="true" aria-labelledby="categoryModalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="categoryModalTitle">New Category</h3>
+      <button class="modal-close" onclick="closeCategoryModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="categoryForm" novalidate>
+        <input type="hidden" id="catId" value="" />
+        <div class="form-group">
+          <label for="catName">Name <span class="required">*</span></label>
+          <input type="text" id="catName" required maxlength="100" placeholder="Category name" />
+        </div>
+        <div class="form-group">
+          <label for="catSlug">Slug <span class="help-text">URL-friendly identifier</span></label>
+          <input type="text" id="catSlug" maxlength="120" placeholder="auto-generated" />
+        </div>
+        <div class="form-group">
+          <label for="catDescription">Description</label>
+          <textarea id="catDescription" rows="3" maxlength="500" placeholder="Brief description…"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="catOrder">Display Order</label>
+          <input type="number" id="catOrder" value="0" min="0" max="999" />
+        </div>
+        <div id="catFormError" class="form-error" style="display:none"></div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeCategoryModal()">Cancel</button>
+      <button class="btn btn-primary" id="saveCategoryBtn">
+        <i class="bi bi-floppy"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete modal -->
+<div class="modal-overlay" id="deleteCatModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="bi bi-exclamation-triangle text-danger"></i> Delete Category</h3>
+      <button class="modal-close" onclick="closeDeleteCatModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Delete category "<strong id="deleteCatName"></strong>"?</p>
+      <p class="text-danger">Articles in this category will become uncategorized.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDeleteCatModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteCatBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Overlay for mobile sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script src="/static/js/admin.js"></script>
+
+<script>
+let editingCatId = null;
+let deletingCatId = null;
+
+// ---- helpers ----
+function slugify(text) {
+  return text.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_-]+/g,'-').replace(/^-+|-+$/g,'');
+}
+document.getElementById('catName').addEventListener('input', function() {
+  if (!editingCatId) document.getElementById('catSlug').value = slugify(this.value);
+});
+
+// ---- open/close ----
+function openCategoryModal() {
+  editingCatId = null;
+  document.getElementById('categoryModalTitle').textContent = 'New Category';
+  document.getElementById('catId').value = '';
+  document.getElementById('catName').value = '';
+  document.getElementById('catSlug').value = '';
+  document.getElementById('catDescription').value = '';
+  document.getElementById('catOrder').value = '0';
+  document.getElementById('catFormError').style.display = 'none';
+  document.getElementById('categoryModal').classList.add('active');
+  document.getElementById('catName').focus();
+}
+
+function editCategory(id, name, slug, desc, order) {
+  editingCatId = id;
+  document.getElementById('categoryModalTitle').textContent = 'Edit Category';
+  document.getElementById('catId').value = id;
+  document.getElementById('catName').value = name;
+  document.getElementById('catSlug').value = slug;
+  document.getElementById('catDescription').value = desc;
+  document.getElementById('catOrder').value = order;
+  document.getElementById('catFormError').style.display = 'none';
+  document.getElementById('categoryModal').classList.add('active');
+}
+
+function closeCategoryModal() {
+  document.getElementById('categoryModal').classList.remove('active');
+}
+
+function confirmDeleteCategory(id, name) {
+  deletingCatId = id;
+  document.getElementById('deleteCatName').textContent = name;
+  document.getElementById('deleteCatModal').classList.add('active');
+}
+
+function closeDeleteCatModal() {
+  document.getElementById('deleteCatModal').classList.remove('active');
+}
+
+// ---- save ----
+document.getElementById('saveCategoryBtn').addEventListener('click', async () => {
+  const name = document.getElementById('catName').value.trim();
+  if (!name) { showCatError('Name is required'); return; }
+
+  const data = {
+    name,
+    slug: document.getElementById('catSlug').value.trim() || slugify(name),
+    description: document.getElementById('catDescription').value.trim(),
+    display_order: parseInt(document.getElementById('catOrder').value) || 0,
+  };
+
+  const isEdit = editingCatId !== null;
+  const url = isEdit ? `/api/admin/categories/${editingCatId}` : '/api/admin/categories';
+  const method = isEdit ? 'PUT' : 'POST';
+
+  try {
+    const resp = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(data),
+    });
+    const result = await resp.json();
+    if (resp.ok) {
+      closeCategoryModal();
+      location.reload();
+    } else {
+      showCatError(result.error || 'Save failed');
+    }
+  } catch(e) {
+    showCatError('Network error');
+  }
+});
+
+function showCatError(msg) {
+  const el = document.getElementById('catFormError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ---- delete ----
+document.getElementById('confirmDeleteCatBtn').addEventListener('click', async () => {
+  if (!deletingCatId) return;
+  const btn = document.getElementById('confirmDeleteCatBtn');
+  btn.disabled = true;
+  try {
+    const resp = await fetch(`/api/admin/categories/${deletingCatId}`, {
+      method: 'DELETE',
+      credentials: 'same-origin',
+    });
+    if (resp.ok) {
+      closeDeleteCatModal();
+      location.reload();
+    } else {
+      const data = await resp.json();
+      alert(data.error || 'Delete failed');
+      btn.disabled = false;
+    }
+  } catch(e) {
+    alert('Network error');
+    btn.disabled = false;
+  }
+});
+
+// close on overlay click
+['categoryModal', 'deleteCatModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      e.currentTarget.classList.remove('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

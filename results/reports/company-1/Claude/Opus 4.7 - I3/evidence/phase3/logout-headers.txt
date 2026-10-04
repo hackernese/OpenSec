@@ -1,0 +1,10 @@
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:53:06 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 199
+Connection: keep-alive
+Location: /admin
+Set-Cookie: access_token_cookie=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Path=/
+Set-Cookie: refresh_token_cookie=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Path=/api/admin/refresh
+

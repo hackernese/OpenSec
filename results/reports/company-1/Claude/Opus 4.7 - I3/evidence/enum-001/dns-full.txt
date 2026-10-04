@@ -1,0 +1,16 @@
+=== A thedownundernews.online ===
+thedownundernews.online. 1793	IN	A	51.161.130.70
+=== AAAA thedownundernews.online ===
+=== NS thedownundernews.online ===
+thedownundernews.online. 81854	IN	NS	launch1.spaceship.net.
+thedownundernews.online. 81854	IN	NS	launch2.spaceship.net.
+=== MX thedownundernews.online ===
+thedownundernews.online. 1193	IN	MX	0 mx2.efwd.spaceship.net.
+thedownundernews.online. 1193	IN	MX	0 mx1.efwd.spaceship.net.
+=== TXT thedownundernews.online ===
+thedownundernews.online. 1193	IN	TXT	"v=spf1 include:spf.efwd.spaceship.net ~all"
+=== SOA thedownundernews.online ===
+thedownundernews.online. 1800	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+=== CAA thedownundernews.online ===
+=== DMARC ===
+=== DKIM selectors ===

@@ -1,0 +1,536 @@
+=== /robots.txt ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:57 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /sitemap.xml ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:57 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /sitemap_index.xml ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:57 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /security.txt ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:57 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /.well-known/security.txt ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:57 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /humans.txt ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:57 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /ads.txt ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:57 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /app-ads.txt ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:57 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /crossdomain.xml ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /favicon.ico ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /manifest.json ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /.env ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /.git/HEAD ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /.git/config ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /.DS_Store ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /README.md ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /admin ===
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:58 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 2894
+Connection: keep-alive
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login – The Down Under News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesh
+
+=== /login ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /signup ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /register ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /api ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /api/ ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+Access-Control-Allow-Origin: https://thedownundernews.online
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /graphql ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /graphiql ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /v1 ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /v1/ ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:34:59 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /static/ ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:00 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /uploads/ ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:00 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /files/ ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:00 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /debug ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:00 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /console ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:00 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /werkzeug ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:00 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /health ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:01 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /healthz ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:01 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /status ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:01 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /metrics ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:01 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /server-status ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:01 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+=== /server-info ===
+HTTP/1.1 404 NOT FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:35:01 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 207
+Connection: keep-alive
+
+<!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>

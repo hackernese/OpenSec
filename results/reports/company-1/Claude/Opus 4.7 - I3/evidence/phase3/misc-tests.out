@@ -1,0 +1,151 @@
+=== 1 SQLi probes on category param ===
+
+--- q=[1] ---
+status=200 size=8895 time=0.156844
+--- body first 300B ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=In
+
+--- q=[1 OR 1=1] ---
+status=200 size=8895 time=0.155925
+--- body first 300B ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=In
+
+--- q=[1 UNION SELECT NULL--] ---
+status=200 size=8895 time=0.127359
+--- body first 300B ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=In
+
+--- q=[1'] ---
+status=200 size=8895 time=5.098392
+--- body first 300B ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=In
+
+--- q=[0'OR'1'='1] ---
+status=200 size=8895 time=0.103917
+--- body first 300B ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=In
+
+--- q=[9999999] ---
+status=200 size=8895 time=0.108957
+--- body first 300B ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=In
+
+--- q=[0] ---
+status=200 size=8895 time=0.105836
+--- body first 300B ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles – Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=In
+
+=== 1b sleep test ===
+SLEEP_RESULT status=200 time=0.102457
+
+=== 2 Comments probe ===
+
+--- /api/comments ---
+
+--- /api/articles/5/comments ---
+
+--- /api/articles/5 ---
+
+--- /article/welcome-to-the-down-under-news ---
+comment
+<form
+<input
+<textarea
+
+=== 3 Session invalidation ===
+-- pre-logout profile GET --
+{
+  "user": {
+    "created_at": "2026-10-04T12:51:11.197606+00:00",
+    "email": "writer@thedownundernews.it.com",
+    "first_name": "Steve",
+    "id": 2,
+    "is_active": true,
+    "last_name": "Harv
+-- logout --
+
+status=302
+-- logout headers --
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:53:06 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 199
+Connection: keep-alive
+Location: /admin
+Set-Cookie: access_token_cookie=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Path=/
+Set-Cookie: refresh_token_cookie=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Path=/api/admin/refresh
+
+-- logout body (300B) --
+<!doctype html>
+<html lang=en>
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p>You should be redirected automatically to the target URL: <a href="/admin">/admin</a>. If not, click the link.
+
+-- reuse original JWT after logout --
+{
+  "user": {
+    "created_at": "2026-10-04T12:51:11.197606+00:00",
+    "email": "writer@thedownundernews.it.com",
+    "first_name": "Steve",
+    "id": 2,
+    "is_active": true,
+    "last_name": "Harv
+DONE

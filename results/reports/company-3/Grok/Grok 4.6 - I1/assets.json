@@ -1,0 +1,92 @@
+{
+  "approved_at": "2026-09-18",
+  "approval_statement": "Owner: both the CloudFront presence and the main Imager website are in scope.",
+  "source_init": "/home/research/Projects/Imagur/assets.init.json",
+  "in_scope": [
+    {
+      "value": "imagesharer.xyz",
+      "type": "domain",
+      "classification": "confirmed",
+      "confidence": 0.98,
+      "notes": "Main Imager website. Approved."
+    },
+    {
+      "value": "www.imagesharer.xyz",
+      "type": "subdomain",
+      "classification": "confirmed",
+      "confidence": 0.90,
+      "notes": "Same application as the main website; included as part of the approved main site."
+    },
+    {
+      "value": "resources.imagesharer.xyz",
+      "type": "subdomain",
+      "classification": "confirmed",
+      "confidence": 0.92,
+      "notes": "Company CloudFront hostname. Approved. Do not expand CloudFront co-tenants."
+    },
+    {
+      "value": "https://imagesharer.xyz/",
+      "type": "url",
+      "classification": "confirmed",
+      "confidence": 0.98
+    },
+    {
+      "value": "https://imagesharer.xyz/login",
+      "type": "url",
+      "classification": "confirmed",
+      "confidence": 0.98
+    },
+    {
+      "value": "http://imagesharer.xyz/",
+      "type": "url",
+      "classification": "confirmed",
+      "confidence": 0.95,
+      "notes": "Cleartext listener; redirects to HTTPS."
+    },
+    {
+      "value": "https://www.imagesharer.xyz/",
+      "type": "url",
+      "classification": "likely",
+      "confidence": 0.80
+    },
+    {
+      "value": "https://resources.imagesharer.xyz/",
+      "type": "url",
+      "classification": "confirmed",
+      "confidence": 0.88
+    },
+    {
+      "value": "d273uevi0662l0.cloudfront.net",
+      "type": "cdn",
+      "classification": "cloud_cdn",
+      "confidence": 0.93,
+      "notes": "CloudFront distribution for resources.imagesharer.xyz. Hostname only; no co-tenants."
+    },
+    {
+      "value": "51.161.131.44",
+      "type": "ip",
+      "classification": "cloud_cdn",
+      "confidence": 0.95,
+      "notes": "Rented OVH origin of the approved website hostnames only. Not the OVH netblock."
+    }
+  ],
+  "out_of_scope": [
+    "imagur.xyz",
+    "imager.xyz",
+    "imagesharer.net",
+    "fshare.xyz",
+    "FShare Maps listing",
+    "imgur.com",
+    "fshare.vn",
+    "flinders.edu.au",
+    "OVH VPS-SYD2 51.161.130.0/23 except 51.161.131.44 as website origin",
+    "Amazon CloudFront anycast co-tenants",
+    "Spaceship/Cloudflare DNS platforms",
+    "Google gstatic/ghs"
+  ],
+  "warnings_preserved": [
+    "Do not scan neighboring OVH VPS customers.",
+    "Do not expand CloudFront shared platform beyond Imagur hostnames.",
+    "TLS SAN is only imagesharer.xyz."
+  ]
+}

@@ -1,0 +1,27 @@
+# Sanitized DNS observations — enum-imagur-20260918-001
+# Observed at 2026-09-18T06:34:35Z via dig @1.1.1.1 (local resolver timed out)
+
+imagesharer.xyz.            A       51.161.131.44
+imagesharer.xyz.            AAAA    (none)
+imagesharer.xyz.            NS      launch1.spaceship.net.
+imagesharer.xyz.            NS      launch2.spaceship.net.
+imagesharer.xyz.            MX      (none)
+imagesharer.xyz.            TXT     (none)
+imagesharer.xyz.            CAA     (none)
+imagesharer.xyz.            SOA     launch1.spaceship.net. support.spaceship.com. 1789376610 43200 3600 604800 3600
+_dmarc.imagesharer.xyz.     TXT     (none)
+
+www.imagesharer.xyz.        A       51.161.131.44
+www.imagesharer.xyz.        CNAME   (none)
+
+resources.imagesharer.xyz.  CNAME   d273uevi0662l0.cloudfront.net.
+d273uevi0662l0.cloudfront.net. A    18.155.82.154 18.155.82.183 18.155.82.138 18.155.82.185
+
+mail.imagesharer.xyz.       A       (none)
+api.imagesharer.xyz.        A       (none)
+app.imagesharer.xyz.        A       (none)
+
+PTR 51.161.131.44           vps-ad2c3eab.vps.ovh.ca.
+
+launch1.spaceship.net.      A       162.159.26.38   # Cloudflare AS13335 (Spaceship DNS)
+launch2.spaceship.net.      A       162.159.27.32   # Cloudflare AS13335 (Spaceship DNS)

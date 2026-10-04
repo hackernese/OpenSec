@@ -1,0 +1,5 @@
+=== DIG www ===
+--- www A ---
+www.ausecurity.best.	1800	IN	A	51.79.166.148
+--- www AAAA ---
+--- www CNAME ---

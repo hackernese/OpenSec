@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Images — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+            <div class="alert alert-success">Image uploaded successfully.</div>
+    
+            <div class="alert alert-error">File type &quot;image/svg+xml&quot; is not allowed. Accepted types: image/jpeg, image/png, image/gif, image/webp.</div>
+    
+    <div class="page-header">
+    <h1>My Images</h1>
+    <a href="/images/upload" class="btn btn-primary">+ Upload image</a>
+</div>
+
+    <p class="text-muted mb-2">5 images</p>
+
+    <div class="image-grid mt-2">
+                    <div class="image-card">
+                <a href="/images/1634e2d1-0195-4265-9601-3b33a25fa3c8">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/1634e2d1-0195-4265-9601-3b33a25fa3c8.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T044256Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=7d72d271140bac05aebac09d3620ca7d2fa68f3337278e96765c51b4728ffed0"
+                        alt="polyglot.png"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">polyglot.png</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+                    <div class="image-card">
+                <a href="/images/0ce210f4-36f0-4e6d-9944-a36e93562ca1">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/0ce210f4-36f0-4e6d-9944-a36e93562ca1.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T044256Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=f47954d2572d481ba79f1c1b8ed58ac878e1c6f7b1250f236681b89da507d3c0"
+                        alt="polyglot.php"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">polyglot.php</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+                    <div class="image-card">
+                <a href="/images/eccc0b46-ff37-4199-b206-b3b696a2da6e">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/eccc0b46-ff37-4199-b206-b3b696a2da6e.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T044256Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=e58db5d721a571e451ac977652ce7b4d30945db0d52d502d8fb593813e3a200e"
+                        alt="polyglot.phtml"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">polyglot.phtml</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+                    <div class="image-card">
+                <a href="/images/74a461ef-4b81-43e1-8ce0-3c0e10ac4859">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/74a461ef-4b81-43e1-8ce0-3c0e10ac4859.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T044256Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=0f716fb653de8a84e5c8e3ef173b3616faa43a98017acaf48dc57007696e7d07"
+                        alt="legit.png"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">legit.png</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+                    <div class="image-card">
+                <a href="/images/7db3a986-dc8d-4258-8c51-a4a9decb6391">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/7db3a986-dc8d-4258-8c51-a4a9decb6391.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T044256Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=3f53b7a8dcc440ddd91f113d96aafb53bf2b00aebaa559656b44a250217a7da3"
+                        alt="legit.png"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">legit.png</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+            </div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>

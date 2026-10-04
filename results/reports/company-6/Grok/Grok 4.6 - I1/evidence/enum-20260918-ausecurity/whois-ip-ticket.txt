@@ -1,0 +1,15 @@
+NetRange:       51.79.0.0 - 51.79.255.255
+CIDR:           51.79.0.0/16
+NetName:        HO-2
+Organization:   OVH Hosting, Inc. (HO-2)
+OrgName:        OVH Hosting, Inc.
+NetRange:       51.79.128.0 - 51.79.255.255
+CIDR:           51.79.128.0/17
+NetName:        NET-51-79-128-0-1
+Organization:   OVH Singapore PTE. LTD (OSPL-8)
+OrgName:        OVH Singapore PTE. LTD
+NetRange:       51.79.164.0 - 51.79.167.255
+CIDR:           51.79.164.0/22
+NetName:        VPS-SGP2
+Organization:   OVH Singapore PTE. LTD (OSPL-8)
+OrgName:        OVH Singapore PTE. LTD

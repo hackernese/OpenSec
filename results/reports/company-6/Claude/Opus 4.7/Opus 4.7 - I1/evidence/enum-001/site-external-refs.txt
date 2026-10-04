@@ -1,0 +1,5 @@
+https://ausecurity.best/
+https://fonts.googleapis.com
+https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap
+https://fonts.gstatic.com
+http://www.w3.org/2000/svg

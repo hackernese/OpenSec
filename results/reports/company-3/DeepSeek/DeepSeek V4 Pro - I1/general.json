@@ -1,0 +1,148 @@
+{
+  "id": "1584ce98-2190-4d3b-80f6-2bc86a7df170",
+  "created": "2026-09-17T20:41:42.826693Z",
+  "updated": "2026-09-17T20:41:42.826851Z",
+  "name": "Imagur",
+  "project_type": "31a79456-cfb8-431a-9cae-5c941404ad93",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/1584ce98-2190-4d3b-80f6-2bc86a7df170",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/1584ce98-2190-4d3b-80f6-2bc86a7df170/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/1584ce98-2190-4d3b-80f6-2bc86a7df170/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-09-17T20:41:42.830262Z",
+      "updated": "2026-09-17T20:41:42.831512Z",
+      "project": "1584ce98-2190-4d3b-80f6-2bc86a7df170",
+      "project_type": "31a79456-cfb8-431a-9cae-5c941404ad93",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "executive_summary": "The \"Imager\" image-sharing service (https://imagesharer.xyz/, also listed as \"FShare\") is a public-facing web application that lets users upload and share images. An authorized security assessment was performed on 17 September 2026 to evaluate the security of the application and its supporting cloud infrastructure.\n\nThe assessment identified seven issues, including three critical/high-severity findings that require immediate attention:\n\n1. **Critical \u2014 Hardcoded AWS root credentials in client-side code.** The website publicly serves a JavaScript file containing valid AWS access credentials that resolve to the AWS account's ROOT identity. Anyone who visits the site can obtain these keys and gain full administrative control of the business's AWS account, including all stored data, services, and billing.\n\n2. **High \u2014 Private images are publicly downloadable.** The Amazon S3 bucket that stores all user images (\"filesharer-research\") allows anonymous listing and download. This means images that users marked \"Private\" can be viewed by anyone, bypassing the application's privacy controls.\n\n3. **High \u2014 Stored cross-site scripting (XSS).** An attacker can upload an image whose filename contains a script that runs in the browser of anyone who opens the image link, potentially taking over their account.\n\nIn addition, the assessment found medium/low-severity issues including an ownership-check flaw in the upload form, missing CSRF protections, account enumeration during registration, and disclosure of server software versions.\n\n**Highest-priority actions:** rotate and remove the exposed AWS root keys immediately, restrict the S3 bucket so it is not publicly listable or readable, and fix the filename output encoding that enables the XSS.\n\nA technical breakdown of each finding, with remediation steps, is provided later in this report."
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-09-17T20:41:42.830284Z",
+      "updated": "2026-09-17T20:41:42.831514Z",
+      "project": "1584ce98-2190-4d3b-80f6-2bc86a7df170",
+      "project_type": "31a79456-cfb8-431a-9cae-5c941404ad93",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "scope": "The assessment covered the following in-scope systems and assets:\n\n| System | Description |\n|:---|:---|\n| https://imagesharer.xyz/ | Primary web application (\"Imager\" image-sharing service), nginx/PHP on ports 80/443 |\n| https://www.imagesharer.xyz/ | `www` subdomain, same nginx/PHP stack |\n| http://51.161.131.44:8080/ | Secondary instance, Apache/PHP on port 8080 |\n| resources.imagesharer.xyz | Amazon CloudFront distribution (d273uevi0662l0.cloudfront.net) |\n| filesharer-research | Amazon S3 bucket (ap-southeast-2) storing user-uploaded images |\n| /js/awsvalid.js | Client-side JavaScript credential file served by the web application |",
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17",
+        "duration": "1 person day",
+        "provided_users": "**Provided Users**\n* Unauthenticated (public) access\n* One self-registered test account used for authenticated testing\n* No production credentials were provided or required."
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-09-17T20:41:42.830306Z",
+      "updated": "2026-09-17T20:41:42.831517Z",
+      "project": "1584ce98-2190-4d3b-80f6-2bc86a7df170",
+      "project_type": "31a79456-cfb8-431a-9cae-5c941404ad93",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "customer_name": "Imagur (FShare)",
+        "customer_address": {
+          "city": "Glengowrie SA 5044, Australia",
+          "street": "132 Morphett Rd"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-09-17T20:41:42.830234Z",
+      "updated": "2026-09-17T20:41:42.831510Z",
+      "project": "1584ce98-2190-4d3b-80f6-2bc86a7df170",
+      "project_type": "31a79456-cfb8-431a-9cae-5c941404ad93",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "title": "Imagur",
+        "report_date": "2026-09-17",
+        "report_version": "1.0",
+        "list_of_changes": [],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-09-17T20:41:42.830188Z",
+      "updated": "2026-09-17T20:41:42.831506Z",
+      "project": "1584ce98-2190-4d3b-80f6-2bc86a7df170",
+      "project_type": "31a79456-cfb8-431a-9cae-5c941404ad93",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

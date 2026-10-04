@@ -1,0 +1,126 @@
+====================
+URL: https://ausecurity.best/
+--- Response headers ---
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Fri, 18 Sep 2026 03:39:43 GMT
+Content-Type: text/html
+Content-Length: 13638
+Connection: keep-alive
+Last-Modified: Mon, 07 Sep 2026 04:27:11 GMT
+ETag: "6a9e3d1f-3546"
+Accept-Ranges: bytes
+
+
+====================
+URL: https://www.ausecurity.best/
+--- Response headers ---
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Fri, 18 Sep 2026 03:39:44 GMT
+Content-Type: text/html
+Content-Length: 13638
+Connection: keep-alive
+Last-Modified: Mon, 07 Sep 2026 04:27:11 GMT
+ETag: "6a9e3d1f-3546"
+Accept-Ranges: bytes
+
+
+====================
+URL: https://contact.ausecurity.best/
+--- Response headers ---
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Fri, 18 Sep 2026 03:39:45 GMT
+Content-Type: text/html
+Content-Length: 13638
+Connection: keep-alive
+Last-Modified: Mon, 07 Sep 2026 04:27:11 GMT
+ETag: "6a9e3d1f-3546"
+Accept-Ranges: bytes
+
+
+====================
+URL: http://51.79.166.148:8080/
+--- Response headers ---
+HTTP/1.1 200 OK
+Server: nginx/1.25.5
+Date: Fri, 18 Sep 2026 03:39:45 GMT
+Content-Type: text/html
+Content-Length: 13638
+Last-Modified: Mon, 07 Sep 2026 04:27:11 GMT
+Connection: keep-alive
+ETag: "6a9e3d1f-3546"
+Accept-Ranges: bytes
+
+
+====================
+URL: https://blog.ausecurity.best/
+--- Response headers ---
+HTTP/1.1 200 OK
+Date: Fri, 18 Sep 2026 03:39:46 GMT
+Server: Apache/2.4.68 (Debian)
+Link: <https://blog.ausecurity.best/index.php/wp-json/>; rel="https://api.w.org/"
+Content-Type: text/html; charset=UTF-8
+
+
+====================
+URL: http://blog.ausecurity.best/
+--- Response headers ---
+HTTP/1.1 301 Moved Permanently
+Date: Fri, 18 Sep 2026 03:39:46 GMT
+Server: Apache/2.4.68 (Debian)
+Location: https://blog.ausecurity.best/
+Content-Type: text/html; charset=iso-8859-1
+
+HTTP/1.1 200 OK
+Date: Fri, 18 Sep 2026 03:39:47 GMT
+Server: Apache/2.4.68 (Debian)
+Link: <https://blog.ausecurity.best/index.php/wp-json/>; rel="https://api.w.org/"
+Content-Type: text/html; charset=UTF-8
+
+
+====================
+URL: https://ticket.ausecurity.best/
+--- Response headers ---
+HTTP/1.1 302 Found
+Server: nginx/1.22.1
+Date: Fri, 18 Sep 2026 03:39:48 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-Powered-By: PHP/8.2.33
+Location: /setup/install.php
+
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Fri, 18 Sep 2026 03:39:48 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-Powered-By: PHP/8.2.33
+Set-Cookie: PHPSESSID=03f049da4755a8987e7b2a10278ed602; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+
+
+====================
+URL: http://51.79.166.209:8080/
+--- Response headers ---
+HTTP/1.1 302 Found
+Date: Fri, 18 Sep 2026 03:39:49 GMT
+Server: Apache/2.4.68 (Debian)
+X-Powered-By: PHP/8.2.33
+Location: /setup/install.php
+Content-Type: text/html; charset=UTF-8
+
+HTTP/1.1 200 OK
+Date: Fri, 18 Sep 2026 03:39:49 GMT
+Server: Apache/2.4.68 (Debian)
+X-Powered-By: PHP/8.2.33
+Set-Cookie: PHPSESSID=7891fe3c9972c7b398cb7a50cbf99cfb; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Type: text/html; charset=UTF-8
+
+

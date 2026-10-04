@@ -1,0 +1,9 @@
+--- blog.ausecurity.best ---
+blog.ausecurity.best.	1799	IN	A	51.79.167.208
+--- ticket.ausecurity.best ---
+ticket.ausecurity.best.	1799	IN	A	51.79.166.209
+--- mail.ausecurity.best ---
+--- api.ausecurity.best ---
+--- staging.ausecurity.best ---
+--- vpn.ausecurity.best ---
+--- ns1.ausecurity.best ---

@@ -1,0 +1,57 @@
+{
+  "name": "AuSecurity - Vulnerability Assessment Report",
+  "language": "en-US",
+  "tags": ["research"],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "data": {
+        "executive_summary": "AuSecurity engaged ClawSec to perform an authorized, full-scope, external vulnerability assessment of its Internet-facing systems. The assessment took place on 18 September 2026 and covered the primary website, the marketing/contact site, the WordPress blog, and the customer support (osTicket) system, all hosted on three dedicated OVH virtual servers in Singapore. Testing followed a non-destructive methodology (passive reconnaissance, controlled enumeration, and manually verified vulnerability probing) and did not use denial-of-service, credential brute forcing, phishing, or lateral-movement techniques.\n\nOverall, AuSecurity's public footprint is small, but the environment shows clear signs of not having been hardened after initial deployment. Fifteen issues were confirmed and are grouped as follows:\n\n| Severity | Count |\n|:---|:---|\n| Critical | 1 |\n| High | 2 |\n| Medium | 7 |\n| Low | 2 |\n| Informational | 3 |\n\n**Most urgent issue.** The customer support system at `ticket.ausecurity.best` is still in an unfinished installation state, and its setup wizard is reachable from anywhere on the Internet without any password. In practice, a stranger on the Internet can complete the installation and become the helpdesk administrator, which would give them ownership of the support system used to communicate with customers. This should be closed within hours, not days.\n\n**Two additional high-priority issues.** First, the main website at `ausecurity.best` is currently serving a self-signed certificate, which causes every visitor's browser to show a full-screen \"your connection is not private\" warning even though a valid Let's Encrypt certificate has already been issued and only needs to be deployed. For a business that sells governance, risk and compliance services, this warning materially damages first impressions and trust. Second, the `ausecurity.best` domain publishes no email authentication records (SPF, DKIM, DMARC) and no mail routing (MX), which means (a) anyone on the Internet can send convincing emails that appear to come from `@ausecurity.best`, and (b) the advertised business contact `info@ausecurity.best` cannot actually receive mail. Both are inexpensive to fix.\n\n**Remaining findings.** The medium- and lower-severity items are common configuration issues (missing HTTP security headers, WordPress user enumeration, exposed backend origin ports, WordPress XML-RPC weaknesses, missing session-cookie flags, weak TLS cipher choices, default WordPress artefacts, an unenforced honeypot on the contact form). Individually they are modest, but taken together they indicate an environment that has not yet been hardened to a production baseline.\n\n**Business context.** AuSecurity's service offering is GRC consulting and penetration testing. The findings in this report are the kind of issues AuSecurity itself would raise with a client, so remediating them quickly protects both the business and its professional reputation.\n\n**Recommended next steps (in order):**\n\n1. Take the osTicket installer offline immediately (firewall rule or webserver block) and either complete or remove the installation.\n2. Deploy the existing Let's Encrypt certificate on the primary website and add the two missing subdomains to it.\n3. Publish SPF, DKIM, DMARC, and (once a mail provider is chosen) MX and MTA-STS records for `ausecurity.best`.\n4. Add the standard HTTP security headers, close the direct-to-origin port 8080 exposure, and rename the default WordPress `admin` account.\n5. Restrict SSH management access at the network layer to known administrator IPs.\n\nA full technical description of every finding, along with reproduction evidence and prioritized remediation guidance, is provided in the Findings section of this report."
+      }
+    },
+    {
+      "id": "scope",
+      "data": {
+        "scope": "This engagement was an **authorized, full-scope, external (Internet-facing) vulnerability assessment** of AuSecurity's public assets. All testing was performed from the public Internet against assets that were confirmed to belong to AuSecurity before any probing began. Scope authorization was obtained by the client publishing the required `AuthorizedCode` HTTP response header on the primary public-facing website (`https://ausecurity.best/`), which was verified at 2026-09-18T02:38:21Z.\n\n**In-scope assets:**\n\n| System | Description |\n|:---|:---|\n| ausecurity.best | Root domain / primary marketing website |\n| www.ausecurity.best | www alias of the primary website |\n| contact.ausecurity.best | Contact site with FastAPI contact-form backend |\n| blog.ausecurity.best | WordPress-based company blog |\n| ticket.ausecurity.best | osTicket customer support portal |\n| 51.79.166.148 | OVH VPS hosting the primary/contact web stack |\n| 51.79.166.209 | OVH VPS hosting the osTicket application |\n| 51.79.167.208 | OVH VPS (blog / auxiliary) |\n\nEight web endpoints were tested across these hosts (HTTPS on TCP/443 for all four subdomains, plus HTTP on TCP/8080 on both origin webservers and HTTP on TCP/80 on the blog).\n\n**Explicitly out of scope (third-party infrastructure):**\n\n* Spaceship (DNS registrar / hosted DNS)\n* OVH (underlying cloud/VPS infrastructure)\n* Google Fonts, Automattic Gravatar (external CDN dependencies referenced by the blog)\n\n**Methodology:** Passive reconnaissance (DNS/WHOIS/Certificate Transparency), light-active enumeration (subdomain, port, and service discovery), and non-destructive vulnerability probing across all confirmed in-scope assets. All commands were reviewed by the ClawSec orchestrator before execution. No destructive techniques (denial-of-service, credential brute forcing, MFA bypass, phishing, malware deployment, or lateral movement) were used. Every finding in this report was manually verified prior to inclusion.\n\n**Limitations honestly acknowledged:**\n\n* The Nuclei baseline template scan (7,888 templates across 8 URLs) completed roughly 54% of planned requests within its 30-minute time budget before being stopped. Targeted manual assessment was subsequently performed on all high-value paths, so no known high-value area was left uncovered, but a longer automated scan may surface additional low-severity noise.\n* The WPScan paid vulnerability database token was not available, so WordPress plugin/theme CVE mapping was performed manually against publicly known issues rather than against the commercial WPScan feed.\n* The osTicket application was in an incomplete / pending-installation state, so runtime application-level testing (authenticated features, authorization checks, business-logic testing) could not be performed against a fully-installed application.\n* No password guessing or brute-force testing was performed against SSH, WordPress admin, osTicket, or any other login surface.",
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18",
+        "duration": "1 person day",
+        "provided_users": "No credentials or user accounts were provided. This engagement was performed entirely from an unauthenticated, external attacker perspective."
+      }
+    },
+    {
+      "id": "customer",
+      "data": {
+        "customer_name": "AuSecurity",
+        "customer_address": {
+          "city": "Paddington NSW 2021, Australia",
+          "street": "63 Paddington St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "data": {
+        "title": "AuSecurity - External Vulnerability Assessment Report",
+        "report_date": "2026-09-18",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "version": "1.0",
+            "date": "2026-09-18",
+            "description": "Initial report issued to the client.",
+            "author": "ClawSec"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

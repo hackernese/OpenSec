@@ -1,0 +1,19 @@
+HTTP/1.1 302 Found
+Server: nginx
+Date: Fri, 18 Sep 2026 04:39:33 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.33
+Set-Cookie: PHPSESSID=d0a6b4ff255b6c97dc0851a89678ebe1; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: PHPSESSID=52f835430fc750a906621ad0b6127d9e; path=/
+Set-Cookie: last_login=%7B%22timestamp%22%3A1789706373%2C%22session_id%22%3A%2252f835430fc750a906621ad0b6127d9e%22%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%7D; expires=Sun, 18 Oct 2026 04:39:33 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Location: /dashboard
+

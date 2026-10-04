@@ -1,0 +1,13 @@
+# Nmap 7.99 scan initiated Fri Sep 18 14:01:46 2026 as: /usr/lib/nmap/nmap --privileged -Pn -n -T4 --min-rate 1500 -p- --open --max-retries 2 --host-timeout 8m -oN /home/research/Projects/Imagur/evidence/task-003-portscan/nmap-allports.txt 51.161.131.44
+Nmap scan report for 51.161.131.44
+Host is up (0.023s latency).
+Not shown: 65528 closed tcp ports (reset), 2 filtered tcp ports (no-response)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+443/tcp  open  https
+5432/tcp open  postgresql
+8080/tcp open  http-proxy
+
+# Nmap done at Fri Sep 18 14:01:54 2026 -- 1 IP address (1 host up) scanned in 8.73 seconds

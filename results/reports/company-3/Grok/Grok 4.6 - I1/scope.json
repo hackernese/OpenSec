@@ -1,0 +1,70 @@
+{
+  "engagement": "Imagur",
+  "approved_at": "2026-09-18",
+  "allowlist": {
+    "domains": ["imagesharer.xyz"],
+    "hostnames": [
+      "imagesharer.xyz",
+      "www.imagesharer.xyz",
+      "resources.imagesharer.xyz",
+      "d273uevi0662l0.cloudfront.net"
+    ],
+    "urls": [
+      "https://imagesharer.xyz/",
+      "http://imagesharer.xyz/",
+      "https://www.imagesharer.xyz/",
+      "https://resources.imagesharer.xyz/"
+    ],
+    "ips": ["51.161.131.44"]
+  },
+  "denylist": {
+    "domains": [
+      "imagur.xyz",
+      "imager.xyz",
+      "imagesharer.net",
+      "fshare.xyz",
+      "imgur.com",
+      "fshare.vn",
+      "flinders.edu.au",
+      "imager.com.au"
+    ],
+    "netblocks": [
+      "51.161.130.0/23 except 51.161.131.44",
+      "51.161.128.0/17 except 51.161.131.44",
+      "18.154.0.0/15",
+      "18.155.82.0/24 except as resolution of approved CloudFront hostname"
+    ]
+  },
+  "third_party_exclusions": [
+    "Flinders University",
+    "Google Maps / gstatic / ghs",
+    "Spaceship registrar DNS",
+    "Cloudflare shared DNS",
+    "OVH customers other than the single origin IP",
+    "Amazon CloudFront co-tenants"
+  ],
+  "method_permissions": {
+    "allowed": [
+      "passive reconnaissance",
+      "non-destructive active scanning of allowlisted hosts",
+      "web application testing of discovered endpoints on allowlisted hosts",
+      "safe proof-of-concept that does not destroy data or availability",
+      "ReDoS testing"
+    ],
+    "forbidden": [
+      "DDoS",
+      "malware",
+      "social engineering",
+      "phishing",
+      "credential stuffing",
+      "password spraying",
+      "brute force",
+      "MFA bypass",
+      "lateral movement",
+      "stealth/evasion",
+      "destructive techniques",
+      "attacks on other devices on the current network",
+      "testing out-of-scope third parties"
+    ]
+  }
+}

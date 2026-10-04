@@ -1,0 +1,513 @@
+# Finding: Unauthenticated osTicket installer wizard publicly reachable
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
+Affected: https://ticket.ausecurity.best/setup/install.php, http://51.79.166.209:8080/setup/install.php
+References:
+- https://docs.osticket.com/en/latest/Getting%20Started/Installation.html (osTicket docs: setup/ must be removed after install)
+- OWASP ASVS V14.3 (unnecessary features and files must be removed)
+- CWE-1188: Insecure Default Initialization of Resource
+
+Summary:
+The osTicket helpdesk application at `ticket.ausecurity.best` is not fully configured, and its installation wizard is publicly reachable without any authentication at `/setup/install.php`. Every route on the application (root, `/scp/login.php` admin console, `/api/http.php` API) redirects unauthenticated visitors to the same installer wizard, which reveals that no database or admin account has yet been provisioned. The installer form does not require any credentials, session, IP restriction, or CSRF token to proceed.
+
+Description:
+- HTTP evidence: `GET https://ticket.ausecurity.best/` returns `302 -> /setup/install.php`. `GET /setup/install.php` returns `200` with an HTML installer page titled "Installing osTicket v1.18.4".
+- The installer form (`<form method="post" action="install.php">`) contains only a single hidden field `s=prereq` and a submit button. No CSRF token, nonce, or authentication challenge is present.
+- The same behaviour is reproduced directly against the origin at `http://51.79.166.209:8080/setup/install.php`, meaning the exposure is not just at the reverse-proxy edge.
+- The following server-side information is disclosed on the installer page and in HTTP headers: `Server: nginx/1.22.1`, `X-Powered-By: PHP/8.2.33`, `osTicket v1.18.4`, and the exact PHP extension inventory (IMAP/APCu missing).
+- The application has been in this pending-setup state since (at least) 2026-09-14 (TLS certificate issue date), which means it has been publicly waiting to be finished for days.
+
+Impact:
+An unauthenticated remote attacker can walk through the installer, connect the application to an attacker-controlled or attacker-created database, and create an administrator account. Because osTicket runs PHP on the same webserver, the attacker gains an authenticated application-admin position from which further web-shell / arbitrary-file upload paths become available (osTicket admins can install language packs, plugins, and edit templates - all of which have led to code execution in past deployments). In the worst case this is a full application takeover of the helpdesk, which typically stores customer data, support tickets, and credentials pasted by users. It also enables convincing phishing sent from ticket.ausecurity.best.
+
+Recommendation:
+1. Immediately restrict access to `/setup/` on both the nginx reverse proxy (port 443) AND directly on the Apache origin (port 8080). Use an IP allowlist, HTTP basic-auth, or a firewall rule limited to the deployment team.
+2. Complete or abandon the osTicket install. Once installation is complete, delete the `setup/` directory from the web root - the vendor explicitly instructs administrators to do this.
+3. Do not expose the origin (`51.79.166.209:8080`) directly to the public Internet. Bind Apache to `127.0.0.1:8080` or block the port at the host firewall so all traffic must transit the reverse proxy.
+4. After install, remove or hide the `Server` header (`ServerTokens Prod` + `ServerSignature Off`) and disable `expose_php` in php.ini to suppress the `X-Powered-By: PHP/8.2.33` disclosure.
+5. Add HSTS, CSP, `X-Frame-Options`, and set the PHPSESSID cookie with `Secure; HttpOnly; SameSite=Lax` (see the "Missing HTTP security headers" and "Insecure session cookie" findings below).
+
+---
+
+# Finding: Self-signed TLS certificate on primary website
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N
+Affected: https://ausecurity.best/, https://www.ausecurity.best/, https://contact.ausecurity.best/ (all on 51.79.166.148:443)
+References:
+- Mozilla TLS guidelines (https://ssl-config.mozilla.org/)
+- RFC 5280 (certificate validation)
+- CWE-295: Improper Certificate Validation
+
+Summary:
+The primary marketing website served on `ausecurity.best` (and its `www` and `contact` aliases) presents a self-signed TLS certificate issued by `CN=ausecurity.best` to `CN=ausecurity.best`, valid from 2026-09-14 to 2027-09-14. Every mainstream browser will display a full-screen warning ("Your connection is not private / NET::ERR_CERT_AUTHORITY_INVALID") before letting a visitor click through. Curiously, a valid Let's Encrypt certificate was issued for this exact hostname on 2026-09-07 (Certificate Transparency ID 29414811460 on crt.sh), meaning the correct certificate exists but has not been deployed.
+
+Description:
+- `openssl s_client -connect ausecurity.best:443 -servername ausecurity.best` returns a certificate with `Issuer=CN=ausecurity.best` (i.e. self-signed) instead of the expected Let's Encrypt R3/E1/E2 issuer.
+- The certificate's Subject Alternative Name is only `DNS:ausecurity.best`, so `https://www.ausecurity.best/` and `https://contact.ausecurity.best/` additionally trigger a hostname mismatch warning even after the browser is instructed to trust the self-signed cert.
+- The nginx configuration on 51.79.166.148 is therefore either pointing at a leftover self-signed pair generated during initial provisioning, or the Let's Encrypt renewal client wrote the cert to a path nginx is not reading.
+
+Impact:
+1. Business impact: every prospective customer is greeted by a "your connection is not private" browser warning. For a company that sells GRC consulting and penetration testing, this materially damages trust and lead conversion.
+2. Security impact: users are conditioned to click through certificate warnings, which teaches them to accept the same warning during a genuine machine-in-the-middle attack. It also disables the browser's principal defence against DNS/BGP hijacking of `ausecurity.best`.
+3. Secondary services relying on certificate validation (HSTS-preload, monitoring, curl-based integrations, some link scanners) will refuse to talk to the site at all.
+
+Recommendation:
+1. Deploy the existing Let's Encrypt certificate for `ausecurity.best` (from crt.sh id 29414811460) into the nginx configuration on `51.79.166.148`. Verify that `ssl_certificate` and `ssl_certificate_key` in the nginx server block reference the LE-issued file paths (usually `/etc/letsencrypt/live/ausecurity.best/fullchain.pem` and `.../privkey.pem`).
+2. Issue additional certificates (or add SANs) that cover `www.ausecurity.best` and `contact.ausecurity.best`. `certbot certonly --nginx -d ausecurity.best -d www.ausecurity.best -d contact.ausecurity.best` in one call is the simplest path.
+3. Confirm renewal is automated (`systemctl status certbot.timer` or the equivalent).
+4. After the correct certificate is deployed, add `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload` to force TLS on future visits.
+
+---
+
+# Finding: Domain has no SPF, DKIM, DMARC, MX or MTA-STS records - full email spoofability
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:N
+Affected: ausecurity.best (entire domain)
+References:
+- RFC 7208 (SPF), RFC 6376 (DKIM), RFC 7489 (DMARC), RFC 8461 (MTA-STS)
+- https://dmarc.org/
+- CWE-940: Improper Verification of Source of a Communication Channel
+
+Summary:
+`ausecurity.best` has no MX record, no SPF record, no DKIM selector records (default/selector1/selector2/google/k1/mail/smtp/mandrill/mailgun were all queried), no DMARC record at `_dmarc.ausecurity.best`, and no MTA-STS policy. This has two effects: (1) the advertised business contact address `info@ausecurity.best` cannot receive email on this domain, and (2) any third party on the Internet can send email that appears to originate from `@ausecurity.best` and it will not be rejected on authentication grounds by receiving mail servers.
+
+Description:
+- `dig MX ausecurity.best +short` -> empty
+- `dig TXT ausecurity.best +short` -> no `v=spf1 ...` string
+- `dig TXT _dmarc.ausecurity.best +short` -> no `v=DMARC1 ...` string
+- `dig TXT _mta-sts.ausecurity.best +short` -> empty
+- DKIM selector probes (`default`, `selector1`, `selector2`, `google`, `k1`, `mail`, `smtp`, `mandrill`, `mailgun` at `_domainkey.ausecurity.best`) all returned NXDOMAIN.
+- The published contact page on `contact.ausecurity.best` still lists `info@ausecurity.best` as the sole business email address; because no MX is published, mail sent there bounces at the sender's side (some providers deliver to A-record fallback, others don't).
+
+Impact:
+- **Phishing**: An attacker can send convincingly-forged emails "from" `admin@ausecurity.best`, `billing@ausecurity.best`, `vinh@ausecurity.best`, etc. to your customers, prospects, or partners. Gmail, Microsoft 365 and other receivers do apply DMARC-derived reputation, but with no SPF/DKIM/DMARC published they cannot reject on authentication - only on content signals and static domain reputation, which are weak for a young domain.
+- **Business communication loss**: Anyone trying to email `info@ausecurity.best` may see a permanent-failure bounce, causing loss of inbound leads.
+- **Brand damage**: A single successful phishing wave sent to a customer will attribute damage to AuSecurity, even though the actual server was never involved.
+
+Recommendation:
+1. Decide how the business receives mail. If Google Workspace or Microsoft 365 is used, publish the vendor's MX records for `ausecurity.best`.
+2. Publish a strict SPF record. If no server should ever send mail as `@ausecurity.best`, use `v=spf1 -all`. Otherwise, enumerate every sending source (`v=spf1 include:_spf.google.com -all`).
+3. Enable DKIM in whichever provider is used and publish the provider's selector TXT record.
+4. Publish a starting DMARC policy: `v=DMARC1; p=none; rua=mailto:vinh@ausecurity.best; ruf=mailto:vinh@ausecurity.best; fo=1; adkim=s; aspf=s` and monitor the aggregate reports for at least two weeks. Then move to `p=quarantine` and finally `p=reject`.
+5. Publish MTA-STS (`_mta-sts.ausecurity.best` + `mta-sts.ausecurity.best`) once a mail provider is in place.
+
+---
+
+# Finding: All-in-One WP Migration plugin exposed with known-vulnerable code path history
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://blog.ausecurity.best/wp-content/plugins/all-in-one-wp-migration/ (version 7.109), https://blog.ausecurity.best/wp-content/ai1wm-backups/
+References:
+- Vendor advisories: https://wordpress.org/plugins/all-in-one-wp-migration/#developers
+- CVE-2023-40004 (broken access control on export/import functions, patched in 7.73)
+- CVE-2024-31111 (backup manipulation)
+- CWE-284: Improper Access Control
+
+Summary:
+The WordPress blog at `blog.ausecurity.best` has `All-in-One WP Migration` v7.109 installed and the backup storage folder `wp-content/ai1wm-backups/` is reachable (`HTTP 200`) from the public Internet. The `web.config` file in that folder is served with a 200 response. The plugin's `readme.txt` (also publicly readable) discloses the exact installed version, which is useful for future exploit targeting.
+
+Description:
+- `GET https://blog.ausecurity.best/wp-content/plugins/all-in-one-wp-migration/readme.txt` -> `200 OK`, `Stable tag: 7.109`.
+- `GET https://blog.ausecurity.best/wp-content/ai1wm-backups/` -> `200 OK` (folder exists and is publicly reachable).
+- `GET https://blog.ausecurity.best/wp-content/ai1wm-backups/web.config` -> `200 OK` (356 bytes).
+- No actual `.wpress` backup files were found in the folder at the time of testing.
+- The plugin's history includes multiple broken-access-control CVEs where authenticated (or in some versions unauthenticated) users could trigger export/import operations. Even if the current 7.109 build is patched, the plugin's presence combined with a public backup directory means that any future backup written to that folder is trivially downloadable and contains the entire site (posts, users' password hashes in `wp_users`, secrets in `wp_options`, and often `wp-config.php`-equivalent constants).
+
+Impact:
+- If an administrator ever runs a backup (or the plugin's scheduled/hooked export functionality writes one), the resulting `.wpress` file is downloadable by anyone on the Internet. A `.wpress` backup contains the entire WordPress database and file tree, including hashed user credentials, session salts, API keys, and any customer data stored in the site.
+- The directory exposure also allows an attacker to discover backup filenames via directory listing / file enumeration and to poll periodically for new backups.
+
+Recommendation:
+1. Block direct browser access to `/wp-content/ai1wm-backups/` and its children on the Apache origin. Add an Apache directive:
+   ```
+   <Directory /var/www/blog/wp-content/ai1wm-backups>
+       Require all denied
+   </Directory>
+   ```
+   (or an nginx equivalent if a proxy is added).
+2. If the plugin is not actively used for migrations, uninstall it. All-in-One WP Migration should generally not be left running on a production site.
+3. Keep the plugin updated (7.109 was current at test time - verify against the vendor changelog).
+4. Store backups off-site (S3, external SFTP), not under `wp-content/`.
+5. Suppress `readme.txt` for all plugins:
+   ```
+   <FilesMatch "^(readme|license|changelog)\.(txt|html|md)$">
+       Require all denied
+   </FilesMatch>
+   ```
+
+---
+
+# Finding: WordPress user enumeration via REST API and author archive
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://blog.ausecurity.best/?rest_route=/wp/v2/users, https://blog.ausecurity.best/?author=1
+References:
+- WordPress hardening docs: https://developer.wordpress.org/rest-api/frequently-asked-questions/
+- CWE-200: Exposure of Sensitive Information
+
+Summary:
+Although the primary REST API route `/wp-json/wp/v2/users` returns 404, the equivalent query-string form `/?rest_route=/wp/v2/users` returns a full JSON list of users, revealing username, slug, display name, and gravatar URLs. Additionally, `?author=1` returns an HTTP 301 redirect to `/author/admin/`, confirming that user ID 1 exists and has slug `admin`. Higher IDs return 404, confirming there is exactly one user.
+
+Description:
+- `curl "https://blog.ausecurity.best/?rest_route=/wp/v2/users"` returns JSON including `{"id":1,"name":"admin","slug":"admin","avatar_urls":{...}}`.
+- `curl -I "https://blog.ausecurity.best/?author=1"` returns `301 Location: https://blog.ausecurity.best/index.php/author/admin/`.
+- `curl -I "https://blog.ausecurity.best/?author=2..6"` all return `404`.
+- The default WordPress administrator username `admin` is in use.
+
+Impact:
+An attacker knows for certain that a valid administrator username is `admin`. This removes one factor from a two-factor guessing problem (username + password) and turns any successful password guess into an administrator take-over. Combined with the fact that `wp-login.php` is publicly reachable and there is no visible rate-limiting or CAPTCHA plugin, this materially raises the risk of successful credential guessing.
+
+Recommendation:
+1. Rename the administrator account. Create a new administrator with a non-obvious username, log in as the new account, delete the `admin` user (or demote it to a role with no login), and reassign the sole post/page authorship.
+2. Restrict the REST users endpoint. Add code like the following to the theme's `functions.php` or a small mu-plugin to require authentication on the users endpoint:
+   ```php
+   add_filter( 'rest_endpoints', function( $endpoints ) {
+       if ( isset( $endpoints['/wp/v2/users'] ) ) unset( $endpoints['/wp/v2/users'] );
+       if ( isset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] ) ) unset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] );
+       return $endpoints;
+   });
+   ```
+3. Block author enumeration in nginx/Apache:
+   ```
+   if ($args ~ "^/?author=([0-9]+)") { return 403; }
+   ```
+4. Install a well-maintained login-protection plugin (Wordfence, Solid Security, Loginizer) to add lockouts, IP blocklists, and 2FA for `/wp-login.php`.
+
+---
+
+# Finding: WordPress /wp-includes/ directory listing enabled
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://blog.ausecurity.best/wp-includes/
+References:
+- OWASP ASVS V14.3.3
+- CWE-548: Exposure of Information Through Directory Listing
+
+Summary:
+Requesting `https://blog.ausecurity.best/wp-includes/` returns an Apache-generated HTML index of the WordPress core includes directory (approximately 65 KB of file names). The other WordPress folders (`/wp-content/`, `/wp-content/plugins/`, `/wp-content/themes/`) return a 200 with an empty body (index.html present), which correctly hides their contents.
+
+Description:
+- `curl https://blog.ausecurity.best/wp-includes/` returns a `<title>Index of /wp-includes</title>` HTML page listing every file and subdirectory.
+- Sensitive files inside `wp-includes/` (e.g. `version.php` if directly requestable, JS/CSS files that leak semver via URL) become trivially discoverable.
+- The server is Apache/2.4.68 (Debian); the default `Options Indexes` is still enabled for this folder.
+
+Impact:
+Directory listings do not directly execute anything, but they let an attacker enumerate every file present, target version-specific weaknesses more accurately, and discover any file left behind (e.g. a stray backup, an old plugin dumped into the wrong path, or a developer's test script).
+
+Recommendation:
+1. Remove `Options Indexes` from the Apache configuration for the site. In the vhost or `.htaccess`:
+   ```
+   Options -Indexes
+   ```
+2. Optionally place an empty `index.html` in `wp-includes/` (as WordPress already does in the sibling folders) as a defence in depth.
+
+---
+
+# Finding: WordPress XML-RPC endpoint exposed with dangerous methods enabled
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:L
+Affected: https://blog.ausecurity.best/xmlrpc.php
+References:
+- https://make.wordpress.org/core/2015/04/28/xml-rpc-and-remote-publishing/
+- https://blog.sucuri.net/2014/03/more-than-162000-wordpress-sites-used-for-distributed-denial-of-service-attack.html (pingback DDoS)
+- CWE-441: Unintended Proxy or Intermediary ('Confused Deputy')
+
+Summary:
+`xmlrpc.php` responds to POST requests with a full `system.listMethods` reply containing 86 methods, including `pingback.ping`, `wp.getUsers`, `wp.getAuthors`, and `metaWeblog.getUsersBlogs`. Pingback in particular is a well-known SSRF and reflected-DDoS primitive: an attacker asks the WordPress server to make an HTTP request to any URL of their choice, which can be aimed at internal network addresses (SSRF), used to amplify a DDoS against a third-party target, or used to fingerprint the internal side of the network.
+
+Description:
+- `curl -X POST -H "Content-Type: text/xml" -d "<methodCall><methodName>system.listMethods</methodName></methodCall>" https://blog.ausecurity.best/xmlrpc.php` -> XML response listing 86 methods including `pingback.ping`, `pingback.extensions.getPingbacks`, `wp.getUsers`, `wp.getAuthors`, `wp.getUserInfo`, `metaWeblog.getUsersBlogs`, `system.multicall`.
+- A test pingback request pointed at `https://example.com/` and `https://blog.ausecurity.best/?p=1` (a non-existent post) returned a fault, which indicates the endpoint accepted the call and attempted to process it. Pingback is therefore live and usable once a real target post ID is supplied.
+- `system.multicall` amplifies password-guessing attempts against `wp.getUsersBlogs` (an attacker submits many username/password pairs in one HTTP request, bypassing per-request rate limits).
+
+Impact:
+- Server-side request forgery: the WordPress host can be coerced into probing internal network resources (e.g. `http://127.0.0.1:8080/`, cloud metadata, other private hosts on the same VLAN).
+- DDoS reflection: a large number of hosts calling `pingback.ping` at a chosen target overloads that target while attributing traffic to WordPress installations.
+- Credential-guessing amplification: `system.multicall` combined with `wp.getUsersBlogs` allows hundreds of login attempts per HTTP request, defeating naive rate limiting.
+
+Recommendation:
+1. Disable XML-RPC entirely if not used. In `functions.php` or a mu-plugin: `add_filter( 'xmlrpc_enabled', '__return_false' );`
+2. Block at the webserver so no XML-RPC request even reaches PHP. For Apache:
+   ```
+   <Files "xmlrpc.php">
+       Require all denied
+   </Files>
+   ```
+3. If XML-RPC is required for a specific integration (e.g. the Jetpack app), IP-allowlist it to that integration only.
+4. Also disable pingback specifically: `add_filter( 'xmlrpc_methods', function($m) { unset($m['pingback.ping']); unset($m['pingback.extensions.getPingbacks']); return $m; } );`
+
+---
+
+# Finding: Backend origin webservers exposed cleartext on TCP/8080
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: http://51.79.166.148:8080/ (nginx/1.25.5 backing ausecurity.best), http://51.79.166.209:8080/ (Apache/2.4.68 + PHP/8.2.33 backing ticket.ausecurity.best)
+References:
+- OWASP ASVS V14.4 (network access controls)
+- CWE-668: Exposure of Resource to Wrong Sphere
+
+Summary:
+Both AuSecurity webservers expose their internal origin daemons directly on TCP port 8080 with plain HTTP. The response body is byte-identical to the reverse-proxied version served on `443`, but the origin advertises different server headers (revealing the true stack) and completely bypasses any TLS, HSTS, or WAF that the reverse proxy could impose. On `51.79.166.209:8080` the exposure also includes the same osTicket installer wizard described in the first (critical) finding, meaning any access control added to the reverse proxy would still not protect against a direct attack.
+
+Description:
+- `curl http://51.79.166.148:8080/` -> `200 OK`, `Server: nginx/1.25.5`, identical body to `https://ausecurity.best/`.
+- `curl http://51.79.166.209:8080/` -> `302 Found` -> `/setup/install.php`, `Server: Apache/2.4.68 (Debian)`, `X-Powered-By: PHP/8.2.33`. The osTicket installer is fully reachable here without HTTPS.
+- Method probes (`OPTIONS`, `TRACE`, `PUT`, `DELETE`, `PATCH`) on 148:8080 all return `405`, so no WebDAV / trace-reflection weakness was found, but the endpoint is still reachable at all.
+- Host-header confusion probes (`Host: admin.ausecurity.best`, `Host: internal.ausecurity.best`, `Host: 127.0.0.1`) on both origins returned identical responses to the default virtual host, so no hidden virtual hosts were discovered.
+
+Impact:
+- All requests to `:8080` travel in cleartext. If an attacker can intercept traffic on the network path (rare for hosted VPS, but not impossible), they can view or modify the request/response, including any session cookies or form data sent by anyone who knew the direct URL.
+- The `:8080` endpoint reveals more precise stack versions (nginx 1.25.5, Apache 2.4.68, PHP 8.2.33) than the reverse proxy, aiding exploit targeting.
+- Any hardening rule added to the nginx reverse proxy (WAF rules, rate limits, IP allowlists, CSP or HSTS injection, request-size caps) is completely bypassable by talking to `:8080` directly.
+
+Recommendation:
+1. Bind the origin webservers to `127.0.0.1:8080` (loopback only) so they cannot be reached from outside the host. In the Apache/nginx origin config, change the listen directive: `Listen 127.0.0.1:8080` (Apache) / `listen 127.0.0.1:8080;` (nginx).
+2. If for operational reasons the origin must be reachable, restrict access at the host firewall (ufw / nftables / OVH firewall panel):
+   ```
+   iptables -I INPUT -p tcp --dport 8080 ! -s <reverse-proxy-IP> -j DROP
+   ```
+   Since the reverse proxy is on the same host, `-s 127.0.0.1` is the safest allowlist.
+3. Remove version disclosure from the origin (`ServerTokens Prod`, `ServerSignature Off`, `expose_php=Off`).
+
+---
+
+# Finding: All HTTP responses lack modern security headers
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N
+Affected: All eight in-scope web endpoints (https://ausecurity.best/, https://www.ausecurity.best/, https://contact.ausecurity.best/, http://51.79.166.148:8080/, https://blog.ausecurity.best/, http://blog.ausecurity.best/, https://ticket.ausecurity.best/, http://51.79.166.209:8080/)
+References:
+- OWASP Secure Headers Project (https://owasp.org/www-project-secure-headers/)
+- MDN: HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
+- CWE-693: Protection Mechanism Failure
+
+Summary:
+Every in-scope web response is missing every one of the commonly recommended HTTP security headers: `Strict-Transport-Security`, `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-*-Policy`. Additionally, the `Server` header reveals the exact webserver version (nginx/1.22.1, nginx/1.25.5, Apache/2.4.68) on every response, and the osTicket endpoints add `X-Powered-By: PHP/8.2.33`.
+
+Description:
+`curl -sIL` on each endpoint returned the following, uniformly:
+- `Strict-Transport-Security`: missing
+- `Content-Security-Policy`: missing
+- `X-Frame-Options`: missing
+- `X-Content-Type-Options`: missing
+- `Referrer-Policy`: missing
+- `Permissions-Policy`: missing
+- `Cross-Origin-Opener-Policy` / `-Embedder-Policy` / `-Resource-Policy`: missing
+- `Server`: exposed (nginx or Apache with exact version)
+- `X-Powered-By`: exposed on osTicket (`PHP/8.2.33`)
+
+Impact:
+- Without HSTS, a first-time visitor navigating to `http://ausecurity.best/` (or any subdomain served on port 80) is vulnerable to SSL-stripping and downgrade attacks.
+- Without `X-Frame-Options` / a `frame-ancestors` CSP directive, every page can be framed inside another site, allowing clickjacking of any form (contact form, future login, osTicket admin console once installed).
+- Without `X-Content-Type-Options: nosniff`, browsers may execute a response as JavaScript even when the declared MIME type is not JS - the risk is small on static pages, but rises sharply once user-uploaded content appears (WordPress uploads folder, osTicket attachments).
+- The version banners let an attacker target published CVEs precisely; suppressing them raises the cost of exploitation.
+
+Recommendation:
+For each site, add the following headers at the reverse proxy layer (nginx) so that a single change protects all backends:
+```
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+add_header X-Frame-Options "DENY" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+add_header Content-Security-Policy "default-src 'self'; img-src 'self' data: https://secure.gravatar.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'" always;
+server_tokens off;
+```
+For osTicket also set `expose_php = Off` in `php.ini`.
+
+Do not enable HSTS until the self-signed certificate finding above is fixed (the browser will otherwise get pinned to a broken certificate).
+
+---
+
+# Finding: osTicket session cookie set without Secure, HttpOnly, or SameSite attributes
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:N
+Affected: https://ticket.ausecurity.best/, http://51.79.166.209:8080/ (PHPSESSID cookie)
+References:
+- OWASP Session Management Cheat Sheet
+- MDN: Set-Cookie attributes
+- CWE-1004: Sensitive Cookie Without 'HttpOnly' Flag; CWE-614: Sensitive Cookie in HTTPS Session Without 'Secure' Attribute; CWE-1275: Sensitive Cookie with Improper SameSite
+
+Summary:
+Every response from `ticket.ausecurity.best` sets `Set-Cookie: PHPSESSID=<value>` without the `Secure`, `HttpOnly`, or `SameSite` attributes.
+
+Description:
+- Observed header: `Set-Cookie: PHPSESSID=03f049da4755a8987e7b2a10278ed602; path=/`
+- No `Secure` flag: the cookie will be sent over cleartext HTTP as soon as any request hits `http://ticket.ausecurity.best/` or `http://51.79.166.209:8080/` (both of which respond and would collect the cookie).
+- No `HttpOnly`: any XSS on the domain lets JavaScript read `document.cookie` and exfiltrate the session id.
+- No `SameSite`: the cookie is sent on all cross-site requests, enabling CSRF (harmful once the app is set up and users are authenticated).
+
+Impact:
+Currently the risk is latent because the osTicket install has not yet been completed, but once administrators and support agents start authenticating, session hijacking becomes trivial through any of the vectors above. Session hijacking gives full agent or admin access to the helpdesk queue, containing customer support tickets, uploaded files, and often sensitive customer data.
+
+Recommendation:
+Configure PHP session cookies in `php.ini` (or via `.htaccess`) globally on the ticket host:
+```
+session.cookie_secure = 1
+session.cookie_httponly = 1
+session.cookie_samesite = "Lax"
+```
+Additionally, in the nginx reverse-proxy configuration, rewrite `Set-Cookie` headers to append the flags as a defence in depth:
+```
+proxy_cookie_flags PHPSESSID secure httponly samesite=lax;
+```
+
+---
+
+# Finding: SSH management port exposed to the public Internet on all three VPS
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L
+Affected: 51.79.166.148:22, 51.79.166.209:22, 51.79.167.208:22 (all OpenSSH 9.2p1 Debian-2+deb12u10)
+References:
+- CIS Debian 12 Benchmark
+- NCSC "Reducing attack surface" guidance
+- CWE-284: Improper Access Control
+
+Summary:
+All three OVH VPS hosts accept TCP connections to port 22 (SSH) from any source IP on the Internet. The SSH daemon itself is modern (OpenSSH 9.2p1, TLS-1.3-equivalent kex/cipher choices, post-quantum sntrup761x25519 available). Two legacy MAC algorithms (`hmac-sha1` and `hmac-sha1-etm@openssh.com`) are still offered for backward compatibility. Host-key fingerprints are unique across the three VPS (no VM cloning). No login attempt or brute-force was performed during this assessment.
+
+Description:
+- Nmap NSE `ssh2-enum-algos` output shows: KEX includes sntrup761x25519, curve25519, ECDHE-nistp256/384/521, DH-group14/16/18 (strong). Ciphers: chacha20-poly1305, aes128/192/256-ctr, aes128/256-gcm (all strong). MACs: umac-64/128 (both raw and -etm), hmac-sha2-256/512 (both raw and -etm), plus the two legacy `hmac-sha1` variants noted above.
+- Banners are identical across all three hosts: `SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10`.
+- Host-key fingerprints:
+  - 51.79.166.148: ECDSA `9a:bd:49:00:5b:b0:59:65:53:a3:6c:86:3a:ae:ed:9a`, ED25519 `1d:ef:e7:0b:cc:5c:b8:c2:95:24:16:84:46:f1:d3:0e`
+  - 51.79.166.209: ECDSA `54:64:22:67:4b:a1:50:93:c9:2e:f5:c4:e7:8b:44:5e`, ED25519 `27:fa:c8:43:03:c8:08:b9:01:63:17:fb:28:df:69:2d`
+  - 51.79.167.208: ECDSA `24:6e:a6:ee:62:0b:a9:2c:73:c1:9a:e3:bf:e1:2c:fe`, ED25519 `e7:1a:00:70:5a:64:4f:f8:fe:b4:29:19:ef:ba:a1:a6`
+
+Impact:
+Public SSH exposure is the default of most OVH images, and OpenSSH 9.2 is well-hardened, so the direct risk from the SSH daemon itself is low. The risk is behavioural: the wider the audience of possible authenticators, the more the deployment depends entirely on password/key strength for security, and the more log noise (bots) obscures real events.
+
+Recommendation:
+1. Restrict SSH to specific management IPs at the OVH firewall or the local host firewall (`iptables`/`nftables`/`ufw`). If a bastion or VPN exists, use it.
+2. Enforce key-only authentication (`PasswordAuthentication no`, `PermitEmptyPasswords no`, `PermitRootLogin prohibit-password`).
+3. Disable the two legacy MACs in `/etc/ssh/sshd_config` (or a drop-in in `/etc/ssh/sshd_config.d/`):
+   ```
+   MACs -hmac-sha1,hmac-sha1-etm@openssh.com
+   ```
+4. Enable `fail2ban` or the OVH-side network protection to slow brute-force attempts.
+5. Consider changing the listening port to a non-default value to reduce noise (defence-in-depth; do not rely on it).
+
+---
+
+# Finding: Weak TLS cipher suites (AES*-CCM8, legacy ECDHE-ECDSA-*-SHA) offered on multiple HTTPS listeners
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://ausecurity.best:443, https://www.ausecurity.best:443, https://ticket.ausecurity.best:443
+References:
+- Mozilla SSL Configuration Generator (Intermediate profile)
+- BSI TR-02102-2
+- CWE-326: Inadequate Encryption Strength
+
+Summary:
+`ausecurity.best` and `ticket.ausecurity.best` both offer TLS 1.2 cipher suites that fall outside the Mozilla "Intermediate" recommendation. The 64-bit truncated-MAC `AES*-CCM8` suites are considered weak by most compliance frameworks. `ticket.ausecurity.best` additionally accepts SHA-1-based `ECDHE-ECDSA-AES128-SHA` / `ECDHE-ECDSA-AES256-SHA`. `blog.ausecurity.best` was clean.
+
+Description:
+`sslscan` output showed the following cipher suites enabled that should be disabled:
+- ausecurity.best:443 and www.ausecurity.best:443: `ECDHE-ECDSA-AES256-CCM8`, `ECDHE-ECDSA-AES128-CCM8`, `AES256-CCM8`, `AES128-CCM8` (64-bit MAC tag - non-compliant with PCI DSS 3.2.1+).
+- ticket.ausecurity.best:443: the same CCM8 suites plus `ECDHE-ECDSA-AES256-SHA384`, `ECDHE-ECDSA-AES128-SHA256`, `ECDHE-ECDSA-AES256-SHA`, `ECDHE-ECDSA-AES128-SHA` (SHA-1 MAC variants).
+- No SSLv2/SSLv3/TLS 1.0/TLS 1.1 was offered - that portion of the config is modern.
+
+Impact:
+No practical attack exists today against a properly-negotiated TLS 1.2 session using CCM8 or SHA-1 MAC (SLOTH-style downgrade requires specific conditions), but compliance frameworks flag these suites and they raise the exploitability of any future weakness found in truncated MACs. They also indicate that the server's TLS configuration was not tuned to a modern baseline.
+
+Recommendation:
+Deploy a Mozilla "Intermediate" cipher list. For nginx:
+```
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+ssl_prefer_server_ciphers off;
+```
+For Apache/mod_ssl on the ticket host use the equivalent `SSLCipherSuite` value from the Mozilla generator.
+
+---
+
+# Finding: WordPress site exposes readme.html, license.txt, and default admin content
+Severity: info
+CVSS:
+Affected: https://blog.ausecurity.best/readme.html, https://blog.ausecurity.best/license.txt, /?p=1 "Hello world!", /?page_id=2 "Sample Page"
+References:
+- WordPress hardening documentation
+
+Summary:
+The default WordPress artifacts (`readme.html`, `license.txt`, the "Hello world!" post at ID 1, and the "Sample Page" page at ID 2) are all still present and publicly reachable. The `readme.html` file discloses the exact WordPress core version.
+
+Description:
+- `curl https://blog.ausecurity.best/readme.html` -> 200 OK, 7.4 KB, includes a `Version 7.1.1` string.
+- `curl https://blog.ausecurity.best/license.txt` -> 200 OK, 19.9 KB, standard GPL text (harmless but confirms WordPress).
+- REST enumeration returned the "Hello world!" post and "Sample Page" page as the only content, plus an additional "Wow" page.
+- The site is very newly deployed (first upload folder is `2026/09`, first content is stub) which reinforces that it is a fresh install with default content still in place.
+
+Impact:
+Low direct impact - the version disclosure is duplicated by the REST API and other channels. However, publishing default install artifacts signals a low-maintenance posture to attackers and lets automated scanners fingerprint WordPress and its exact core version instantly.
+
+Recommendation:
+1. Delete `readme.html` and `license.txt` from the document root. Add a rewrite rule to block them if they will be recreated by an update:
+   ```
+   <FilesMatch "^(readme|license)\.(txt|html)$">
+       Require all denied
+   </FilesMatch>
+   ```
+2. Delete the default post ("Hello world!") and the default page ("Sample Page").
+3. Publish real content or, if the blog is not yet ready for the public, restrict the entire host to authenticated access until launch.
+
+---
+
+# Finding: Contact form honeypot field is present but not enforced
+Severity: info
+CVSS:
+Affected: https://contact.ausecurity.best/api/contact
+References:
+- OWASP ASVS V13 (business logic validation)
+
+Summary:
+The FastAPI backend behind the contact form requires a field named `h` (present in the JSON schema, absent from the HTML form) which appears to be intended as a spam-bot honeypot. However, submissions in which `h` is filled with a non-empty value are accepted (HTTP 422 only when it is missing entirely, not when it is populated). The honeypot therefore does not filter automated form submissions.
+
+Description:
+- POST `{"h": ""}` (empty string) plus other required fields -> processed successfully.
+- POST `{"h": "honeypot_test_value"}` (non-empty string) plus other required fields -> also processed successfully, with no rejection or additional error.
+- The rest of the API is well-hardened: strict Pydantic validation, no reflected XSS, no SSTI, no CRLF injection, no mass-assignment (`extra_field`, `is_admin`, `role` all silently discarded), FastAPI docs (`/docs`, `/openapi.json`, `/redoc`) all return 404.
+
+Impact:
+Automated form-spam bots will pass through the honeypot without being blocked, so the form will not be protected against low-effort spam. There is no direct security impact.
+
+Recommendation:
+1. On the backend, reject any submission where `h` is non-empty (return 200/204 to the bot so it does not learn the filter is present).
+2. Consider replacing / supplementing the honeypot with a CAPTCHA or an origin-IP rate-limit for defence in depth.
+
+---
+
+# Finding: WordPress REST API exposes 135 routes including editing and batch endpoints
+Severity: info
+CVSS:
+Affected: https://blog.ausecurity.best/?rest_route=/
+References:
+- https://developer.wordpress.org/rest-api/
+
+Summary:
+The full WordPress REST API index (available via `?rest_route=/`) lists 135 registered routes across the `oembed/1.0`, `wp/v2`, `wp-site-health/v1`, `wp-block-editor/v1`, and `wp-abilities/v1` namespaces. This includes `/batch/v1` (up to 25 sub-requests per request), plus template and global-style editing endpoints.
+
+Description:
+The full route list is captured in `evidence/T-03c/root.json`. Notable routes exposed:
+- `/wp/v2/users` (via query-string workaround - see separate finding),
+- `/wp/v2/posts`, `/pages`, `/comments`, `/media`, `/templates`, `/template-parts`, `/global-styles` (editable when authenticated),
+- `/wp/v2/settings`, `/wp/v2/themes`, `/wp/v2/plugins` (editable when authenticated),
+- `/batch/v1` for compound requests,
+- Site Health checks under `/wp-site-health/v1`.
+
+All editing routes require authentication - none allowed anonymous modification during testing.
+
+Impact:
+By itself this is normal WordPress behaviour. The concern is aggregate: once combined with the user enumeration finding (an attacker has a confirmed valid username `admin`), the wide REST surface increases the impact of any credential compromise, because a single Application Password would grant the attacker full site edit through the REST API without ever needing to reach `/wp-admin/`.
+
+Recommendation:
+1. Disable REST routes that are not needed. For example, if the site does not use the block editor for templates, block `/wp/v2/templates` and `/wp/v2/global-styles` via the `rest_endpoints` filter.
+2. Disable Application Passwords if not used (`add_filter('wp_is_application_passwords_available','__return_false');`).
+3. Force authentication on the whole REST API for unauthenticated readers if the site does not need public REST access:
+   ```
+   add_filter('rest_authentication_errors', function($result){
+       if (!empty($result)) return $result;
+       if (!is_user_logged_in()) return new WP_Error('rest_not_logged_in','You must be logged in.',['status'=>401]);
+       return $result;
+   });
+   ```
+
+---

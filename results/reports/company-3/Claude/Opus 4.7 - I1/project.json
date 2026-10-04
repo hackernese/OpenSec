@@ -1,0 +1,59 @@
+{
+  "name": "Imagur - Vulnerability Assessment Report",
+  "project_type": "74b4193e-bfcc-402f-8527-fbaf591d8bd3",
+  "language": "en-US",
+  "tags": ["research"],
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "data": {
+        "executive_summary": "Imagur engaged ClawSec to perform an authorized, full-scope vulnerability assessment of its public image-sharing platform hosted at https://imagesharer.xyz. The application is newly launched, built on PHP 8.2 and PostgreSQL, hosted on a single OVH virtual server in Sydney, and uses an Amazon S3 bucket in the same region to store all user images.\n\nThe assessment focused on how well the platform protects three things any customer would care about: the privacy of the images they upload, the integrity of their account, and the confidentiality of the credentials they use to sign in. During testing the platform demonstrated several strong security foundations - modern TLS, encrypted database queries, UUID-based identifiers, and session rotation on login. However, the assessment also uncovered a set of serious weaknesses that, taken together, allow a determined outsider to view every image any user has ever uploaded, take control of any user's account, and place unwanted content into another user's profile.\n\nThe two most urgent issues are (1) a live Amazon Web Services access key that is published in a public JavaScript file on the website and (2) the storage bucket that holds every user's images being configured to allow anyone on the internet to list and download those images directly, completely bypassing the application's \"Private\" setting. Beyond these, an image-upload flaw allows any signed-in user to plant images inside any other user's account, a second cleartext copy of the site on an alternate port undermines HTTPS protection, and the customer database is directly reachable from the public internet.\n\nRemediation is straightforward and can be started immediately. The highest-priority actions, in order, are:\n\n1. Rotate the exposed AWS access key and review AWS activity logs for unauthorized use.\n2. Enable \"Block all public access\" on the S3 bucket that stores customer images.\n3. Remove the ability of the upload form to accept a user identifier from the browser; derive it only from the signed-in session.\n4. Close the alternate HTTP service on port 8080 and the PostgreSQL database port to the public internet.\n5. Remove the public JavaScript file that contains the AWS key.\n\nOnce these five steps are complete, the platform's largest privacy and account-takeover risks are neutralized. The remaining medium and low severity findings - session cookie hardening, cross-site request forgery protection, rate limiting on login, verbose error messages, missing modern HTTP security headers, weak password policy, and email spoofing protection for the domain - are all common, well-understood fixes that can be scheduled into normal engineering work.\n\nOverall the platform is fixable and no evidence of an active third-party compromise was observed during testing. Acting on the recommendations below will bring Imagur to a security posture appropriate for a public image-sharing product handling personal content."
+      }
+    },
+    {
+      "id": "scope",
+      "data": {
+        "scope": "This engagement was an authorized, full-scope vulnerability assessment covering all internet-facing assets confirmed to belong to Imagur. Assets in scope:\n\n* imagesharer.xyz (primary web application, HTTPS)\n* www.imagesharer.xyz (same origin)\n* resources.imagesharer.xyz (CloudFront distribution controlled by Imagur)\n* 51.161.131.44 (OVH VPS in Sydney - the dedicated origin server)\n* 51.161.131.44:80/tcp and 443/tcp (nginx + PHP 8.2 application)\n* 51.161.131.44:8080/tcp (Apache secondary HTTP service)\n* 51.161.131.44:5432/tcp (PostgreSQL protocol fingerprint only)\n\nExplicitly out of scope:\n\n* CloudFront edge IP addresses (shared AWS infrastructure)\n* 51.161.130.0/23 sibling OVH VPS addresses\n* launch1/launch2.spaceship.net (registrar-operated DNS)\n* flinders.edu.au (the owner's employer domain)\n* Third-party static hosts (e.g., Google)\n\n**Methodology**\n\n* Passive OSINT enumeration (WHOIS, DNS, TLS SAN, Certificate Transparency, Shodan, subfinder, assetfinder).\n* Active but non-destructive scanning of the approved origin IP (TCP port sweep, version and default-safe script detection).\n* Manual web application testing against the primary site: authentication flow, authenticated surface mapping, file upload validation (magic bytes, extensions, polyglots, XSS via filename), Insecure Direct Object References on every state-changing endpoint, verbose-error probing, TLS/HSTS/CSP header review, rate-limit checks, cookie flag review, session-fixation review, and unauthenticated S3 bucket permission review.\n* No credential brute forcing, no exploitation of discovered AWS credentials against AWS APIs, no destructive actions, no testing of any asset outside the approved scope.\n\n**Limitations**\n\n* The exposed AWS access key was **not** validated against AWS APIs; engagement rules prohibited that. Its live status is inferred from the fact that the application's own presigned S3 URLs are signed with the same access key ID.\n* PostgreSQL on port 5432 was fingerprinted only. No authentication attempts of any kind were made.\n* The S3 origin behind resources.imagesharer.xyz (CloudFront) was fingerprinted only; the origin bucket was not directly enumerated because that would have required AWS API calls.",
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18",
+        "duration": "1 person day",
+        "provided_users": "Two test accounts were self-registered by the tester through the public registration flow at https://imagesharer.xyz/register. No pre-provisioned credentials were supplied by the customer.\n\n* Test account A (attacker role) - used for upload, IDOR, and XSS proof-of-concept.\n* Test account B (victim role) - used to demonstrate cross-account impact of the upload IDOR."
+      }
+    },
+    {
+      "id": "customer",
+      "data": {
+        "customer_name": "Imagur",
+        "customer_address": {
+          "city": "Glengowrie SA 5044",
+          "street": "132 Morphett Rd"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "data": {
+        "title": "Imagur - Vulnerability Assessment Report",
+        "report_date": "2026-09-18",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {"description": "Initial report issued to Imagur.", "date": "2026-09-18", "version": "1.0"}
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Coverage Summary",
+            "content": "All in-scope assets were reached and tested to the extent permitted by the engagement rules.\n\n**Web application (https://imagesharer.xyz):** Fully mapped. Endpoints exercised include /register, /login, /logout, /dashboard, /profile, /profile/avatar, /images/upload, /images/<uuid>, /images/<uuid>/visibility, /images/<uuid>/delete, /js/awsvalid.js, static asset paths, approximately 60 sensitive-file probes, and a small directory brute-force pass.\n\n**Origin server (51.161.131.44):** Full TCP port scan followed by targeted service/version detection with safe default scripts. Ports 80, 443, 5432, and 8080 were found open and characterised. No authentication brute-forcing was performed against any service.\n\n**Storage (filesharer-research S3 bucket, ap-southeast-2):** Unauthenticated listing and object-read behaviour was verified from outside the customer's AWS account. No AWS API calls were made using discovered credentials.\n\n**Areas intentionally not tested (documented for the customer's awareness):**\n\n* Live validation of the exposed AWS credentials against any AWS API.\n* Credential brute-force or authentication attempts against PostgreSQL on port 5432.\n* Direct enumeration of the S3 origin behind the resources.imagesharer.xyz CloudFront distribution."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+# Sanitized TLS / WHOIS / IP observations — enum-imagur-20260918-001
+# Observed 2026-09-18
+
+## TLS imagesharer.xyz:443
+subject=CN=imagesharer.xyz
+issuer=C=US, O=Let's Encrypt, CN=YE2
+notBefore=Sep 14 14:00:07 2026 GMT
+notAfter=Dec 13 14:00:06 2026 GMT
+SAN=DNS:imagesharer.xyz
+sha256 Fingerprint=8B:07:1F:78:7A:6C:3B:2C:94:9C:58:FE:EB:1E:2D:CC:28:F5:BF:0E:13:DF:E5:90:8B:8D:36:41:99:46:E0:80
+www.imagesharer.xyz presents the same leaf (no www SAN)
+
+## Domain WHOIS imagesharer.xyz
+Domain Name: IMAGESHARER.XYZ
+Registry Domain ID: D638294370-CNIC
+Creation Date: 2026-09-06T07:50:15.0Z
+Registry Expiry Date: 2027-09-06T23:59:59.0Z
+Registrar: Spaceship, Inc. (IANA 3862)
+Name Server: LAUNCH1.SPACESHIP.NET
+Name Server: LAUNCH2.SPACESHIP.NET
+DNSSEC: signedDelegation
+Registrant: not published in public WHOIS/RDAP
+
+## Origin IP 51.161.131.44
+Team Cymru: AS16276 | 51.161.128.0/17 | CA | arin | 2019-09-03
+ARIN: OVH Hosting, Inc. / OVH Australia PTY LTD
+Assignment: VPS-SYD2 51.161.130.0/23 (Sydney VPS)
+PTR: vps-ad2c3eab.vps.ovh.ca
+Shodan (updated 2026-09-10): hostname vps-ad2c3eab.vps.ovh.ca; org OVH Australia PTY LTD; city Sydney; historically 80/tcp nginx title "Welcome to nginx!"
+Do not expand neighboring VPS addresses.
+
+## CloudFront (resources.imagesharer.xyz)
+CNAME d273uevi0662l0.cloudfront.net
+Sample A: 18.155.82.154/138/183/185
+Team Cymru: AS16509 | 18.155.82.0/24
+ARIN: AMAZON-CF 18.154.0.0/15 Amazon.com, Inc.
+Shared CDN anycast — not organization-owned addressing.
+
+## Certificate transparency
+crt.sh JSON for imagesharer.xyz and %.imagesharer.xyz returned [] at 2026-09-18T06:34:40Z
+(Let's Encrypt leaf issued 2026-09-14; CT index lag likely)

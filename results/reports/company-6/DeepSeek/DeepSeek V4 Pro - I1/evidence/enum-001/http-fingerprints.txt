@@ -1,0 +1,34 @@
+# HTTP / application fingerprinting (enum-001)
+
+## ausecurity.best  (51.79.166.148)
+- GET / -> 200, Server: nginx/1.22.1, title "Ausecurity — GRC Consulting & Penetration Testing"
+- HTTP -> 301 redirect to https://ausecurity.best/
+- 404 body shows "nginx/1.25.5" (origin) but Server header is nginx/1.22.1 (proxy)
+- /login, /login.html -> 200 "Admin Login — Ausecurity"
+- /dashboard, /dashboard.html -> 200 "Dashboard"
+- /robots.txt, /sitemap.xml -> 404 (absent)
+
+### API backend (same host, /api/*) — FastAPI/Starlette-style JSON
+- /api/auth/me      GET  -> 401 {"detail":"Not authenticated"}
+- /api/auth/login   POST only (405 otherwise)
+- /api/auth/logout  POST only (405 otherwise)
+- /api/contact      POST only (405 otherwise); payload includes hidden field h="contact.ausecurity.best"
+- /api/users        GET  -> 404
+- /docs, /openapi.json -> 404 (docs disabled)
+
+## blog.ausecurity.best (51.79.167.208)
+- WordPress (meta generator "WordPress 7.1"), theme hello-elementor 3.0.0
+- Server: Apache/2.4.68 (Debian)  [Shodan 2026-09-15 scan showed nginx 1.22.1 on 443]
+- wp-json API enabled; user: admin (id=1)
+- xmlrpc.php enabled; 80 methods incl. custom "demo.addTwoNumbers", "demo.sayHello"
+- default content only: "Hello world!" post, "Sample Page"/"Wow" pages
+
+## ticket.ausecurity.best (51.79.166.209)
+- osTicket v1.18.4 installer at /setup/install.php
+- X-Powered-By: PHP/8.2.33, Server: nginx/1.22.1
+- port 80 closed (connection refused); 443 open
+- 302 / -> /setup/install.php (not yet installed)
+
+## contact.ausecurity.best (51.79.166.148)
+- Serves identical content to main site (same ETag 6a9e3d1f-3546)
+- Referenced in assets/js/main.js contact form as hidden field h="contact.ausecurity.best"

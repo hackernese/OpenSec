@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Images — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>My Images</h1>
+    <a href="/images/upload" class="btn btn-primary">+ Upload image</a>
+</div>
+
+    <p class="text-muted mb-2">1 image</p>
+
+    <div class="image-grid mt-2">
+                    <div class="image-card">
+                <a href="/images/b0c9c911-d750-4a6a-9e8c-286276e213bf">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/16ffaff0-cec0-4cc6-9c4a-dbb6dbe0b40d/b0c9c911-d750-4a6a-9e8c-286276e213bf.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T050546Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=b155829d647b0816dba41e13fbf0ed6ab18a4e0c6e3dfeb03b5f241fd73832ff"
+                        alt="tinyA.png"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">tinyA.png</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+            </div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>

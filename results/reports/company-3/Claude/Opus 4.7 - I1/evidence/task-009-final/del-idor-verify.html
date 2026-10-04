@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>legit.png — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>legit.png</h1>
+            <a href="/dashboard" class="btn btn-ghost btn-sm">← My images</a>
+    </div>
+
+<div class="detail-grid">
+
+    <!-- ── Image preview ──────────────────────────────────────────────────── -->
+    <div>
+        <img
+            class="detail-image"
+            src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/74a461ef-4b81-43e1-8ce0-3c0e10ac4859.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T051024Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=066a324653d60ebc93805b26f1ec1c537abfdcc32b3b47125c08da14bef89a95"
+            alt="legit.png"
+            onerror="this.style.background='#e5e7eb';this.alt='Image unavailable';"
+        >
+    </div>
+
+    <!-- ── Metadata + actions ─────────────────────────────────────────────── -->
+    <div class="detail-panel">
+
+        <!-- Metadata -->
+        <div class="card" style="padding:1.25rem">
+            <h2>Details</h2>
+            <div class="meta-row">
+                <span>Filename</span>
+                <span>legit.png</span>
+            </div>
+            <div class="meta-row">
+                <span>Type</span>
+                <span>image/png</span>
+            </div>
+            <div class="meta-row">
+                <span>Size</span>
+                <span>0.3 KB</span>
+            </div>
+            <div class="meta-row">
+                <span>Uploaded</span>
+                <span>18 Sep 2026, 04:42</span>
+            </div>
+            <div class="meta-row">
+                <span>Visibility</span>
+                <span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </span>
+            </div>
+        </div>
+
+        
+            <!-- Direct link -->
+            <div class="card" style="padding:1.25rem">
+                <h2>Direct link</h2>
+                <input
+                    type="text"
+                    readonly
+                    value="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/74a461ef-4b81-43e1-8ce0-3c0e10ac4859.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T051024Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=066a324653d60ebc93805b26f1ec1c537abfdcc32b3b47125c08da14bef89a95"
+                    onclick="this.select()"
+                    style="width:100%;font-size:.8rem;padding:.4rem .6rem;border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-bg);"
+                    title="Click to select"
+                >
+            </div>
+
+            <!-- Toggle visibility -->
+            <div class="card" style="padding:1.25rem">
+                <h2>Visibility</h2>
+                <form method="POST" action="/images/74a461ef-4b81-43e1-8ce0-3c0e10ac4859/visibility">
+                    <input type="hidden" name="is_public" value="true">
+                    <button type="submit" class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;">
+                                                    🌍 Make public
+                                            </button>
+                </form>
+            </div>
+
+            <!-- Danger zone -->
+            <div class="danger-zone">
+                <h2>⚠ Danger zone</h2>
+                <p>Deleting this image is permanent and cannot be undone.</p>
+                <form method="POST" action="/images/74a461ef-4b81-43e1-8ce0-3c0e10ac4859/delete"
+                      onsubmit="return confirm('Delete this image permanently?')">
+                    <button type="submit" class="btn btn-danger btn-sm" style="width:100%;justify-content:center;">
+                        Delete image
+                    </button>
+                </form>
+            </div>
+
+        
+    </div><!-- /.detail-panel -->
+</div><!-- /.detail-grid -->
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>

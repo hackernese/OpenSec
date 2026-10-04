@@ -1,0 +1,271 @@
+target_identity:
+  canonical_name: Imagur
+  aliases:
+    - Imager        # site title used inside the application UI
+  primary_website: https://imagesharer.xyz/
+  root_domain: imagesharer.xyz
+  address: 132 Morphett Rd, Glengowrie SA 5044
+  country: Australia
+  owner_email: dinh0087@flinders.edu.au
+  identity_evidence:
+    - user_supplied primary_website and known_ip
+    - "WHOIS: imagesharer.xyz registered 2026-09-06 (Spaceship, Inc.); DNSSEC signed"
+    - "DNS: imagesharer.xyz A -> 51.161.131.44 (matches user-supplied known_ip)"
+    - "TLS: Let's Encrypt certificate CN=imagesharer.xyz (valid 2026-09-14 -> 2026-12-13) served on origin"
+    - "HTTP: https://imagesharer.xyz/ 302 -> /login rendering <title>Log in — Imager</title>"
+
+run_mode: passive_recon_plus_light_http_dns_fingerprinting
+
+sources_used:
+  - whois (registry + ARIN)
+  - dig (Cloudflare 1.1.1.1 resolver)
+  - openssl s_client (TLS cert inspection, target_contact=true)
+  - crt.sh (JSON + HTML)
+  - subfinder (all sources)
+  - assetfinder
+  - shodan (host + hostname/ssl.cert.subject.cn searches)
+  - curl (HEAD/GET on origin and CDN, target_contact=true)
+  - duckduckgo html search
+  - light DNS subdomain probe (~50 common labels)
+
+sources_skipped:
+  - amass active enum (required sudo in this environment)
+  - github code search API (requires authentication; unauthenticated 401)
+  - censys (no API credential configured)
+  - securitytrails / spyse / virustotal passive DNS (no API credential configured)
+  - active port scanning / nmap / masscan (out of scope for enumeration phase)
+  - directory brute forcing / content discovery (out of scope for enumeration phase)
+
+discovery_summary:
+  root_domains: 1
+  subdomains: 2
+  ips: 1                    # target-attributable origin only; CloudFront edge IPs excluded
+  services: 2               # 80/tcp + 443/tcp on the origin
+  cdn_distributions: 1
+  asns: 1
+  netblocks: 1
+  repos: 0
+  buckets: 0
+  mail_infrastructure: 0
+  third_party_dependencies: 3   # Spaceship (DNS/registrar), AWS CloudFront, AWS STS
+  rejected_candidates: 0
+
+assets:
+  - name: imagesharer.xyz
+    type: domain
+    value: imagesharer.xyz
+    confidence: confirmed
+    confidence_score: 99
+    evidence_paths:
+      - evidence/enum-001/whois-imagesharer.xyz.txt
+      - evidence/enum-001/dns-imagesharer.xyz.txt
+      - evidence/enum-001/tls-cert-imagesharer.xyz.txt
+      - evidence/enum-001/index-imagesharer.xyz.html
+    notes: >
+      User-supplied root domain. Registered 2026-09-06 via Spaceship, Inc.
+      (registrar IANA 3862); DNSSEC signedDelegation. Nameservers
+      launch1.spaceship.net / launch2.spaceship.net. No MX, TXT, CAA, or
+      AAAA records observed. SOA serial 1789376610. Registrant contact
+      redacted by TLD privacy (standard for .xyz).
+
+  - name: www.imagesharer.xyz
+    type: subdomain
+    value: www.imagesharer.xyz
+    confidence: confirmed
+    confidence_score: 95
+    evidence_paths:
+      - evidence/enum-001/subdomain-bruteforce.txt
+    notes: >
+      A record 51.161.131.44 (same origin as apex). Standard www alias.
+
+  - name: resources.imagesharer.xyz
+    type: subdomain
+    value: resources.imagesharer.xyz
+    confidence: confirmed
+    confidence_score: 92
+    evidence_paths:
+      - evidence/enum-001/index-imagesharer.xyz.html
+      - evidence/enum-001/tls-cert-resources.txt
+    notes: >
+      CNAME -> d273uevi0662l0.cloudfront.net (AWS CloudFront distribution).
+      Referenced in application HTML as an icon host (currently commented
+      out). Distribution responds 403 at "/" and "/icon.ico" (no default
+      object / no permitted origin behaviour for those paths from this
+      client). The CNAME to a target-controlled CloudFront distribution is
+      strong ownership evidence; the underlying edge IPs are shared CDN
+      infrastructure and are NOT attributed to Imagur.
+
+  - name: origin-vps
+    type: ip
+    value: 51.161.131.44
+    confidence: confirmed
+    confidence_score: 98
+    evidence_paths:
+      - evidence/enum-001/whois-51.161.131.44.txt
+      - evidence/enum-001/shodan-51.161.131.44.txt
+      - evidence/enum-001/https-head-imagesharer.xyz.txt
+    notes: >
+      Origin server for imagesharer.xyz and www.imagesharer.xyz.
+      rDNS vps-ad2c3eab.vps.ovh.ca. Hosted by OVH Australia PTY LTD
+      (OAPL-2) in Sydney; NetName VPS-SYD2 (51.161.130.0/23). Dedicated
+      OVH VPS (not shared CDN/hosting), therefore treated as an
+      in-scope target-attributable IP rather than "cloud/CDN shared".
+
+  - name: nginx-http
+    type: service
+    value: 51.161.131.44:80/tcp
+    confidence: confirmed
+    confidence_score: 95
+    evidence_paths:
+      - evidence/enum-001/shodan-51.161.131.44.txt
+      - evidence/enum-001/http-head-imagesharer.xyz.txt
+    notes: >
+      Shodan (2026-09-10) banner shows nginx serving default "Welcome to
+      nginx!" page. Direct HEAD returns HTTP 301 redirect to
+      https://imagesharer.xyz/ for the Host header of the app, indicating
+      nginx virtualhosts distinguish app vs default.
+
+  - name: nginx-https
+    type: service
+    value: 51.161.131.44:443/tcp
+    confidence: confirmed
+    confidence_score: 95
+    evidence_paths:
+      - evidence/enum-001/https-head-imagesharer.xyz.txt
+      - evidence/enum-001/tls-cert-imagesharer.xyz.txt
+      - evidence/enum-001/index-imagesharer.xyz.html
+    notes: >
+      TLS terminated by nginx; upstream reveals X-Powered-By: PHP/8.2.33.
+      Security headers set: X-Frame-Options DENY, X-Content-Type-Options
+      nosniff, X-XSS-Protection 1; mode=block, Referrer-Policy
+      strict-origin-when-cross-origin. Application "Imager" exposes /login,
+      /register, /dashboard, and static /css/app.css, /js/awsvalid.js.
+      Not visible in Shodan yet (recent deployment).
+
+  - name: cloudfront-distribution
+    type: other
+    value: d273uevi0662l0.cloudfront.net
+    confidence: cloud/CDN
+    confidence_score: 88
+    evidence_paths:
+      - evidence/enum-001/tls-cert-resources.txt
+    notes: >
+      AWS CloudFront distribution referenced by resources.imagesharer.xyz.
+      Distribution ID is target-controlled (they created the CNAME) but
+      the CloudFront edge IPs (18.155.82.138/154/183/185 observed) are
+      AWS shared infrastructure and MUST NOT be actively scanned as if
+      they were Imagur assets.
+
+  - name: ovh-netblock-vps-syd2
+    type: other
+    value: 51.161.130.0/23
+    confidence: third-party
+    confidence_score: 90
+    evidence_paths:
+      - evidence/enum-001/whois-51.161.131.44.txt
+    notes: >
+      ARIN NetName VPS-SYD2, Organization "OVH Australia PTY LTD".
+      Shared VPS pool; only 51.161.131.44 is attributable to Imagur.
+      Do NOT expand scope to sibling addresses in this netblock.
+
+  - name: ovh-asn
+    type: other
+    value: OVH Hosting (AS16276 - inferred; parent net HO-2)
+    confidence: third-party
+    confidence_score: 80
+    evidence_paths:
+      - evidence/enum-001/whois-51.161.131.44.txt
+    notes: >
+      Parent allocation "OVH Hosting, Inc." (HO-2) 51.161.0.0/16 delegated
+      to OVH Australia. ASN not explicitly returned by ARIN in this query;
+      OVH's global ASN is commonly AS16276. Recorded for context only;
+      NOT in scope for testing.
+
+  - name: spaceship-dns
+    type: other
+    value: launch1.spaceship.net, launch2.spaceship.net (198.54.117.249 …)
+    confidence: third-party
+    confidence_score: 95
+    evidence_paths:
+      - evidence/enum-001/whois-imagesharer.xyz.txt
+      - evidence/enum-001/dns-imagesharer.xyz.txt
+    notes: >
+      Authoritative nameservers operated by Spaceship, Inc. (the domain
+      registrar). Third-party managed DNS; out of scope for active testing.
+      AXFR attempts refused (both NS timed out on TCP/53 from this host).
+
+rejected_candidates:
+  - value: encrypted-tbn0.gstatic.com
+    reason: >
+      Referenced only as a fallback favicon in application HTML. Google
+      static asset host; not attributable to Imagur.
+  - value: 18.155.82.138 / 18.155.82.154 / 18.155.82.183 / 18.155.82.185
+    reason: >
+      AWS CloudFront edge IPs resolved for resources.imagesharer.xyz.
+      Shared CDN infrastructure — must not be attributed to the target
+      per operating rule #3.
+  - value: flinders.edu.au
+    reason: >
+      Domain of the supplied owner email (dinh0087@flinders.edu.au).
+      Flinders University is a separate legal entity; the email is a
+      contact channel, not an Imagur-owned asset.
+
+warnings:
+  - >
+    CRITICAL enumeration observation (flag for orchestrator, do NOT act
+    on from this agent): the public JavaScript file
+    https://imagesharer.xyz/js/awsvalid.js (HTTP 200, 5,298 bytes) contains
+    what appears to be a live AWS IAM access key ID (AKIA...) plus a
+    secret access key and region "ap-southeast-2" in a top-of-file
+    comment block, together with a working SigV4 GetCallerIdentity
+    implementation. Credentials were NOT used or validated by this agent.
+    Local copy saved to evidence/enum-001/awsvalid.js for triage.
+  - >
+    crt.sh returned zero certificates for imagesharer.xyz and the
+    wildcard query, despite a live Let's Encrypt cert being served.
+    Domain is only ~12 days old and CT log ingestion into crt.sh has
+    not caught up; passive subdomain discovery via CT is currently
+    unreliable for this target.
+  - >
+    subfinder, assetfinder, and Shodan hostname/CN searches returned
+    no additional subdomains. This is consistent with the domain's
+    age; results should be re-run in ~30 days for corroboration.
+  - >
+    amass passive enum required sudo in this environment and was
+    skipped; not fatal (subfinder covers the same public sources).
+  - >
+    GitHub code search API returned 401 (authentication required).
+    Passive checks for repositories or leaked credential re-use on
+    GitHub could not be performed from this agent.
+  - >
+    DNS AXFR against launch1/launch2.spaceship.net timed out (denied,
+    as expected for a hosted DNS provider).
+  - >
+    No MX / SPF / DMARC / DKIM records are published on imagesharer.xyz.
+    No mail infrastructure is attributable to the target at this time.
+  - >
+    Shodan's most recent scan of 51.161.131.44 (2026-09-10) only shows
+    port 80 with a default nginx banner and does not yet reflect the
+    live PHP application on 443. Passive service inventory is therefore
+    partial; treat the origin's true exposed surface as the union of
+    Shodan + the direct HEAD probe (80 + 443).
+
+coverage:
+  in_scope_confirmed:
+    - imagesharer.xyz
+    - www.imagesharer.xyz
+    - resources.imagesharer.xyz (CNAME target under target control; edges are CDN)
+    - 51.161.131.44 (OVH VPS origin)
+    - 51.161.131.44:80/tcp (nginx)
+    - 51.161.131.44:443/tcp (nginx + PHP 8.2.33 app "Imager")
+  out_of_scope:
+    - CloudFront edge IPs (shared AWS infrastructure)
+    - 51.161.130.0/23 sibling addresses (shared OVH VPS pool)
+    - launch1/launch2.spaceship.net (registrar-operated DNS)
+    - flinders.edu.au (owner's employer email domain)
+    - encrypted-tbn0.gstatic.com (Google static asset)
+  untested_but_noted:
+    - GitHub / GitLab presence (API auth required)
+    - Censys / SecurityTrails passive DNS (no credentials)
+    - S3 buckets by name-guess (skipped: no bucket names observed;
+      only STS + region ap-southeast-2 referenced in awsvalid.js)

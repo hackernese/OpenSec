@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+            <div class="alert alert-success">Profile picture updated.</div>
+    
+            <div class="alert alert-error">Only JPEG, PNG, GIF and WebP images are allowed.</div>
+    
+    <div class="page-header">
+    <h1>My Profile</h1>
+</div>
+
+<div class="profile-grid">
+
+    <!-- ── Avatar card ────────────────────────────────────────────────────── -->
+    <div class="card profile-avatar-card">
+
+        <div class="avatar-wrap">
+                            <img
+                    src="/uploads/avatars/44438961-87de-4aaa-9930-e20a2b5e7ef8_1f6984cf1dbf.png"
+                    alt="Profile picture"
+                    class="avatar-img"
+                >
+                    </div>
+
+        <h2 class="profile-email">clawsec.tester.a@example.com</h2>
+        <p class="text-muted profile-since">
+            Member since September 2026        </p>
+
+        <div class="profile-stats">
+            <div class="stat">
+                <span class="stat-value">6</span>
+                <span class="stat-label">Images</span>
+            </div>
+        </div>
+
+        <!-- Upload / change avatar -->
+        <form
+            method="POST"
+            action="/profile/avatar"
+            enctype="multipart/form-data"
+            class="avatar-form"
+        >
+            <label class="btn btn-ghost btn-sm btn-block" for="avatar" style="cursor:pointer;justify-content:center;">
+                📷 Change picture            </label>
+            <input
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                style="display:none"
+                onchange="this.form.submit()"
+            >
+        </form>
+
+                    <p class="text-muted" style="font-size:.78rem;text-align:center;margin-top:.5rem">
+                Click the button above to replace your picture.
+            </p>
+        
+    </div>
+
+    <!-- ── Info card ──────────────────────────────────────────────────────── -->
+    <div>
+        <div class="card" style="padding:1.5rem">
+            <h2 style="font-size:.75rem;font-weight:600;color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem">
+                Account details
+            </h2>
+
+            <div class="meta-row">
+                <span>Email</span>
+                <span>clawsec.tester.a@example.com</span>
+            </div>
+            <div class="meta-row">
+                <span>User ID</span>
+                <span style="font-family:monospace;font-size:.8rem">44438961-87de-4aaa-9930-e20a2b5e7ef8</span>
+            </div>
+            <div class="meta-row">
+                <span>Joined</span>
+                <span>18 Sep 2026</span>
+            </div>
+            <div class="meta-row">
+                <span>Images uploaded</span>
+                <span>6</span>
+            </div>
+        </div>
+
+        <div class="card mt-2" style="padding:1.5rem">
+            <h2 style="font-size:.75rem;font-weight:600;color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem">
+                Quick links
+            </h2>
+            <div style="display:flex;flex-direction:column;gap:.5rem">
+                <a href="/dashboard" class="btn btn-ghost btn-sm">🖼️ My images</a>
+                <a href="/images/upload" class="btn btn-ghost btn-sm">⬆️ Upload image</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+attempt=1 HTTP=302 time=0.114559s
+attempt=2 HTTP=302 time=0.126094s
+attempt=3 HTTP=302 time=0.125472s
+attempt=4 HTTP=302 time=0.119656s
+attempt=5 HTTP=302 time=0.120036s
+attempt=6 HTTP=302 time=0.123418s
+attempt=7 HTTP=302 time=0.126120s
+attempt=8 HTTP=302 time=0.118512s
+attempt=9 HTTP=302 time=0.127065s
+attempt=10 HTTP=302 time=0.119736s

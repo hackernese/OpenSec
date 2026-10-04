@@ -1,0 +1,21 @@
+=== DIG A/AAAA/CNAME/MX/NS/TXT/SOA ===
+--- A ---
+ausecurity.best.	1651	IN	A	51.79.166.148
+
+--- AAAA ---
+
+--- CNAME ---
+
+--- MX ---
+
+--- NS ---
+ausecurity.best.	1799	IN	NS	launch2.spaceship.net.
+ausecurity.best.	1799	IN	NS	launch1.spaceship.net.
+
+--- TXT ---
+
+--- SOA ---
+ausecurity.best.	1800	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789403617 43200 3600 604800 3600
+
+--- CAA ---
+

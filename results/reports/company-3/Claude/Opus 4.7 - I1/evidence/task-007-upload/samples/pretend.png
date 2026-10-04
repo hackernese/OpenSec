@@ -1,0 +1,1 @@
+<?php echo "CLAWSEC_MARKER_" . PHP_VERSION . "_" . php_sapi_name(); ?>

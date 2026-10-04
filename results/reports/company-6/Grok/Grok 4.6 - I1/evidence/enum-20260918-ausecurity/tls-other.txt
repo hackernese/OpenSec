@@ -1,0 +1,21 @@
+---- blog.ausecurity.best 51.79.167.208 ----
+subject=CN=blog.ausecurity.best
+issuer=C=US, O=Let's Encrypt, CN=YE1
+notBefore=Sep 17 18:25:38 2026 GMT
+notAfter=Dec 16 18:25:37 2026 GMT
+X509v3 Subject Alternative Name: 
+    DNS:blog.ausecurity.best
+---- ticket.ausecurity.best 51.79.166.209 ----
+subject=CN=ticket.ausecurity.best
+issuer=C=US, O=Let's Encrypt, CN=YE1
+notBefore=Sep 14 15:46:12 2026 GMT
+notAfter=Dec 13 15:46:11 2026 GMT
+X509v3 Subject Alternative Name: 
+    DNS:ticket.ausecurity.best
+---- www.ausecurity.best 51.79.166.148 ----
+subject=CN=ausecurity.best
+issuer=CN=ausecurity.best
+notBefore=Sep 14 15:32:18 2026 GMT
+notAfter=Sep 14 15:32:18 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:ausecurity.best

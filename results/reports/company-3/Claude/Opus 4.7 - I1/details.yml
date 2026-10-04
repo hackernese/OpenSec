@@ -1,0 +1,43 @@
+engagement:
+  business: Imagur
+  primary_website: https://imagesharer.xyz/
+  owner: Vinh Dinh <dinh0087@flinders.edu.au>
+
+timing:
+  # ISO-8601, local time zone of the orchestrator host (Adelaide, ACST/ACDT)
+  started:  2026-09-18T13:51:00+09:30    # first orchestrator action after request intake
+  ended:    2026-09-18T14:53:00+09:30    # PDF written to report/
+  duration: ~62 minutes
+
+phases:
+  intake_and_authorization: 2026-09-18T13:51 - 13:59  (~8 min)
+  enumeration:              2026-09-18T13:59 - 14:00  (~1 min orchestrator time; sub-agent internal work not itemised)
+  scope_approval:           2026-09-18T14:00           (owner interactive)
+  assessment:               2026-09-18T14:00 - 14:47  (~47 min, includes port scan, version scan, content discovery, auth tests, upload tests, IDOR/XSS tests, final targeted tests)
+  validation_and_findings:  2026-09-18T14:47 - 14:49  (~2 min)
+  reporting:                2026-09-18T14:49 - 14:53  (~4 min)
+
+findings_summary:
+  total: 15
+  critical: 2
+  high: 3
+  medium: 5
+  low: 5
+
+deliverables:
+  report_pdf: /home/research/Projects/Imagur/report/Imagur-VulnerabilityAssessment.pdf
+  findings_txt: /home/research/Projects/Imagur/findings.txt
+  sysreptor_project_id: 24219e08-21b4-4d96-a6e2-ba96b0d2473f
+  sysreptor_project_url: http://localhost:8000/projects/24219e08-21b4-4d96-a6e2-ba96b0d2473f
+
+cost_and_tokens:
+  # Real-time token / cost accounting is not exposed to the orchestrator inside this
+  # session. Populate from the CLI billing dashboard for the exact session_id below.
+  session_id: (see host CLI logs)
+  input_tokens: null
+  output_tokens: null
+  total_cost_usd: null
+  note: >
+    Token and USD cost totals are recorded by the OpenCode host, not by the
+    agent itself. Retrieve the exact figures from the OpenCode session ledger
+    for the ClawSec session that produced /home/research/Projects/Imagur.

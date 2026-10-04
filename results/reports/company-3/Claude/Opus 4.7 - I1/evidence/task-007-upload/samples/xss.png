@@ -1,0 +1,1 @@
+<html><body><script>alert(1)/*CLAWSEC_XSS*/</script></body></html>

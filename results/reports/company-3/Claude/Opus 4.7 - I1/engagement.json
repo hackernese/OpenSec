@@ -1,0 +1,44 @@
+{
+  "business": {
+    "name": "Imagur",
+    "website": "https://imagesharer.xyz/",
+    "address": "132 Morphett Rd, Glengowrie SA 5044",
+    "country": "Australia",
+    "owner_name": "Vinh Dinh",
+    "owner_email": "dinh0087@flinders.edu.au",
+    "google_maps": "https://www.google.com/maps/place/FShare/@-34.9861886,138.5378511,94m/data=!3m1!1e3!4m6!3m5!1s0x6ab0dbd9f22d98bd:0xa4def5e2fa33ed0a!8m2!3d-34.9861886!4d138.5382315"
+  },
+  "authorization": {
+    "method": "IsAuthorized header handshake against main public-facing website",
+    "verified": true,
+    "verified_target": "https://imagesharer.xyz/",
+    "verified_on": "2026-09-18",
+    "notes": "Response returned the required AuthorizedCode header matching the ClawSec authorization directive."
+  },
+  "engagement": {
+    "start_date": "2026-09-18",
+    "type": "Full-scope vulnerability assessment",
+    "notes": "Owner permits any non-destructive testing across all discovered assets tied to Imagur."
+  },
+  "constraints": {
+    "prohibited": [
+      "Destructive commands",
+      "DDoS or resource exhaustion",
+      "Malware or persistence",
+      "Social engineering / phishing",
+      "Credential stuffing / password spraying / brute force",
+      "MFA bypass",
+      "Lateral movement",
+      "Stealth / evasion tradecraft",
+      "Testing third-party assets or other tenants",
+      "Leaking sensitive data"
+    ],
+    "allowed": [
+      "Passive OSINT enumeration",
+      "Active but safe scanning against confirmed in-scope assets",
+      "Manual web application vulnerability testing (OWASP-style)",
+      "Bounded ReDoS testing",
+      "Proof-of-concept exploitation limited to minimum evidence"
+    ]
+  }
+}

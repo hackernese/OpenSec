@@ -1,0 +1,167 @@
+{
+  "id": "16381979-9564-47ae-a46f-2df142fa1459",
+  "created": "2026-09-18T17:47:10.959334Z",
+  "updated": "2026-09-18T17:47:10.959823Z",
+  "name": "AuSecurity",
+  "project_type": "b30007d2-46e9-49a1-be9c-ba7bead92042",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/16381979-9564-47ae-a46f-2df142fa1459",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/16381979-9564-47ae-a46f-2df142fa1459/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/16381979-9564-47ae-a46f-2df142fa1459/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-09-18T17:47:10.968062Z",
+      "updated": "2026-09-18T17:47:10.969409Z",
+      "project": "16381979-9564-47ae-a46f-2df142fa1459",
+      "project_type": "b30007d2-46e9-49a1-be9c-ba7bead92042",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "executive_summary": "## Overview\n\nClawSec completed an owner-authorized vulnerability assessment of AuSecurity on 18 September 2026. AuSecurity is a governance, risk, and compliance (GRC) consulting and penetration testing firm at 63 Paddington St, Paddington NSW 2021, Australia. Testing covered the public website, WordPress blog, ticket system, and the three approved servers that host them.\n\n## What we found\n\nThe assessment confirmed **11 findings**:\n\n| Severity | Count |\n|:---|:---|\n| Critical | 1 |\n| High | 0 |\n| Medium | 3 |\n| Low | 6 |\n| Informational | 1 |\n\n## Issue that needs action first\n\nThe public ticket host (`ticket.ausecurity.best`) still shows the osTicket installation wizard to anyone on the internet. A stranger who finishes that setup could choose the administrator account and take control of the future support platform, including customer tickets. Completing the installer was not performed during this test.\n\n## Other important issues\n\nThe main website has a cross-site scripting flaw on the consultation thank-you page. A crafted link can run an attacker’s script in a visitor’s browser.\n\nThe main site uses a self-signed certificate that browsers do not trust, and the www and contact names are not on that certificate. The same websites are also available without encryption on port 8080, so traffic can be read or changed on the network. The WordPress blog discloses the login name `admin` and lists files in some folders.\n\n## What to do first\n\n1. Finish osTicket setup privately, or take the ticket host offline, and remove or lock down `/setup/` immediately.\n2. Stop writing the `name` query parameter into the thank-you page with `innerHTML`; use plain text instead.\n3. Replace the homemade certificate with a publicly trusted certificate covering `ausecurity.best`, `www.ausecurity.best`, and `contact.ausecurity.best`, and close port 8080 if it is not needed.\n\n## Testing we did not claim as a problem\n\nNo evidence of SQL injection was found on the contact API. The public dashboard HTML is a static mock and was not reported as broken access control. WordPress plugin CVE lists were not claimed (vulnerability database token missing). SSH was not logged into. Password guessing and other forbidden methods were not used.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-09-18T17:47:10.968106Z",
+      "updated": "2026-09-18T17:47:10.969418Z",
+      "project": "16381979-9564-47ae-a46f-2df142fa1459",
+      "project_type": "b30007d2-46e9-49a1-be9c-ba7bead92042",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "scope": "## Engagement\n\nOwner-authorized full-scope vulnerability assessment of AuSecurity public internet assets. Intake, authorization, enumeration, assessment, validation, and reporting all occurred on 18 September 2026.\n\nAuthorization was confirmed with a GET request to `https://ausecurity.best/` that included the `IsAuthorized` request header; the expected agreement response header matched. The authorization secret was not stored.\n\n## In-scope assets (owner-approved)\n\n| System | Address | Description |\n|:---|:---|:---|\n| ausecurity.best / www / contact | 51.79.166.148 | Main marketing site; nginx 1.22.1; extra HTTP nginx 1.25.5 on TCP 8080; OpenSSH 9.2p1 |\n| blog.ausecurity.best | 51.79.167.208 | WordPress 7.1.1, theme hello-elementor 3.0.0, Apache 2.4.68 |\n| ticket.ausecurity.best | 51.79.166.209 | osTicket 1.18.4 uninstalled; nginx 1.22.1 PHP 8.2.33; Apache 2.4.68 on TCP 8080 |\n\n**Domains:** ausecurity.best, www.ausecurity.best, blog.ausecurity.best, ticket.ausecurity.best, contact.ausecurity.best\n\n**URLs:** https://ausecurity.best/, https://www.ausecurity.best/, https://blog.ausecurity.best/, https://ticket.ausecurity.best/, https://contact.ausecurity.best/\n\n**IPs:** 51.79.166.148, 51.79.167.208, 51.79.166.209\n\n## Explicitly out of scope\n\n- OVH ASN AS16276 and netblocks 51.79.164.0/22 and 51.79.128.0/17 except the three IPs above\n- Spaceship DNS (launch1/launch2.spaceship.net), Google Fonts, OVH PTR hostnames\n- Lookalike domains ausecurity.com.au, ausecurity.net, ausecurity.com\n- flinders.edu.au\n\n## Methodology\n\n- Fast port discovery (top 200 ports), then version scan on open ports only\n- Web mapping from public JavaScript and HTML\n- Unauthenticated WordPress enumeration without password attacks\n- Safe GET requests to the osTicket installer without completing setup\n- Single-request API probes\n- Execution delegated to isolated command workers\n\n## Not performed\n\nDDoS, malware, phishing, social engineering, credential stuffing, password spraying, brute force, MFA bypass, lateral movement, destructive changes, neighbour-IP scanning, and completing the osTicket installer.\n\n## Limitations and coverage\n\n- WPScan vulnerability database not used (API token missing); plugin CVE list not claimed\n- amass, SecurityTrails, VirusTotal, and Censys were unavailable\n- No authenticated testing of the main-site admin API (no credentials; brute force forbidden)\n- Dashboard HTML is a public static mock; not reported as broken access control\n- SQL injection not evidenced (contact API accepted quoted input with no database errors)\n- XML-RPC pingback SSRF not exploited\n- SSH not authenticated\n- Self-signed TLS required an insecure-skip-verify client flag to fetch the main site\n",
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18",
+        "duration": "1 day",
+        "provided_users": "No user credentials were provided. All testing was unauthenticated. Password guessing and brute force were forbidden and were not performed.\n\nPublished contacts used only for report addressing:\n\n* Owner: Vinh Dinh — dinh0087@flinders.edu.au\n* Site email: info@ausecurity.best\n* Published phone: +61 2 9000 1234 (may be a placeholder)\n"
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-09-18T17:47:10.968149Z",
+      "updated": "2026-09-18T17:47:10.969425Z",
+      "project": "16381979-9564-47ae-a46f-2df142fa1459",
+      "project_type": "b30007d2-46e9-49a1-be9c-ba7bead92042",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "customer_name": "AuSecurity",
+        "customer_address": {
+          "city": "Paddington NSW 2021, Australia",
+          "street": "63 Paddington St"
+        },
+        "receiver_name": "Vinh Dinh (dinh0087@flinders.edu.au)"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-09-18T17:47:10.968012Z",
+      "updated": "2026-09-18T17:47:10.969400Z",
+      "project": "16381979-9564-47ae-a46f-2df142fa1459",
+      "project_type": "b30007d2-46e9-49a1-be9c-ba7bead92042",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "title": "AuSecurity - Vulnerability Assessment Report",
+        "report_date": "2026-09-18",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "version": "1.0",
+            "date": "2026-09-18",
+            "description": "Initial vulnerability assessment report"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-09-18T17:47:10.967888Z",
+      "updated": "2026-09-18T17:47:10.969386Z",
+      "project": "16381979-9564-47ae-a46f-2df142fa1459",
+      "project_type": "b30007d2-46e9-49a1-be9c-ba7bead92042",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Remediation priority",
+            "content": "## Immediate\n\n| Finding | Action |\n|:---|:---|\n| Unauthenticated osTicket installer | Take the host offline or finish install privately; restrict or remove `/setup/`; close TCP 8080 if unused |\n\n## Next\n\n| Finding | Action |\n|:---|:---|\n| DOM-based XSS on consultation-success.html | Use textContent instead of innerHTML for the `name` parameter; add a strict Content-Security-Policy |\n| Self-signed TLS and hostname mismatch | Issue a public certificate for ausecurity.best, www.ausecurity.best, and contact.ausecurity.best |\n| Cleartext HTTP on port 8080 | Disable port 8080 or bind it to localhost |\n\n## Planned maintenance\n\n| Finding | Action |\n|:---|:---|\n| HTTPS paths redirect to HTTP | Keep trailing-slash redirects on https:// |\n| Missing HTTP security headers | Add HSTS (after trusted TLS), CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy |\n| WordPress directory listing | Disable Options Indexes |\n| WordPress XML-RPC | Disable xmlrpc.php if unused |\n| WordPress username admin disclosed | Replace the admin login name; stop author ID redirects |\n| No MX, SPF, or DMARC | Publish mail authentication, or an explicit deny policy if mail is unused |\n| Software version disclosure | Hide Server/X-Powered-By; remove readme.html and license.txt |\n"
+          },
+          {
+            "title": "Finding severity (from verified CVSS vectors)",
+            "content": "Severity labels in this report follow the findings file. CVSS 3.1 vectors were taken from that file and were not guessed.\n\n| Title | Severity | CVSS 3.1 vector |\n|:---|:---|:---|\n| Unauthenticated osTicket installer exposed | Critical | CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H |\n| DOM-based cross-site scripting on consultation success page | Medium | CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N |\n| Self-signed TLS certificate and hostname mismatch on the main site | Medium | CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N |\n| Marketing site and ticket installer served over cleartext HTTP on port 8080 | Medium | CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N |\n| HTTPS paths redirect to HTTP | Low | CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N |\n| Missing HTTP security headers | Low | CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N |\n| WordPress directory listing enabled | Low | CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N |\n| WordPress XML-RPC enabled with pingback and multicall | Low | CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L |\n| WordPress administrator username disclosed | Low | CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N |\n| No MX, SPF, or DMARC for ausecurity.best | Low | CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N |\n| Software version information disclosed | Info | n/a |\n"
+          },
+          {
+            "title": "Business and contact details",
+            "content": "- **Business:** AuSecurity (also seen as Au Security / Ausecurity)\n- **Description:** GRC consulting and penetration testing firm\n- **Address:** 63 Paddington St, Paddington NSW 2021, Australia\n- **Owner:** Vinh Dinh\n- **Owner email:** dinh0087@flinders.edu.au\n- **Published site email:** info@ausecurity.best\n- **Published phone:** +61 2 9000 1234 (may be a placeholder)\n- **Website:** https://ausecurity.best/\n"
+          }
+        ]
+      }
+    }
+  ]
+}

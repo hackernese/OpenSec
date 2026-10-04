@@ -1,0 +1,7 @@
+subject=CN=ausecurity.best
+issuer=CN=ausecurity.best
+notBefore=Sep 14 15:32:18 2026 GMT
+notAfter=Sep 14 15:32:18 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:ausecurity.best
+sha256 Fingerprint=B5:30:10:E0:32:E7:42:10:E4:B1:F0:68:A0:C5:B2:A2:0B:F6:44:C1:F3:32:92:87:4D:1C:64:07:14:8D:14:E2

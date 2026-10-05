@@ -1,0 +1,7 @@
+;; Connection to 192.168.20.1#53(192.168.20.1) for ausecurity.best failed: connection refused.
+;; no servers could be reached
+;; Connection to 192.168.20.1#53(192.168.20.1) for ausecurity.best failed: connection refused.
+;; no servers could be reached
+;; Connection to 192.168.20.1#53(192.168.20.1) for ausecurity.best failed: connection refused.
+;; Connection to fe80::4635:b9ff:fe00:9358%3#53(fe80::4635:b9ff:fe00:9358%3%3) for ausecurity.best failed: connection refused.
+;; no servers could be reached

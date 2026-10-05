@@ -1,0 +1,32 @@
+{
+  "task_id": "enum-001-approved",
+  "approved_at": "2026-10-05",
+  "assets": [
+    {"value": "ausecurity.best",            "type": "root_domain", "classification": "confirmed", "confidence": 1.0, "notes": "Spaceship registrar, DNSSEC signed delegation, no MX/SPF/DMARC."},
+    {"value": "www.ausecurity.best",        "type": "subdomain",   "classification": "confirmed", "confidence": 1.0, "notes": "Alias of apex; same content/ETag; 51.79.166.148."},
+    {"value": "blog.ausecurity.best",       "type": "subdomain",   "classification": "confirmed", "confidence": 1.0, "notes": "WordPress; Let's Encrypt TLS; 51.79.167.208."},
+    {"value": "ticket.ausecurity.best",     "type": "subdomain",   "classification": "confirmed", "confidence": 1.0, "notes": "osTicket 1.18.4; installer page exposed; Let's Encrypt TLS; 51.79.166.209."},
+    {"value": "https://ausecurity.best/",   "type": "website",     "classification": "confirmed", "confidence": 1.0, "notes": "Self-signed TLS cert (CA:TRUE), 1y validity."},
+    {"value": "https://blog.ausecurity.best/",   "type": "website", "classification": "confirmed", "confidence": 1.0, "notes": "WordPress generator meta 7.1.2 (unusual)."},
+    {"value": "https://ticket.ausecurity.best/", "type": "website", "classification": "confirmed", "confidence": 1.0, "notes": "osTicket."},
+    {"value": "51.79.166.148", "type": "ipv4", "classification": "confirmed", "confidence": 1.0, "asn": "AS16276 OVH SAS", "ptr": "vps-10f1e4c3.vps.ovh.ca", "notes": "Apex host."},
+    {"value": "51.79.167.208", "type": "ipv4", "classification": "confirmed", "confidence": 1.0, "asn": "AS16276 OVH SAS", "ptr": "vps-d64a720c.vps.ovh.ca", "notes": "Blog host. Shodan: 22/80/443."},
+    {"value": "51.79.166.209", "type": "ipv4", "classification": "confirmed", "confidence": 1.0, "asn": "AS16276 OVH SAS", "ptr": "vps-91287016.vps.ovh.ca", "notes": "Ticket host. Shodan: 22."},
+    {"value": "info@ausecurity.best", "type": "email_address", "classification": "likely", "confidence": 0.8, "notes": "Advertised on site; mailbox non-functional because no MX exists."}
+  ],
+  "rejected_sibling_domains": [
+    {"value": "ausecurity.com.au", "verdict": "probably NOT owned (registrant: Russell Morgan)"},
+    {"value": "ausecurity.au",     "verdict": "probably NOT owned (same owner as .com.au)"},
+    {"value": "ausecurity.io",     "verdict": "unknown / privacy masked, A record not in AuSecurity range"},
+    {"value": "ausecurity.net",    "verdict": "unknown / privacy masked, A record not in AuSecurity range"}
+  ],
+  "warnings_preserved_from_enum": [
+    "Primary site uses SELF-SIGNED TLS cert",
+    "ticket.ausecurity.best exposes osTicket /setup/install.php",
+    "blog.ausecurity.best WordPress generator 7.1.2 (atypical version string)",
+    "Different nginx versions 1.22.1 and 1.25.5 observed on apex host (multi-layer?)",
+    "No MX/SPF/DMARC/DKIM on ausecurity.best",
+    "Hosting is OVH Singapore despite Sydney NSW address",
+    "No AAAA, no CAA"
+  ]
+}

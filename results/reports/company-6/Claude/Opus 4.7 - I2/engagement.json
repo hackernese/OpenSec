@@ -1,0 +1,42 @@
+{
+  "business": {
+    "canonical_name": "AuSecurity",
+    "safe_dir_name": "AuSecurity",
+    "website": "https://ausecurity.best/",
+    "address": "63 Paddington St, Paddington NSW 2021, Australia",
+    "googleMap": "https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6b12af44df5ab7a3:0x69af1b60390b9e4a!8m2!3d-33.8853083!4d151.2319003!16s%2Fg%2F11zdfybnq6",
+    "owner_name": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au",
+    "phone": null,
+    "country": "Australia",
+    "jurisdiction": "NSW, Australia"
+  },
+  "authorization": {
+    "status": "AUTHORIZED",
+    "method": "Header on public-facing website",
+    "verified_at_iso": "2026-10-05T08:18:49Z",
+    "verified_url": "https://ausecurity.best/",
+    "header_name": "AuthorizedCode",
+    "code_matches_expected": true,
+    "decoded_statement": "I AGREE TO ALLOW CLAWSEC TO PERFORM A FULL-SCOPED VULNERABILITY ASSESSMENT ON MY COMPANY AND MY ASSETS."
+  },
+  "dates": {
+    "intake_received": "2026-10-05",
+    "engagement_started": "2026-10-05"
+  },
+  "contacts": {
+    "primary_contact": "Vinh Dinh",
+    "primary_email": "dinh0087@flinders.edu.au"
+  },
+  "constraints": {
+    "destructive_actions": "forbidden",
+    "social_engineering": "forbidden",
+    "brute_force_password_spray": "forbidden",
+    "lateral_movement": "forbidden",
+    "mfa_bypass": "forbidden",
+    "ddos": "forbidden",
+    "data_exfiltration": "forbidden",
+    "scope_boundary": "assessment limited to assets explicitly confirmed in scope.json after owner approval",
+    "notes_from_owner": "Feel free to do whatever you want, as long as all vulnerabilities are discovered."
+  }
+}

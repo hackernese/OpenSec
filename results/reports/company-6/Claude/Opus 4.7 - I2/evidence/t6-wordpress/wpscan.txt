@@ -1,0 +1,99 @@
+[32m[+][0m URL: https://blog.ausecurity.best/ [51.79.167.208]
+[32m[+][0m Started: Mon Oct  5 19:31:38 2026
+[32m[+][0m Command Line: wpscan --url https://blog.ausecurity.best/ --disable-tls-checks --random-user-agent --enumerate ap,at,u1-10,m,cb,dbe --plugins-detection mixed --format cli --output /home/research/Projects/AuSecurity/evidence/t6-wordpress/wpscan.txt --no-banner --throttle 300
+[32m[+][0m Hostname: vin
+
+Interesting Finding(s):
+
+[32m[+][0m Headers
+ | Interesting Entry: Server: Apache/2.4.68 (Debian)
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[32m[+][0m XML-RPC seems to be enabled: https://blog.ausecurity.best/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[32m[+][0m WordPress readme found: https://blog.ausecurity.best/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[32m[+][0m Upload directory has listing enabled: https://blog.ausecurity.best/wp-content/uploads/
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[32m[+][0m The external WP-Cron seems to be enabled: https://blog.ausecurity.best/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[33m[!][0m No WPScan API Token given, as a result vulnerability data has not been output.
+[33m[!][0m You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+[32m[+][0m Finished: Mon Oct  5 19:33:34 2026
+[32m[+][0m Requests Done: 157
+[32m[+][0m Cached Requests: 6
+[32m[+][0m Most response codes received: 200: 134, 404: 22, 302: 1
+[32m[+][0m Data Sent: 46.216 KB
+[32m[+][0m Data Received: 26.663 MB
+[32m[+][0m Memory used: 226.723 MB
+[32m[+][0m Elapsed time: 00:01:55
+
+Scan Aborted: SIGTERM
+Trace: /usr/lib/x86_64-linux-gnu/rubygems-integration/3.3.0/gems/ffi-1.17.4/lib/ffi/pointer.rb:59:in `read_string'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/easy/callbacks.rb:55:in `block in header_write_callback'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/easy/operations.rb:30:in `easy_perform'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/easy/operations.rb:30:in `perform'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/operations.rb:16:in `run'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/cacheable.rb:18:in `run'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/block_connection.rb:31:in `run'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/stubbable.rb:25:in `run'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/before.rb:26:in `run'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/browser/actions.rb:20:in `get'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/finder/enumerator.rb:60:in `maybe_get_full_response'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/finder/enumerator.rb:41:in `block (2 levels) in enumerate'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/callbacks.rb:146:in `block in execute_callbacks'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/callbacks.rb:145:in `each'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/callbacks.rb:145:in `execute_callbacks'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/request/operations.rb:35:in `finish'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/easy_factory.rb:170:in `block in set_callback'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/easy/response_callbacks.rb:74:in `block in complete'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/easy/response_callbacks.rb:74:in `each'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/easy/response_callbacks.rb:74:in `complete'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/multi/operations.rb:189:in `check'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/multi/operations.rb:202:in `run'
+/usr/share/rubygems-integration/all/gems/ethon-0.18.0/lib/ethon/multi/operations.rb:50:in `perform'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/hydra/runnable.rb:15:in `run'
+/usr/share/rubygems-integration/all/gems/typhoeus-1.6.0/lib/typhoeus/hydra/memoizable.rb:51:in `run'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/finder/enumerator.rb:49:in `enumerate'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/finder/fingerprinter.rb:32:in `fingerprint'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/app/finders/wp_version/unique_fingerprinting.rb:12:in `aggressive'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/base_finders.rb:31:in `run_finder'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/unique_finders.rb:22:in `block (2 levels) in run'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/unique_finders.rb:21:in `each'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/unique_finders.rb:21:in `block in run'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/unique_finders.rb:20:in `each'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/unique_finders.rb:20:in `run'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/independent_finder.rb:24:in `find'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/finders/independent_finder.rb:12:in `find'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/target.rb:149:in `wp_version'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/app/controllers/wp_version.rb:26:in `run'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/controllers.rb:71:in `each'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/controllers.rb:71:in `block in run'
+/usr/lib/ruby/3.3.0/timeout.rb:170:in `timeout'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/controllers.rb:66:in `run'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/scan.rb:59:in `run'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/bin/wpscan:18:in `block in <top (required)>'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/lib/wpscan/scan.rb:18:in `initialize'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/bin/wpscan:6:in `new'
+/usr/share/rubygems-integration/all/gems/wpscan-4.1.0/bin/wpscan:6:in `<top (required)>'
+/usr/lib/ruby/vendor_ruby/rubygems.rb:305:in `load'
+/usr/lib/ruby/vendor_ruby/rubygems.rb:305:in `activate_and_load_bin_path'
+/usr/bin/wpscan:25:in `<main>'

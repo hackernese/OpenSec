@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.99 scan initiated Mon Oct  5 19:06:41 2026 as: /usr/lib/nmap/nmap -&#45;privileged -Pn -sS -sV -sC -&#45;version-intensity 7 -p 22,80,443,8080 -&#45;max-retries 2 -T4 -oA /home/research/Projects/AuSecurity/evidence/t1-ports/stage2-services 51.79.166.148 51.79.167.208 51.79.166.209 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -&#45;privileged -Pn -sS -sV -sC -&#45;version-intensity 7 -p 22,80,443,8080 -&#45;max-retries 2 -T4 -oA /home/research/Projects/AuSecurity/evidence/t1-ports/stage2-services 51.79.166.148 51.79.167.208 51.79.166.209" start="1791189401" startstr="Mon Oct  5 19:06:41 2026" version="7.99" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="4" services="22,80,443,8080"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1791189401" endtime="1791189438"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="51.79.166.148" addrtype="ipv4"/>
+<hostnames>
+<hostname name="www.ausecurity.best" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="ssh" product="OpenSSH" version="9.2p1 Debian 2+deb12u10" extrainfo="protocol 2.0" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:9.2p1</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service><script id="ssh-hostkey" output="&#xa;  256 9a:bd:49:00:5b:b0:59:65:53:a3:6c:86:3a:ae:ed:9a (ECDSA)&#xa;  256 1d:ef:e7:0b:cc:5c:b8:c2:95:24:16:84:46:f1:d3:0e (ED25519)"><table>
+<elem key="key">AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNbWFS6MAkfZWLQmaJzTnNkQnR+l89wXxaChK7NCD0aei2an8w5sO3b71qCc1DsZcipg3B8tYvSz9hvaq4l/Iqk=</elem>
+<elem key="type">ecdsa-sha2-nistp256</elem>
+<elem key="fingerprint">9abd49005bb0596553a36c863aaeed9a</elem>
+<elem key="bits">256</elem>
+</table>
+<table>
+<elem key="key">AAAAC3NzaC1lZDI1NTE5AAAAIHZJPAKzsmrSk2l/4VxAZxs+VtM4syW8zbN7e2eV/AHb</elem>
+<elem key="type">ssh-ed25519</elem>
+<elem key="fingerprint">1defe70bcc5cb8c29524168446f1d30e</elem>
+<elem key="bits">256</elem>
+</table>
+</script></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" product="nginx" version="1.22.1" method="probed" conf="10"><cpe>cpe:/a:igor_sysoev:nginx:1.22.1</cpe></service><script id="http-server-header" output="nginx/1.22.1"><elem>nginx/1.22.1</elem>
+</script><script id="http-title" output="Did not follow redirect to https://www.ausecurity.best/"><elem key="redirect_url">https://www.ausecurity.best/</elem>
+</script></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" product="nginx" version="1.22.1" tunnel="ssl" method="probed" conf="10"><cpe>cpe:/a:igor_sysoev:nginx:1.22.1</cpe></service><script id="http-server-header" output="nginx/1.22.1"><elem>nginx/1.22.1</elem>
+</script><script id="ssl-cert" output="Subject: commonName=ausecurity.best&#xa;Subject Alternative Name: DNS:ausecurity.best&#xa;Not valid before: 2026-09-14T15:32:18&#xa;Not valid after:  2027-09-14T15:32:18"><table key="subject">
+<elem key="commonName">ausecurity.best</elem>
+</table>
+<table key="issuer">
+<elem key="commonName">ausecurity.best</elem>
+</table>
+<table key="pubkey">
+<elem key="type">rsa</elem>
+<elem key="bits">2048</elem>
+<elem key="modulus">9E8322DFB5D5BE6BD35AD7DD5CE1D29C772D61A67E58AEBF3BB6A414F1D3C57FC0B9D3793FD3E51BF45ABE0721E4EAB204A4534C11D83EFE881F5ECA858DF33FEA90C750894B17D6212868EC098B32F481EFAAE58607A683DE39FA8CACAEF3691641376829624A80ACC37A2528A5B19E1E4739ACAB626856A320EB051CFC9EE40645E23466A4CFCF9752D661D53CC28E7A35B1E2FB21FD27F1CE0123B14835D6979990BE3441258F6D2C14BED9F55AB42F97C369F819E2BEF68A54B86944A795EE5D284CFF9817A10B8561F1C3B6CF65DCEC0FFF81020A8BD2BFC6322448A3C5F70F894A0A514D953FA383F91D2A892119ED924EB64C70D48F7CE9187A049E1B</elem>
+<elem key="exponent">65537</elem>
+</table>
+<table key="extensions">
+<table>
+<elem key="name">X509v3 Subject Key Identifier</elem>
+<elem key="value">CC:E1:51:C0:5A:18:74:9E:EA:B7:12:17:C7:7E:31:48:52:EF:D3:7A</elem>
+</table>
+<table>
+<elem key="name">X509v3 Authority Key Identifier</elem>
+<elem key="value">CC:E1:51:C0:5A:18:74:9E:EA:B7:12:17:C7:7E:31:48:52:EF:D3:7A</elem>
+</table>
+<table>
+<elem key="name">X509v3 Basic Constraints</elem>
+<elem key="value">CA:TRUE</elem>
+<elem key="critical">true</elem>
+</table>
+<table>
+<elem key="name">X509v3 Subject Alternative Name</elem>
+<elem key="value">DNS:ausecurity.best</elem>
+</table>
+</table>
+<elem key="sig_algo">sha256WithRSAEncryption</elem>
+<table key="validity">
+<elem key="notBefore">2026-09-14T15:32:18</elem>
+<elem key="notAfter">2027-09-14T15:32:18</elem>
+</table>
+<elem key="md5">336501d77ed2c8bf8c4066a95110227f</elem>
+<elem key="sha1">db18468ec05e674bf3a2c7ca901077a262cbec76</elem>
+<elem key="sha256">b53010e032e74210e4b1f068a0c5b2a20bf644c1f33292874d1c6407148d14e2</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIDMDCCAhigAwIBAgITCLH0LPdih2uWBkWNAWEMEF/U3TANBgkqhkiG9w0BAQsF&#xa;ADAaMRgwFgYDVQQDDA9hdXNlY3VyaXR5LmJlc3QwHhcNMjYwOTE0MTUzMjE4WhcN&#xa;MjcwOTE0MTUzMjE4WjAaMRgwFgYDVQQDDA9hdXNlY3VyaXR5LmJlc3QwggEiMA0G&#xa;CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCegyLftdW+a9Na191c4dKcdy1hpn5Y&#xa;rr87tqQU8dPFf8C503k/0+Ub9Fq+ByHk6rIEpFNMEdg+/ogfXsqFjfM/6pDHUIlL&#xa;F9YhKGjsCYsy9IHvquWGB6aD3jn6jKyu82kWQTdoKWJKgKzDeiUopbGeHkc5rKti&#xa;aFajIOsFHPye5AZF4jRmpM/Pl1LWYdU8wo56NbHi+yH9J/HOASOxSDXWl5mQvjRB&#xa;JY9tLBS+2fVatC+Xw2n4GeK+9opUuGlEp5XuXShM/5gXoQuFYfHDts9l3OwP/4EC&#xa;CovSv8YyJEijxfcPiUoKUU2VP6OD+R0qiSEZ7ZJOtkxw1I986Rh6BJ4bAgMBAAGj&#xa;bzBtMB0GA1UdDgQWBBTM4VHAWhh0nuq3EhfHfjFIUu/TejAfBgNVHSMEGDAWgBTM&#xa;4VHAWhh0nuq3EhfHfjFIUu/TejAPBgNVHRMBAf8EBTADAQH/MBoGA1UdEQQTMBGC&#xa;D2F1c2VjdXJpdHkuYmVzdDANBgkqhkiG9w0BAQsFAAOCAQEACs4iU/di9kBC4Jwq&#xa;YtumNwCVSRyNhJGMkypWaqZWxwfqLkIk990jhtR/ZNaOvzjptsOMU9WCEk0ljDU9&#xa;W2ayo3XokgVy891+tYQ19NChQgPu40/abKXYp41TOvIic/tjeHGMpc4IwUw1vi0n&#xa;hVpji50KvIKNVKuLqlbA/r47GooUed9OXN87g2CsHcM+S/kjpefOGLyV8xThoeGL&#xa;EEOmTkZjd+9AzJ/xrCoJtT6v+rl1Z7i2FCfSQ4FEXuTpJlABtj7iA0MRaL+mhDS2&#xa;DdyNYCQrNa622SW38Vl+ALgTXVv6LBC+7vn87Mci3wofYnHJ0WklkSONv/oPUyRu&#xa;Jtuc9A==&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="http-title" output="Ausecurity \xE2\x80\x94 GRC Consulting &amp; Penetration Testing"><elem key="title">Ausecurity \xE2\x80\x94 GRC Consulting &amp; Penetration Testing</elem>
+</script><script id="tls-alpn" output="&#xa;  http/1.1&#xa;  http/1.0&#xa;  http/0.9"><elem>http/1.1</elem>
+<elem>http/1.0</elem>
+<elem>http/0.9</elem>
+</script><script id="ssl-date" output="TLS randomness does not represent time"></script></port>
+<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" product="nginx" version="1.25.5" method="probed" conf="10"><cpe>cpe:/a:igor_sysoev:nginx:1.25.5</cpe></service><script id="http-title" output="Ausecurity \xE2\x80\x94 GRC Consulting &amp; Penetration Testing"><elem key="title">Ausecurity \xE2\x80\x94 GRC Consulting &amp; Penetration Testing</elem>
+</script><script id="http-open-proxy" output="Proxy might be redirecting requests"/><script id="http-server-header" output="nginx/1.25.5"><elem>nginx/1.25.5</elem>
+</script></port>
+</ports>
+<times srtt="263492" rttvar="112319" to="712768"/>
+</host>
+<host starttime="1791189401" endtime="1791189438"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="51.79.167.208" addrtype="ipv4"/>
+<hostnames>
+<hostname name="blog.ausecurity.best" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="ssh" product="OpenSSH" version="9.2p1 Debian 2+deb12u10" extrainfo="protocol 2.0" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:9.2p1</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service><script id="ssh-hostkey" output="&#xa;  256 24:6e:a6:ee:62:0b:a9:2c:73:c1:9a:e3:bf:e1:2c:fe (ECDSA)&#xa;  256 e7:1a:00:70:5a:64:4f:f8:fe:b4:29:19:ef:ba:a1:a6 (ED25519)"><table>
+<elem key="key">AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGOQUjIjagWJtJdQxztZuzgrPFfsMIrtAPd9lkSGTPeX159q4kgbddlp6G9qXQfKQ7u1qR0AmNYXb3SSKDCwths=</elem>
+<elem key="type">ecdsa-sha2-nistp256</elem>
+<elem key="fingerprint">246ea6ee620ba92c73c19ae3bfe12cfe</elem>
+<elem key="bits">256</elem>
+</table>
+<table>
+<elem key="key">AAAAC3NzaC1lZDI1NTE5AAAAIE+QyqmV5uA+6GGtffzKYj14sZH7S11YGGMmOMruoK9G</elem>
+<elem key="type">ssh-ed25519</elem>
+<elem key="fingerprint">e71a00705a644ff8feb42919efbaa1a6</elem>
+<elem key="bits">256</elem>
+</table>
+</script></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" product="Apache httpd" version="2.4.68" extrainfo="(Debian)" method="probed" conf="10"><cpe>cpe:/a:apache:http_server:2.4.68</cpe></service><script id="http-title" output="Did not follow redirect to https://blog.ausecurity.best/"><elem key="redirect_url">https://blog.ausecurity.best/</elem>
+</script><script id="http-server-header" output="Apache/2.4.68 (Debian)"><elem>Apache/2.4.68 (Debian)</elem>
+</script></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" product="Apache httpd" version="2.4.68" extrainfo="(Debian)" tunnel="ssl" method="probed" conf="10"><cpe>cpe:/a:apache:http_server:2.4.68</cpe></service><script id="ssl-date" output="TLS randomness does not represent time"></script><script id="ssl-cert" output="Subject: commonName=blog.ausecurity.best&#xa;Subject Alternative Name: DNS:blog.ausecurity.best&#xa;Not valid before: 2026-09-17T18:25:38&#xa;Not valid after:  2026-12-16T18:25:37"><table key="subject">
+<elem key="commonName">blog.ausecurity.best</elem>
+</table>
+<table key="issuer">
+<elem key="commonName">YE1</elem>
+<elem key="countryName">US</elem>
+<elem key="organizationName">Let&apos;s Encrypt</elem>
+</table>
+<table key="pubkey">
+<elem key="type">ec</elem>
+<elem key="bits">256</elem>
+<table key="ecdhparams">
+<table key="curve_params">
+<elem key="ec_curve_type">namedcurve</elem>
+<elem key="curve">prime256v1</elem>
+</table>
+</table>
+</table>
+<table key="extensions">
+<table>
+<elem key="name">X509v3 Key Usage</elem>
+<elem key="value">Digital Signature</elem>
+<elem key="critical">true</elem>
+</table>
+<table>
+<elem key="name">X509v3 Extended Key Usage</elem>
+<elem key="value">TLS Web Server Authentication</elem>
+</table>
+<table>
+<elem key="name">X509v3 Basic Constraints</elem>
+<elem key="value">CA:FALSE</elem>
+<elem key="critical">true</elem>
+</table>
+<table>
+<elem key="name">X509v3 Subject Key Identifier</elem>
+<elem key="value">7A:14:BF:A3:E2:F2:23:96:F4:FB:30:55:EA:4B:0C:E0:7E:21:BF:A4</elem>
+</table>
+<table>
+<elem key="name">X509v3 Authority Key Identifier</elem>
+<elem key="value">BB:20:CA:47:0B:FE:D7:E5:9C:F9:8F:09:2A:A3:8C:37:45:B1:BC:D8</elem>
+</table>
+<table>
+<elem key="name">Authority Information Access</elem>
+<elem key="value">CA Issuers - URI:http://ye1.i.lencr.org/</elem>
+</table>
+<table>
+<elem key="name">X509v3 Subject Alternative Name</elem>
+<elem key="value">DNS:blog.ausecurity.best</elem>
+</table>
+<table>
+<elem key="name">X509v3 Certificate Policies</elem>
+<elem key="value">Policy: 2.23.140.1.2.1</elem>
+</table>
+<table>
+<elem key="name">X509v3 CRL Distribution Points</elem>
+<elem key="value">Full Name:&#xa;  URI:http://ye1.c.lencr.org/61.crl&#xa;</elem>
+</table>
+<table>
+<elem key="name">CT Precertificate SCTs</elem>
+<elem key="value">Signed Certificate Timestamp:&#xa;    Version   : v1 (0x0)&#xa;    Log ID    : 94:4E:43:87:FA:EC:C1:EF:81:F3:19:24:26:A8:18:65:&#xa;                01:C7:D3:5F:38:02:01:3F:72:67:7D:55:37:2E:19:D8&#xa;    Timestamp : Sep 17 19:24:08.954 2026 GMT&#xa;    Extensions: none&#xa;    Signature : ecdsa-with-SHA256&#xa;                30:45:02:20:71:FA:02:DA:66:10:FB:26:F7:E4:6A:08:&#xa;                A4:F0:0A:41:08:54:37:3D:5E:6C:D5:0D:2A:D6:9F:45:&#xa;                50:D9:4F:45:02:21:00:D6:D8:BC:26:46:29:A7:BE:D1:&#xa;                FF:85:B1:F1:46:AE:5F:6D:42:FB:B6:F8:85:FF:98:14:&#xa;                D3:57:F5:5F:E7:D2:CE&#xa;Signed Certificate Timestamp:&#xa;    Version   : v1 (0x0)&#xa;    Log ID    : 6C:FE:50:19:43:A8:5E:A9:16:BC:52:D1:33:E4:DC:C9:&#xa;                1E:F1:41:1C:7D:25:84:20:D1:73:80:9E:18:18:EB:3A&#xa;    Timestamp : Sep 17 19:24:09.606 2026 GMT&#xa;    Extensions: 00:00:05:00:37:D7:72:C6&#xa;    Signature : ecdsa-with-SHA256&#xa;                30:46:02:21:00:E1:DA:35:53:9C:F9:A0:D3:D0:39:00:&#xa;                11:02:A9:EC:BA:21:9C:32:06:0C:E8:CE:3C:7A:99:42:&#xa;                F0:D6:07:2C:71:02:21:00:C0:7E:DB:08:34:84:63:C8:&#xa;                F0:16:D1:2F:1E:90:11:94:D1:F2:29:DF:7D:75:03:A0:&#xa;                9C:D8:9F:34:3F:40:08:91</elem>
+</table>
+</table>
+<elem key="sig_algo">ecdsa-with-SHA384</elem>
+<table key="validity">
+<elem key="notBefore">2026-09-17T18:25:38</elem>
+<elem key="notAfter">2026-12-16T18:25:37</elem>
+</table>
+<elem key="md5">8d698b8550e6f4a7f946c8e696c9c683</elem>
+<elem key="sha1">3b26da1829ef0902080e43cc68ce5b3ccc11cda9</elem>
+<elem key="sha256">f321e8cd50a061b27535b9e4a5f51079715546b772913db2190c4179de295c5d</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIDljCCAx2gAwIBAgISBQ80XhZuhlvQO68CMmKIWsS8MAoGCCqGSM49BAMDMDMx&#xa;CzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQwwCgYDVQQDEwNZ&#xa;RTEwHhcNMjYwOTE3MTgyNTM4WhcNMjYxMjE2MTgyNTM3WjAfMR0wGwYDVQQDExRi&#xa;bG9nLmF1c2VjdXJpdHkuYmVzdDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABLLn&#xa;kt/xbLK43NwmSsR2pg+PhWIEomy29s15g5TPfciSx6HmRCQ24j3QpAArRYMegqcv&#xa;vqKq9fmOHs9oIbAM2XSjggIjMIICHzAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAww&#xa;CgYIKwYBBQUHAwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUehS/o+LyI5b0+zBV&#xa;6ksM4H4hv6QwHwYDVR0jBBgwFoAUuyDKRwv+1+Wc+Y8JKqOMN0WxvNgwMwYIKwYB&#xa;BQUHAQEEJzAlMCMGCCsGAQUFBzAChhdodHRwOi8veWUxLmkubGVuY3Iub3JnLzAf&#xa;BgNVHREEGDAWghRibG9nLmF1c2VjdXJpdHkuYmVzdDATBgNVHSAEDDAKMAgGBmeB&#xa;DAECATAuBgNVHR8EJzAlMCOgIaAfhh1odHRwOi8veWUxLmMubGVuY3Iub3JnLzYx&#xa;LmNybDCCAQ0GCisGAQQB1nkCBAIEgf4EgfsA+QB2AJROQ4f67MHvgfMZJCaoGGUB&#xa;x9NfOAIBP3JnfVU3LhnYAAABoLDTi3oAAAQDAEcwRQIgcfoC2mYQ+yb35GoIpPAK&#xa;QQhUNz1ebNUNKtafRVDZT0UCIQDW2LwmRimnvtH/hbHxRq5fbUL7tviF/5gU01f1&#xa;X+fSzgB/AGz+UBlDqF6pFrxS0TPk3Mke8UEcfSWEINFzgJ4YGOs6AAABoLDTjgYA&#xa;CAAABQA313LGBAMASDBGAiEA4do1U5z5oNPQOQARAqnsuiGcMgYM6M48eplC8NYH&#xa;LHECIQDAftsINIRjyPAW0S8ekBGU0fIp3311A6Cc2J80P0AIkTAKBggqhkjOPQQD&#xa;AwNnADBkAjA8Nu0fA3yOKeaBhZGttftD9R0GdEzsLealtKFosyiQDcTI/EvWCKMG&#xa;5fbKD9gaQhgCMBizu/R2WreF7RNjZ6giA2JiFCk08AlS1oTlRHRTxVzEdq7JoA/u&#xa;O4CDZoRbwl79ZA==&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="http-title" output="AuSecurity"><elem key="title">AuSecurity</elem>
+</script><script id="http-generator" output="WordPress 7.1.2"/><script id="http-server-header" output="Apache/2.4.68 (Debian)"><elem>Apache/2.4.68 (Debian)</elem>
+</script></port>
+<port protocol="tcp" portid="8080"><state state="filtered" reason="no-response" reason_ttl="0"/><service name="http-proxy" method="table" conf="3"/></port>
+</ports>
+<times srtt="252912" rttvar="145745" to="835892"/>
+</host>
+<host starttime="1791189401" endtime="1791189438"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="51.79.166.209" addrtype="ipv4"/>
+<hostnames>
+<hostname name="ticket.ausecurity.best" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="ssh" product="OpenSSH" version="9.2p1 Debian 2+deb12u10" extrainfo="protocol 2.0" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:9.2p1</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service><script id="ssh-hostkey" output="&#xa;  256 54:64:22:67:4b:a1:50:93:c9:2e:f5:c4:e7:8b:44:5e (ECDSA)&#xa;  256 27:fa:c8:43:03:c8:08:b9:01:63:17:fb:28:df:69:2d (ED25519)"><table>
+<elem key="key">AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMkOA0kkbIGvfhPXTtGRBu2qpAGImbqWF9eg44w3XZrUL+CWfzNybKM03mmnCodOG2sqZCYAECA4ilgdaZGXdkY=</elem>
+<elem key="type">ecdsa-sha2-nistp256</elem>
+<elem key="fingerprint">546422674ba15093c92ef5c4e78b445e</elem>
+<elem key="bits">256</elem>
+</table>
+<table>
+<elem key="key">AAAAC3NzaC1lZDI1NTE5AAAAIN/bi+ml7zhYKxl2HwB6IIgXNmwi81xaQNIG6BEyn7FT</elem>
+<elem key="type">ssh-ed25519</elem>
+<elem key="fingerprint">27fac84303c808b9016317fb28df692d</elem>
+<elem key="bits">256</elem>
+</table>
+</script></port>
+<port protocol="tcp" portid="80"><state state="closed" reason="reset" reason_ttl="247"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" product="nginx" version="1.22.1" tunnel="ssl" method="probed" conf="10"><cpe>cpe:/a:igor_sysoev:nginx:1.22.1</cpe></service><script id="ssl-date" output="TLS randomness does not represent time"></script><script id="http-cookie-flags" output="&#xa;  /: &#xa;    PHPSESSID: &#xa;      httponly flag not set"><table key="/">
+<table key="PHPSESSID">
+<elem>httponly flag not set</elem>
+</table>
+</table>
+</script><script id="ssl-cert" output="Subject: commonName=ticket.ausecurity.best&#xa;Subject Alternative Name: DNS:ticket.ausecurity.best&#xa;Not valid before: 2026-09-14T15:46:12&#xa;Not valid after:  2026-12-13T15:46:11"><table key="subject">
+<elem key="commonName">ticket.ausecurity.best</elem>
+</table>
+<table key="issuer">
+<elem key="commonName">YE1</elem>
+<elem key="countryName">US</elem>
+<elem key="organizationName">Let&apos;s Encrypt</elem>
+</table>
+<table key="pubkey">
+<elem key="type">ec</elem>
+<elem key="bits">256</elem>
+<table key="ecdhparams">
+<table key="curve_params">
+<elem key="ec_curve_type">namedcurve</elem>
+<elem key="curve">prime256v1</elem>
+</table>
+</table>
+</table>
+<table key="extensions">
+<table>
+<elem key="name">X509v3 Key Usage</elem>
+<elem key="value">Digital Signature</elem>
+<elem key="critical">true</elem>
+</table>
+<table>
+<elem key="name">X509v3 Extended Key Usage</elem>
+<elem key="value">TLS Web Server Authentication</elem>
+</table>
+<table>
+<elem key="name">X509v3 Basic Constraints</elem>
+<elem key="value">CA:FALSE</elem>
+<elem key="critical">true</elem>
+</table>
+<table>
+<elem key="name">X509v3 Subject Key Identifier</elem>
+<elem key="value">56:03:6A:B6:39:16:86:3E:BE:CD:8F:3F:AA:97:4D:02:F0:F9:7C:71</elem>
+</table>
+<table>
+<elem key="name">X509v3 Authority Key Identifier</elem>
+<elem key="value">BB:20:CA:47:0B:FE:D7:E5:9C:F9:8F:09:2A:A3:8C:37:45:B1:BC:D8</elem>
+</table>
+<table>
+<elem key="name">Authority Information Access</elem>
+<elem key="value">CA Issuers - URI:http://ye1.i.lencr.org/</elem>
+</table>
+<table>
+<elem key="name">X509v3 Subject Alternative Name</elem>
+<elem key="value">DNS:ticket.ausecurity.best</elem>
+</table>
+<table>
+<elem key="name">X509v3 Certificate Policies</elem>
+<elem key="value">Policy: 2.23.140.1.2.1</elem>
+</table>
+<table>
+<elem key="name">X509v3 CRL Distribution Points</elem>
+<elem key="value">Full Name:&#xa;  URI:http://ye1.c.lencr.org/103.crl&#xa;</elem>
+</table>
+<table>
+<elem key="name">CT Precertificate SCTs</elem>
+<elem key="value">Signed Certificate Timestamp:&#xa;    Version   : v1 (0x0)&#xa;    Log ID    : 94:4E:43:87:FA:EC:C1:EF:81:F3:19:24:26:A8:18:65:&#xa;                01:C7:D3:5F:38:02:01:3F:72:67:7D:55:37:2E:19:D8&#xa;    Timestamp : Sep 14 16:44:43.033 2026 GMT&#xa;    Extensions: none&#xa;    Signature : ecdsa-with-SHA256&#xa;                30:46:02:21:00:B3:19:94:42:33:C4:36:9B:CF:8C:EF:&#xa;                AF:8C:F0:CA:60:E2:9D:22:78:7A:B4:A6:CB:7A:99:82:&#xa;                4E:C1:DB:8D:11:02:21:00:BA:15:89:01:31:AB:46:4C:&#xa;                72:E9:3C:A2:C3:E1:F4:DE:63:58:AE:A0:CB:C1:1A:9F:&#xa;                71:9A:40:D4:B3:39:41:68&#xa;Signed Certificate Timestamp:&#xa;    Version   : v1 (0x0)&#xa;    Log ID    : 6C:FE:50:19:43:A8:5E:A9:16:BC:52:D1:33:E4:DC:C9:&#xa;                1E:F1:41:1C:7D:25:84:20:D1:73:80:9E:18:18:EB:3A&#xa;    Timestamp : Sep 14 16:44:43.607 2026 GMT&#xa;    Extensions: 00:00:05:00:35:24:AF:05&#xa;    Signature : ecdsa-with-SHA256&#xa;                30:44:02:20:56:75:8C:B4:B0:30:48:48:76:52:F3:F8:&#xa;                60:19:14:44:46:D9:4A:07:24:C4:29:FA:14:FC:14:83:&#xa;                C5:F1:B9:60:02:20:0F:B9:77:E9:61:F3:48:49:DB:AF:&#xa;                6B:95:22:A9:FA:AF:7D:6A:B1:18:B6:C8:25:AC:FB:D5:&#xa;                BF:4F:08:B2:1E:8B</elem>
+</table>
+</table>
+<elem key="sig_algo">ecdsa-with-SHA384</elem>
+<table key="validity">
+<elem key="notBefore">2026-09-14T15:46:12</elem>
+<elem key="notAfter">2026-12-13T15:46:11</elem>
+</table>
+<elem key="md5">2ffb725e28f51289d9ea9f62db45e8fc</elem>
+<elem key="sha1">371284cd3e2c03c88e6132c969eea7423b104d9e</elem>
+<elem key="sha256">9710acbfd4ed6413f7c027096cf9f2fb2d058862aa4950515226c07104b66b4d</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIDnDCCAyGgAwIBAgISBXcF1PPhDNk2ZuCgpsPPVAFmMAoGCCqGSM49BAMDMDMx&#xa;CzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQwwCgYDVQQDEwNZ&#xa;RTEwHhcNMjYwOTE0MTU0NjEyWhcNMjYxMjEzMTU0NjExWjAhMR8wHQYDVQQDExZ0&#xa;aWNrZXQuYXVzZWN1cml0eS5iZXN0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE&#xa;E5ueaz/M9z/TrbZKxrHUjmUj2ySFt8Us01RsFxMa6vAWaeKPV74LYxoGjSEmtp1b&#xa;lyDcUMQ31nGH5ilx5ScbraOCAiUwggIhMA4GA1UdDwEB/wQEAwIHgDATBgNVHSUE&#xa;DDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRWA2q2ORaGPr7N&#xa;jz+ql00C8Pl8cTAfBgNVHSMEGDAWgBS7IMpHC/7X5Zz5jwkqo4w3RbG82DAzBggr&#xa;BgEFBQcBAQQnMCUwIwYIKwYBBQUHMAKGF2h0dHA6Ly95ZTEuaS5sZW5jci5vcmcv&#xa;MCEGA1UdEQQaMBiCFnRpY2tldC5hdXNlY3VyaXR5LmJlc3QwEwYDVR0gBAwwCjAI&#xa;BgZngQwBAgEwLwYDVR0fBCgwJjAkoCKgIIYeaHR0cDovL3llMS5jLmxlbmNyLm9y&#xa;Zy8xMDMuY3JsMIIBDAYKKwYBBAHWeQIEAgSB/QSB+gD4AHcAlE5Dh/rswe+B8xkk&#xa;JqgYZQHH0184AgE/cmd9VTcuGdgAAAGgoM6AmQAABAMASDBGAiEAsxmUQjPENpvP&#xa;jO+vjPDKYOKdInh6tKbLepmCTsHbjRECIQC6FYkBMatGTHLpPKLD4fTeY1iuoMvB&#xa;Gp9xmkDUszlBaAB9AGz+UBlDqF6pFrxS0TPk3Mke8UEcfSWEINFzgJ4YGOs6AAAB&#xa;oKDOgtcACAAABQA1JK8FBAMARjBEAiBWdYy0sDBISHZS8/hgGRRERtlKByTEKfoU&#xa;/BSDxfG5YAIgD7l36WHzSEnbr2uVIqn6r31qsRi2yCWs+9W/TwiyHoswCgYIKoZI&#xa;zj0EAwMDaQAwZgIxAIX33YAiDweZ2lW26Jo04foJarwhW6erZFjBJ+ZPv1EynOot&#xa;ebuVsS9PJo/mxYnvtQIxAMzJDwZd4L8mLoe6gKQHun3Ww26MWWKEfoywNuqgly4Y&#xa;oZmMnLWH3B59qmluovTU7Q==&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="http-server-header" output="nginx/1.22.1"><elem>nginx/1.22.1</elem>
+</script><script id="http-title" output="osTicket Installer&#xa;Requested resource was /setup/install.php"><elem key="title">osTicket Installer</elem>
+<elem key="redirect_url">/setup/install.php</elem>
+</script></port>
+<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" product="Apache httpd" version="2.4.68" extrainfo="(Debian)" method="probed" conf="10"><cpe>cpe:/a:apache:http_server:2.4.68</cpe></service><script id="http-server-header" output="Apache/2.4.68 (Debian)"><elem>Apache/2.4.68 (Debian)</elem>
+</script><script id="http-cookie-flags" output="&#xa;  /: &#xa;    PHPSESSID: &#xa;      httponly flag not set"><table key="/">
+<table key="PHPSESSID">
+<elem>httponly flag not set</elem>
+</table>
+</table>
+</script><script id="http-title" output="osTicket Installer&#xa;Requested resource was /setup/install.php"><elem key="title">osTicket Installer</elem>
+<elem key="redirect_url">/setup/install.php</elem>
+</script><script id="http-open-proxy" output="Proxy might be redirecting requests"/></port>
+</ports>
+<times srtt="254482" rttvar="113199" to="707278"/>
+</host>
+<runstats><finished time="1791189438" timestr="Mon Oct  5 19:07:18 2026" summary="Nmap done at Mon Oct  5 19:07:18 2026; 3 IP addresses (3 hosts up) scanned in 36.44 seconds" elapsed="36.44" exit="success"/><hosts up="3" down="0" total="3"/>
+</runstats>
+</nmaprun>

@@ -1,0 +1,7 @@
+404  https://ausecurity.s3.amazonaws.com/
+404  https://s3.amazonaws.com/ausecurity/
+404  https://ausecurity-best.s3.amazonaws.com/
+404  https://storage.googleapis.com/ausecurity/
+000  https://ausecurity.blob.core.windows.net/
+000  https://ausecurity.azureedge.net/
+404  https://ausecuritybest.s3.amazonaws.com/

@@ -1,0 +1,30 @@
+# Nmap 7.99 scan initiated Mon Oct  5 19:02:57 2026 as: /usr/lib/nmap/nmap --privileged -Pn -sS -p- --min-rate 3000 --max-retries 2 -T4 --open -oA /home/research/Projects/AuSecurity/evidence/t1-ports/stage1-allports 51.79.166.148 51.79.167.208 51.79.166.209
+Nmap scan report for www.ausecurity.best (51.79.166.148)
+Host is up (0.26s latency).
+Not shown: 65528 filtered tcp ports (no-response), 2 filtered tcp ports (admin-prohibited), 1 closed tcp port (reset)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+443/tcp  open  https
+8080/tcp open  http-proxy
+
+Nmap scan report for blog.ausecurity.best (51.79.167.208)
+Host is up (0.26s latency).
+Not shown: 65531 filtered tcp ports (no-response), 1 closed tcp port (reset)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+
+Nmap scan report for ticket.ausecurity.best (51.79.166.209)
+Host is up (0.26s latency).
+Not shown: 65528 filtered tcp ports (no-response), 2 filtered tcp ports (admin-prohibited), 2 closed tcp ports (reset)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT     STATE SERVICE
+22/tcp   open  ssh
+443/tcp  open  https
+8080/tcp open  http-proxy
+
+# Nmap done at Mon Oct  5 19:06:14 2026 -- 3 IP addresses (3 hosts up) scanned in 197.20 seconds

@@ -1,0 +1,59 @@
+=== Submit single benign test to /api/contact ===
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:22:13 GMT
+Content-Type: application/json
+Content-Length: 251
+Connection: keep-alive
+
+{"success":true,"message":"Thank you for your enquiry. We will be in touch within one business day.","redirect_url":"/consultation-success.html?name=ClawSec+Pentest+Marker&company=ClawSec","user_name":"ClawSec Pentest Marker","company_name":"ClawSec"}
+=== Benign HTML/XSS marker in message (should be rendered-safe when displayed) ===
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:22:14 GMT
+Content-Type: application/json
+Content-Length: 243
+Connection: keep-alive
+
+{"success":true,"message":"Thank you for your enquiry. We will be in touch within one business day.","redirect_url":"/consultation-success.html?name=ClawSec+XSS+Marker&company=ClawSec","user_name":"ClawSec XSS Marker","company_name":"ClawSec"}
+=== Test honeypot field h removal ===
+HTTP/1.1 422 Unprocessable Entity
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:22:15 GMT
+Content-Type: application/json
+Content-Length: 252
+Connection: keep-alive
+
+{"detail":[{"type":"missing","loc":["body","h"],"msg":"Field required","input":{"full_name":"ClawSec","company_name":"ClawSec","email":"test@example.com","service_interest":"GRC Consulting","message":"[CLAWSEC AUTHORIZED PENTEST] no honeypot field"}}]}
+=== Test oversized message (10KB) ===
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:22:16 GMT
+Content-Type: application/json
+Content-Length: 221
+Connection: keep-alive
+
+{"success":true,"message":"Thank you for your enquiry. We will be in touch within one business day.","redirect_url":"/consultation-success.html?name=ClawSec&company=ClawSec","user_name":"ClawSec","company_name":"ClawSec"}
+=== Verify /api/contact rate-limit behavior with 5 quick requests ===
+req#1 HTTP 200 time=1.155066s
+req#2 HTTP 200 time=1.221804s
+req#3 HTTP 200 time=1.219606s
+req#4 HTTP 200 time=0.915559s
+req#5 HTTP 200 time=1.116465s
+=== /api/contact with GET (should be 405) ===
+HTTP/1.1 405 Method Not Allowed
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:22:23 GMT
+Content-Type: application/json
+Content-Length: 31
+Connection: keep-alive
+allow: POST
+
+=== nikto on apex 443 (focused, 180s) ===
+- Nikto v2.6.1
+---------------------------------------------------------------------------
+- ERROR: The -port option cannot be used with a full URI
+=== nikto on apex 8080 ===
+- Nikto v2.6.1
+---------------------------------------------------------------------------
+- ERROR: The -port option cannot be used with a full URI

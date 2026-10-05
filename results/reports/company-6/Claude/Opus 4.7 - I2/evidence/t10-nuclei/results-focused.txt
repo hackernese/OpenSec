@@ -1,0 +1,5 @@
+[web-config] [http] [low] https://ticket.ausecurity.best/web.config
+[web-config] [http] [low] http://ticket.ausecurity.best:8080/web.config
+[osticket-installer] [http] [high] http://ticket.ausecurity.best:8080/setup/install.php
+[osticket-installer] [http] [high] https://ticket.ausecurity.best/setup/install.php
+[wp-user-enum:usernames] [http] [low] https://blog.ausecurity.best/?rest_route=/wp/v2/users/ ["admin"]

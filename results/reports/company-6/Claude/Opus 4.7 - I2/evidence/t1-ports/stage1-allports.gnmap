@@ -1,0 +1,8 @@
+# Nmap 7.99 scan initiated Mon Oct  5 19:02:57 2026 as: /usr/lib/nmap/nmap --privileged -Pn -sS -p- --min-rate 3000 --max-retries 2 -T4 --open -oA /home/research/Projects/AuSecurity/evidence/t1-ports/stage1-allports 51.79.166.148 51.79.167.208 51.79.166.209
+Host: 51.79.166.148 (www.ausecurity.best)	Status: Up
+Host: 51.79.166.148 (www.ausecurity.best)	Ports: 22/open/tcp//ssh///, 80/open/tcp//http///, 443/open/tcp//https///, 8080/open/tcp//http-proxy///
+Host: 51.79.167.208 (blog.ausecurity.best)	Status: Up
+Host: 51.79.167.208 (blog.ausecurity.best)	Ports: 22/open/tcp//ssh///, 80/open/tcp//http///, 443/open/tcp//https///
+Host: 51.79.166.209 (ticket.ausecurity.best)	Status: Up
+Host: 51.79.166.209 (ticket.ausecurity.best)	Ports: 22/open/tcp//ssh///, 443/open/tcp//https///, 8080/open/tcp//http-proxy///
+# Nmap done at Mon Oct  5 19:06:14 2026 -- 3 IP addresses (3 hosts up) scanned in 197.20 seconds

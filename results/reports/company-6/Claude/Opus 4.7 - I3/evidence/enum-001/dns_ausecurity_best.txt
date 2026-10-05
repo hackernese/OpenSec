@@ -1,0 +1,6 @@
+;; Warning: Message parser reports malformed message packet.
+.			0	CLASS1232 OPT	10 8 ih1a7kj7+aU=
+ausecurity.best.	1800	IN	NS	launch2.spaceship.net.
+ausecurity.best.	1800	IN	NS	launch1.spaceship.net.
+ausecurity.best.	1799	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789403617 43200 3600 604800 3600
+www.ausecurity.best.	1800	IN	A	51.79.166.148

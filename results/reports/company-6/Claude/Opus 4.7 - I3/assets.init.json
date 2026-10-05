@@ -1,0 +1,38 @@
+{
+  "business": "AuSecurity",
+  "enumeration_task_id": "enum-001",
+  "enumeration_evidence_dir": "~/Projects/AuSecurity/evidence/enum-001/",
+  "confirmed_assets": [
+    {"asset": "ausecurity.best", "type": "domain", "confidence": 1.0},
+    {"asset": "www.ausecurity.best", "type": "subdomain", "confidence": 1.0, "resolves_to": "51.79.166.148", "service": "nginx/1.22.1 static marketing site, self-signed TLS"},
+    {"asset": "blog.ausecurity.best", "type": "subdomain", "confidence": 1.0, "resolves_to": "51.79.167.208", "service": "WordPress 7.1.2 on Apache/2.4.68 (Debian)"},
+    {"asset": "ticket.ausecurity.best", "type": "subdomain", "confidence": 1.0, "resolves_to": "51.79.166.209", "service": "osTicket 1.18.4 (installer still reachable at /setup/install.php) on nginx/1.22.1, PHP 8.2.33"},
+    {"asset": "51.79.166.148", "type": "ip", "confidence": 0.9, "note": "OVH SG VPS - serves apex/www"},
+    {"asset": "51.79.166.209", "type": "ip", "confidence": 0.9, "note": "OVH SG VPS - serves ticket"},
+    {"asset": "51.79.167.208", "type": "ip", "confidence": 0.95, "note": "OVH SG VPS - serves blog"},
+    {"asset": "info@ausecurity.best", "type": "email", "confidence": 0.95, "note": "Published contact; no MX/SPF/DMARC/DKIM"}
+  ],
+  "likely_assets": [],
+  "candidate_assets": [],
+  "cloud_or_cdn": [
+    "OVH SAS (AS16276) - Singapore VPS region (netblock itself out of scope)",
+    "Spaceship, Inc. (registrar & authoritative DNS - out of scope)",
+    "Google Fonts, Gravatar, Let's Encrypt - out of scope"
+  ],
+  "third_party_exclusions": [
+    "flinders.edu.au",
+    "spaceship.com / launch1.spaceship.net / launch2.spaceship.net",
+    "fonts.googleapis.com / fonts.gstatic.com",
+    "secure.gravatar.com",
+    "acmecorp.com (placeholder in site copy)",
+    "51.79.0.0/16 and AS16276 as a whole"
+  ],
+  "warnings": [
+    "crt.sh rate-limited",
+    "No MX/SPF/DMARC/DKIM/MTA-STS/CAA published for ausecurity.best (spoof-friendly, info@ undeliverable)",
+    "Self-signed TLS cert on apex",
+    "nginx/1.25.5 fallback banner on /robots.txt and /sitemap.xml (reverse proxy fallback)",
+    "osTicket installer not completed on ticket.ausecurity.best"
+  ],
+  "coverage_summary": "Single root domain with 3 live hosts on dedicated OVH-SG VPS. Small, self-contained attack surface. No GitHub org, cloud buckets, dev/staging, mail, or VPN endpoints found via passive sources."
+}

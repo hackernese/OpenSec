@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Date: Mon, 05 Oct 2026 10:59:17 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private
+Set-Cookie: wordpress_test_cookie=WP%20Cookie%20check; path=/; secure; HttpOnly
+X-Frame-Options: SAMEORIGIN
+Content-Security-Policy: frame-ancestors 'self';
+Referrer-Policy: strict-origin-when-cross-origin
+Content-Type: text/html; charset=UTF-8
+

@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Ausecurity</title>
+  <meta name="description" content="Meet the Ausecurity team — certified cybersecurity consultants with expertise in GRC, penetration testing, and cloud security." />
+  <meta property="og:title" content="About Ausecurity" />
+  <meta property="og:description" content="Founded by security professionals, driven by a mission to make security accessible and actionable." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ausecurity.best/about.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Ausecurity home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="case-studies.html">Case Studies</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Consultation</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <div class="overline">Who We Are</div>
+      <h1 id="page-title">About Ausecurity</h1>
+      <p>A team of certified security professionals on a mission to make enterprise-grade security accessible to every organisation.</p>
+    </div>
+  </section>
+
+  <!-- COMPANY STORY -->
+  <section class="section section-light" aria-labelledby="story-heading">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+        <div>
+          <div class="overline">Our Story</div>
+          <h2 id="story-heading">Founded on a Simple Belief</h2>
+          <div class="separator separator-left" style="margin-bottom:1.5rem;"></div>
+          <p style="color:var(--slate);margin-bottom:1rem;">Ausecurity was founded by a team of seasoned security professionals who saw a gap in the market: small and mid-sized businesses were being left behind in an increasingly hostile digital landscape, unable to afford the retainer fees of large consultancy firms yet too exposed to operate without expert guidance.</p>
+          <p style="color:var(--slate);margin-bottom:1rem;">The company's philosophy is straightforward — security should be accessible, understandable, and actionable. We deliver Australian-grade rigour in cybersecurity practice to clients across the region, operating with a <em>"red team mindset, blue team discipline"</em> ethos.</p>
+          <p style="color:var(--slate);">Today, Ausecurity works with financial services, healthcare providers, government contractors, and e-commerce platforms — acting as a trusted long-term partner, not just a vendor.</p>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--navy),#1a2f45);border-radius:16px;padding:2.5rem;color:white;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+            <div style="text-align:center;">
+              <div style="font-size:2.2rem;font-weight:800;color:var(--blue);">2009</div>
+              <div style="font-size:0.85rem;color:#A0AEC0;margin-top:0.3rem;">Year Founded</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:2.2rem;font-weight:800;color:var(--blue);">200+</div>
+              <div style="font-size:0.85rem;color:#A0AEC0;margin-top:0.3rem;">Clients Served</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:2.2rem;font-weight:800;color:var(--blue);">500+</div>
+              <div style="font-size:0.85rem;color:#A0AEC0;margin-top:0.3rem;">Assessments Delivered</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:2.2rem;font-weight:800;color:var(--blue);">15+</div>
+              <div style="font-size:0.85rem;color:#A0AEC0;margin-top:0.3rem;">Years Experience</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section section-mid" aria-labelledby="team-heading">
+    <div class="container">
+      <div class="section-heading">
+        <div class="overline">Meet The Team</div>
+        <h2 id="team-heading">The People Behind Ausecurity</h2>
+        <div class="separator"></div>
+        <p>Every consultant on our team holds industry-recognised certifications and has real-world experience in both offensive and defensive security.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar" aria-hidden="true">JH</div>
+          <h3>James Harrington</h3>
+          <div class="role">CEO &amp; Lead GRC Consultant</div>
+          <div class="certs">CISSP · CISM · ISO 27001 Lead Auditor<br>15 years in security advisory</div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" aria-hidden="true">SC</div>
+          <h3>Sarah Chen</h3>
+          <div class="role">Head of Penetration Testing</div>
+          <div class="certs">OSCP · CREST CRT · CEH<br>12 years in offensive security</div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" aria-hidden="true">MT</div>
+          <h3>Michael Torres</h3>
+          <div class="role">Senior GRC Analyst</div>
+          <div class="certs">CISM · CRISC · PCI-DSS QSA<br>10 years in compliance and risk</div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar" aria-hidden="true">PP</div>
+          <h3>Priya Patel</h3>
+          <div class="role">Cloud Security Specialist</div>
+          <div class="certs">AWS Security Specialty · OSCP · CCSP<br>8 years in cloud and DevSecOps</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="section section-light" aria-labelledby="values-heading">
+    <div class="container">
+      <div class="section-heading">
+        <div class="overline">What We Stand For</div>
+        <h2 id="values-heading">Our Values</h2>
+        <div class="separator"></div>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <h3>Integrity</h3>
+          <p>We tell clients what they need to hear, not what they want to hear. Our findings are honest, our scoping is fair, and our recommendations are independent.</p>
+        </div>
+        <div class="value-card">
+          <h3>Transparency</h3>
+          <p>No hidden methodologies, no black-box deliverables. Every finding is explained, every recommendation is justified, and every report is written for a real audience.</p>
+        </div>
+        <div class="value-card">
+          <h3>Excellence</h3>
+          <p>We hold ourselves to a high standard — CREST certification, continuous training, peer-reviewed reports, and a zero-tolerance policy for sloppy work.</p>
+        </div>
+        <div class="value-card">
+          <h3>Partnership</h3>
+          <p>We build long-term relationships. When an engagement ends, we don't disappear — we remain available for questions and support throughout remediation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="section section-dark" aria-labelledby="certs-heading">
+    <div class="container">
+      <div class="section-heading">
+        <div class="overline">Credentials</div>
+        <h2 id="certs-heading">Certifications &amp; Accreditations</h2>
+        <div class="separator"></div>
+        <p>Our team holds certifications across governance, risk, compliance, and offensive security disciplines.</p>
+      </div>
+      <div class="cert-badges">
+        <span class="cert-badge">CREST CRT</span>
+        <span class="cert-badge">CREST CCT</span>
+        <span class="cert-badge">OSCP</span>
+        <span class="cert-badge">CISSP</span>
+        <span class="cert-badge">CISM</span>
+        <span class="cert-badge">CRISC</span>
+        <span class="cert-badge">ISO 27001 Lead Auditor</span>
+        <span class="cert-badge">PCI-DSS QSA</span>
+        <span class="cert-badge">CEH</span>
+        <span class="cert-badge">CCSP</span>
+        <span class="cert-badge">AWS Security Specialty</span>
+        <span class="cert-badge">Azure Security Engineer</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner" aria-labelledby="cta-heading">
+    <div class="container">
+      <h2 id="cta-heading">Work with people who take security seriously.</h2>
+      <p>Whether you need a compliance assessment or a full red team exercise, we're ready to help.</p>
+      <div class="btns">
+        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        <a href="services.html" class="btn btn-outline">View Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+              <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+              <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="footer-brand-name">Au<span>security</span></span>
+          </div>
+          <p class="tagline">Red team mindset. Blue team discipline.</p>
+          <div class="social-links" aria-label="Social media links">
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html#grc">GRC Consulting</a></li>
+            <li><a href="services.html#grc">Risk Assessments</a></li>
+            <li><a href="services.html#grc">Virtual CISO</a></li>
+            <li><a href="services.html#pentest">Penetration Testing</a></li>
+            <li><a href="services.html#pentest">Red Team Exercises</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-contact">
+            <li>📧 info@ausecurity.best</li>
+            <li>📞 +61 2 9000 1234</li>
+            <li>🕐 Mon–Fri, 9am–6pm AEST</li>
+            <li>🌐 ausecurity.best</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Ausecurity. All rights reserved.</span>
+        <span>ABN 00 000 000 000 | CREST Certified</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Studies — Ausecurity</title>
+  <meta name="description" content="See how Ausecurity has helped organisations achieve ISO 27001 certification, secure web applications, and pass red team assessments." />
+  <meta property="og:title" content="Case Studies — Ausecurity" />
+  <meta property="og:description" content="Real-world cybersecurity outcomes delivered by Ausecurity across financial services, healthcare, e-commerce, and government." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ausecurity.best/case-studies.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Ausecurity home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="case-studies.html" class="active">Case Studies</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Consultation</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <div class="overline">Proven Results</div>
+      <h1 id="page-title">Case Studies</h1>
+      <p>Anonymised examples of real engagements — illustrating the challenges our clients faced, how we approached them, and the outcomes we delivered.</p>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES GRID -->
+  <section class="section section-light" aria-labelledby="cases-heading">
+    <div class="container">
+      <div class="section-heading">
+        <div class="overline">Client Outcomes</div>
+        <h2 id="cases-heading">Engagements Across Industries</h2>
+        <div class="separator"></div>
+        <p>Every engagement is unique — here are four examples that illustrate our depth of capability.</p>
+      </div>
+      <div class="case-grid">
+
+        <!-- Case Study 1 -->
+        <article class="case-card" aria-labelledby="case1-title">
+          <div class="case-card-tag">Financial Services · GRC</div>
+          <div class="case-card-body">
+            <h3 id="case1-title">ISO 27001 Certification Achieved in 9 Months</h3>
+            <div class="case-row">
+              <span class="case-row-label">Challenge</span>
+              <span class="case-row-text">A regional lending institution needed ISO 27001 certification to satisfy enterprise client procurement requirements, but had no existing ISMS documentation and limited internal security capability.</span>
+            </div>
+            <div class="case-row">
+              <span class="case-row-label">Approach</span>
+              <span class="case-row-text">Ausecurity conducted an initial gap assessment, developed a complete ISMS policy suite, delivered staff awareness training, and provided hands-on support through the internal audit and certification audit process.</span>
+            </div>
+            <div class="case-outcome">
+              ✅ Achieved ISO 27001:2022 certification within 9 months. Zero non-conformities raised during certification audit.
+            </div>
+          </div>
+        </article>
+
+        <!-- Case Study 2 -->
+        <article class="case-card" aria-labelledby="case2-title">
+          <div class="case-card-tag">E-Commerce · Penetration Testing</div>
+          <div class="case-card-body">
+            <h3 id="case2-title">Critical SQLi Vulnerability Discovered Pre-Launch</h3>
+            <div class="case-row">
+              <span class="case-row-label">Challenge</span>
+              <span class="case-row-text">An e-commerce platform was six weeks from launch and required an independent security assessment before going live. The platform handled payment card data and customer PII.</span>
+            </div>
+            <div class="case-row">
+              <span class="case-row-label">Approach</span>
+              <span class="case-row-text">A full web application penetration test was conducted against the staging environment, including manual testing of authentication flows, checkout logic, admin interfaces, and API endpoints.</span>
+            </div>
+            <div class="case-outcome">
+              ✅ Discovered and documented a critical SQL injection vulnerability in the order history endpoint. Fully remediated before go-live — protecting 50,000+ customer records.
+            </div>
+          </div>
+        </article>
+
+        <!-- Case Study 3 -->
+        <article class="case-card" aria-labelledby="case3-title">
+          <div class="case-card-tag">Healthcare · GRC + Training</div>
+          <div class="case-card-body">
+            <h3 id="case3-title">Full GRC Uplift &amp; Security Awareness Programme</h3>
+            <div class="case-row">
+              <span class="case-row-label">Challenge</span>
+              <span class="case-row-text">A multi-site healthcare provider had grown rapidly through acquisitions and had fragmented, inconsistent security practices across its locations. Staff were regularly falling for phishing simulations.</span>
+            </div>
+            <div class="case-row">
+              <span class="case-row-label">Approach</span>
+              <span class="case-row-text">A 12-month vCISO engagement was established. Ausecurity consolidated the risk register, standardised policy documentation, conducted a full NIST CSF assessment, and delivered quarterly phishing simulations with targeted training.</span>
+            </div>
+            <div class="case-outcome">
+              ✅ Phishing click rate reduced from 34% to 6% over 12 months. Organisation achieved NIST CSF Tier 3 posture from a Tier 1 baseline.
+            </div>
+          </div>
+        </article>
+
+        <!-- Case Study 4 -->
+        <article class="case-card" aria-labelledby="case4-title">
+          <div class="case-card-tag">Government Contractor · Red Team</div>
+          <div class="case-card-body">
+            <h3 id="case4-title">Red Team Assessment Reveals Critical AD Misconfigurations</h3>
+            <div class="case-row">
+              <span class="case-row-label">Challenge</span>
+              <span class="case-row-text">A government contractor handling sensitive data required an adversarial simulation to validate the effectiveness of their recently upgraded SOC and endpoint detection capabilities.</span>
+            </div>
+            <div class="case-row">
+              <span class="case-row-label">Approach</span>
+              <span class="case-row-text">A goal-based red team exercise was scoped to simulate an advanced persistent threat actor. The team gained initial access via a phishing email, escalated privileges through an unconstrained delegation misconfiguration in Active Directory, and achieved domain compromise.</span>
+            </div>
+            <div class="case-outcome">
+              ✅ Domain compromise achieved in 4 days without triggering any SOC alerts. Full MITRE ATT&CK-mapped report delivered. AD hardening project initiated — 17 misconfigurations resolved.
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS SECTION -->
+  <section class="section section-dark" aria-labelledby="stats-heading">
+    <div class="container">
+      <div class="section-heading">
+        <div class="overline">By The Numbers</div>
+        <h2 id="stats-heading">Outcomes That Matter</h2>
+        <div class="separator"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;text-align:center;margin-top:2rem;">
+        <div>
+          <div style="font-size:2.8rem;font-weight:800;color:var(--blue);">98%</div>
+          <div style="color:#A0AEC0;margin-top:0.4rem;">Client satisfaction rate</div>
+        </div>
+        <div>
+          <div style="font-size:2.8rem;font-weight:800;color:var(--blue);">100%</div>
+          <div style="color:#A0AEC0;margin-top:0.4rem;">of ISO 27001 clients certified first attempt</div>
+        </div>
+        <div>
+          <div style="font-size:2.8rem;font-weight:800;color:var(--blue);">0</div>
+          <div style="color:#A0AEC0;margin-top:0.4rem;">Data breaches at retained clients</div>
+        </div>
+        <div>
+          <div style="font-size:2.8rem;font-weight:800;color:var(--blue);">72h</div>
+          <div style="color:#A0AEC0;margin-top:0.4rem;">Average time to draft pentest report</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner" aria-labelledby="cta-heading">
+    <div class="container">
+      <h2 id="cta-heading">Want results like these for your organisation?</h2>
+      <p>Get in touch and tell us about your security goals. We'll put together a scoped proposal within 48 hours.</p>
+      <div class="btns">
+        <a href="contact.html" class="btn btn-primary">Request a Proposal</a>
+        <a href="services.html" class="btn btn-outline">View Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+              <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+              <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="footer-brand-name">Au<span>security</span></span>
+          </div>
+          <p class="tagline">Red team mindset. Blue team discipline.</p>
+          <div class="social-links" aria-label="Social media links">
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html#grc">GRC Consulting</a></li>
+            <li><a href="services.html#grc">Risk Assessments</a></li>
+            <li><a href="services.html#grc">Virtual CISO</a></li>
+            <li><a href="services.html#pentest">Penetration Testing</a></li>
+            <li><a href="services.html#pentest">Red Team Exercises</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-contact">
+            <li>📧 info@ausecurity.best</li>
+            <li>📞 +61 2 9000 1234</li>
+            <li>🕐 Mon–Fri, 9am–6pm AEST</li>
+            <li>🌐 ausecurity.best</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Ausecurity. All rights reserved.</span>
+        <span>ABN 00 000 000 000 | CREST Certified</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — Ausecurity</title>
+  <meta name="description" content="Contact Ausecurity to book a consultation, request a penetration test, or enquire about GRC services. We respond within one business day." />
+  <meta property="og:title" content="Contact Ausecurity" />
+  <meta property="og:description" content="Get in touch with Ausecurity's cybersecurity experts for a free initial consultation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ausecurity.best/contact.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Ausecurity home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="case-studies.html">Case Studies</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Consultation</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <div class="overline">Get In Touch</div>
+      <h1 id="page-title">Contact Ausecurity</h1>
+      <p>Tell us about your security challenges. We'll respond within one business day with an honest assessment of how we can help.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="section section-light" aria-labelledby="contact-section-heading">
+    <div class="container">
+      <h2 id="contact-section-heading" class="sr-only">Contact information and enquiry form</h2>
+      <div class="contact-layout">
+
+        <!-- LEFT: Contact Info -->
+        <aside aria-label="Contact details">
+          <h2>Get In Touch</h2>
+          <p style="color:var(--slate);margin-bottom:2rem;font-size:0.95rem;">Our team of certified consultants is ready to discuss your security needs — whether you're exploring options or ready to scope a specific engagement.</p>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>Email</strong>
+              <span><a href="mailto:info@ausecurity.best" style="color:var(--blue);text-decoration:none;">info@ausecurity.best</a></span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>Phone</strong>
+              <span>+61 2 9000 1234</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>Business Hours</strong>
+              <span>Monday – Friday, 9:00am – 6:00pm AEST</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>Location</strong>
+              <span>Sydney, NSW, Australia<br>Remote engagements available nationwide</span>
+            </div>
+          </div>
+
+          <div style="margin-top:2rem;padding:1.25rem;background:rgba(0,168,232,0.07);border-radius:10px;border:1px solid rgba(0,168,232,0.2);">
+            <p style="font-size:0.9rem;color:var(--navy);font-weight:600;margin-bottom:0.4rem;">🔒 Confidentiality Assured</p>
+            <p style="font-size:0.85rem;color:var(--slate);">All enquiries are handled with strict confidentiality. We operate under NDA for all engagements.</p>
+          </div>
+        </aside>
+
+        <!-- RIGHT: Contact Form -->
+        <div class="contact-form-card" role="main">
+          <h3>Send Us an Enquiry</h3>
+          <form id="contact-form" novalidate aria-label="Contact enquiry form">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="full_name">Full Name <span class="req" aria-hidden="true">*</span></label>
+                <input
+                  type="text"
+                  id="full_name"
+                  name="full_name"
+                  class="form-control"
+                  placeholder="Jane Smith"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                  aria-describedby="full_name-error"
+                />
+                <div id="full_name-error" class="form-error-msg" role="alert" aria-live="polite"></div>
+              </div>
+              <div class="form-group">
+                <label for="company_name">Company Name <span class="req" aria-hidden="true">*</span></label>
+                <input
+                  type="text"
+                  id="company_name"
+                  name="company_name"
+                  class="form-control"
+                  placeholder="Acme Corp"
+                  autocomplete="organization"
+                  required
+                  aria-required="true"
+                  aria-describedby="company_name-error"
+                />
+                <div id="company_name-error" class="form-error-msg" role="alert" aria-live="polite"></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address <span class="req" aria-hidden="true">*</span></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="jane@acmecorp.com"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                  aria-describedby="email-error"
+                />
+                <div id="email-error" class="form-error-msg" role="alert" aria-live="polite"></div>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number <span style="color:var(--slate);font-weight:400;font-size:0.82rem;">(optional)</span></label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="form-control"
+                  placeholder="+61 4XX XXX XXX"
+                  autocomplete="tel"
+                  aria-describedby="phone-error"
+                />
+                <div id="phone-error" class="form-error-msg" role="alert" aria-live="polite"></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="service_interest">Service of Interest <span class="req" aria-hidden="true">*</span></label>
+              <select
+                id="service_interest"
+                name="service_interest"
+                class="form-control"
+                required
+                aria-required="true"
+                aria-describedby="service_interest-error"
+              >
+                <option value="">— Select a service —</option>
+                <option value="GRC Consulting">GRC Consulting</option>
+                <option value="Penetration Testing">Penetration Testing</option>
+                <option value="Not Sure">Not Sure — Help Me Decide</option>
+              </select>
+              <div id="service_interest-error" class="form-error-msg" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message / Description of Needs <span class="req" aria-hidden="true">*</span></label>
+              <textarea
+                id="message"
+                name="message"
+                class="form-control"
+                placeholder="Tell us about your organisation, your current security challenges, and what you're hoping to achieve. The more detail you can provide, the better we can tailor our response."
+                required
+                aria-required="true"
+                aria-describedby="message-error"
+              ></textarea>
+              <div id="message-error" class="form-error-msg" role="alert" aria-live="polite"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:0.85rem;">
+              Send Enquiry
+            </button>
+
+            <div id="form-feedback" role="status" aria-live="polite"></div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+              <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+              <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="footer-brand-name">Au<span>security</span></span>
+          </div>
+          <p class="tagline">Red team mindset. Blue team discipline.</p>
+          <div class="social-links" aria-label="Social media links">
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html#grc">GRC Consulting</a></li>
+            <li><a href="services.html#grc">Risk Assessments</a></li>
+            <li><a href="services.html#grc">Virtual CISO</a></li>
+            <li><a href="services.html#pentest">Penetration Testing</a></li>
+            <li><a href="services.html#pentest">Red Team Exercises</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-contact">
+            <li>📧 info@ausecurity.best</li>
+            <li>📞 +61 2 9000 1234</li>
+            <li>🕐 Mon–Fri, 9am–6pm AEST</li>
+            <li>🌐 ausecurity.best</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Ausecurity. All rights reserved.</span>
+        <span>ABN 00 000 000 000 | CREST Certified</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Ausecurity</title>
+  <meta name="description" content="Ausecurity offers GRC consulting (ISO 27001, NIST, PCI-DSS, vCISO) and penetration testing (web apps, networks, cloud, red team) services." />
+  <meta property="og:title" content="Services — Ausecurity" />
+  <meta property="og:description" content="GRC consulting and penetration testing services for businesses of every size." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ausecurity.best/services.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Ausecurity home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="case-studies.html">Case Studies</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Consultation</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <div class="overline">What We Offer</div>
+      <h1 id="page-title">Our Services</h1>
+      <p>From governance frameworks to hands-on offensive assessments — all delivered by certified professionals with deep industry experience.</p>
+    </div>
+  </section>
+
+  <!-- GRC CONSULTING -->
+  <section class="section section-light" id="grc" aria-labelledby="grc-heading">
+    <div class="container">
+      <div class="services-section-header">
+        <div class="icon-box" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l6 2.67V11c0 3.88-2.61 7.52-6 8.93C8.61 18.52 6 14.88 6 11V7.67L12 5z"/></svg>
+        </div>
+        <div>
+          <div class="overline">Pillar One</div>
+          <h2 id="grc-heading">GRC Consulting</h2>
+        </div>
+      </div>
+      <p style="color:var(--slate);max-width:720px;margin-bottom:2.5rem;">Governance, Risk &amp; Compliance is the foundation of a mature security posture. Our GRC consultants work alongside your team to build frameworks that are practical, auditable, and aligned with your business objectives.</p>
+      <div class="cards-grid">
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.05 15.96 0 13.36 0c-1.46 0-2.75.63-3.65 1.63L8 3.5 6.29 1.63C5.4.63 4.1 0 2.64 0 1.05 0 0 1.05 0 2.64c0 .48.1.92.18 1.36H0v14c0 1.1.9 2 2 2h8.95c.63 0 1.21-.32 1.54-.82L16 13l4.5 7H22c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-2z"/></svg>
+          </div>
+          <h3>Risk Assessments</h3>
+          <p>Identify, analyse, and prioritise your organisation's information security risks using structured methodologies aligned to ISO 31000 and NIST.</p>
+          <ul class="deliverables">
+            <li>Threat and vulnerability identification</li>
+            <li>Risk register development</li>
+            <li>Likelihood and impact scoring</li>
+            <li>Risk treatment recommendations</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zm-5-5v2H9v-2h4zm4-4H7v2h10v-2zm0-3H7v2h10V8z"/></svg>
+          </div>
+          <h3>Policy &amp; Procedure Development</h3>
+          <p>We develop or update your Information Security Management System (ISMS) documentation — including policies, standards, and operational procedures.</p>
+          <ul class="deliverables">
+            <li>ISMS policy suite development</li>
+            <li>Acceptable use and data classification policies</li>
+            <li>Incident response procedures</li>
+            <li>Business continuity documentation</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <h3>Compliance Gap Analysis</h3>
+          <p>Measure your current security posture against leading frameworks and regulatory requirements — and receive a prioritised remediation roadmap.</p>
+          <ul class="deliverables">
+            <li>ISO 27001:2022 gap assessment</li>
+            <li>NIST CSF mapping and scoring</li>
+            <li>PCI-DSS requirements review</li>
+            <li>Australian Privacy Act alignment</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+          </div>
+          <h3>Security Awareness Training</h3>
+          <p>Turn your workforce into a security asset. Our training programs are tailored to your industry and designed to drive lasting behavioural change.</p>
+          <ul class="deliverables">
+            <li>Phishing simulation campaigns</li>
+            <li>Role-based awareness modules</li>
+            <li>Executive-level security briefings</li>
+            <li>Compliance training for PCI-DSS / HIPAA</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+          </div>
+          <h3>Virtual CISO (vCISO)</h3>
+          <p>Get the strategic security leadership of a CISO without the full-time hire. Our vCISO service provides ongoing oversight, board reporting, and security programme management.</p>
+          <ul class="deliverables">
+            <li>Security strategy development</li>
+            <li>Board and executive reporting</li>
+            <li>Vendor and third-party risk management</li>
+            <li>Security roadmap ownership</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PENETRATION TESTING -->
+  <section class="section section-mid" id="pentest" aria-labelledby="pentest-heading">
+    <div class="container">
+      <div class="services-section-header">
+        <div class="icon-box" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 0 0 9.5 3 6.5 6.5 0 0 0 3 9.5 6.5 6.5 0 0 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+        <div>
+          <div class="overline">Pillar Two</div>
+          <h2 id="pentest-heading">Penetration Testing</h2>
+        </div>
+      </div>
+      <p style="color:var(--slate);max-width:720px;margin-bottom:2.5rem;">Our offensive security team operates with a real-world attacker's mindset. Every assessment is scoped carefully, executed by CREST-certified testers, and delivered with clear, risk-prioritised findings and remediation guidance.</p>
+      <div class="cards-grid">
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10z"/></svg>
+          </div>
+          <h3>Web Application Penetration Testing</h3>
+          <p>Manual-led assessments of your web applications following OWASP Top 10 and OWASP WSTG methodology. We go beyond automated scanning to find business-logic flaws.</p>
+          <ul class="deliverables">
+            <li>Authentication and session management testing</li>
+            <li>Injection and XSS vulnerability testing</li>
+            <li>API security assessment</li>
+            <li>CVSS-scored findings with PoC evidence</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7.01 5 5 7.01 5 9.5S7.01 14 9.5 14 14 11.99 14 9.5 11.99 5 9.5 5z"/></svg>
+          </div>
+          <h3>Internal &amp; External Network Testing</h3>
+          <p>Simulate an external attacker or a malicious insider to identify network-level vulnerabilities, misconfigurations, and lateral movement pathways.</p>
+          <ul class="deliverables">
+            <li>External perimeter assessment</li>
+            <li>Internal network enumeration and exploitation</li>
+            <li>Active Directory security review</li>
+            <li>Firewall and segmentation review</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+          </div>
+          <h3>Cloud Security Assessment</h3>
+          <p>Review your AWS, Azure, or GCP environment for misconfigured IAM policies, exposed storage, insecure services, and deviations from CIS Benchmarks.</p>
+          <ul class="deliverables">
+            <li>IAM policy and privilege escalation review</li>
+            <li>Storage bucket and secret exposure checks</li>
+            <li>Network security group analysis</li>
+            <li>CIS Benchmark compliance report</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-9 3h2v2h-2V7zm4 0h2v2h-2V7zm-8 0h2v2H7V7zm13 12H4V9h16v10z"/></svg>
+          </div>
+          <h3>Social Engineering &amp; Phishing Simulations</h3>
+          <p>Test your staff's susceptibility to phishing, pretexting, and vishing attacks in a controlled, ethical manner — with full metrics and training integration.</p>
+          <ul class="deliverables">
+            <li>Targeted spear-phishing campaigns</li>
+            <li>Credential harvesting simulations</li>
+            <li>Vishing (phone-based) engagements</li>
+            <li>Awareness training integration</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M17.8 20.25L16 18.47V21h-2v-6h6v2h-2.17l1.77 1.78-1.8 1.47M7 17H5v-2h2v2m0-4H5V8h2v5m0-7H5V4h2v2m6-2h-4V4h4v2m6 6h-2v-2h2v2m0-4h-2V6h2v2m0-4h-2V2h2v2m-6 0h-4V2h4v2M7 2H5V0h2v2M9 21H7v-2h2v2m-2-4H5v-2h2v2m6 0h-4v-2h4v2m-4-4H7v-2h4v2m4 0h-2v-2h2v2"/></svg>
+          </div>
+          <h3>Red Team Exercises</h3>
+          <p>Full-scope adversary simulation campaigns that test your people, processes, and technology against real-world threat actor TTPs, mapped to MITRE ATT&amp;CK.</p>
+          <ul class="deliverables">
+            <li>Custom threat actor scenario design</li>
+            <li>Multi-vector attack campaigns</li>
+            <li>Detection and response evaluation</li>
+            <li>MITRE ATT&amp;CK-mapped executive report</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-blue">Enquire</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner" aria-labelledby="cta-heading">
+    <div class="container">
+      <h2 id="cta-heading">Not sure which service you need?</h2>
+      <p>Tell us about your situation and we'll recommend the right assessment or programme for your organisation.</p>
+      <div class="btns">
+        <a href="contact.html" class="btn btn-primary">Talk to an Expert</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+              <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+              <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="footer-brand-name">Au<span>security</span></span>
+          </div>
+          <p class="tagline">Red team mindset. Blue team discipline.</p>
+          <div class="social-links" aria-label="Social media links">
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html#grc">GRC Consulting</a></li>
+            <li><a href="services.html#grc">Risk Assessments</a></li>
+            <li><a href="services.html#grc">Virtual CISO</a></li>
+            <li><a href="services.html#pentest">Penetration Testing</a></li>
+            <li><a href="services.html#pentest">Red Team Exercises</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-contact">
+            <li>📧 info@ausecurity.best</li>
+            <li>📞 +61 2 9000 1234</li>
+            <li>🕐 Mon–Fri, 9am–6pm AEST</li>
+            <li>🌐 ausecurity.best</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Ausecurity. All rights reserved.</span>
+        <span>ABN 00 000 000 000 | CREST Certified</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
+/* ===========================
+   Ausecurity — Main JS
+   =========================== */
+
+// ---- Auth utilities ----
+
+/**
+ * Check with the backend whether the current session cookie is valid.
+ * Returns true if authenticated, false otherwise.
+ */
+async function isAuthenticated() {
+  try {
+    const res = await fetch('/api/auth/me', { credentials: 'same-origin' });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Redirect to /login, preserving the current page as the ?redirect= param
+ * so the user is sent back after a successful login.
+ */
+function redirectToLogin() {
+  const redirect = encodeURIComponent(window.location.pathname + window.location.search);
+  window.location.href = `/login?redirect=${redirect}`;
+}
+
+// ---- Dashboard auth guard ----
+// Runs on dashboard.html: redirect to /login if not authenticated.
+if (document.body.closest('[data-page="dashboard"]') ||
+    window.location.pathname.replace(/\/$/, '').endsWith('/dashboard') ||
+    window.location.pathname.replace(/\/$/, '').endsWith('/dashboard.html')) {
+  isAuthenticated().then(authed => {
+    if (!authed) {
+      redirectToLogin();
+    } else {
+      // Populate the live date in the topbar
+      const dateEl = document.getElementById('dash-date');
+      if (dateEl) {
+        dateEl.textContent = new Date().toLocaleDateString('en-AU', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+        });
+      }
+    }
+  });
+
+  // Logout button
+  document.addEventListener('DOMContentLoaded', () => {
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' });
+        window.location.href = '/login';
+      });
+    }
+  });
+}
+
+// ---- Login form ----
+// Runs on login.html: handles form submit + redirect-after-login.
+if (window.location.pathname.replace(/\/$/, '').endsWith('/login') ||
+    window.location.pathname.replace(/\/$/, '').endsWith('/login.html')) {
+
+  // If already logged in, skip the login page
+  isAuthenticated().then(authed => {
+    if (authed) {
+      const params = new URLSearchParams(window.location.search);
+      window.location.href = params.get('redirect') || '/dashboard';
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('login-form');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Clear previous errors
+      ['username', 'password'].forEach(field => {
+        const input = document.getElementById(field);
+        const err   = document.getElementById(`${field}-error`);
+        if (input) input.classList.remove('error');
+        if (err)   { err.textContent = ''; err.classList.remove('visible'); }
+      });
+      const banner = document.getElementById('login-error');
+      if (banner) { banner.textContent = ''; banner.classList.remove('visible'); }
+
+      const username = form.username.value.trim();
+      const password = form.password.value;
+      let valid = true;
+
+      if (!username) {
+        _loginFieldError('username', 'Username is required.');
+        valid = false;
+      }
+      if (!password) {
+        _loginFieldError('password', 'Password is required.');
+        valid = false;
+      }
+      if (!valid) return;
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in…';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ username, password }),
+        });
+
+        if (res.ok) {
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect');
+          // Safety check: only allow same-origin redirects
+          if (redirect) {
+            window.location.href = redirect;
+          } else {
+            window.location.href = '/dashboard';
+          }
+        } else {
+          const json = await res.json().catch(() => ({}));
+          const msg = json.detail || 'Invalid username or password.';
+          if (banner) { banner.textContent = msg; banner.classList.add('visible'); }
+        }
+      } catch {
+        if (banner) {
+          banner.textContent = 'Network error. Please check your connection and try again.';
+          banner.classList.add('visible');
+        }
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+      }
+    });
+  });
+}
+
+function _loginFieldError(field, msg) {
+  const input = document.getElementById(field);
+  const err   = document.getElementById(`${field}-error`);
+  if (input) input.classList.add('error');
+  if (err)   { err.textContent = msg; err.classList.add('visible'); }
+}
+
+// ---- Mobile nav toggle ----
+document.addEventListener('DOMContentLoaded', () => {
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks  = document.querySelector('.nav-links');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+  }
+
+  // Highlight active nav link
+  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPath || (currentPath === '' && href === 'index.html')) {
+      link.classList.add('active');
+    }
+  });
+});
+
+// ---- Contact form ----
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const data = {
+      full_name:        contactForm.full_name.value.trim(),
+      company_name:     contactForm.company_name.value.trim(),
+      email:            contactForm.email.value.trim(),
+      phone:            contactForm.phone.value.trim() || null,
+      service_interest: contactForm.service_interest.value,
+      message:          contactForm.message.value.trim(),
+      h: "contact.ausecurity.best"
+    };
+
+    let valid = true;
+
+    if (!data.full_name) {
+      showError('full_name', 'Full name is required.');
+      valid = false;
+    }
+    if (!data.company_name) {
+      showError('company_name', 'Company name is required.');
+      valid = false;
+    }
+    if (!data.email || !isValidEmail(data.email)) {
+      showError('email', 'A valid email address is required.');
+      valid = false;
+    }
+    if (!data.service_interest) {
+      showError('service_interest', 'Please select a service.');
+      valid = false;
+    }
+    if (!data.message) {
+      showError('message', 'Please describe your needs.');
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    try {
+      const apiBase = window.location.origin;
+      const res = await fetch(`${apiBase}/api/contact`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(data),
+      });
+
+      const json = await res.json();
+
+      if (res.ok && json.success) {
+        // If a redirect URL is provided, navigate to it
+        if (json.redirect_url) {
+          window.location.href = json.redirect_url;
+        } else {
+          // Fallback to showing inline success message
+          showFeedback('success', json.message || 'Thank you! We will be in touch shortly.');
+          contactForm.reset();
+        }
+      } else {
+        const detail = json.detail || 'Something went wrong. Please try again.';
+        showFeedback('error-msg', detail);
+      }
+    } catch {
+      showFeedback('error-msg', 'Network error. Please check your connection and try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Enquiry';
+    }
+  });
+}
+
+function showError(fieldName, msg) {
+  const field = document.getElementById(fieldName);
+  if (field) field.classList.add('error');
+  const errEl = document.getElementById(`${fieldName}-error`);
+  if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
+}
+
+function clearErrors() {
+  document.querySelectorAll('.form-control').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.form-error-msg').forEach(el => {
+    el.textContent = '';
+    el.classList.remove('visible');
+  });
+  const fb = document.getElementById('form-feedback');
+  if (fb) { fb.className = ''; fb.textContent = ''; fb.style.display = 'none'; }
+}
+
+function showFeedback(type, msg) {
+  const fb = document.getElementById('form-feedback');
+  if (!fb) return;
+  fb.className = type;
+  fb.textContent = msg;
+  fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+/* ===========================
+   Ausecurity — Custom Styles
+   =========================== */
+
+:root {
+  --navy:    #0D1B2A;
+  --blue:    #00A8E8;
+  --slate:   #4A5568;
+  --bg:      #F7F8FC;
+  --white:   #FFFFFF;
+  --blue-dark: #0089C0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--navy);
+  line-height: 1.6;
+}
+
+/* ---- Typography ---- */
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+h3 { font-size: 1.25rem; }
+
+/* ---- Utility ---- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.section    { padding: 5rem 0; }
+.section-dark { background: var(--navy); color: var(--white); }
+.section-light { background: var(--bg); }
+.section-mid  { background: #EEF0F8; }
+.text-blue    { color: var(--blue); }
+.text-slate   { color: var(--slate); }
+.text-center  { text-align: center; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
+}
+.btn-primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border-color: var(--white);
+}
+.btn-outline:hover { background: var(--white); color: var(--navy); }
+.btn-outline-blue {
+  background: transparent;
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.btn-outline-blue:hover { background: var(--blue); color: var(--white); }
+
+/* ---- Navigation ---- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--navy);
+  padding: 1rem 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--white);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.navbar-brand span { color: var(--blue); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: #CBD5E0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--white); }
+.nav-cta { margin-left: 1rem; }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background: var(--white);
+  transition: all 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--navy);
+    padding: 1.5rem;
+    gap: 1.2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .nav-links.open { display: flex; }
+  .nav-cta { margin-left: 0; }
+  .navbar { position: relative; }
+}
+
+/* ---- Hero ---- */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #142133 60%, #0a1520 100%);
+  color: var(--white);
+  padding: 7rem 0 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -80px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,168,232,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content { max-width: 680px; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(0,168,232,0.15);
+  color: var(--blue);
+  border: 1px solid rgba(0,168,232,0.3);
+  padding: 0.3rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.hero h1 { margin-bottom: 1rem; }
+.hero p.lead {
+  font-size: 1.15rem;
+  color: #A0AEC0;
+  margin-bottom: 2rem;
+  max-width: 560px;
+}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ---- Trust Bar ---- */
+.trust-bar {
+  background: #081422;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.trust-bar .container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.trust-item .number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--blue);
+}
+.trust-item .label {
+  font-size: 0.85rem;
+  color: #A0AEC0;
+  margin-top: 0.2rem;
+}
+
+/* ---- Cards ---- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 2px 16px rgba(13,27,42,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(13,27,42,0.12); }
+.card-icon {
+  width: 52px; height: 52px;
+  background: rgba(0,168,232,0.1);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.card-icon svg { width: 28px; height: 28px; fill: var(--blue); }
+.card h3 { margin-bottom: 0.6rem; }
+.card p { color: var(--slate); font-size: 0.95rem; }
+.card .btn { margin-top: 1.2rem; font-size: 0.9rem; }
+
+/* Deliverables list */
+.deliverables {
+  list-style: none;
+  margin: 0.8rem 0 1rem;
+}
+.deliverables li {
+  color: var(--slate);
+  font-size: 0.9rem;
+  padding: 0.25rem 0 0.25rem 1.4rem;
+  position: relative;
+}
+.deliverables li::before {
+  content: '✓';
+  position: absolute; left: 0;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+/* ---- Section Heading ---- */
+.section-heading { text-align: center; margin-bottom: 3rem; }
+.section-heading p { color: var(--slate); margin-top: 0.6rem; font-size: 1.05rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+.section-heading .overline {
+  display: inline-block;
+  color: var(--blue);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+/* ---- Testimonials ---- */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.testimonial-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 2rem;
+}
+.testimonial-card p { color: #CBD5E0; font-style: italic; line-height: 1.7; }
+.testimonial-author { margin-top: 1.2rem; }
+.testimonial-author strong { color: var(--white); font-size: 0.95rem; }
+.testimonial-author span { display: block; color: var(--blue); font-size: 0.85rem; margin-top: 0.2rem; }
+.stars { color: #F6AD55; font-size: 1rem; margin-bottom: 0.8rem; }
+
+/* ---- CTA Banner ---- */
+.cta-banner {
+  background: linear-gradient(135deg, var(--navy), #142133);
+  color: var(--white);
+  padding: 5rem 0;
+  text-align: center;
+}
+.cta-banner h2 { margin-bottom: 1rem; }
+.cta-banner p { color: #A0AEC0; margin-bottom: 2rem; font-size: 1.05rem; }
+.cta-banner .btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ---- Services Page ---- */
+.services-section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.services-section-header .icon-box {
+  width: 56px; height: 56px;
+  background: rgba(0,168,232,0.12);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.services-section-header .icon-box svg { width: 30px; height: 30px; fill: var(--blue); }
+.services-section-header h2 { margin-bottom: 0; }
+
+/* ---- About Page ---- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+.team-card { text-align: center; }
+.team-avatar {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), #1e3a5f);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2.2rem;
+  color: var(--blue);
+  border: 3px solid rgba(0,168,232,0.25);
+}
+.team-card h3 { margin-bottom: 0.2rem; font-size: 1.1rem; }
+.team-card .role { color: var(--blue); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+.team-card .certs { color: var(--slate); font-size: 0.82rem; line-height: 1.5; }
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+.value-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 1.75rem;
+  border-left: 4px solid var(--blue);
+  box-shadow: 0 2px 12px rgba(13,27,42,0.06);
+}
+.value-card h3 { color: var(--navy); margin-bottom: 0.5rem; }
+.value-card p { color: var(--slate); font-size: 0.93rem; }
+
+.cert-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.cert-badge {
+  background: rgba(0,168,232,0.1);
+  border: 1px solid rgba(0,168,232,0.3);
+  color: var(--blue);
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ---- Case Studies ---- */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.case-card {
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(13,27,42,0.07);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.case-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(13,27,42,0.13); }
+.case-card-tag {
+  background: var(--navy);
+  color: var(--blue);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.5rem 1.2rem;
+}
+.case-card-body { padding: 1.5rem; }
+.case-card-body h3 { margin-bottom: 0.8rem; font-size: 1.1rem; }
+.case-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: flex-start; }
+.case-row-label { font-weight: 700; font-size: 0.85rem; color: var(--navy); min-width: 80px; flex-shrink: 0; }
+.case-row-text { font-size: 0.88rem; color: var(--slate); }
+.case-outcome {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0,168,232,0.07);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9rem;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+/* ---- Contact Page ---- */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 3rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .contact-layout { grid-template-columns: 1fr; }
+}
+.contact-info h2 { margin-bottom: 1.5rem; }
+.contact-detail {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+.contact-detail-icon {
+  width: 42px; height: 42px;
+  background: rgba(0,168,232,0.1);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.contact-detail-icon svg { width: 20px; height: 20px; fill: var(--blue); }
+.contact-detail-text strong { display: block; font-size: 0.9rem; margin-bottom: 0.2rem; }
+.contact-detail-text span { color: var(--slate); font-size: 0.9rem; }
+
+.contact-form-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 24px rgba(13,27,42,0.09);
+}
+.contact-form-card h3 { margin-bottom: 1.5rem; }
+.form-group { margin-bottom: 1.2rem; }
+.form-group label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--navy);
+}
+.form-group label .req { color: var(--blue); }
+.form-control {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--navy);
+  background: #FAFAFA;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0,168,232,0.12);
+  background: var(--white);
+}
+.form-control.error { border-color: #E53E3E; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
+textarea.form-control { resize: vertical; min-height: 130px; }
+.form-error-msg { color: #E53E3E; font-size: 0.82rem; margin-top: 0.3rem; display: none; }
+.form-error-msg.visible { display: block; }
+#form-feedback {
+  display: none;
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+#form-feedback.success {
+  background: #E6FFFA;
+  color: #276749;
+  border: 1px solid #9AE6B4;
+  display: block;
+}
+#form-feedback.error-msg {
+  background: #FFF5F5;
+  color: #C53030;
+  border: 1px solid #FC8181;
+  display: block;
+}
+
+/* ---- Footer ---- */
+footer {
+  background: #081422;
+  color: #A0AEC0;
+  padding: 4rem 0 2rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 540px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+.footer-brand { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; }
+.footer-brand-name { color: var(--white); font-size: 1.2rem; font-weight: 800; }
+.footer-brand-name span { color: var(--blue); }
+footer .tagline { font-size: 0.88rem; color: #718096; margin-bottom: 1.2rem; }
+footer h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.5px; text-transform: uppercase; }
+footer ul { list-style: none; }
+footer ul li { margin-bottom: 0.5rem; }
+footer ul a { color: #A0AEC0; text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+footer ul a:hover { color: var(--blue); }
+.footer-contact li { font-size: 0.9rem; display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.6rem; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+.social-links { display: flex; gap: 0.75rem; }
+.social-link {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+.social-link:hover { background: rgba(0,168,232,0.25); }
+.social-link svg { width: 18px; height: 18px; fill: #A0AEC0; }
+.social-link:hover svg { fill: var(--blue); }
+
+/* ---- Page Hero (inner pages) ---- */
+.page-hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #142133 100%);
+  color: var(--white);
+  padding: 5rem 0 4rem;
+  text-align: center;
+}
+.page-hero .overline { display: inline-block; color: var(--blue); font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.6rem; }
+.page-hero h1 { margin-bottom: 1rem; }
+.page-hero p { color: #A0AEC0; max-width: 580px; margin: 0 auto; font-size: 1.05rem; }
+
+/* ---- Misc ---- */
+.separator {
+  height: 4px;
+  width: 48px;
+  background: var(--blue);
+  border-radius: 2px;
+  margin: 1rem auto 0;
+}
+.separator-left { margin-left: 0; }
+.pill {
+  display: inline-block;
+  background: rgba(0,168,232,0.1);
+  color: var(--blue);
+  border-radius: 50px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}

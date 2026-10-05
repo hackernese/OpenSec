@@ -1,0 +1,4 @@
+issuer=CN=ausecurity.best
+subject=CN=ausecurity.best
+notBefore=Sep 14 15:32:18 2026 GMT
+notAfter=Sep 14 15:32:18 2027 GMT

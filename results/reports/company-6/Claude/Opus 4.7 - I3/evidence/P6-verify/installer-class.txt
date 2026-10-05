@@ -1,0 +1,5 @@
+<br />
+<b>Fatal error</b>:  Uncaught Error: Undefined constant &quot;INCLUDE_DIR&quot; in /var/www/html/setup/inc/class.installer.php:16
+Stack trace:
+#0 {main}
+  thrown in <b>/var/www/html/setup/inc/class.installer.php</b> on line <b>16</b><br />

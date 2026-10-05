@@ -1,0 +1,177 @@
+---
+scan_metadata:
+  company: AuSecurity
+  scan_type: Nuclei Cross-Cut Assessment
+  scan_date: 2026-10-05
+  duration: 7m 22s
+  targets: 5
+  total_requests: 79882
+  total_matches: 25
+  errors: 382
+
+critical_and_high_findings:
+  - finding_id: F001
+    host: ticket.ausecurity.best
+    severity: HIGH
+    template_id: osticket-installer
+    name: osTicket Installer Panel - Detect
+    matched_at: https://ticket.ausecurity.best/setup/install.php
+    description: |
+      osTicket installation panel is publicly accessible. This indicates either:
+      1. Installation not completed or removed properly
+      2. Installer directory left in production
+      3. Potential for complete system compromise
+    business_impact: Critical - Allows unauthenticated system configuration, database reset, and full application takeover
+    recommendation: |
+      - Immediately remove /setup directory from production
+      - Verify osTicket installation is complete
+      - Implement .htaccess or nginx rules to block setup access
+      - Review osTicket version and apply latest security patches
+
+wordpress_findings:
+  blog_ausecurity_best:
+    version: "7.1.2"
+    total_indicators: 14
+    themes:
+      - name: hello-elementor
+        status: detected
+    plugins:
+      - name: akismet
+        version: "5.7.2"
+        status: detected
+      - name: all-in-one-wp-migration
+        version: "7.109"
+        status: detected
+    exposures:
+      - type: README_FILE
+        location: https://blog.ausecurity.best/readme.html
+        severity: info
+      - type: LICENSE_FILE
+        location: https://blog.ausecurity.best/license.txt
+        severity: info
+      - type: WP_LINKS_OPML
+        location: https://blog.ausecurity.best/wp-links-opml.php
+        version_disclosed: "7.1.2"
+        severity: info
+      - type: DIRECTORY_LISTING
+        location: https://blog.ausecurity.best/wp-content/uploads/
+        severity: info
+      - type: DIRECTORY_LISTING
+        location: https://blog.ausecurity.best/wp-includes/
+        severity: info
+    admin_exposure:
+      - type: WP_LOGIN
+        location: https://blog.ausecurity.best/wp-login.php
+        severity: info
+      - type: USER_ENUMERATION
+        location: https://blog.ausecurity.best/?rest_route=/wp/v2/users/
+        enumerated_users:
+          - admin
+        severity: low
+    xmlrpc:
+      - type: XMLRPC_ENABLED
+        location: https://blog.ausecurity.best/xmlrpc.php
+        severity: info
+      - type: XMLRPC_LIST_METHODS
+        location: https://blog.ausecurity.best/xmlrpc.php
+        severity: info
+
+server_infrastructure_findings:
+  nginx:
+    - host: ausecurity.best
+      version: "1.22.1"
+      status: EOL (End-of-Life)
+      severity: info
+      recommendation: Upgrade to stable version >= 1.26
+    - host: www.ausecurity.best
+      version: "1.22.1"
+      status: EOL
+      severity: info
+    - host: 51.79.166.148
+      version: "1.25.5"
+      status: Current but not latest stable
+      severity: info
+    - host: ticket.ausecurity.best
+      version: "1.22.1"
+      status: EOL
+      severity: info
+  apache:
+    - host: blog.ausecurity.best
+      version: "Apache/2.4.68 (Debian)"
+      severity: info
+      status: Current
+
+login_and_panel_findings:
+  wordpress:
+    - template: wordpress-login
+      host: blog.ausecurity.best
+      location: https://blog.ausecurity.best/wp-login.php
+      severity: info
+      note: Standard WordPress login endpoint, exposed and accessible
+
+summary_by_host:
+  ausecurity.best:
+    findings: 2
+    severity_distribution:
+      info: 2
+    issues:
+      - Nginx EOL version 1.22.1
+  www.ausecurity.best:
+    findings: 2
+    severity_distribution:
+      info: 2
+    issues:
+      - Nginx EOL version 1.22.1
+  blog.ausecurity.best:
+    findings: 15
+    severity_distribution:
+      info: 13
+      low: 1
+    issues:
+      - WordPress 7.1.2 with multiple version-disclosing endpoints
+      - Directory listing enabled (wp-content/uploads, wp-includes)
+      - REST API user enumeration possible
+      - XMLRPC enabled (attack surface)
+      - Plugins: Akismet 5.7.2, All-in-One WP Migration 7.109
+      - Apache 2.4.68 Debian
+  ticket.ausecurity.best:
+    findings: 4
+    severity_distribution:
+      high: 1
+      low: 1
+      info: 2
+    critical_issues:
+      - osTicket setup/installer panel exposed
+    issues:
+      - Nginx EOL version 1.22.1
+      - web-config file detected
+  51.79.166.148:
+    findings: 2
+    severity_distribution:
+      info: 2
+    issues:
+      - Nginx version 1.25.5 (non-EOL but older)
+
+key_metrics:
+  total_findings: 25
+  critical: 0
+  high: 1
+  medium: 0
+  low: 2
+  info: 22
+  hosts_with_issues: 5
+  wordpress_footprint: high
+  infrastructure_exposure: moderate
+
+recommendations_priority:
+  critical:
+    1: Remove osTicket setup directory from ticket.ausecurity.best/setup/
+  high:
+    1: Harden WordPress installation on blog.ausecurity.best
+    2: Disable directory listing on WordPress directories
+    3: Disable XMLRPC if not required
+  medium:
+    1: Upgrade Nginx to current stable (1.26+)
+    2: Review and update WordPress plugins for vulnerabilities
+    3: Implement REST API endpoint restrictions
+    4: Disable user enumeration via REST API

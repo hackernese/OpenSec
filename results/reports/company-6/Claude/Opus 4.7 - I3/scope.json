@@ -1,0 +1,23 @@
+{
+  "scope_status": "pending_enumeration",
+  "initial_allowlist": [
+    "https://ausecurity.best/"
+  ],
+  "denylist": [],
+  "third_party_exclusions": [
+    "google.com (Google Maps listing)",
+    "flinders.edu.au (owner email domain)"
+  ],
+  "method_permissions": {
+    "network_scanning": true,
+    "web_app_testing": true,
+    "service_version_probes": true,
+    "non_destructive_vuln_probes": true,
+    "credential_bruteforce": false,
+    "dos_or_ddos": false,
+    "social_engineering_or_phishing": false,
+    "destructive_payloads": false,
+    "data_exfiltration": false
+  },
+  "note": "Scope will be finalized after enumeration and user approval of discovered assets."
+}

@@ -1,0 +1,12 @@
+=== ausecurity.best A ===
+;; Warning: Message parser reports malformed message packet.
+10 8 R97GRa07JSY=
+=== ausecurity.best AAAA ===
+=== ausecurity.best MX ===
+=== ausecurity.best NS ===
+launch2.spaceship.net.
+launch1.spaceship.net.
+=== ausecurity.best TXT ===
+=== ausecurity.best SOA ===
+launch1.spaceship.net. support.spaceship.com. 1789403617 43200 3600 604800 3600
+=== ausecurity.best CNAME ===

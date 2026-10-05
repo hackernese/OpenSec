@@ -1,0 +1,253 @@
+business: AuSecurity
+
+confirmed_assets:
+  - asset: ausecurity.best
+    type: domain
+    evidence: >-
+      User-supplied root domain. WHOIS confirms registration via Spaceship, Inc.
+      (Creation 2026-08-04, privacy-protected registrant). DNS SOA/NS at
+      launch{1,2}.spaceship.net. Live site content is clearly branded
+      "Ausecurity — GRC Consulting & Penetration Testing" and lists the
+      Sydney/NSW presence consistent with the engagement brief.
+      Files: whois_ausecurity_best.txt, dns_full.txt, https_body_root.html,
+      https_headers_root.txt
+    confidence: 1.0
+
+  - asset: www.ausecurity.best
+    type: subdomain
+    evidence: >-
+      Resolves to 51.79.166.148 (same host as apex). Serves identical
+      "Ausecurity" marketing site over HTTPS (nginx/1.22.1), 200 OK.
+      Files: dnsx_resolve.txt, httpx_probe.txt
+    confidence: 1.0
+
+  - asset: blog.ausecurity.best
+    type: subdomain
+    evidence: >-
+      Found via subfinder/assetfinder passive sources and certspotter CT
+      issuances. Let's Encrypt cert SAN=blog.ausecurity.best (issuer YE1).
+      WordPress 7.1.2 instance titled "AuSecurity" on Apache/2.4.68 (Debian);
+      wp-json/wp/v2/users exposes author "admin".
+      Files: subfinder_subs.txt, certspotter.json, dnsx_resolve.txt,
+      httpx_probe.txt, blog_headers.txt, blog_body.html
+    confidence: 1.0
+
+  - asset: ticket.ausecurity.best
+    type: subdomain
+    evidence: >-
+      Found via subfinder/assetfinder/certspotter. Let's Encrypt cert
+      SAN=ticket.ausecurity.best. Serves osTicket v1.18.4 (PHP 8.2.33 on
+      nginx/1.22.1); apex path 302 → /setup/install.php (installer still
+      reachable — flag for the vulnerability-assessment phase, not an
+      enumeration finding).
+      Files: certspotter.json, dnsx_resolve.txt, ticket_headers.txt,
+      ticket_body.html
+    confidence: 1.0
+
+  - asset: https://ausecurity.best/
+    type: other
+    evidence: >-
+      Primary marketing site. nginx/1.22.1, 200 OK, title "Ausecurity — GRC
+      Consulting & Penetration Testing". TLS cert on 443 is SELF-SIGNED
+      (CN=ausecurity.best, issuer=self, notBefore=2026-09-14).
+      Files: https_headers_root.txt, https_body_root.html, tls_cert_summary.txt
+    confidence: 1.0
+
+  - asset: https://www.ausecurity.best/
+    type: other
+    evidence: "Same content/host as apex (51.79.166.148). File: httpx_probe.txt"
+    confidence: 1.0
+
+  - asset: https://blog.ausecurity.best/
+    type: other
+    evidence: "WordPress 7.1.2 on Apache/2.4.68 (Debian). File: httpx_probe.txt, blog_headers.txt"
+    confidence: 1.0
+
+  - asset: https://ticket.ausecurity.best/
+    type: other
+    evidence: "osTicket 1.18.4 installer wizard reachable. File: ticket_body.html"
+    confidence: 1.0
+
+  - asset: 51.79.166.148
+    type: ip
+    evidence: >-
+      A record for ausecurity.best and www.ausecurity.best. OVH SAS (AS16276)
+      Singapore VPS; rDNS vps-10f1e4c3.vps.ovh.ca. This is a dedicated VPS
+      (OVH per-VM naming convention, not a CDN/shared-pool). Attributed to the
+      business as the host running their site, while the netblock itself is
+      hoster-owned.
+      Files: dns_full.txt, ipinfo_51.79.166.148.json, cymru_148.txt
+    confidence: 0.9
+
+  - asset: 51.79.166.209
+    type: ip
+    evidence: >-
+      A record for ticket.ausecurity.best. OVH SG VPS (vps-91287016.vps.ovh.ca,
+      AS16276). Shodan: 22/tcp OpenSSH 9.2p1 Debian. Dedicated VPS attributed
+      to the business.
+      Files: dnsx_resolve.txt, shodan_host_51.79.166.209.txt, cymru_209.txt
+    confidence: 0.9
+
+  - asset: 51.79.167.208
+    type: ip
+    evidence: >-
+      A record for blog.ausecurity.best. OVH SG VPS (vps-d64a720c.vps.ovh.ca,
+      AS16276). Shodan hostnames include blog.ausecurity.best. Dedicated VPS
+      attributed to the business.
+      Files: dnsx_resolve.txt, shodan_host_51.79.167.208.txt, cymru_208.txt
+    confidence: 0.95
+
+  - asset: info@ausecurity.best
+    type: email
+    evidence: >-
+      Published contact address on https://ausecurity.best/ (contact page).
+      NOTE: ausecurity.best has NO MX, SPF, DMARC, DKIM or MTA-STS records —
+      mail delivery to this address is unlikely to succeed and the domain is
+      currently spoof-friendly (worth flagging in the assessment phase, not
+      enumeration).
+      Files: emails_root.txt, dns_full.txt
+    confidence: 0.95
+
+likely_assets: []
+
+candidate_assets: []
+
+rejected_assets:
+  - asset: jane@acmecorp.com
+    type: email
+    reason: >-
+      Appears in page_contact.html as placeholder/testimonial copy
+      ("Jane @ Acme Corp"); unrelated to AuSecurity infrastructure.
+    confidence: 0.0
+
+cloud_or_cdn:
+  - provider: OVH SAS (AS16276) — Singapore VPS region
+    note: >-
+      All three in-scope hosts (51.79.166.148, 51.79.166.209, 51.79.167.208)
+      are OVH Singapore VPS instances within prefix 51.79.128.0/17
+      (NET-51-79-128-0-1, OVH Singapore PTE. LTD; sub-range
+      NET-51-79-164-0-1 "VPS-SGP2"). The netblock and ASN are OVH-owned,
+      not AuSecurity-owned, so they are NOT listed as business netblocks/ASNs.
+      Only the specific VPS IPs that are actively serving AuSecurity hostnames
+      are treated as in-scope assets.
+
+  - provider: Spaceship, Inc.
+    note: >-
+      Domain registrar for ausecurity.best and operator of the authoritative
+      nameservers launch1.spaceship.net / launch2.spaceship.net. Third-party
+      DNS/registrar service — NS infrastructure is NOT a business-owned asset
+      and must not be targeted.
+
+  - provider: Google Fonts (fonts.googleapis.com, fonts.gstatic.com)
+    note: >-
+      Referenced from https://ausecurity.best/ for web-font delivery.
+      Third-party CDN; out of scope.
+
+  - provider: Gravatar / Automattic (secure.gravatar.com)
+    note: >-
+      Referenced by the WordPress install on blog.ausecurity.best for user
+      avatars. Third-party; out of scope.
+
+  - provider: Let's Encrypt (CA)
+    note: >-
+      Issuer of the valid certificates on blog.ausecurity.best and
+      ticket.ausecurity.best (intermediate "YE1"/"YE2"). CA metadata only;
+      not an asset.
+
+third_party_exclusions:
+  - asset: flinders.edu.au (and dinh0087@flinders.edu.au)
+    reason: >-
+      Owner's educational email domain, explicitly marked out of scope in the
+      engagement brief. Not an AuSecurity asset.
+  - asset: spaceship.com / spaceship.net / launch1.spaceship.net / launch2.spaceship.net
+    reason: Registrar and third-party authoritative DNS provider.
+  - asset: fonts.googleapis.com, fonts.gstatic.com
+    reason: Google-operated web-font CDN referenced from the marketing site.
+  - asset: secure.gravatar.com
+    reason: Automattic avatar CDN loaded by the WordPress blog.
+  - asset: acmecorp.com
+    reason: Placeholder/testimonial copy on the contact page; not operated by AuSecurity.
+  - asset: 51.79.0.0/16 netblock (and AS16276 OVH SAS as a whole)
+    reason: >-
+      Hoster-owned shared infrastructure. Only the specific VPS IPs actively
+      serving ausecurity.best hostnames are in scope; the surrounding netblock
+      and other OVH tenants are explicitly NOT.
+
+warnings:
+  - >-
+      crt.sh was rate-limited (HTTP 429/502) during this run; subdomain
+      enumeration from Certificate Transparency relied on api.certspotter.com
+      as a secondary source. Certspotter returned 3 names (apex + blog +
+      ticket) which matches subfinder/assetfinder and the live DNS, so
+      coverage is believed complete, but a repeat crt.sh pass later is
+      recommended.
+  - >-
+      The authoritative server at launch{1,2}.spaceship.net returned
+      "malformed message packet" to the system resolver on several queries
+      (EDNS/DNSSEC quirk); results above were re-queried via 1.1.1.1 / 8.8.8.8.
+      No records were missed, but direct queries to the authoritative servers
+      should be re-attempted if deeper DNS enumeration is needed later.
+  - >-
+      ausecurity.best publishes NO MX, SPF, DMARC, DKIM, MTA-STS or CAA
+      records. info@ausecurity.best is advertised publicly but mail delivery
+      is not configured, and the domain is currently open to spoofing.
+      Flag for the assessment phase (not an enumeration asset).
+  - >-
+      TLS cert on https://ausecurity.best/ (apex, port 443) is self-signed
+      (CN=ausecurity.best, issuer=self). Modern browsers will warn. Flag for
+      the assessment phase.
+  - >-
+      https://ausecurity.best/robots.txt and /sitemap.xml return a 404 from
+      "nginx/1.25.5" (different from the main site's nginx/1.22.1). This
+      suggests a reverse-proxy / fallback container catching unmatched paths.
+      Noted for the assessment phase; not promoted as a separate asset.
+  - >-
+      https://ticket.ausecurity.best/ is in osTicket "install" state (installer
+      wizard reachable at /setup/install.php). Noted here as context — the
+      actual exploitation risk is for the assessment phase, not enumeration.
+  - >-
+      Wayback Machine has no snapshots for ausecurity.best (domain was
+      registered 2026-08-04, so no historical DNS/content to pivot from).
+  - >-
+      WHOIS registrant is "Privacy service provided by WITHHELD FOR PRIVACY
+      LLC" (Delaware/US). Business identity cannot be independently
+      cross-confirmed from WHOIS; attribution relies on supplied brief +
+      live site content + address shown on the contact page.
+  - >-
+      No GitHub organisation, Git/CI/CD surface, S3/GCS/Azure bucket, cloud
+      console, VPN endpoint, mail server, dev/staging host, admin panel
+      (beyond the osTicket installer and WordPress wp-login), or exposed API
+      was discovered through passive sources or a small focused DNS sweep
+      (~90 common labels). Absence of evidence, not evidence of absence.
+
+unavailable_sources:
+  - crt.sh (rate-limited to HTTP 429 / 502 during run; certspotter used instead)
+  - GitHub Code Search API (requires authenticated token; unavailable here)
+  - Censys (no API credential configured in this environment)
+  - SecurityTrails / passivetotal / VirusTotal passive DNS (no API key configured)
+  - Direct AXFR / zone-transfer attempts (not attempted; low-value and intrusive)
+  - DuckDuckGo / Google dorking surfaced no AuSecurity-attributable results
+    beyond the main site itself
+
+coverage_summary: >-
+  AuSecurity's public attack surface, as discoverable passively, is small and
+  self-contained: a single root domain ausecurity.best with three live hosts
+  (apex/www, blog, ticket), each on its own dedicated OVH Singapore VPS
+  within AS16276 (51.79.166.148, 51.79.166.209, 51.79.167.208). The apex is
+  a static nginx marketing site (with a self-signed TLS cert and nginx/1.25.5
+  fallback banner on unknown paths), blog is a WordPress 7.1.2 install on
+  Apache/2.4.68, and ticket is an osTicket 1.18.4 installer that has not yet
+  been completed. Domain registrar is Spaceship (privacy-protected); DNS is
+  hosted on launch{1,2}.spaceship.net; no MX/SPF/DMARC/DKIM/MTA-STS/CAA are
+  published, leaving the published info@ausecurity.best address effectively
+  undeliverable and the domain spoof-friendly. No GitHub org, cloud buckets,
+  dev/staging hosts, mail servers, VPN endpoints, or additional subdomains
+  were found via subfinder, assetfinder, amass passive, certspotter CT, a
+  focused 90-label DNS sweep, Shodan hostname/SSL searches, Wayback, or
+  WHOIS/RDAP. Third-party services referenced by the site (Google Fonts,
+  Gravatar, Let's Encrypt, Spaceship DNS/registrar) and the surrounding
+  OVH netblock/AS16276 are explicitly excluded from scope; only the three
+  specific VPS IPs that currently serve AuSecurity hostnames are treated as
+  in-scope infrastructure. Confidence in completeness is high for passive
+  enumeration; a repeat crt.sh pass and (if authorised later) a wider active
+  DNS sweep are the main residual gaps.

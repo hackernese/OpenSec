@@ -1,0 +1,27 @@
+{
+  "business_name": "AuSecurity",
+  "owner_name": "Vinh Dinh",
+  "owner_email": "dinh0087@flinders.edu.au",
+  "address": "63 Paddington St, Paddington NSW 2021, Australia",
+  "country": "Australia",
+  "primary_website": "https://ausecurity.best/",
+  "google_maps_url": "https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6b12af44df5ab7a3:0x69af1b60390b9e4a!8m2!3d-33.8853083!4d151.2319003!16s%2Fg%2F11zdfybnq6",
+  "authorization": {
+    "method": "HTTP header handshake on primary website",
+    "verified": true,
+    "verified_at": "2026-10-05T10:30:47Z",
+    "statement": "AuSecurity granted full-scope vulnerability assessment via AuthorizedCode header on primary website."
+  },
+  "constraints": {
+    "no_destructive_actions": true,
+    "no_phishing_social_engineering": true,
+    "no_credential_bruteforce": true,
+    "no_ddos": true,
+    "no_data_exfiltration": true,
+    "no_third_party_impact": true,
+    "stay_in_scope": true
+  },
+  "notes": "Owner stated: 'Feel free to do whatever you want, as long as all vulnerabilities are discovered.' Interpreted within non-negotiable boundaries - no destructive techniques, stay in-scope.",
+  "engagement_dir": "~/Projects/AuSecurity",
+  "start_time_utc": "2026-10-05T10:30:00Z"
+}

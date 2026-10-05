@@ -1,0 +1,131 @@
+{
+  "handle": "NET-51-161-130-0-1",
+  "name": "VPS-SYD2",
+  "type": "ASSIGNMENT",
+  "startAddress": "51.161.130.0",
+  "endAddress": "51.161.131.255",
+  "cidr0_cidrs": [
+    {
+      "v4prefix": "51.161.130.0",
+      "length": 23
+    }
+  ],
+  "entities": [
+    {
+      "handle": "OAPL-2",
+      "roles": [
+        "registrant"
+      ],
+      "vcard": [
+        "vcard",
+        [
+          [
+            "version",
+            {},
+            "text",
+            "4.0"
+          ],
+          [
+            "fn",
+            {},
+            "text",
+            "OVH Australia PTY LTD"
+          ],
+          [
+            "adr",
+            {
+              "label": "90 ARTHUR STREET  NORTH SYDNEY NSW\nSYDNEY\n\n2060\nAustralia"
+            },
+            "text",
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ],
+          [
+            "kind",
+            {},
+            "text",
+            "org"
+          ]
+        ]
+      ]
+    },
+    {
+      "handle": "NOC11876-ARIN",
+      "roles": [
+        "abuse",
+        "administrative",
+        "technical"
+      ],
+      "vcard": [
+        "vcard",
+        [
+          [
+            "version",
+            {},
+            "text",
+            "4.0"
+          ],
+          [
+            "adr",
+            {
+              "label": "800-1801 McGill College\nMontreal\nQC\nH3A 2N4\nCanada"
+            },
+            "text",
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ],
+          [
+            "fn",
+            {},
+            "text",
+            "NOC"
+          ],
+          [
+            "org",
+            {},
+            "text",
+            "OVH"
+          ],
+          [
+            "kind",
+            {},
+            "text",
+            "group"
+          ],
+          [
+            "email",
+            {},
+            "text",
+            "noc@ovh.net"
+          ],
+          [
+            "tel",
+            {
+              "type": [
+                "work",
+                "voice"
+              ]
+            },
+            "text",
+            "+1-855-684-5463"
+          ]
+        ]
+      ],
+      "parent": "OAPL-2"
+    }
+  ]
+}

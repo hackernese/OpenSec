@@ -1,0 +1,182 @@
+{
+  "task_id": "imagur-enum-001",
+  "schema_version": "1.0",
+  "company": {
+    "canonical_name": "Imagur",
+    "aliases": ["Imager", "FShare"],
+    "country": "Australia",
+    "jurisdiction": "South Australia, Australia",
+    "address": "132 Morphett Rd, Glengowrie SA 5044, Australia",
+    "supplied_website": "https://imagesharer.xyz/",
+    "identity_confidence": 90,
+    "identity_notes": "Authorized seed https://imagesharer.xyz/ is live and brands as Imager. Independent OSINT did not corroborate the Glengowrie address, owner name, or Google Maps FShare listing on the website."
+  },
+  "run": {
+    "mode": "passive+low-impact-validation",
+    "started_at": "2026-10-04T23:30:17Z",
+    "completed_at": "2026-10-04T23:37:30Z",
+    "evidence_dir": "/home/research/Projects/Imagur/evidence/imagur-enum-001/"
+  },
+  "assets": [
+    {
+      "id": "A-001",
+      "type": "root_domain",
+      "value": "imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 98,
+      "ownership": "organization",
+      "notes": "Authorized official root. Registrar Spaceship, Inc. Created 2026-09-06."
+    },
+    {
+      "id": "A-002",
+      "type": "subdomain",
+      "value": "www.imagesharer.xyz",
+      "root_domain": "imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 92,
+      "ownership": "organization",
+      "resolves": true,
+      "a": ["51.161.131.44"]
+    },
+    {
+      "id": "A-003",
+      "type": "subdomain",
+      "value": "resources.imagesharer.xyz",
+      "root_domain": "imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 88,
+      "ownership": "organization",
+      "resolves": true,
+      "cname": ["d273uevi0662l0.cloudfront.net"],
+      "notes": "Org hostname via Amazon CloudFront. Exclude CDN infrastructure from attack testing."
+    },
+    {
+      "id": "A-004",
+      "type": "website",
+      "value": "https://imagesharer.xyz/",
+      "host": "imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 98,
+      "title": "Log in — Imager",
+      "server": "nginx",
+      "technologies": ["nginx", "PHP/8.2.34"]
+    },
+    {
+      "id": "A-005",
+      "type": "website",
+      "value": "https://www.imagesharer.xyz/",
+      "host": "www.imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 92,
+      "title": "Log in — Imager"
+    },
+    {
+      "id": "A-006",
+      "type": "website",
+      "value": "https://resources.imagesharer.xyz/",
+      "host": "resources.imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 80,
+      "status_code": 403,
+      "cdn": "Amazon CloudFront"
+    },
+    {
+      "id": "A-007",
+      "type": "ip_address",
+      "value": "51.161.131.44",
+      "version": 4,
+      "status": "confirmed",
+      "confidence": 95,
+      "ownership": "cloud-provider",
+      "related_hosts": ["imagesharer.xyz", "www.imagesharer.xyz"],
+      "asn": "AS16276",
+      "prefix": "51.161.130.0/23",
+      "notes": "OVH Australia Sydney VPS. Shodan passively observed 80/tcp nginx, 443/tcp nginx, 5432/tcp PostgreSQL. Do not scan other OVH hosts."
+    },
+    {
+      "id": "A-008",
+      "type": "asn",
+      "value": "AS16276",
+      "name": "OVH SAS",
+      "status": "rejected",
+      "confidence": 95,
+      "ownership": "cloud-provider"
+    },
+    {
+      "id": "A-009",
+      "type": "netblock",
+      "value": "51.161.130.0/23",
+      "asn": "AS16276",
+      "status": "rejected",
+      "confidence": 95,
+      "ownership": "cloud-provider"
+    },
+    {
+      "id": "A-010",
+      "type": "dns_cname",
+      "value": "d273uevi0662l0.cloudfront.net",
+      "status": "third-party",
+      "confidence": 90,
+      "ownership": "cdn"
+    },
+    {
+      "id": "A-011",
+      "type": "root_domain",
+      "value": "imagur.xyz",
+      "status": "candidate",
+      "confidence": 42,
+      "ownership": "unknown",
+      "notes": "Name match to Imagur. Google-hosted 404. No content tying it to imagesharer.xyz."
+    },
+    {
+      "id": "A-012",
+      "type": "root_domain",
+      "value": "fshare.xyz",
+      "status": "candidate",
+      "confidence": 32,
+      "ownership": "unknown",
+      "notes": "Name similar to FShare maps alias. No public website."
+    }
+  ],
+  "rejected_candidates": [
+    {"value": "imager.xyz", "reason": "Spaceship for-sale parking page"},
+    {"value": "www.imager.xyz", "reason": "CNAME to for-sale parking page"},
+    {"value": "imagur.com", "reason": "Unrelated parked redirect"},
+    {"value": "imagesharer.net", "reason": "Unrelated service, no Imagur branding"},
+    {"value": "vps-ad2c3eab.vps.ovh.ca", "reason": "OVH provider PTR hostname"},
+    {"value": "flinders.edu.au", "reason": "Owner mailbox is Flinders University; third-party"},
+    {"value": "encrypted-tbn0.gstatic.com", "reason": "Google thumbnail favicon"},
+    {"value": "imagur.net", "reason": "No DNS delegation"},
+    {"value": "api.imagesharer.xyz", "reason": "Does not resolve"}
+  ],
+  "third_party_exclusions": [
+    {"value": "AS16276", "owner": "OVH SAS"},
+    {"value": "51.161.130.0/23", "owner": "OVH Australia PTY LTD"},
+    {"value": "51.161.128.0/17", "owner": "OVH SAS"},
+    {"value": "launch1.spaceship.net", "owner": "Spaceship, Inc."},
+    {"value": "launch2.spaceship.net", "owner": "Spaceship, Inc."},
+    {"value": "d273uevi0662l0.cloudfront.net", "owner": "Amazon CloudFront"},
+    {"value": "ghs.google.com", "owner": "Google LLC"},
+    {"value": "eforward.registrar-servers.com", "owner": "Namecheap"},
+    {"value": "flinders.edu.au", "owner": "Flinders University"},
+    {"value": "encrypted-tbn0.gstatic.com", "owner": "Google"}
+  ],
+  "warnings": [
+    "Website public brand is Imager; legal/engagement name is Imagur.",
+    "FShare Google Maps listing at 132 Morphett Rd was not corroborated by the website.",
+    "Owner email is Flinders University; do not include university assets.",
+    "www.imagesharer.xyz is not on the Let's Encrypt SAN (only imagesharer.xyz).",
+    "Shodan CVE-2007-3205/CVE-2013-2220 are unverified banner noise, not findings.",
+    "Shodan observed PostgreSQL/5432 on 51.161.131.44; same VPS note only."
+  ],
+  "unavailable_sources": [
+    "crt.sh (502/429)",
+    "censys (no API credentials)",
+    "securitytrails (no API key)",
+    "virustotal (no API key)",
+    "amass passive (timeout, empty)",
+    "ABR/ASIC (404)",
+    "yellowpages.com.au (403)",
+    "Google Maps/Search (JS-only)"
+  ]
+}

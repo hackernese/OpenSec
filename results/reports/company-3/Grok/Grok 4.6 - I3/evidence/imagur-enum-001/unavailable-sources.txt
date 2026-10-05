@@ -1,0 +1,12 @@
+crt.sh: HTTP 502 then 429; no CT names retrieved
+censys: CLI present but API credentials not configured
+securitytrails: SECURITYTRAILS_API_KEY unset
+virustotal: VIRUSTOTAL_API_KEY unset
+amass enum -passive: no results within timeout
+subfinder: 0 subdomains (domain created 2026-09-06)
+ABR search: HTTP 404
+Yellow Pages: HTTP 403
+Google Maps/Search: JS-only pages, no usable extract
+rdap.identitydigital.services domain lookup: 404 Object not found
+rdap.nic.xyz: DNS resolution failed
+websearch tool: not available in this worker

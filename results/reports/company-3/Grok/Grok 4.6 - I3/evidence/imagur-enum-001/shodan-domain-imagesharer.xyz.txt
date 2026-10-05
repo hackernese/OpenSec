@@ -1,0 +1,6 @@
+IMAGESHARER.XYZ
+
+                         A      51.161.131.44
+                         NS     launch1.spaceship.net
+                         NS     launch2.spaceship.net
+                         SOA    launch1.spaceship.net

@@ -1,0 +1,216 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Public Amazon S3 bucket exposes all stored images, including private ones",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "summary": "Anyone on the internet can list and download files from the image storage bucket. Images marked private in the website are still readable directly from storage.",
+      "description": "Uploading a test image caused the application to serve objects from Amazon S3 bucket filesharer-research (ap-southeast-2) under a predictable users/<user-uuid>/<image-uuid>.jpg key. An unauthenticated GET of our own object returned HTTP 200 with Content-Type image/jpeg. An unauthenticated GET of the bucket root returned an object listing (about 1000 keys). A second test image uploaded with is_public=false was protected on the website (unauthenticated requests to /images/<id> redirected away), but the same object remained anonymously readable on S3. The private flag therefore does not protect the file. Other customers' objects were not downloaded.",
+      "recommendation": "Block public list and public read on the bucket. Serve objects only through short-lived, least-privilege signed URLs or a backend proxy. Enforce private objects at the storage ACL/IAM layer, not only in the PHP page. Rotate any credentials that could have been used with this bucket and review access logs.",
+      "affected_components": [
+        "https://imagesharer.xyz/",
+        "S3 bucket filesharer-research (ap-southeast-2)"
+      ],
+      "references": [
+        "CWE-284",
+        "CWE-552",
+        "OWASP A01 Broken Access Control"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Hidden user_id lets one account upload into another account",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+      "summary": "A logged-in user can attach files to someone else's library by changing a hidden form field.",
+      "description": "POST /images/upload accepts multipart field user_id from the client (set to the caller's UUID in HTML, but not bound to the session server-side). A second test account uploaded a JPEG while sending the first account's UUID. The server accepted it and created a new image. The object appeared on the first account's dashboard, the image page showed the first account as owner, and the file was stored under the first account's S3 prefix. Unauthenticated upload was rejected (302 to /login).",
+      "recommendation": "Ignore client-supplied user_id. Bind ownership to the authenticated session. Authorize every upload, visibility change, and delete against that session user.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/upload"
+      ],
+      "references": [
+        "CWE-639",
+        "CWE-284",
+        "OWASP A01 Broken Access Control"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "AWS access keys shipped in public JavaScript",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+      "summary": "Cloud access-key material is hardcoded in a JavaScript file that anyone can download from the website.",
+      "description": "https://imagesharer.xyz/js/awsvalid.js is reachable without login. It embeds AWS accessKeyId (AKIA-format, 20 characters) and secretAccessKey as string literals and calls STS at https://sts.amazonaws.com/ from the browser (validateAwsCredentials, region us-east-1). The same access key id also appears in S3 presigned URLs on image pages. Live STS/IAM use of the secret was not performed, so key validity was not independently proven. The presence of long-lived IAM material in a public static file is still a credential exposure. Secret values and full access keys are not included in this report.",
+      "recommendation": "Remove the file from the site. Create credentials only on a server, never in frontend code. Rotate and disable the exposed IAM user immediately. Use IAM roles or short-lived tokens. Check CloudTrail for use of this key.",
+      "affected_components": [
+        "https://imagesharer.xyz/js/awsvalid.js"
+      ],
+      "references": [
+        "CWE-798",
+        "CWE-200",
+        "OWASP A07 Identification and Authentication Failures"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Image filenames are not safely encoded in every page location",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+      "summary": "A crafted file name can inject HTML into the image page.",
+      "description": "A JPEG uploaded with filename clawsec<img>xss.jpg was accepted. On the resulting image page, the title, heading, and alt text encoded the brackets as &lt;img&gt;, but at least one span output the raw characters <img>. That is stored HTML injection. A more complex breakout filename was rejected at upload, so script execution was not fully proven. Encoding is inconsistent and unsafe.",
+      "recommendation": "HTML-encode all filename/title output in every template context. Prefer storing a generated display name. Add a Content-Security-Policy that disallows inline script.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/{id}"
+      ],
+      "references": [
+        "CWE-79",
+        "OWASP A03 Injection"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Recursive DNS resolver open on the public server",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:L",
+      "summary": "The website server will answer DNS lookups for unrelated names from the internet.",
+      "description": "TCP/53 is open on 51.161.131.44. A recursive query for example.com A against this resolver returned NOERROR with A records, flags rd and ra set. That is an open recursive resolver. It can be abused for amplification and cache issues. Only a single lookup was used as proof.",
+      "recommendation": "Do not expose a recursive resolver on a public VPS. Bind DNS to localhost if local resolution is needed, or disable the service. Restrict to internal networks if it must remain.",
+      "affected_components": [
+        "51.161.131.44:53"
+      ],
+      "references": [
+        "CWE-406",
+        "US-CERT TA13-088A"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "PostgreSQL reachable on the public internet",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N",
+      "summary": "The database port is open to the world. A password is required, but attackers can still try to log in.",
+      "description": "Port 5432 on 51.161.131.44 is open and identified as PostgreSQL. A single unauthenticated attempt as user postgres with no password failed with password-required (not trust/peer). No password guessing was performed. Public exposure still enlarges the attack surface for the application database.",
+      "recommendation": "Bind PostgreSQL to localhost or a private network. Firewall 5432 from the internet. Require strong auth, TLS, and restrict pg_hba.conf.",
+      "affected_components": [
+        "51.161.131.44:5432"
+      ],
+      "references": [
+        "CWE-668",
+        "CWE-200"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Session cookie missing Secure, HttpOnly, and SameSite",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "summary": "The login session cookie can leak to scripts and to unencrypted HTTP.",
+      "description": "A fresh GET https://imagesharer.xyz/login set PHPSESSID with Path=/ only. Secure, HttpOnly, and SameSite were absent. A second cookie, page_views, correctly used Secure, HttpOnly, and SameSite=Lax. The session cookie is the weaker of the two. The same application is also offered on HTTP port 8080, so a missing Secure flag is more serious. Cookie values are not included in this report.",
+      "recommendation": "Set PHPSESSID with Secure; HttpOnly; SameSite=Lax (or Strict). Enable session.cookie_secure, session.cookie_httponly, and session.cookie_samesite in PHP. Do not serve the app on cleartext HTTP.",
+      "affected_components": [
+        "https://imagesharer.xyz/ (PHPSESSID)"
+      ],
+      "references": [
+        "CWE-614",
+        "CWE-1004",
+        "OWASP A05 Security Misconfiguration"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "State-changing forms have no CSRF token",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+      "summary": "Logged-in actions such as upload, delete, visibility change, avatar change, and logout do not include an anti-CSRF token.",
+      "description": "Upload, image delete, visibility, avatar, logout, and registration forms had no hidden CSRF field and no CSRF token in HTML. Combined with a session cookie that may be sent on cross-site requests (no SameSite on PHPSESSID), a third-party page could submit those POSTs in a victim browser.",
+      "recommendation": "Issue a per-session CSRF token, require it on every cookie-authenticated POST, and set SameSite on the session cookie. Prefer re-auth for delete.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/upload",
+        "https://imagesharer.xyz/images/{id}/delete",
+        "https://imagesharer.xyz/images/{id}/visibility",
+        "https://imagesharer.xyz/profile/avatar",
+        "https://imagesharer.xyz/logout",
+        "https://imagesharer.xyz/register"
+      ],
+      "references": [
+        "CWE-352",
+        "OWASP A01 Broken Access Control"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Same login application exposed on cleartext HTTP port 8080",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:N",
+      "summary": "The Imager login page is also served unencrypted on port 8080.",
+      "description": "Port 8080 on the approved server runs Apache/2.4.68 (Debian) with X-Powered-By PHP/8.2.34. GET http://51.161.131.44:8080/login returned 200 and the same \"Log in — Imager\" form (email/password POST to /login). Credentials and session cookies sent to this port travel in cleartext. PHPSESSID lacked the Secure flag, so browsers may send it here.",
+      "recommendation": "Disable the Apache listener on 8080 or restrict it to localhost. Redirect all clients to HTTPS on 443. HSTS after HTTPS is clean.",
+      "affected_components": [
+        "51.161.131.44:8080"
+      ],
+      "references": [
+        "CWE-319",
+        "OWASP A02 Cryptographic Failures"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing HSTS and Content-Security-Policy",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "summary": "The HTTPS site does not tell browsers to stay on HTTPS or limit script sources.",
+      "description": "GET https://imagesharer.xyz/login returned X-Content-Type-Options nosniff, X-Frame-Options DENY, X-XSS-Protection, and Referrer-Policy, but no Strict-Transport-Security and no Content-Security-Policy. HTTP on port 80 does redirect to https://imagesharer.xyz/. Without HSTS, SSL stripping remains possible. CSP would also reduce impact of the filename HTML injection.",
+      "recommendation": "Send Strict-Transport-Security with a long max-age (and includeSubDomains once www is intended). Add a strict CSP default-src/script-src.",
+      "affected_components": [
+        "https://imagesharer.xyz/"
+      ],
+      "references": [
+        "CWE-319",
+        "CWE-1021",
+        "OWASP A05 Security Misconfiguration"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "PHP version disclosed in HTTP headers",
+      "cvss": "",
+      "summary": "Responses include X-Powered-By: PHP/8.2.34, which tells attackers the exact language version.",
+      "description": "Nginx on 443 and Apache on 8080 both return X-Powered-By PHP/8.2.34. Apache also returns Server: Apache/2.4.68 (Debian). This is reconnaissance, not a direct exploit.",
+      "recommendation": "Turn off expose_php, hide Server tokens, and keep PHP/Apache patched.",
+      "affected_components": [
+        "https://imagesharer.xyz/",
+        "51.161.131.44:8080"
+      ],
+      "references": [
+        "CWE-200"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "SSH service exposed on the public VPS",
+      "cvss": "",
+      "summary": "SSH is open on the same public IP as the website.",
+      "description": "Port 22 is open running OpenSSH 10.0p2 Debian 7+deb13u4. No login guessing was performed. Internet-facing SSH is common on a VPS but should be locked down.",
+      "recommendation": "Restrict SSH by firewall to admin IPs, use keys only, and keep OpenSSH patched.",
+      "affected_components": [
+        "51.161.131.44:22"
+      ],
+      "references": [
+        "CWE-200"
+      ]
+    }
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "approved_at": "2026-10-05",
+  "approved_by": "owner",
+  "source": "assets.init.json",
+  "in_scope": [
+    {
+      "asset": "ausecurity.best",
+      "type": "hostname",
+      "urls": ["https://ausecurity.best/", "http://ausecurity.best/"],
+      "status": "confirmed",
+      "confidence": 98,
+      "notes": "Owner approved the main website only. Same-origin paths on this host are in scope."
+    }
+  ],
+  "implicit_hosting": {
+    "ip": "51.79.166.148",
+    "use": "Connectivity to the approved website only. Not approved as a general host for unrelated services."
+  },
+  "out_of_scope": [
+    "www.ausecurity.best",
+    "contact.ausecurity.best",
+    "blog.ausecurity.best",
+    "ticket.ausecurity.best",
+    "51.79.166.148 as a general host (SSH/other services)",
+    "51.79.166.209",
+    "51.79.167.208",
+    "AS16276 OVH and 51.79.164.0/22",
+    "Spaceship/Cloudflare nameservers",
+    "Google Fonts, Let's Encrypt, Google Maps",
+    "flinders.edu.au / dinh0087@flinders.edu.au",
+    "ausecurity.com.au",
+    "ausecurity.com",
+    "ausecurity.net"
+  ],
+  "warnings": [
+    "Owner selected only the main website. Do not test unapproved hosts."
+  ]
+}

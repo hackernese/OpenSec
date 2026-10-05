@@ -1,0 +1,82 @@
+{
+  "id": "9a10b84b-ff08-41eb-8fe6-dd30f4da7c39",
+  "name": "AuSecurity",
+  "project_type": "3b90c206-2cba-4b99-bd4d-7c37f1e40392",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "override_finding_order": false,
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "finished",
+      "data": {
+        "executive_summary": "# Executive Summary\n\nAusecurity delivers expert GRC consulting and penetration testing services to businesses across Australia. This report covers an authorized security assessment of the public website. Testing was performed on 5 October 2026 with the owner’s permission and was limited to **ausecurity.best**.\n\n## Overall result\n\nThe assessment confirmed **8 findings**: **1 high**, **4 medium**, **2 low**, and **1 informational**.\n\nThis report keeps the CVSS vectors from the verified findings file. Two items labelled low in that file (the HTTPS-to-HTTP redirect on `/api`, and missing SPF/DMARC) score as medium under CVSS 3.1. The chart therefore shows 1 high, 6 medium, and 1 informational.\n\nThe most serious issue is that the admin dashboard is reachable without logging in. It includes client-looking contact details and internal business figures. The site only tries to hide this with JavaScript after the page is already sent.\n\nA “thank you” page can run script from the address bar (cross-site scripting). The login page can send users to an attacker site after sign-in. HTTPS uses a self-signed certificate, and standard browser-protection headers are missing.\n\nLower-priority issues are an HTTPS-to-HTTP redirect on `/api`, no SPF or DMARC email-authentication records, and nginx version disclosure.\n\n## Highest-priority actions\n\n1. Take the dashboard off the public internet until server-side login is required.\n2. Fix the thank-you page to use text, not HTML.\n3. Install a trusted certificate.\n4. Add security headers.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "status": "finished",
+      "data": {
+        "scope": "This assessment covered only the owner-approved public website. Testing was performed on 5 October 2026 after authorization was confirmed via a required response header on the main public-facing website. The header value is not recorded in this report.\n\n**In-scope (owner approved)**\n\n| System | Description |\n|:---|:---|\n| https://ausecurity.best/ | Official public website and same-origin paths on ausecurity.best |\n\n**Enumerated hosts (inventory only — not tested)**\n\nThe owner explicitly did not approve the following for testing:\n\n* www.ausecurity.best (51.79.166.148)\n* contact.ausecurity.best (51.79.166.148)\n* blog.ausecurity.best (51.79.167.208) — WordPress observed during enumeration only\n* ticket.ausecurity.best (51.79.166.209) — osTicket installer observed during enumeration only\n* 51.79.166.148 as a general host (unrelated services)\n\nThe official website resolves to 51.79.166.148. That address was used only for connectivity to the approved website.\n\n**Rejected lookalikes (out of scope)**\n\n* ausecurity.com.au\n* ausecurity.com\n* ausecurity.net\n\n**Third-party exclusions (not tested)**\n\nOVH AS16276, Spaceship DNS, Google Fonts, Google Maps, and Flinders email infrastructure.\n\n**Allowed methods**\n\nAuthorization check, passive and active enumeration, TLS review, HTTP header review, path discovery, JavaScript and HTML review, unauthenticated access-control checks, a single invalid-login response-shape test, contact-form input tests, and a DNS mail-record check.\n\n**Forbidden methods**\n\nBrute force, password spraying, denial of service, social engineering, malware, and destructive tests. No exploitation beyond minimum proof.\n",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 person day",
+        "provided_users": "No user accounts were provided. Testing was unauthenticated only. Cookie security flags were not observed because no authenticated session was obtained.\n"
+      }
+    },
+    {
+      "id": "customer",
+      "status": "finished",
+      "data": {
+        "customer_name": "AuSecurity (Ausecurity)",
+        "customer_address": {
+          "city": "Paddington NSW 2021, Australia",
+          "street": "63 Paddington St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "status": "finished",
+      "data": {
+        "title": "AuSecurity Vulnerability Assessment Report",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-10-05",
+            "description": "Final report",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Methodology",
+            "content": "The assessment followed a phased, non-destructive methodology:\n\n1. Authorization check on the main public-facing website before any testing.\n2. Passive and active enumeration of company-related assets.\n3. Owner confirmation that only https://ausecurity.best/ and same-origin paths were in scope.\n4. TLS review of the approved host.\n5. HTTP security-header review.\n6. Path discovery on the approved host (common wordlist).\n7. JavaScript and HTML review of public pages.\n8. Unauthenticated access-control checks on the dashboard and related endpoints.\n9. A single invalid-login response-shape test.\n10. Contact-form input tests.\n11. DNS mail-record check for ausecurity.best.\n\nNo brute force, password spraying, denial of service, social engineering, malware, or destructive tests were used. Testing stopped at minimum proof.\n"
+          },
+          {
+            "title": "Limitations",
+            "content": "The following limitations apply to this assessment:\n\n* Other enumerated hosts (www, contact, blog, ticket, and the related IP addresses as general hosts) were not tested because the owner selected only the main website.\n* No authenticated session was obtained, so cookie flags were not observed.\n* Dashboard client records were not independently verified as production versus demo data. They were still served without authentication.\n* Possible unsafe handling of contact field `h` (HTTP 500 when pointing at localhost) was not confirmed as server-side request forgery and is not reported as a finding.\n* Testing was performed from a single vantage point on a single day (5 October 2026).\n* Third-party infrastructure (OVH AS16276, Spaceship DNS, Google Fonts, Google Maps, Flinders email) was excluded.\n"
+          },
+          {
+            "title": "Coverage",
+            "content": "Approved host coverage on ausecurity.best:\n\n* Public website over HTTPS, including same-origin paths\n* TLS certificate review\n* HTTP security headers\n* Unauthenticated dashboard access (`/dashboard`, `/dashboard.html`)\n* Login page and client-side redirect handling\n* Consultation success page and contact form (`/api/contact`)\n* `/api` slash-redirect behaviour\n* DNS records relevant to email authentication (SPF, DMARC, MX, TXT, CAA)\n* Server header disclosure\n\nEnumerated but not tested: www.ausecurity.best, contact.ausecurity.best, blog.ausecurity.best, ticket.ausecurity.best, and IP addresses as general hosts.\n"
+          }
+        ]
+      }
+    }
+  ]
+}

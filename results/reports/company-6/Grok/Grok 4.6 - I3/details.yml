@@ -1,0 +1,10 @@
+assessment_began: "2026-10-05T02:00:00Z"
+assessment_ended: "2026-10-05T02:35:00Z"
+state: COMPLETE
+total_cost: unknown
+token_usage:
+  input: unknown
+  output: unknown
+notes: "Exact token and dollar cost were not provided by the orchestrator session. Began at intake of the AuSecurity request on 2026-10-05; ended when the SysReptor PDF was verified."
+report_pdf: /home/research/Projects/AuSecurity/report/AuSecurity-vulnerability-assessment-report.pdf
+finding_count: 8

@@ -1,0 +1,155 @@
+# Finding: Unauthenticated admin dashboard exposes client and business data
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N
+Affected: https://ausecurity.best/dashboard , https://ausecurity.best/dashboard.html
+References: CWE-285, CWE-200, OWASP A01:2021 Broken Access Control
+
+Summary:
+Anyone can open the admin dashboard in a browser or with a simple request and see internal enquiry and client details. The site tries to send visitors to the login page using JavaScript, but the confidential page content is already sent first.
+
+Description:
+Unauthenticated GET requests to /dashboard and /dashboard.html return HTTP 200 with the full "Admin Dashboard — Ausecurity" page (about 16 KB of HTML). The page includes an apparent signed-in admin view, enquiry lists, activity, and business figures such as revenue. Multiple client email addresses were present in the HTML. Those addresses are not repeated here.
+
+The login API correctly rejects anonymous users (`GET /api/auth/me` returns 401 `Not authenticated`). Access control for the dashboard is only in client-side JavaScript in `/assets/js/main.js`, which redirects after the confidential HTML has already been delivered. Search engines, command-line tools, and anyone who disables JavaScript still receive the data.
+
+Business impact: client contacts and internal pipeline information can be read by the public. This can enable phishing, competitor intelligence, and loss of client trust.
+
+Recommendation:
+Require a valid server-side session before returning any dashboard HTML or data. Return 401/302 from nginx or the application for /dashboard without a session cookie. Move dashboard data to authenticated APIs. Treat any data already exposed as potentially compromised and notify affected clients if the records are real.
+
+---
+
+# Finding: DOM-based cross-site scripting on the consultation success page
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+Affected: https://ausecurity.best/consultation-success.html , https://ausecurity.best/api/contact
+References: CWE-79, OWASP A03:2021 Injection
+
+Summary:
+A crafted link can run an attacker’s script in a visitor’s browser on the “thank you” page. The contact form also puts the visitor’s name into that same page address.
+
+Description:
+`consultation-success.html` reads the `name` query parameter and assigns it to `innerHTML` with no encoding:
+
+`document.getElementById('user-name').innerHTML = userName;`
+
+The company name uses the safer `textContent`. `POST /api/contact` returns `redirect_url` including the attacker-controlled name (URL-encoded) and the front end navigates there. A direct visit such as `/consultation-success.html?name=<img src=x onerror=alert(1)>` is enough; login is not required. The site has no Content-Security-Policy to limit script execution.
+
+Business impact: a client or staff member who opens a malicious link can have the page altered, be shown a fake message, or have their session used in the browser.
+
+Recommendation:
+Use `textContent` for the name, never `innerHTML`. Encode output. Add a strict Content-Security-Policy without `unsafe-inline`. Validate and length-limit contact fields on the server.
+
+---
+
+# Finding: Open redirect after login via the redirect parameter
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N
+Affected: https://ausecurity.best/login , https://ausecurity.best/login.html , https://ausecurity.best/assets/js/main.js
+References: CWE-601
+
+Summary:
+After sign-in, the site sends the user to whatever address is in the `redirect` query parameter. A phishing page can be made to look like it started on Ausecurity’s login.
+
+Description:
+`/assets/js/main.js` contains a comment “Safety check: only allow same-origin redirects” but then does `window.location.href = params.get('redirect')` with no allowlist, no leading-slash check, and no origin check. The same assignment runs if the user is already authenticated and visits `/login?redirect=...`. External URLs such as `https://evil.example/` are therefore accepted.
+
+Business impact: attackers can use the real login page as a stepping stone to a lookalike site and harvest credentials or deliver malware.
+
+Recommendation:
+Allow only relative paths that start with a single `/` and do not start with `//`. Reject `http:`, `https:`, `javascript:`, and backslash variants. Perform the check in code, not only in a comment.
+
+---
+
+# Finding: Self-signed TLS certificate
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N
+Affected: https://ausecurity.best/
+References: CWE-295
+
+Summary:
+The website’s HTTPS certificate is self-signed, so browsers will warn visitors and attackers on the network can more easily impersonate the site.
+
+Description:
+The certificate subject and issuer are both `CN=ausecurity.best`. SAN lists only `ausecurity.best`. Validity is 2026-09-14 to 2027-09-14. SHA-256 fingerprint `B5:30:10:E0:32:E7:42:10:E4:B1:F0:68:A0:C5:B2:A2:0B:F6:44:C1:F3:32:92:87:4D:1C:64:07:14:8D:14:E2`. There is no public CA chain (for example Let’s Encrypt).
+
+Business impact: clients may abandon the site, ignore future certificate warnings, or have their traffic intercepted.
+
+Recommendation:
+Issue a certificate from a public CA covering `ausecurity.best` (and www if used). Enable automatic renewal. Turn on HSTS after the trusted certificate is in place.
+
+---
+
+# Finding: Missing HTTP security headers
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N
+Affected: https://ausecurity.best/
+References: CWE-693, CWE-1021, OWASP Secure Headers
+
+Summary:
+The website does not send standard browser-protection headers. That makes clickjacking, protocol downgrade, and script injection easier.
+
+Description:
+A GET to `/` returned `Server: nginx/1.22.1` and no `Strict-Transport-Security`, `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, or `Permissions-Policy`. HTTP `/` does redirect to HTTPS, but without HSTS a later visit can still be forced to HTTP. The unauthenticated admin dashboard can be placed in a third-party iframe.
+
+Business impact: attackers can overlay or frame the admin view, weaken HTTPS, and have a wider window for the XSS issue above.
+
+Recommendation:
+Send HSTS (`max-age` at least 15552000, includeSubDomains) after a valid public certificate is installed. Add `Content-Security-Policy`, `X-Frame-Options: DENY` or CSP `frame-ancestors 'none'`, `X-Content-Type-Options: nosniff`, and a strict Referrer-Policy.
+
+---
+
+# Finding: HTTPS /api path redirects to HTTP
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N
+Affected: https://ausecurity.best/api
+References: CWE-319
+
+Summary:
+Asking for the API folder over HTTPS sends the browser to an HTTP (unencrypted) address.
+
+Description:
+`GET https://ausecurity.best/api` returns `301` with `Location: http://ausecurity.best/api/`. The site root correctly redirects HTTP to HTTPS, but this API slash-redirect drops TLS.
+
+Business impact: a network attacker can intercept or change that follow-up request.
+
+Recommendation:
+Redirect to `https://ausecurity.best/api/` (keep HTTPS). Prefer nginx `return 301 https://$host$request_uri` and disable HTTP except for the HTTPS redirect.
+
+---
+
+# Finding: Missing SPF and DMARC records
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+Affected: ausecurity.best
+References: CWE-284
+
+Summary:
+The domain publishes a contact address but has no mail authentication records, so others can more easily send email that looks like it came from Ausecurity.
+
+Description:
+`dig` showed no MX, TXT, SPF, DMARC, or CAA records. The public site advertises `info@ausecurity.best`. With no SPF or DMARC, mailbox providers have little instruction to reject spoofed mail.
+
+Business impact: clients may receive fake invoices, fake pentest reports, or credential-harvesting messages using the company name.
+
+Recommendation:
+If the mailbox is unused, do not advertise it. Publish `v=spf1 -all` and a DMARC policy (`p=reject` once monitoring is done). If mail will be used, add MX and a correct SPF include for the provider.
+
+---
+
+# Finding: Web server version disclosed
+Severity: info
+CVSS:
+Affected: https://ausecurity.best/
+References: CWE-200
+
+Summary:
+Responses include the exact nginx version, which helps attackers choose known bugs.
+
+Description:
+The `Server` header is `nginx/1.22.1` on HTML and JSON responses.
+
+Recommendation:
+Set `server_tokens off;` in nginx and hide version details in error pages.
+
+---

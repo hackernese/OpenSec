@@ -1,0 +1,46 @@
+Read proxies.yaml from /etc/theHarvester/proxies.yaml
+*******************************************************************
+*  _   _                                            _             *
+* | |_| |__   ___    /\  /\__ _ _ ____   _____  ___| |_ ___ _ __  *
+* | __|  _ \ / _ \  / /_/ / _` | '__\ \ / / _ \/ __| __/ _ \ '__| *
+* | |_| | | |  __/ / __  / (_| | |   \ V /  __/\__ \ ||  __/ |    *
+*  \__|_| |_|\___| \/ /_/ \__,_|_|    \_/ \___||___/\__\___|_|    *
+*                                                                 *
+* theHarvester 4.11.1                                             *
+* Coded by Christian Martorella                                   *
+* Edge-Security Research                                          *
+* cmartorella@edge-security.com                                   *
+*                                                                 *
+*******************************************************************
+
+[*] Target: ausecurity.best 
+
+Read api-keys.yaml from /etc/theHarvester/api-keys.yaml
+
+[!] Missing API key for DNSDumpster. 
+Read api-keys.yaml from /etc/theHarvester/api-keys.yaml
+[*] Searching Hackertarget. 
+[*] Searching Urlscan. 
+[*] Searching CRTsh. 
+
+[*] ASNS found: 1
+--------------------
+AS16276
+
+[*] Interesting Urls found: 2
+--------------------
+https://ausecurity.best/
+https://ticket.ausecurity.best/setup/install.php
+
+[*] IPs found: 2
+-------------------
+51.79.166.148
+51.79.166.209
+
+[*] No emails found.
+
+[*] No people found.
+
+[*] Hosts found: 1
+---------------------
+ticket.ausecurity.best

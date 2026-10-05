@@ -1,0 +1,10 @@
+assessment_began: "2026-10-05"
+assessment_ended: "2026-10-05"
+state: COMPLETE
+total_cost: not_measured
+token_usage:
+  input: not_measured
+  output: not_measured
+report_pdf: /home/research/Projects/AuSecurity/report/report.pdf
+sysreptor_project_id: 61a88870-14c1-42a8-81f7-5cf366ad0826
+finding_count: 15

@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Mon, 05 Oct 2026 00:32:02 GMT
+Server: Apache/2.4.68 (Debian)
+Link: <https://blog.ausecurity.best/index.php/wp-json/>; rel="https://api.w.org/"
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=UTF-8
+

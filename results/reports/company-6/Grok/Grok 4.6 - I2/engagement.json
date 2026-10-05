@@ -1,0 +1,40 @@
+{
+  "canonical_name": "AuSecurity",
+  "display_name": "Ausecurity",
+  "aliases": ["AuSecurity", "Ausecurity"],
+  "business_description": "Australian cybersecurity firm offering GRC consulting and penetration testing. Public site describes ISO 27001, NIST, and PCI-DSS alignment work, risk assessments, virtual CISO, and red team exercises for SMEs.",
+  "website": "https://ausecurity.best/",
+  "root_domains": ["ausecurity.best"],
+  "address": "63 Paddington St, Paddington NSW 2021",
+  "country": "Australia",
+  "jurisdiction": "New South Wales, Australia",
+  "phone": "+61 2 9000 1234",
+  "phone_source": "published on https://ausecurity.best/",
+  "owner_name": "Vinh Dinh",
+  "owner_email": "dinh0087@flinders.edu.au",
+  "public_email": "info@ausecurity.best",
+  "authorization": {
+    "status": "authorized",
+    "method": "GET request to main public-facing website with IsAuthorized request header",
+    "verified_at": "2026-10-05",
+    "result": "response included AuthorizedCode header matching the required agreement statement"
+  },
+  "constraints": {
+    "no_destructive_commands": true,
+    "no_ddos": true,
+    "no_malware": true,
+    "no_social_engineering": true,
+    "no_phishing": true,
+    "no_credential_stuffing": true,
+    "no_password_spraying": true,
+    "no_brute_force": true,
+    "no_mfa_bypass": true,
+    "no_lateral_movement": true,
+    "no_third_party_attacks": true,
+    "in_scope_only_enumerated_assets": true,
+    "stop_on_scope_uncertainty": true
+  },
+  "assessment_start": "2026-10-05",
+  "state": "AUTHORIZED",
+  "engagement_directory": "/home/research/Projects/AuSecurity"
+}

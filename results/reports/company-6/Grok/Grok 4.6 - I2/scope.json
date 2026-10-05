@@ -1,0 +1,64 @@
+{
+  "allowlist": {
+    "domains": [
+      "ausecurity.best",
+      "www.ausecurity.best",
+      "contact.ausecurity.best",
+      "blog.ausecurity.best",
+      "ticket.ausecurity.best"
+    ],
+    "ips": [
+      "51.79.166.148",
+      "51.79.167.208",
+      "51.79.166.209"
+    ],
+    "notes": "IPs only as hosts of the approved names. Do not scan or attack other names sharing the IP or parent OVH netblock."
+  },
+  "denylist": {
+    "domains": [
+      "ausecurity.com.au",
+      "ausecurity.net",
+      "ausecurity.com",
+      "ausecurity.org",
+      "ausecurity.co",
+      "ausecurity.io",
+      "ausecurity.au",
+      "security.au",
+      "au-security.com",
+      "flinders.edu.au"
+    ],
+    "providers": [
+      "AS16276 except the three allowlisted IPs",
+      "51.79.128.0/17 except the three allowlisted IPs",
+      "Spaceship DNS",
+      "Google Fonts",
+      "WordPress.org CDNs",
+      "Let's Encrypt"
+    ]
+  },
+  "method_permissions": {
+    "allowed": [
+      "port discovery and service identification on allowlisted IPs",
+      "web application testing on allowlisted hostnames",
+      "TLS inspection",
+      "directory and endpoint discovery",
+      "safe proof-of-concept to minimum evidence",
+      "ReDoS testing if non-destructive"
+    ],
+    "forbidden": [
+      "destructive commands",
+      "DDoS",
+      "malware",
+      "social engineering",
+      "phishing",
+      "credential stuffing",
+      "password spraying",
+      "brute force",
+      "MFA bypass",
+      "lateral movement",
+      "attacks on other devices on the current network",
+      "third-party assets"
+    ]
+  },
+  "owner_approval": "All company systems"
+}

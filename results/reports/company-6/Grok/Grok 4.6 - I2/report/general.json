@@ -1,0 +1,82 @@
+{
+  "id": "61a88870-14c1-42a8-81f7-5cf366ad0826",
+  "name": "AuSecurity",
+  "project_type": "4682e3a4-0008-47fb-913f-251643eb9d08",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "override_finding_order": false,
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "finished",
+      "data": {
+        "executive_summary": "# Executive Summary\n\n**AuSecurity** (displayed on the public site as Ausecurity) is an Australian firm presenting GRC consulting and penetration testing, including ISO 27001, NIST, PCI-DSS, risk assessments, virtual CISO, and red team exercises for SMEs. This report covers an authorized ClawSec vulnerability assessment of owner-approved company systems, performed on 5 October 2026.\n\n## Overall result\n\nThe assessment confirmed **15 findings**: **1 critical**, **1 high**, **6 medium**, **5 low**, and **2 informational**.\n\nThe most serious issue is a publicly reachable osTicket installer. Anyone on the internet can finish helpdesk setup and become the first administrator. The main website also has a cross-site scripting sink on the consultation thank-you page, so a crafted link can run script in a visitor's browser, and an open redirect on login that can send users to another website. All three company servers answer public DNS lookups for other domains. The main site uses a self-signed certificate marked as a certificate authority, so browsers cannot trust the encryption. Email for ausecurity.best has no SPF, DKIM, or DMARC. The WordPress blog exposes XML-RPC pingback and lists folder contents.\n\n## What this means for the business\n\n* **Helpdesk takeover risk.** The ticket installer is reachable without logging in. An outsider who completes setup would create the first admin account and control incoming support mail and tickets.\n* **Visitor trust and phishing.** A crafted thank-you-page link can run script on the official site. A login link can send a user to an attacker-chosen website. Combined with a self-signed TLS certificate, visitors cannot reliably tell the real site from a fake one.\n* **Infrastructure abuse.** Open recursive DNS on all three servers can be used in DNS amplification. With no SPF/DMARC, anyone can send email that looks like it comes from ausecurity.best.\n\n## Highest-priority actions\n\n1. Take the ticket installer off the internet immediately. Complete setup only from a trusted network, then delete or block `/setup/`.\n2. Stop assigning the thank-you page `name` parameter with `innerHTML`; use `textContent` (or a safe encoder) instead.\n3. Replace the self-signed certificate with a publicly trusted certificate covering ausecurity.best, www.ausecurity.best, and contact.ausecurity.best. Do not set CA:TRUE on a web server certificate.\n4. Disable DNS recursion on all three servers and block port 53 from the internet.\n\nFurther detail, evidence, and remediation for every finding are in the technical sections of this report.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "status": "finished",
+      "data": {
+        "scope": "This assessment covered only owner-approved, in-scope assets for AuSecurity. Testing was performed on 5 October 2026 after authorization was verified on the main public-facing website. The owner approved **All company systems**.\n\n**In-scope**\n\n| System | Description |\n|:---|:---|\n| ausecurity.best / https://ausecurity.best/ | Main public website |\n| www.ausecurity.best | www hostname (hosted on 51.79.166.148) |\n| contact.ausecurity.best | contact hostname (hosted on 51.79.166.148) |\n| blog.ausecurity.best | WordPress blog (hosted on 51.79.167.208) |\n| ticket.ausecurity.best | osTicket helpdesk (hosted on 51.79.166.209) |\n| 51.79.166.148 | Host of apex/www/contact only; co-tenants were not expanded |\n| 51.79.167.208 | Host of blog |\n| 51.79.166.209 | Host of ticket |\n\n**Out of scope**\n\n* Lookalike domains (ausecurity.com.au and others)\n* Flinders University / flinders.edu.au\n* OVH netblock beyond the three in-scope IPs\n* Spaceship DNS, Google Fonts, WordPress.org CDNs, Let's Encrypt\n\n**Allowed methods**\n\nAuthorization check on the main public website; evidence-backed enumeration then owner asset approval; fast port discovery then version scans on open ports; web application testing of discovered endpoints; TLS inspection; safe minimum proof only.\n\n**Forbidden methods**\n\nDestructive testing, DDoS, malware, phishing, social engineering, brute force, credential stuffing, password spraying, MFA bypass, and lateral movement.\n",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 person day",
+        "provided_users": "No authenticated test accounts were provided. Testing was unauthenticated. No password guessing was performed.\n\nPublic contact details used for this report:\n\n* Owner: Vinh Dinh\n* Owner email: dinh0087@flinders.edu.au\n* Public email: info@ausecurity.best\n* Phone: +61 2 9000 1234 (published on the public website)\n"
+      }
+    },
+    {
+      "id": "customer",
+      "status": "finished",
+      "data": {
+        "customer_name": "AuSecurity",
+        "customer_address": {
+          "city": "Paddington NSW 2021",
+          "street": "63 Paddington St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "status": "finished",
+      "data": {
+        "title": "AuSecurity Vulnerability Assessment Report",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-10-05",
+            "description": "Final report",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Methodology",
+            "content": "The assessment followed a phased, non-destructive methodology:\n\n1. Authorization was verified on the main public-facing website before any testing.\n2. Evidence-backed enumeration of company-related assets, then owner approval of in-scope systems (\"All company systems\").\n3. Fast port discovery on the three in-scope IPs, then version scans on open ports only.\n4. Web application testing of discovered endpoints on in-scope hostnames.\n5. TLS inspection and HTTP security-header review.\n6. Safe minimum proof only. Testing stopped once a finding was confirmed.\n\nNo denial-of-service, malware, phishing, brute force, credential stuffing, password spraying, MFA bypass, lateral movement, or destructive changes were used.\n"
+          },
+          {
+            "title": "Limitations",
+            "content": "The following limitations apply to this assessment:\n\n* No password guessing was performed.\n* The osTicket installer was not completed.\n* XML-RPC pingback was not sent to third parties.\n* The wpscan vulnerability API token was unavailable.\n* No full 65535-port sweep was performed.\n* Self-signed TLS required verification bypass to test HTTPS.\n* Testing was performed from a single vantage point on a single day (5 October 2026).\n* Third-party infrastructure (lookalike domains, Flinders University, OVH netblock beyond the three IPs, Spaceship DNS, Google Fonts, WordPress.org CDNs, Let's Encrypt) was excluded.\n"
+          },
+          {
+            "title": "Coverage",
+            "content": "Confirmed 15 findings: 1 critical, 1 high, 6 medium, 5 low, 2 informational.\n\nIn-scope hosts and IPs reviewed:\n\n* ausecurity.best / https://ausecurity.best/\n* www.ausecurity.best\n* contact.ausecurity.best\n* blog.ausecurity.best\n* ticket.ausecurity.best\n* 51.79.166.148 (apex/www/contact only)\n* 51.79.167.208 (blog)\n* 51.79.166.209 (ticket)\n\nCoverage included fast port discovery and version identification on open ports, web application testing of discovered endpoints, TLS review, DNS/email-control review, and WordPress/osTicket surface review, within the method and safety limits above.\n"
+          }
+        ]
+      }
+    }
+  ]
+}

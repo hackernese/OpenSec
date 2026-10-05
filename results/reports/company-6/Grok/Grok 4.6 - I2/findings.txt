@@ -1,0 +1,262 @@
+# Finding: Public osTicket installer allows unauthenticated takeover
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+Affected: https://ticket.ausecurity.best/, https://ticket.ausecurity.best/setup/install.php, http://51.79.166.209:8080/, 51.79.166.209
+References: https://docs.osticket.com/
+
+Summary:
+Anyone on the internet can open the helpdesk installer and finish setup as administrator.
+
+Description:
+https://ticket.ausecurity.best/ redirects to /setup/install.php, which returns HTTP 200 and the page title "osTicket Installer" for osTicket v1.18.4. The same installer is also exposed on http://51.79.166.209:8080/ (Apache/2.4.68, PHP/8.2.33). Staff and API paths such as /scp/login.php, /login.php, /open.php, and /api/http.php redirect to the installer, showing the helpdesk is not installed yet. ost-config.php returned 403 and was not read. The installer form was not submitted. An attacker who completes setup would create the first admin account and control incoming support mail and tickets.
+
+Recommendation:
+Take the installer off the internet immediately. Complete setup only from a trusted network, then delete or block /setup/. Do not expose port 8080. Restrict the helpdesk with HTTPS, a firewall, and authentication before it is used.
+
+---
+
+# Finding: DOM-based cross-site scripting on consultation success page
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N
+Affected: https://ausecurity.best/consultation-success.html
+References: https://owasp.org/www-community/attacks/DOM_Based_XSS
+
+Summary:
+A crafted link can run script in a visitor's browser on the "thank you" page.
+
+Description:
+The contact API returns redirect_url values such as /consultation-success.html?name=...&company=.... The success page reads the name query parameter and assigns it with innerHTML:
+
+document.getElementById('user-name').innerHTML = userName;
+
+The company value is assigned with textContent and was not treated as executable. A victim who opens a malicious name parameter can have HTML injected into the page. This can be used for phishing on the official site or session theft in the same origin. The contact API also reflects the submitted name in JSON, but the executable sink is the success page innerHTML assignment.
+
+Recommendation:
+Use textContent (or a safe HTML encoder) for the name field. Do not assign URL parameters to innerHTML. Add a Content-Security-Policy that blocks inline script.
+
+---
+
+# Finding: Open redirect after login via redirect parameter
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+Affected: https://ausecurity.best/login.html, https://ausecurity.best/assets/js/main.js
+References: https://cwe.mitre.org/data/definitions/601.html
+
+Summary:
+A login link can send the user to an attacker-chosen website.
+
+Description:
+First-party JavaScript in /assets/js/main.js reads the redirect query parameter and assigns it directly:
+
+window.location.href = params.get('redirect') || '/dashboard';
+
+No allowlist or same-origin check is present at that assignment. An attacker can send https://ausecurity.best/login.html?redirect=https://evil.example/ and, when that code path runs, the browser leaves the real site. That is useful for phishing around the admin login.
+
+Recommendation:
+Allow only relative paths on the same origin (for example paths starting with / and not //). Ignore absolute URLs. Perform the check on the server as well as in JavaScript.
+
+---
+
+# Finding: Host header reflected in HTTP to HTTPS redirect
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+Affected: 51.79.166.148:80, ausecurity.best
+References: https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection
+
+Summary:
+The website trusts the Host header when redirecting HTTP to HTTPS.
+
+Description:
+A GET to http://51.79.166.148/ with Host: evil.example returned 301 Location: https://evil.example/. With Host: ausecurity.best the Location was https://ausecurity.best/. HTTPS on port 443 served the same site for arbitrary Host values, including evil.example (HTTP 200, same body size as the official homepage). This can support phishing, password-reset poisoning if a reset flow is added later, and cache confusion.
+
+Recommendation:
+Set a fixed server_name and a fixed canonical redirect target in nginx. Do not copy the request Host into Location. Reject unknown hosts.
+
+---
+
+# Finding: Open recursive DNS resolvers on all company servers
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:L
+Affected: 51.79.166.148, 51.79.167.208, 51.79.166.209
+References: https://www.cisa.gov/news-events/alerts/2016/03/23/dns-amplification-attacks
+
+Summary:
+Each company server answers public DNS lookups for other domains.
+
+Description:
+Port 53/tcp is open on all three in-scope IPs. A single recursive query for example.com A against each IP returned answers with the Recursion Available bit set. version.bind was not disclosed. Recursion was not used for amplification testing. Internet-facing recursive resolvers can be abused for DNS amplification and cache poisoning.
+
+Recommendation:
+Disable recursion. If DNS is needed, allow only localhost or an internal network. Block port 53 from the internet at the firewall.
+
+---
+
+# Finding: Untrusted TLS certificate (self-signed CA) and name mismatch
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N
+Affected: ausecurity.best, www.ausecurity.best, contact.ausecurity.best, 51.79.166.148
+References:
+
+Summary:
+Browsers cannot trust the main website's encryption, and www/contact names are not on the certificate.
+
+Description:
+The certificate for 51.79.166.148:443 has subject and issuer CN=ausecurity.best (self-signed), SAN DNS:ausecurity.best only, and BasicConstraints CA:TRUE. Validity is 2026-09-14 to 2027-09-14. OpenSSL verify error 18 (self-signed). www.ausecurity.best and contact.ausecurity.best use this same certificate, so those names do not match the SAN. Users see warnings, and a certificate marked CA:TRUE is more dangerous if someone is persuaded to trust it.
+
+Recommendation:
+Issue a publicly trusted certificate (for example Let's Encrypt) covering ausecurity.best, www.ausecurity.best, and contact.ausecurity.best. Do not set CA:TRUE on a web server certificate. Turn on HSTS after the trusted certificate is in place.
+
+---
+
+# Finding: No SPF, DKIM, or DMARC for ausecurity.best
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+Affected: ausecurity.best
+References: https://dmarc.org/
+
+Summary:
+Anyone can send email that looks like it comes from ausecurity.best.
+
+Description:
+DNS has no MX records, no TXT/SPF records, and no TXT record at _dmarc.ausecurity.best. The public site still advertises info@ausecurity.best. Without SPF/DKIM/DMARC, mailbox providers have little reason to reject forged mail using this domain.
+
+Recommendation:
+If the domain will not send mail, publish a deny-all SPF record and a DMARC reject policy. If it will send mail, add MX, SPF, DKIM, and DMARC.
+
+---
+
+# Finding: WordPress XML-RPC with pingback enabled
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:L
+Affected: https://blog.ausecurity.best/xmlrpc.php
+References: https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces
+
+Summary:
+The blog accepts XML-RPC calls, including pingback, which is a common abuse path.
+
+Description:
+GET /xmlrpc.php returns that the server accepts POST only. POST system.listMethods returned about 80 methods, including pingback.ping, pingback.extensions.getPingbacks, system.multicall, and mt.publishPost. Pingback was not sent to any third-party site. This interface can support brute-force via system.multicall and pingback abuse. WordPress generator/version observed: 7.1.2.
+
+Recommendation:
+Disable xmlrpc.php if it is not needed (web server rule or a plugin). If remote publishing is required, restrict it and disable pingback.
+
+---
+
+# Finding: Directory listing on WordPress uploads and includes
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://blog.ausecurity.best/wp-content/uploads/, https://blog.ausecurity.best/wp-includes/
+References:
+
+Summary:
+The blog web server lists folder contents instead of hiding them.
+
+Description:
+Apache returned an index listing for /wp-content/uploads/ (including a 2026/ folder) and for /wp-includes/. wp-config.php was not leaked (HTTP 200 with an empty body). debug.log was not present (404). Listings make it easier to find uploaded files and WordPress internals.
+
+Recommendation:
+Turn off Options Indexes in Apache. Return a 403 or a blank index for those directories.
+
+---
+
+# Finding: WordPress administrator username disclosed
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://blog.ausecurity.best/?author=1
+References:
+
+Summary:
+The blog reveals that an account named admin exists.
+
+Description:
+https://blog.ausecurity.best/?author=1 returns 301 to /index.php/author/admin/ with X-Redirect-By: WordPress. REST user listing at /wp-json/wp/v2/users returned 404. No password guessing was performed. Knowing the username admin still helps a later password attack.
+
+Recommendation:
+Do not use the username admin. Create a unique editor/admin name and disable author archives or the ?author= ID lookup.
+
+---
+
+# Finding: Missing HTTP security headers on the main website
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N
+Affected: https://ausecurity.best/
+References: https://owasp.org/www-project-secure-headers/
+
+Summary:
+The main site does not send standard browser protections.
+
+Description:
+The homepage response from nginx/1.22.1 did not include Strict-Transport-Security, Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, or Permissions-Policy. Login and dashboard paths do send X-Frame-Options: DENY and X-Robots-Tag. Missing headers on the public pages make clickjacking and mixed-content issues easier. Some HTTPS directory URLs (/api, /assets, /assets/js, /assets/css) 301-redirect to http://ausecurity.best/... which weakens HTTPS.
+
+Recommendation:
+Add HSTS (after a trusted certificate is installed), CSP, X-Content-Type-Options: nosniff, Referrer-Policy, and frame restrictions. Redirect HTTP to HTTPS using a fixed https URL, never the other way around.
+
+---
+
+# Finding: Ticket session cookie missing Secure, HttpOnly, and SameSite
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N
+Affected: https://ticket.ausecurity.best/
+References: https://owasp.org/www-community/controls/SecureCookieAttribute
+
+Summary:
+The helpdesk session cookie can be stolen more easily than a locked-down cookie.
+
+Description:
+Responses from the osTicket installer set PHPSESSID with path=/ only. HttpOnly, Secure, and SameSite were not set. nmap http-cookie-flags also reported PHPSESSID missing HttpOnly on ports 443 and 8080.
+
+Recommendation:
+Set HttpOnly, Secure, and SameSite=Strict or Lax on session cookies. Serve the helpdesk on HTTPS only.
+
+---
+
+# Finding: SSH password authentication exposed on all servers
+Severity: low
+CVSS:
+Affected: 51.79.166.148, 51.79.167.208, 51.79.166.209
+References:
+
+Summary:
+Remote login with a password is allowed on every company server.
+
+Description:
+OpenSSH_9.2p1 Debian-2+deb12u10 is listening on port 22 on all three IPs. An authentication probe with no password attempt returned Permission denied (publickey,password). Password logins were not guessed. Internet-facing password authentication increases the chance of a later password attack.
+
+Recommendation:
+Use key-only authentication, disable PasswordAuthentication, restrict SSH by firewall or VPN, and keep fail2ban or equivalent in place.
+
+---
+
+# Finding: Unauthenticated admin dashboard HTML is publicly readable
+Severity: info
+CVSS:
+Affected: https://ausecurity.best/dashboard.html, https://ausecurity.best/login.html
+References:
+
+Summary:
+The admin pages can be opened without logging in, even though live data still requires the API.
+
+Description:
+/login.html and /dashboard.html return HTTP 200 without authentication. The dashboard is a static shell (including a "Signed in as admin" label). GET /api/auth/me returns 401 {"detail":"Not authenticated"}. Login POST with invalid credentials returns 401 {"detail":"Invalid credentials"} and empty JSON returns FastAPI-style 422. No working password was used. The HTML still reveals that an admin console exists and how it is built.
+
+Recommendation:
+Do not serve dashboard HTML until the server has a valid session. Return 302 to login from the web server, not only from JavaScript.
+
+---
+
+# Finding: Service version information disclosed
+Severity: info
+CVSS:
+Affected: ausecurity.best, blog.ausecurity.best, ticket.ausecurity.best, 51.79.166.148, 51.79.167.208, 51.79.166.209
+References:
+
+Summary:
+Software names and versions are visible to anyone who connects.
+
+Description:
+Observed banners and headers include nginx/1.22.1, Apache/2.4.68 (Debian), PHP/8.2.33, OpenSSH 9.2p1 Debian, WordPress 7.1.2, and osTicket v1.18.4. This is not exploitable by itself but helps an attacker choose known issues.
+
+Recommendation:
+Remove Server and X-Powered-By headers where practical, and keep the software updated.
+
+---

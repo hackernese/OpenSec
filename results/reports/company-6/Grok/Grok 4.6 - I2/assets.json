@@ -1,0 +1,112 @@
+{
+  "approved_at": "2026-10-05",
+  "approval": "All company systems",
+  "state": "ENUMERATED",
+  "in_scope": [
+    {
+      "identifier": "ausecurity.best",
+      "type": "root_domain",
+      "confidence": 98
+    },
+    {
+      "identifier": "https://ausecurity.best/",
+      "type": "website",
+      "confidence": 98,
+      "related_paths": [
+        "/login.html",
+        "/dashboard.html",
+        "/contact.html",
+        "/about.html",
+        "/services.html",
+        "/case-studies.html"
+      ],
+      "js_referenced_apis": [
+        "/api/auth/me",
+        "/api/auth/login",
+        "/api/auth/logout",
+        "/api/contact"
+      ]
+    },
+    {
+      "identifier": "www.ausecurity.best",
+      "type": "subdomain",
+      "confidence": 95,
+      "ip": "51.79.166.148"
+    },
+    {
+      "identifier": "contact.ausecurity.best",
+      "type": "subdomain",
+      "confidence": 92,
+      "ip": "51.79.166.148"
+    },
+    {
+      "identifier": "blog.ausecurity.best",
+      "type": "subdomain",
+      "confidence": 93,
+      "ip": "51.79.167.208"
+    },
+    {
+      "identifier": "ticket.ausecurity.best",
+      "type": "subdomain",
+      "confidence": 92,
+      "ip": "51.79.166.209"
+    },
+    {
+      "identifier": "51.79.166.148",
+      "type": "ip_address",
+      "confidence": 95,
+      "hosts": ["ausecurity.best", "www.ausecurity.best", "contact.ausecurity.best"],
+      "constraint": "Test only services bound to approved hostnames on this IP. Do not expand co-tenants."
+    },
+    {
+      "identifier": "51.79.167.208",
+      "type": "ip_address",
+      "confidence": 93,
+      "hosts": ["blog.ausecurity.best"]
+    },
+    {
+      "identifier": "51.79.166.209",
+      "type": "ip_address",
+      "confidence": 92,
+      "hosts": ["ticket.ausecurity.best"]
+    }
+  ],
+  "likely": [],
+  "candidate": [],
+  "rejected": [
+    "ausecurity.com.au",
+    "ausecurity.net",
+    "ausecurity.com",
+    "ausecurity.org",
+    "ausecurity.co",
+    "ausecurity.io",
+    "ausecurity.au",
+    "security.au",
+    "au-security.com",
+    "jane@acmecorp.com"
+  ],
+  "cloud_cdn_excluded_from_expansion": [
+    "AS16276",
+    "51.79.128.0/17",
+    "vps-*.vps.ovh.ca"
+  ],
+  "third_party_excluded": [
+    "launch1.spaceship.net",
+    "launch2.spaceship.net",
+    "Spaceship, Inc.",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+    "Let's Encrypt",
+    "s.w.org",
+    "api.w.org",
+    "flinders.edu.au"
+  ],
+  "warnings": [
+    "Street address 63 Paddington St was not published on official pages.",
+    "Published ABN 00 000 000 000 is a placeholder.",
+    "Apex/www/contact TLS is self-signed.",
+    "ticket.ausecurity.best serves an osTicket installer.",
+    "blog.ausecurity.best appears to be a default WordPress install.",
+    "No MX/TXT/SPF/DMARC on ausecurity.best."
+  ]
+}

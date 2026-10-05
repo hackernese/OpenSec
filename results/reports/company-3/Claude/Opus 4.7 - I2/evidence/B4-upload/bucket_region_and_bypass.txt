@@ -1,0 +1,204 @@
+===== Resolve bucket region (301) =====
+---- imager ----
+HTTP/1.1 404 Not Found
+x-amz-request-id: RM0PCJB9ZM3XYZ3K
+x-amz-id-2: x2svODjfeLWl/sS5vlh56Ifi/r2KfHrERGa3mQ0i2tNMS9GcmtDpQzzLsDjXPdu0sik9UfD8R3g=
+Content-Type: application/xml
+Transfer-Encoding: chunked
+Date: Mon, 05 Oct 2026 03:37:51 GMT
+Server: AmazonS3
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>imager</BucketName><RequestId>RM0PCJB9ZM3XYZ3K</RequestId><HostId>x2svODjfeLWl/sS5vlh56Ifi/r2KfHrERGa3mQ0i2tNMS9GcmtDpQzzLsDjXPdu0sik9UfD8R3g=</HostId></Error>
+---- imagesharer ----
+HTTP/1.1 403 Forbidden
+x-amz-bucket-region: ap-northeast-1
+Server: AmazonS3
+x-amz-request-id: AFVD2Y9ZX68FMTX8
+x-amz-id-2: YG3dbFXsRIlRH2soeZRX4f2nCf0i4jPlABs61CaX3EU4UbMmP6EROiyz3L/Rg5sCRttoR4Rvx7s=
+Content-Type: application/xml
+Transfer-Encoding: chunked
+Date: Mon, 05 Oct 2026 03:37:52 GMT
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>AFVD2Y9ZX68FMTX8</RequestId><HostId>YG3dbFXsRIlRH2soeZRX4f2nCf0i4jPlABs61CaX3EU4UbMmP6EROiyz3L/Rg5sCRttoR4Rvx7s=</HostId></Error>
+===== List found buckets by region hint =====
+imager @ us-east-1 -> 404
+imager @ us-east-2 -> 404
+imager @ us-west-1 -> 404
+imager @ us-west-2 -> 404
+imager @ eu-west-1 -> 404
+imager @ eu-central-1 -> 404
+imager @ ap-southeast-2 -> 404
+imager @ ap-southeast-1 -> 404
+imager @ ap-northeast-1 -> 404
+imagesharer @ us-east-1 -> 301
+imagesharer @ us-east-2 -> 301
+imagesharer @ us-west-1 -> 301
+imagesharer @ us-west-2 -> 301
+imagesharer @ eu-west-1 -> 301
+imagesharer @ eu-central-1 -> 301
+imagesharer @ ap-southeast-2 -> 301
+imagesharer @ ap-southeast-1 -> 301
+imagesharer @ ap-northeast-1 -> 403
+
+===== Upload bypass tests (as user A, upload to A) =====
+===== Upload: xss.svg as CT=image/svg+xml filename=xss.svg =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:07 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/upload
+
+
+===== Upload: shell.php as CT=application/x-php filename=shell.php =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:07 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/upload
+
+
+===== Upload: shell.php as CT=image/jpeg filename=shell.jpg.php =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:07 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/upload
+
+
+===== Upload: magic_php.jpg as CT=image/jpeg filename=magic_php.jpg =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:08 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/3c76b775-8c18-4616-aafb-03a99e652791
+
+
+===== Upload: double_ext.jpg.php as CT=image/jpeg filename=double_ext.jpg.php =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:08 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/dffd1d45-c079-475c-83a9-003e9ffec7c4
+
+
+===== Try user_id with SQLi apostrophe =====
+HTTP/1.1 500 Internal Server Error
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:08 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 298
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+
+{"error":{"code":"INTERNAL_ERROR","message":"An unexpected error occurred.","detail":"SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  invalid input syntax for type uuid: \"\"\"\nCONTEXT:  unnamed portal parameter $2 = '...' in \/var\/www\/html\/src\/modules\/images\/ImagesService.php:71"}}
+===== Try user_id with path traversal =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:08 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/upload
+
+
+===== Try user_id with blank =====
+HTTP/1.1 500 Internal Server Error
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:08 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 293
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+
+{"error":{"code":"INTERNAL_ERROR","message":"An unexpected error occurred.","detail":"SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  invalid input syntax for type uuid: \"\"\nCONTEXT:  unnamed portal parameter $2 = '' in \/var\/www\/html\/src\/modules\/images\/ImagesService.php:71"}}
+===== Try user_id missing =====
+HTTP/1.1 500 Internal Server Error
+Server: nginx
+Date: Mon, 05 Oct 2026 03:38:09 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 176
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+
+{"error":{"code":"INTERNAL_ERROR","message":"An unexpected error occurred.","detail":"Undefined array key \"user_id\" in \/var\/www\/html\/src\/UI\/ImagesUiController.php:42"}}

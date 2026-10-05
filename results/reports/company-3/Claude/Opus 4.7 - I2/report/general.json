@@ -1,0 +1,68 @@
+{
+  "id": "a65d324a-b174-4bc9-b99e-a9358a20da9d",
+  "name": "Imagur \u2014 Full-Scope Vulnerability Assessment (October 2026)",
+  "project_type": "e3be279f-3369-4408-83f1-163ac3112c57",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "override_finding_order": false,
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "finished",
+      "data": {
+        "executive_summary": "Imagur operates **Imager**, a young photo-sharing web application hosted on a single OVH VPS in Sydney and backed by Amazon S3 for image storage. This single-day, full-scope assessment (5 October 2026) covered the public web application, the host operating system and its exposed services, DNS and email configuration, and the backing cloud storage.\n\nAcross the application and its supporting infrastructure the assessment identified **19 confirmed issues**: **2 critical**, **3 high**, **8 medium**, **5 low**, and **1 informational**. The underlying cryptography (TLS and SSH) is well configured and produced no findings on its own \u2014 the risks are concentrated in **application logic, access control, cloud storage configuration, and secret handling**.\n\n**Two issues demand action today:**\n\n1. **Live AWS production credentials are published to every visitor.** A JavaScript file served from the website contains an active AWS Access Key ID and Secret Access Key that the back-end currently uses to sign S3 requests. Anyone who opens the page \u2014 or who finds the file via a search engine \u2014 obtains those credentials and the AWS privileges they carry.\n2. **The S3 bucket that stores every user upload is open to the public internet.** Anyone can list the entire set of files and download any individual image, including images users marked \"private\" in the application. The in-application \"private\" setting provides no real protection.\n\n**Three further issues are high severity:**\n\n* The upload endpoint lets an authenticated attacker upload images into **any other user's account**, because the owner is read from a hidden form field instead of the user session.\n* **None** of the state-changing forms carry anti-CSRF protection, so a malicious page visited by a logged-in user can act on their behalf.\n* The **PostgreSQL database port is open to the Internet** rather than being restricted to the application host.\n\nThe remaining 14 findings are a mix of hygiene and configuration issues \u2014 verbose error messages, missing security headers, missing email anti-spoofing records, no rate limiting on authentication, no password-change or password-reset flow, and similar. Several of these compound the critical issues: for example, the lack of CSRF combined with the upload-as-anyone bug means a single malicious webpage, if visited by a logged-in user, can plant content under any victim's name.\n\n**Priority order:**\n\n* **Today:** rotate the exposed AWS keys and lock down the S3 bucket.\n* **This week:** fix the upload-ownership and CSRF issues.\n* **Next sprint:** firewall the database, remove verbose error messages, add rate limiting, and address the remaining hygiene items.\n\nWith the critical and high findings remediated, the overall risk profile of the service moves from *unacceptable for live user data* to *within the expected range for a small production web application*."
+      }
+    },
+    {
+      "id": "scope",
+      "status": "finished",
+      "data": {
+        "scope": "## In-Scope Assets\n\nThe following assets were explicitly authorised and tested:\n\n* **imagesharer.xyz** \u2014 apex web application (nginx on 443/TCP + PHP 8.2.34, custom \"Imager\" PHP application).\n* **www.imagesharer.xyz** \u2014 same OVH VPS; TLS certificate lacks a `www` SAN.\n* **resources.imagesharer.xyz** \u2014 owner-controlled DNS record resolving to AWS CloudFront (d273uevi0662l0.cloudfront.net); serves the application favicon. (DNS record only; CloudFront edges excluded.)\n* **51.161.131.44** \u2014 OVH Sydney VPS (AS16276, rDNS `vps-ad2c3eab.vps.ovh.ca`). Six open ports probed:\n  * 22/TCP \u2014 OpenSSH 10.0p2\n  * 53/TCP \u2014 DNS (recursive resolver)\n  * 80/TCP \u2014 nginx redirect to 443\n  * 443/TCP \u2014 nginx + Imager PHP application\n  * 5432/TCP \u2014 PostgreSQL (protocol 3.0)\n  * 8080/TCP \u2014 Apache 2.4.68 + PHP 8.2.34 serving the same Imager application directly\n* **http://51.161.131.44:8080/** \u2014 direct Apache backend (same application without the nginx front proxy).\n* **AWS S3 bucket `filesharer-research` (ap-southeast-2)** \u2014 object storage for all user uploads. Publicly listable and readable.\n* **AWS S3 bucket `imagesharer` (ap-northeast-1)** \u2014 observed, locked down, treated as an owner asset.\n\n## Out-of-Scope Assets\n\nThe following were explicitly excluded from testing:\n\n* AWS CloudFront edge IPs (13.32.126.0/24).\n* Spaceship / Cloudflare managed DNS infrastructure (`launch1/2.spaceship.net`, 162.159.0.0/16).\n* Google static-content host (`encrypted-tbn0.gstatic.com`).\n* OVH neighbour IPs in 51.161.130.0/23 other than 51.161.131.44.\n\n## Methodology\n\nA full-scope **grey-box** web application and infrastructure vulnerability assessment covering the public web application, the host operating system and exposed services, DNS, email hygiene, and the backing cloud storage.\n\nTesting followed:\n\n* **OWASP Web Security Testing Guide**\n* **OWASP API Security Top 10**\n* **CIS Benchmarks** for the exposed infrastructure components\n\n## Limitations\n\nThe following were explicitly out-of-method, by owner agreement:\n\n* No credential brute-forcing.\n* No destructive techniques.\n* No denial-of-service testing.\n* No social engineering.\n* **No exploitation of the leaked AWS keys.** The validity of the exposed Access Key ID was corroborated only passively, by comparing it against the Access Key ID that appears in live application-generated pre-signed S3 URLs.\n\n## Coverage Summary\n\n* All **4 confirmed in-scope assets** were reached.\n* All **6 open ports** on the VPS were probed.\n* All identified **HTTP forms** were tested.\n* **2 live test accounts** were registered for authenticated testing.\n* The upload surface was stressed with **5 bypass variants**.\n* **Cross-user authorisation** was tested end-to-end.\n* The **S3 bucket** was enumerated via its public listing endpoint.\n",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 person day",
+        "provided_users": "Two self-registered test accounts were used for authenticated testing:\n\n* Account A \u2014 UUID `740532d8-b0f3-4cad-a69a-43a0de29a4c8`\n* Account B \u2014 UUID `0d542b4a-75de-4dc5-ac0b-35fed0279387`\n\nNo pre-provisioned credentials were supplied by the business owner; both accounts were created through the public `/register` endpoint for the purposes of cross-user authorisation testing.\n"
+      }
+    },
+    {
+      "id": "customer",
+      "status": "finished",
+      "data": {
+        "customer_name": "Imagur",
+        "customer_address": {
+          "city": "Glengowrie SA 5044, Australia",
+          "street": "132 Morphett Rd"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "status": "finished",
+      "data": {
+        "title": "Imagur \u2014 Full-Scope Vulnerability Assessment (October 2026)",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-10-05",
+            "version": "1.0",
+            "description": "Initial report",
+            "author": "ClawSec"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "status": "finished",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

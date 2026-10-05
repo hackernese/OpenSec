@@ -1,0 +1,158 @@
+===== XSS registration attempt (payload in email) =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:43:02 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=86f642f245257428c2046aae7f994004; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /register
+
+
+===== XSS registration with simpler payload =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:43:02 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=c60f883d2f42c31e8f8bb1667f103231; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /register
+
+
+===== Register with HTML-looking email via API (bypassing form validation) =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:43:02 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=93dbf73a288ab12f12f718765daa0dfe; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /register
+
+
+===== Register with trivially valid email containing < > ===== 
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:43:02 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=6bc3d0059f5a5b007ddca5624d2dc297; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /register
+
+
+===== CSRF: logout from attacker origin =====
+-- Pre-logout: GET /dashboard --
+200
+-- Attacker-origin POST /logout (no CSRF token, no referer) --
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:43:03 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: last_logout=%7B%22timestamp%22%3A1791171783%2C%22session_duration%22%3A587%7D; expires=Mon, 12 Oct 2026 03:43:03 GMT; Max-Age=604800; path=/; secure; HttpOnly; SameSite=Lax
+-- Post-logout: GET /dashboard --
+302
+
+===== Second S3 bucket imagesharer in ap-northeast-1: object read attempts =====
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/?list-type=2
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/favicon.ico
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/index.html
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/robots.txt
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/css/app.css
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/js/app.js
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/js/awsvalid.js
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/css/
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/users/
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/avatars/
+403 https://imagesharer.s3.ap-northeast-1.amazonaws.com/avatar/
+
+----- /js/awsvalid.js on main site has that comment, try fetching it -----
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 03:43:14 GMT
+Content-Type: text/javascript
+Content-Length: 5298
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Last-Modified: Mon, 14 Sep 2026 14:47:51 GMT
+ETag: "14b2-65b7284b333c0"
+Accept-Ranges: bytes
+Vary: Accept-Encoding
+
+// Testing to see if the endpoint is connectable
+// Try this
+/*
+AKIAQHQ6PGM62T2FFPGU
+c7njNpv1oT3rhBhUHue2e2d+oIFnw7QDgCmTtPCG
+ap-southeast-2
+*/
+
+
+async function validateAwsCredentials(accessKeyId, secretAccessKey, sessionToken = null) {
+    const region = "us-east-1";
+    const service = "sts";
+    const host = "sts.amazonaws.com";
+    const endpoint = `https://${host}/`;
+
+    const body = "Action=GetCallerIdentity&Version=2011-06-15";
+
+    const now = new Date();
+
+    const amzDate = now
+        .toISOString()
+        .replace(/[:-]|\.\d{3}/g, "");
+
+    const dateStamp = amzDate.substring(0, 8);
+
+
+===== Check favicon-ish paths on main bucket (ap-southeast-2) =====
+404 https://filesharer-research.s3.ap-southeast-2.amazonaws.com/favicon.ico
+404 https://filesharer-research.s3.ap-southeast-2.amazonaws.com/avatars/
+404 https://filesharer-research.s3.ap-southeast-2.amazonaws.com/avatars/740532d8-b0f3-4cad-a69a-43a0de29a4c8.png

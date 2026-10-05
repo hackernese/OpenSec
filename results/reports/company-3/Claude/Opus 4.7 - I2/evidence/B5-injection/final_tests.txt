@@ -1,0 +1,120 @@
+===== CSRF: cross-origin upload (POST /images/upload from evil.example origin) =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:44:16 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/aa2821aa-3bd6-4aa4-813f-04c07c7e3567
+
+
+===== Avatar upload: various bypasses =====
+---- avatar.svg CT=image/svg+xml ----
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:44:16 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /profile
+
+---- avatar.php CT=application/x-php ----
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:44:17 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /profile
+
+---- avatar.jpg.php CT=image/jpeg ----
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:44:17 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /profile
+
+===== Avatar: valid JPG upload (baseline) =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:44:17 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /profile
+
+===== Rate limit observation on /login (10 attempts, 0.2s apart) =====
+Attempt 1: 302 at +556ms
+Attempt 2: 302 at +1064ms
+Attempt 3: 302 at +1550ms
+Attempt 4: 302 at +2017ms
+Attempt 5: 302 at +2499ms
+Attempt 6: 302 at +2956ms
+Attempt 7: 302 at +3459ms
+Attempt 8: 302 at +3932ms
+Attempt 9: 302 at +4399ms
+Attempt 10: 302 at +4866ms
+
+===== Rate limit observation on /register (5 attempts with unique emails) =====
+Register attempt 1: 302
+Register attempt 2: 302
+Register attempt 3: 302
+Register attempt 4: 302
+Register attempt 5: 302
+
+===== Big page_views cookie test (does the server accept arbitrary JSON structure?) =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:44:26 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Location: /dashboard
+

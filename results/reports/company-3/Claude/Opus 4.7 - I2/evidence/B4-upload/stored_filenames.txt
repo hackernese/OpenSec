@@ -1,0 +1,45 @@
+===== Latest bucket listing (filter to A uuid) =====
+<?xml version="1.0" encoding="UTF-8"?>
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Name>filesharer-research</Name><Prefix>users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/</Prefix><KeyCount>3</KeyCount><MaxKeys>1000</MaxKeys><IsTruncated>false</IsTruncated><Contents><Key>users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/26985279-5c79-43d6-9e1c-37ebc4ae9571.jpg</Key><LastModified>2026-10-05T03:35:19.000Z</LastModified><ETag>&quot;613de5e24fa56206e8bfc342869ec9c7&quot;</ETag><ChecksumAlgorithm>CRC32</ChecksumAlgorithm><ChecksumType>FULL_OBJECT</ChecksumType><Size>149</Size><StorageClass>STANDARD</StorageClass></Contents><Contents><Key>users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/3c76b775-8c18-4616-aafb-03a99e652791.jpg</Key><LastModified>2026-10-05T03:38:09.000Z</LastModified><ETag>&quot;cc7a750ed4ecf226522c4b5e8c5e6c30&quot;</ETag><ChecksumAlgorithm>CRC32</ChecksumAlgorithm><ChecksumType>FULL_OBJECT</ChecksumType><Size>31</Size><StorageClass>STANDARD</StorageClass></Contents><Contents><Key>users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/dffd1d45-c079-475c-83a9-003e9ffec7c4.jpg</Key><LastModified>2026-10-05T03:38:09.000Z</LastModified><ETag>&quot;613de5e24fa56206e8bfc342869ec9c7&quot;</ETag><ChecksumAlgorithm>CRC32</ChecksumAlgorithm><ChecksumType>FULL_OBJECT</ChecksumType><Size>149</Size><StorageClass>STANDARD</StorageClass></Contents></ListBucketResult>
+===== Image detail pages for the uploaded test images =====
+---- /images/3c76b775-8c18-4616-aafb-03a99e652791 ----
+https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/3c76b775-8c18-4616-aafb-03a99e652791.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033941Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=71739c898e5b20d6a0c893f6feb3c7fcb842c169ece527cd3e27e324adb85b71
+https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/3c76b775-8c18-4616-aafb-03a99e652791.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033941Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=71739c898e5b20d6a0c893f6feb3c7fcb842c169ece527cd3e27e324adb85b71
+
+---- /images/dffd1d45-c079-475c-83a9-003e9ffec7c4 ----
+https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/dffd1d45-c079-475c-83a9-003e9ffec7c4.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033941Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=e9de5a3078a4115f43228b14f752bfd43aea35ecb71a66918f6e9265fb78e6ba
+https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/dffd1d45-c079-475c-83a9-003e9ffec7c4.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033941Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=604800&amp;X-Amz-Signature=e9de5a3078a4115f43228b14f752bfd43aea35ecb71a66918f6e9265fb78e6ba
+
+---- /images/26985279-5c79-43d6-9e1c-37ebc4ae9571 ----
+https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/26985279-5c79-43d6-9e1c-37ebc4ae9571.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033941Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=34bc717153504444f9eade168d878058ce5847243552ee1b77d66fd4eefe4a1b
+https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/26985279-5c79-43d6-9e1c-37ebc4ae9571.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033941Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=34bc717153504444f9eade168d878058ce5847243552ee1b77d66fd4eefe4a1b
+
+===== Fuzz for API auth endpoints =====
+404 POST /api/login
+404 POST /api/auth/login
+200 POST /api/v1/auth/login
+404 POST /api/v1/login
+404 POST /api/v1/sessions
+404 POST /api/v1/auth
+404 POST /api/v1/token
+404 POST /api/v1/tokens
+404 POST /api/v1/auth/token
+404 POST /oauth/token
+404 POST /api/v1/signin
+
+===== fuzz discovery under /api/v1/ with common endpoints =====
+404 /api/v1/users/me
+404 /api/v1/users/profile
+404 /api/v1/profile
+404 /api/v1/account
+404 /api/v1/image
+404 /api/v1/images/upload
+404 /api/v1/upload
+200 /api/v1/health
+404 /api/v1/ping
+404 /api/v1/public/images
+404 /api/v1/public
+404 /api/v1/stats
+404 /api/v1/admin
+404 /api/v1/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8
+404 /api/v1/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/images

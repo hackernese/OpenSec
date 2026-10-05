@@ -1,0 +1,416 @@
+===== GET http://51.161.131.44:8080/ =====
+HTTP/1.1 302 Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Location: /dashboard
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+
+
+===== GET http://51.161.131.44:8080/index.php =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/index.html =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/info.php =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/phpinfo.php =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/test.php =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/server-status =====
+HTTP/1.1 403 Forbidden
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Content-Length: 320
+Content-Type: text/html; charset=iso-8859-1
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<title>403 Forbidden</title>
+</head><body>
+<h1>Forbidden</h1>
+<p>You don't have permission to access this resource.</p>
+<hr>
+<address>Apache/2.4.68 (Debian) Server at 51.161.131.44 Port 8080</address>
+</body></html>
+
+===== GET http://51.161.131.44:8080/server-info =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/admin =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/admin/ =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/phpmyadmin/ =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/.env =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:19 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/.git/HEAD =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/wp-login.php =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/manager/html =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/console =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/api/ =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/health =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/status =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET http://51.161.131.44:8080/favicon.ico =====
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Content-Length: 434
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== Host: localhost ====
+HTTP/1.1 302 Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Location: /dashboard
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+
+===== Host: imagesharer.xyz ====
+HTTP/1.1 302 Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Location: /dashboard
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+
+===== Host: 127.0.0.1 ====
+HTTP/1.1 302 Found
+Date: Mon, 05 Oct 2026 03:24:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Location: /dashboard
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+

@@ -1,0 +1,51 @@
+=== DNS ===
+imagesharer.xyz A -> 51.161.131.44
+www.imagesharer.xyz A -> 51.161.131.44 (cert does NOT include www SAN; served default cert)
+resources.imagesharer.xyz CNAME -> d273uevi0662l0.cloudfront.net (AWS CloudFront)
+NS: launch1.spaceship.net, launch2.spaceship.net (Spaceship managed DNS; Cloudflare-hosted NS IPs 162.159.26.38/27.32)
+MX: none
+TXT (apex): none
+_dmarc / default._domainkey / CAA: none
+SOA: launch1.spaceship.net support.spaceship.com
+
+=== WHOIS (domain) ===
+Registrar: Spaceship, Inc.
+Created: 2026-09-06
+Expires: 2027-09-06
+DNSSEC: signedDelegation
+
+=== IP WHOIS (51.161.131.44) ===
+NetRange: 51.161.130.0 - 51.161.131.255  CIDR 51.161.130.0/23
+NetName: VPS-SYD2  Organization: OVH Australia PTY LTD  Country: AU
+Parent: 51.161.128.0/17 (OVH Australia)
+ASN: AS16276 OVH SAS
+rDNS: vps-ad2c3eab.vps.ovh.ca
+
+=== TLS (apex 443) ===
+CN=imagesharer.xyz  Issuer=Let's Encrypt YE1  SAN=imagesharer.xyz only
+Validity 2026-10-04 -> 2027-01-02 (3-month LE)
+
+=== HTTP ===
+Server: nginx (reverse proxy)
+Backend: PHP/8.2.34 (apex) ; PHP/8.2.34 on :8080 Apache/2.4.68 (Debian)
+Headers present: X-Content-Type-Options, X-Frame-Options DENY, X-XSS-Protection, Referrer-Policy
+Missing: HSTS, CSP, Permissions-Policy
+Cookies: PHPSESSID (secure/httponly on some flows), page_views (long-lived tracking cookie, HttpOnly)
+Page title: "Log in — Imager"
+Externally referenced hosts in HTML: resources.imagesharer.xyz (self), encrypted-tbn0.gstatic.com (Google thumbnail - used as favicon)
+
+=== Ports on 51.161.131.44 (lightweight Nmap + Shodan confirmation) ===
+22/tcp open  OpenSSH 10.0p2 Debian 7+deb13u4
+53/tcp open  domain (bind-style; replies NXDOMAIN to generic queries — likely local resolver exposed)
+80/tcp  open  nginx (301 -> https)
+443/tcp open  nginx (TLS)
+5432/tcp open  PostgreSQL 3.0 protocol (DB directly reachable from the internet)
+8080/tcp open  Apache httpd 2.4.68 (Debian) with PHP/8.2.34 (same stack; secondary HTTP service)
+
+Shodan-reported CVEs on service banners: CVE-2007-3205, CVE-2013-2220 (historical, likely banner-based noise)
+
+=== CloudFront (resources.imagesharer.xyz) ===
+Distribution host: d273uevi0662l0.cloudfront.net
+Edge POP returned: MEL61-P1 (Melbourne)
+Cert served: *.cloudfront.net (shared) - subdomain CNAME lacks matching cert, so direct https to the hostname fails cert verification
+=> Third-party / shared infrastructure (AWS AS16509). Only the DNS mapping and the hostname are attributable to the business.

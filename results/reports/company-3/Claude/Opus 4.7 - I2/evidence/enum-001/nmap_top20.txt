@@ -1,0 +1,27 @@
+# Nmap 7.99 scan initiated Mon Oct  5 14:08:19 2026 as: /usr/lib/nmap/nmap --privileged -Pn -T4 --top-ports 20 -sS -oN /home/research/Projects/Imagur/evidence/enum-001/nmap_top20.txt 51.161.131.44
+Nmap scan report for vps-ad2c3eab.vps.ovh.ca (51.161.131.44)
+Host is up (0.024s latency).
+
+PORT     STATE    SERVICE
+21/tcp   closed   ftp
+22/tcp   open     ssh
+23/tcp   closed   telnet
+25/tcp   filtered smtp
+53/tcp   open     domain
+80/tcp   open     http
+110/tcp  closed   pop3
+111/tcp  closed   rpcbind
+135/tcp  closed   msrpc
+139/tcp  closed   netbios-ssn
+143/tcp  closed   imap
+443/tcp  open     https
+445/tcp  closed   microsoft-ds
+993/tcp  closed   imaps
+995/tcp  closed   pop3s
+1723/tcp closed   pptp
+3306/tcp closed   mysql
+3389/tcp closed   ms-wbt-server
+5900/tcp closed   vnc
+8080/tcp open     http-proxy
+
+# Nmap done at Mon Oct  5 14:08:19 2026 -- 1 IP address (1 host up) scanned in 0.21 seconds

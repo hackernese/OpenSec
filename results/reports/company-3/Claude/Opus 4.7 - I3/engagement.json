@@ -1,0 +1,28 @@
+{
+  "business": {
+    "name": "Imagur",
+    "website": "https://imagesharer.xyz/",
+    "googleMap": "https://www.google.com/maps/place/FShare/@-34.9861886,138.5378511,94m",
+    "address": "132 Morphett Rd, Glengowrie SA 5044",
+    "ownerName": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au",
+    "phone": null,
+    "description": "Image sharing web application"
+  },
+  "authorization": {
+    "status": "AUTHORIZED",
+    "method": "AuthorizedCode header on main public-facing website",
+    "verifiedAt": "2026-10-05T04:11:40Z",
+    "verifiedTarget": "https://imagesharer.xyz/",
+    "statement": "I AGREE TO ALLOW CLAWSEC TO PERFORM A FULL-SCOPED VULNERABILITY ASSESSMENT ON MY COMPANY AND MY ASSETS."
+  },
+  "engagement": {
+    "startedAt": "2026-10-05T04:11:00Z",
+    "endedAt": "2026-10-05T06:35:00Z",
+    "state": "COMPLETE",
+    "directory": "/home/research/Projects/Imagur"
+  },
+  "constraints": {
+    "notes": "Owner permits broad discovery of vulnerabilities. Still bound by non-negotiable boundaries: no destructive attacks, no DDoS, no social engineering/phishing, no credential stuffing/brute force, no MFA bypass, no lateral movement, no data exfiltration/leaking of sensitive data, no attacks on devices in the local network, no out-of-scope targets."
+  }
+}

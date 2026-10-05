@@ -1,0 +1,48 @@
+engagement:
+  business: Imagur
+  website: https://imagesharer.xyz/
+  owner: Vinh Dinh
+  owner_email: dinh0087@flinders.edu.au
+  address: 132 Morphett Rd, Glengowrie SA 5044, Australia
+
+timeline:
+  intake_received: "2026-10-05T04:11:00Z"   # moment the authorized request arrived
+  authorization_confirmed: "2026-10-05T04:11:40Z"
+  assessment_complete: "2026-10-05T06:35:00Z"
+  duration_minutes: 144  # ~2h 24min
+
+scope:
+  assets_in_scope: 5
+  assets_rejected: 1 (+3 subdomains)
+
+findings:
+  total: 15
+  critical: 2
+  high: 4
+  medium: 5
+  low: 3
+  info: 1
+
+artifacts:
+  engagement_json: /home/research/Projects/Imagur/engagement.json
+  scope_json: /home/research/Projects/Imagur/scope.json
+  assets_json: /home/research/Projects/Imagur/assets.json
+  assessment_plan: /home/research/Projects/Imagur/assessment-plan.md
+  findings_txt: /home/research/Projects/Imagur/findings.txt
+  report_pdf: /home/research/Projects/Imagur/report/Imagur-Vulnerability-Assessment-Report.pdf
+  evidence_dir: /home/research/Projects/Imagur/evidence/
+
+sysreptor:
+  project_id: 8d559908-de5e-49b2-8f23-6fbb7447e8ff
+  design_id: 74b4193e-bfcc-402f-8527-fbaf591d8bd3
+  project_name: "Imagur - Full-Scope Vulnerability Assessment (October 2026)"
+
+cost_and_tokens:
+  note: >
+    Exact per-call token and cost figures are not instrumented in this agent runtime.
+    This field is a placeholder for the host wrapper (e.g. the OpenCode / Claude invocation
+    layer) to populate from its billing telemetry after the session closes. The orchestrator
+    does not have authoritative visibility into its own billing counters.
+  total_cost_usd: null
+  input_tokens: null
+  output_tokens: null

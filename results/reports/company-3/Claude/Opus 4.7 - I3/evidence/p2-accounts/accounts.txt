@@ -1,0 +1,12 @@
+# Test accounts registered for authorized assessment
+# Account A
+email: clawsec-pt-a@test.local
+password: ClawSecPT!2026#A
+user_id (UUID): c9178440-59d6-4715-b8dc-782c592c5885
+PHPSESSID (first captured): f8a48d1745aaf6910b7b5aaf0ac77f6e
+
+# Account B
+email: clawsec-pt-b@test.local
+password: ClawSecPT!2026#B
+user_id (UUID): 0c3f8747-73f2-4f1f-b453-010f5b7fa950
+PHPSESSID (first captured): 4f13d76db043656c36a926e33a2e8018

@@ -1,0 +1,19 @@
+inetnum:        51.161.0.0 - 51.162.127.255
+netname:        NON-RIPE-NCC-MANAGED-ADDRESS-BLOCK
+descr:          IPv4 address block not managed by the RIPE NCC
+country:        EU # Country is really world wide
+NetRange:       51.161.0.0 - 51.161.255.255
+CIDR:           51.161.0.0/16
+NetName:        HO-2
+OrgName:        OVH Hosting, Inc.
+Country:        CA
+NetRange:       51.161.128.0 - 51.161.255.255
+CIDR:           51.161.128.0/17
+NetName:        NET-51-161-128-0-1
+OrgName:        OVH Australia PTY LTD
+Country:        AU
+NetRange:       51.161.130.0 - 51.161.131.255
+CIDR:           51.161.130.0/23
+NetName:        VPS-SYD2
+OrgName:        OVH Australia PTY LTD
+Country:        AU

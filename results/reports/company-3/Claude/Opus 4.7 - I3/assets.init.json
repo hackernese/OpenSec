@@ -1,0 +1,78 @@
+{
+  "target": {
+    "canonical_name": "Imagur",
+    "display_name_observed": "Imager",
+    "supplied_website": "https://imagesharer.xyz/",
+    "registrable_root": "imagesharer.xyz",
+    "country": "AU"
+  },
+  "root_domains": [
+    {
+      "value": "imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 1.0,
+      "registrar": "Spaceship, Inc.",
+      "created": "2026-09-06",
+      "evidence": ["user_input", "whois", "authorization header returned"]
+    }
+  ],
+  "subdomains": [
+    {
+      "value": "www.imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 0.99,
+      "resolves_to": ["51.161.131.44"]
+    },
+    {
+      "value": "resources.imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 0.95,
+      "cname": "d273uevi0662l0.cloudfront.net",
+      "cdn": "AWS CloudFront",
+      "notes": "Referenced in HTML; CloudFront alias cert misconfigured"
+    }
+  ],
+  "websites": [
+    {"url": "https://imagesharer.xyz/", "status": 200, "title": "Log in — Imager", "tech": ["nginx", "PHP/8.2.34", "PostgreSQL (backend)"]},
+    {"url": "https://www.imagesharer.xyz/", "status": 200, "title": "Log in — Imager"},
+    {"url": "https://resources.imagesharer.xyz/", "status": 403, "served_by": "CloudFront"}
+  ],
+  "ip_addresses": [
+    {
+      "value": "51.161.131.44",
+      "status": "confirmed",
+      "rdns": "vps-ad2c3eab.vps.ovh.ca",
+      "asn": "AS16276",
+      "org": "OVH Australia PTY LTD",
+      "country": "AU",
+      "open_ports": ["80/tcp nginx", "443/tcp nginx", "5432/tcp PostgreSQL"]
+    }
+  ],
+  "cloud_cdn": [
+    {
+      "value": "d273uevi0662l0.cloudfront.net",
+      "provider": "AWS CloudFront",
+      "in_scope": "partial (customer config in scope; shared edge IPs out)"
+    }
+  ],
+  "rejected": [
+    {
+      "value": "cataierc.com (+ www/mail/webmail)",
+      "reason": "Co-tenant on same OVH VPS; different registrar/NS/brand; no ownership evidence"
+    }
+  ],
+  "third_party_out_of_scope": [
+    "encrypted-tbn0.gstatic.com",
+    "spaceship.net",
+    "letsencrypt.org",
+    "AWS CloudFront shared edge IPs",
+    "OVH infrastructure outside the single VPS IP"
+  ],
+  "assessment_hints": [
+    "Hard-coded AWS access key in /js/awsvalid.js (ap-southeast-2) — likely critical finding",
+    "PostgreSQL 5432/tcp publicly reachable",
+    "resources.imagesharer.xyz CloudFront alias has no matching cert — possible misconfig/takeover-adjacent",
+    "No HSTS, CSP, SPF, DMARC — hardening gaps",
+    "Web stack = nginx + PHP 8.2.34 + PostgreSQL + custom auth; test standard web vulnerability classes"
+  ]
+}

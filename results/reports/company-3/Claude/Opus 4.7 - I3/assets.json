@@ -1,0 +1,17 @@
+{
+  "approved": true,
+  "approved_at": "2026-10-05T04:15:00Z",
+  "assets": [
+    {"id": "A1", "type": "root_domain", "value": "imagesharer.xyz", "notes": "Primary web application"},
+    {"id": "A2", "type": "subdomain", "value": "www.imagesharer.xyz", "notes": "Alias of A1"},
+    {"id": "A3", "type": "subdomain", "value": "resources.imagesharer.xyz", "notes": "AWS CloudFront fronted; alias cert misconfigured"},
+    {"id": "A4", "type": "ip", "value": "51.161.131.44", "open_ports": [80, 443, 5432], "notes": "OVH AU VPS; PostgreSQL exposed"},
+    {"id": "A5", "type": "cloudfront_distribution", "value": "d273uevi0662l0.cloudfront.net", "notes": "Customer-config only"}
+  ],
+  "early_hints": [
+    "Hard-coded AWS key in /js/awsvalid.js",
+    "PostgreSQL 5432 public",
+    "resources.imagesharer.xyz alias cert mismatch",
+    "Missing HSTS/CSP/SPF/DMARC"
+  ]
+}

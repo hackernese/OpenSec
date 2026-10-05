@@ -1,0 +1,44 @@
+{
+  "approved_at": "2026-10-05T04:15:00Z",
+  "allowlist": [
+    {"type": "domain", "value": "imagesharer.xyz"},
+    {"type": "subdomain", "value": "www.imagesharer.xyz"},
+    {"type": "subdomain", "value": "resources.imagesharer.xyz"},
+    {"type": "ip", "value": "51.161.131.44", "ports": ["80", "443", "5432"]},
+    {"type": "cloudfront-distribution", "value": "d273uevi0662l0.cloudfront.net", "note": "Customer-side configuration only; shared edge IPs out-of-scope"}
+  ],
+  "denylist": [
+    "cataierc.com",
+    "www.cataierc.com",
+    "mail.cataierc.com",
+    "webmail.cataierc.com",
+    "AWS CloudFront shared edge IP ranges",
+    "OVH shared infrastructure beyond 51.161.131.44",
+    "encrypted-tbn0.gstatic.com",
+    "spaceship.net",
+    "letsencrypt.org"
+  ],
+  "method_constraints": {
+    "allowed": [
+      "passive osint",
+      "DNS/HTTP enumeration",
+      "web vulnerability testing (SQLi, XSS, SSRF, IDOR, auth flaws, file upload, path traversal, etc.)",
+      "non-brute-force authn/authz probing with provided test accounts",
+      "banner grabbing / version detection on confirmed services",
+      "non-intrusive ReDoS checks",
+      "verification of hard-coded credentials ONLY against the apparent owner's resources after read-only sts:GetCallerIdentity"
+    ],
+    "forbidden": [
+      "DDoS / resource exhaustion",
+      "malware",
+      "social engineering / phishing",
+      "credential stuffing / password spraying / brute force",
+      "MFA bypass attempts",
+      "lateral movement",
+      "stealth/evasion techniques",
+      "data exfiltration / leaking of sensitive data",
+      "attacks on local-network devices",
+      "destructive database operations"
+    ]
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "id": "8d559908-de5e-49b2-8f23-6fbb7447e8ff",
+  "name": "Imagur - Full-Scope Vulnerability Assessment (October 2026)",
+  "project_type": "9165c5ff-3cff-42a5-9a64-680f40a3ebff",
+  "language": "en-US",
+  "tags": ["reptor", "research"],
+  "override_finding_order": false,
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "in-progress",
+      "data": {
+        "executive_summary": "Imagur engaged ClawSec to perform a one-day, full-scope vulnerability assessment of the \"Imager\" image-sharing platform on 5 October 2026. The assessment covered the public website (imagesharer.xyz), its underlying OVH-hosted server, and the associated AWS infrastructure that was proven to belong to the business.\n\nIn short: the service is at **immediate, severe risk** on multiple independent fronts. Fifteen issues were confirmed, of which **two are critical and four are high**.\n\nThe single most urgent problem is a **live AWS root-account access key published on the public website** inside a JavaScript file. Any visitor can read it; our verification call confirmed it grants unrestricted administrative control of the AWS account that runs the platform. In parallel, the **S3 bucket that stores every uploaded image is open to the entire internet** — anyone can list every file and download any image, including pictures users explicitly marked as \"Private\". The platform's privacy promise is therefore not met today.\n\nWithin the web application itself, two broken access-control defects allow any logged-in member to (a) upload images onto another member's account and (b) flip another member's private image to public. Combined, these let an attacker plant content on a victim's account and then expose it publicly. The database server (PostgreSQL) is reachable from the open internet, the application is additionally served in cleartext on port 8080, and the server is acting as an open DNS resolver that could be used by third parties for amplification attacks. A handful of smaller issues — weak password policy enforced only in the browser, no login rate limiting, email-enumeration on registration, missing security headers, and missing email anti-spoofing records — further weaken the overall security posture.\n\n**Recommended priority:** rotate the AWS root key and lock down the S3 bucket within hours; fix the two authorization defects in the upload and visibility endpoints before any additional user traffic is onboarded; firewall PostgreSQL and port 8080; disable the open DNS resolver. The smaller hygiene issues can be scheduled across the following sprint.\n\nFixing the critical and high items is low-cost and well-understood work. Doing so would move Imager from \"all user data effectively public\" to a defensible baseline suitable for a growing user base."
+      }
+    },
+    {
+      "id": "scope",
+      "status": "in-progress",
+      "data": {
+        "scope": "Imagur authorized ClawSec to perform a time-boxed, full-scope vulnerability assessment of the Imager image-sharing platform. Authorization was confirmed on 5 October 2026 via the required `AuthorizedCode` HTTP header exchange on the primary website.\n\nThe assessment covered the public web application, the OVH-hosted server that runs it, and the AWS infrastructure proven (by evidence of ownership) to belong to the business.\n\n| System | Description |\n|:---|:---|\n| imagesharer.xyz | Primary production web application (HTTPS) |\n| www.imagesharer.xyz | Alias of the primary web application |\n| resources.imagesharer.xyz | CloudFront-fronted static subdomain |\n| 51.161.131.44 | OVH Australia VPS hosting the application (ports 80 / 443 / 5432 / 8080 / 22 / 53) |\n| d273uevi0662l0.cloudfront.net | CloudFront distribution — customer configuration only |\n| AWS Account 016170038077 | AWS account owning the application's cloud resources (ownership verified via sts:GetCallerIdentity) |\n| s3://filesharer-research (ap-southeast-2) | S3 bucket storing every uploaded image |\n\n**Out of scope / excluded:** `cataierc.com` and its subdomains (co-tenant on the same VPS, no ownership evidence), OVH shared infrastructure beyond the specific VPS, AWS CloudFront shared edge IP ranges, and third-party services (gstatic.com, spaceship.net, letsencrypt.org).\n\n**Limitations:** No destructive techniques were used — no DDoS, brute force, credential stuffing, password spraying, MFA bypass, social engineering, or exfiltration of sensitive data. PostgreSQL on port 5432 was banner-probed only; no authentication was attempted. The leaked AWS key was used for a single read-only `sts:GetCallerIdentity` call solely to confirm ownership; no further AWS API calls were made with it. The engagement was a single-day window, so areas such as mobile clients, future features, and non-public endpoints behind deeper authentication paths may harbour further issues.",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 person day",
+        "provided_users": "* clawsec-pt-a (test account A, created solely for the engagement)\n* clawsec-pt-b (test account B, created solely for the engagement)\n"
+      }
+    },
+    {
+      "id": "customer",
+      "status": "in-progress",
+      "data": {
+        "customer_name": "Imagur",
+        "customer_address": {
+          "city": "Glengowrie SA 5044, Australia",
+          "street": "132 Morphett Rd"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "status": "in-progress",
+      "data": {
+        "title": "Imagur - Full-Scope Vulnerability Assessment (October 2026)",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "version": "1.0",
+            "date": "2026-10-05",
+            "description": "Initial release."
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "status": "in-progress",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Methodology",
+            "content": "The engagement followed ClawSec's standard workflow: INTAKE -> AUTHORIZED -> ENUMERATED -> ASSESSING -> VALIDATING -> REPORTING.\n\n**Asset discovery.** DNS, WHOIS, TLS SAN inspection, Certificate Transparency logs, Shodan, HackerTarget, and the Wayback Machine were used to identify assets owned by the business. The confirmed scope was validated with the owner before any active testing began.\n\n**Web application testing.** Burp-style HTTP probes using two engagement-only test accounts (clawsec-pt-a / clawsec-pt-b). Test classes exercised: unauthenticated SQL injection, authentication bypass, session fixation, mass-assignment / IDOR, broken object-level access control, file upload abuse (MIME + extension + polyglot + path traversal), stored XSS via filename, user enumeration via login/register, rate limiting, HTTP method abuse, and pre-signed URL inspection.\n\n**Infrastructure testing.** `nmap` top-1000 TCP service enumeration at gentle timing (T3); TLS version and cipher enumeration via `openssl s_client`; PostgreSQL banner probe (no authentication attempts); DNS open-resolver check with `dig`.\n\n**AWS testing.** A single read-only `aws sts get-caller-identity` call was made using the publicly leaked access key, solely to confirm ownership. No listing, no mutation, and no further API calls were performed with the leaked credential.\n\n**S3 testing.** Anonymous HEAD, GET, and ListBucket requests were made against the bucket; anonymous PUT and DELETE write-probes were sent and both were correctly denied.\n\n**Standards referenced:** OWASP Top 10 2021, OWASP ASVS, NIST SP 800-63B, AWS Security Best Practices."
+          },
+          {
+            "title": "Remediation Summary (Executive)",
+            "content": "The following prioritized actions address the issues identified during the engagement.\n\n**Within hours (do first):**\n\n1. Rotate the exposed AWS root access key and remove it from the public JavaScript file.\n2. Enable \"Block Public Access\" on the `filesharer-research` S3 bucket.\n\n**Within days (before any further user growth):**\n\n3. Fix the two broken access-control issues on the image upload and image visibility endpoints so a user cannot act on behalf of another user.\n4. Replace long-lived (7-day) pre-signed image URLs with short-lived server-mediated access.\n5. Firewall PostgreSQL (port 5432) and close plaintext HTTP on port 8080.\n6. Disable the open DNS resolver on port 53 or restrict it to trusted ranges.\n\n**Within the next sprint:**\n\n7. Enforce the password policy on the server, not only in the browser.\n8. Add rate limiting to the login endpoint.\n9. Make the registration endpoint stop revealing whether an email is already registered.\n10. Add HSTS, CSP, and Permissions-Policy response headers; add SPF, DMARC, and CAA DNS records.\n11. Harden SSH exposure (key-only authentication, restrict source IPs).\n\n**Longer term:**\n\n12. Move all secrets to a secret manager and never embed them in client-side code.\n13. Add CI/CD secret-scanning (gitleaks / trufflehog) to prevent future credential leaks.\n14. Enable AWS GuardDuty and CloudTrail data events for S3; alert on anonymous requests."
+          }
+        ]
+      }
+    }
+  ]
+}

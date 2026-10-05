@@ -1,0 +1,56 @@
+=== dig CNAME ===
+d273uevi0662l0.cloudfront.net.
+=== dig A ===
+d273uevi0662l0.cloudfront.net.
+13.32.126.132
+13.32.126.182
+13.32.126.59
+13.32.126.107
+=== TLS cert on SNI resources.imagesharer.xyz ===
+subject=CN=*.cloudfront.net
+issuer=C=US, O=Amazon, CN=Amazon RSA 2048 M04
+X509v3 Subject Alternative Name: 
+    DNS:*.cloudfront.net, DNS:cloudfront.net
+notBefore=Aug 25 00:00:00 2026 GMT
+notAfter=Mar 10 23:59:59 2027 GMT
+=== TLS cert on SNI d273uevi0662l0.cloudfront.net ===
+subject=CN=*.cloudfront.net
+issuer=C=US, O=Amazon, CN=Amazon RSA 2048 M04
+X509v3 Subject Alternative Name: 
+    DNS:*.cloudfront.net, DNS:cloudfront.net
+notBefore=Aug 25 00:00:00 2026 GMT
+notAfter=Mar 10 23:59:59 2027 GMT
+=== HTTP via SNI resources ===
+HTTP/1.1 403 Forbidden
+Server: CloudFront
+Date: Mon, 05 Oct 2026 04:23:37 GMT
+Content-Type: text/html
+Content-Length: 915
+Connection: keep-alive
+X-Cache: Error from cloudfront
+Via: 1.1 868a7f13fe19503d4ee25d749a6ade42.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: MEL61-P1
+X-Amz-Cf-Id: nJ8prKnTgKz0PwALZSFSqkErav_qzcXTcoR5T1y7mRy46hGYwihqEA==
+
+=== HTTP root of cloudfront direct ===
+HTTP/2 404 
+content-type: application/xml
+server: AmazonS3
+date: Mon, 05 Oct 2026 04:23:37 GMT
+x-cache: Error from cloudfront
+via: 1.1 4b054ed0a4b1071d96f59161e46a787e.cloudfront.net (CloudFront)
+x-amz-cf-pop: MEL61-P1
+x-amz-cf-id: qTw16ClQ0bLEDQHUthKl1KyBgkP9OTZT2ImTR2n7sJreYVNb9-962g==
+
+=== HTTP /icon.ico via resources SNI ===
+HTTP/1.1 403 Forbidden
+Server: CloudFront
+Date: Mon, 05 Oct 2026 04:23:37 GMT
+Content-Type: text/html
+Content-Length: 915
+Connection: keep-alive
+X-Cache: Error from cloudfront
+Via: 1.1 4a7243e7adeb378f46285d87a4fada24.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: MEL61-P1
+X-Amz-Cf-Id: ON-CZyWAFXWh4Yyp4sgD_p1i2aWd1v1ubgNBPEDbvUX5IASyCfszRw==
+

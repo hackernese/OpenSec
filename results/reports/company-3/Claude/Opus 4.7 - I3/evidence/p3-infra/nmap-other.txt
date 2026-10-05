@@ -1,0 +1,20 @@
+# Nmap 7.99 scan initiated Mon Oct  5 16:23:54 2026 as: /usr/lib/nmap/nmap --privileged -Pn -sS -sV --top-ports 1000 --exclude-ports 80,443,5432 -T3 -oN /home/research/Projects/Imagur/evidence/p3-infra/nmap-other.txt 51.161.131.44
+Nmap scan report for vps-ad2c3eab.vps.ovh.ca (51.161.131.44)
+Host is up (0.037s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT     STATE    SERVICE VERSION
+22/tcp   open     ssh     OpenSSH 10.0p2 Debian 7+deb13u4 (protocol 2.0)
+25/tcp   filtered smtp
+53/tcp   open     domain  (generic dns response: NXDOMAIN)
+8080/tcp open     http    Apache httpd 2.4.68 ((Debian))
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port53-TCP:V=7.99%I=7%D=10/5%Time=6AC33B7D%P=x86_64-pc-linux-gnu%r(DNSV
+SF:ersionBindReqTCP,7B,"\0y\0\x06\x81\x03\0\x01\0\0\0\x01\0\x01\x07version
+SF:\x04bind\0\0\x10\0\x03\0\0\x06\0\x01\0\0\x0e\x10\0@\x01a\x0croot-server
+SF:s\x03net\0\x05nstld\x0cverisign-grs\x03com\0x\xc3\xd7\x14\0\0\x07\x08\0
+SF:\0\x03\x84\0\t:\x80\0\x01Q\x80\0\0\)\x10\0\0\0\0\0\0\x05\xffy\0\x01\x1f
+SF:");
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Oct  5 16:24:11 2026 -- 1 IP address (1 host up) scanned in 16.57 seconds

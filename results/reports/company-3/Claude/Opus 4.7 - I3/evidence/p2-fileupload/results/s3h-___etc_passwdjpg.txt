@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+x-amz-id-2: ZR6R31AAhugUPyNmMTqyX4WjUeVo4NMuIYngyLIHR7FloN0jUh4FFFTXlzYMfy0gsscFFMQdBcM=
+x-amz-request-id: MNT33ZHE50XA9WVQ
+Server: AmazonS3
+Date: Mon, 05 Oct 2026 05:43:33 GMT
+Last-Modified: Mon, 05 Oct 2026 05:43:33 GMT
+ETag: "a89a16529f71f686f5ca3d5386e14c82"
+x-amz-server-side-encryption: AES256
+Accept-Ranges: bytes
+Content-Type: image/jpeg
+Content-Length: 628
+

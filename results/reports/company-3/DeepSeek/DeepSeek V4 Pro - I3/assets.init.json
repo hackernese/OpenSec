@@ -1,0 +1,27 @@
+{
+  "task_id": "enum-001",
+  "date": "2026-10-06",
+  "target_identity": {
+    "canonical_name": "Imagur",
+    "aliases": ["FShare", "Image Sharer"],
+    "website": "https://imagesharer.xyz/",
+    "address": "132 Morphett Rd, Glengowrie SA 5044, Australia",
+    "country": "Australia"
+  },
+  "assets": [
+    {"name": "imagesharer.xyz", "type": "domain", "value": "imagesharer.xyz", "classification": "confirmed", "confidence": 1.0},
+    {"name": "Imager web app", "type": "url", "value": "https://imagesharer.xyz/", "classification": "confirmed", "confidence": 1.0},
+    {"name": "www.imagesharer.xyz", "type": "subdomain", "value": "www.imagesharer.xyz", "classification": "likely", "confidence": 0.85},
+    {"name": "resources.imagesharer.xyz", "type": "subdomain", "value": "resources.imagesharer.xyz", "classification": "confirmed", "confidence": 0.9},
+    {"name": "Web server IPv4", "type": "ip", "value": "51.161.131.44", "classification": "confirmed", "confidence": 1.0},
+    {"name": "Apex IPv6", "type": "ip", "value": "2405:dc00:0:3::33a1:832c", "classification": "candidate", "confidence": 0.4},
+    {"name": "CloudFront distribution", "type": "host", "value": "d273uevi0662l0.cloudfront.net", "classification": "cloud-cdn", "confidence": 0.9},
+    {"name": "PostgreSQL service", "type": "service", "value": "51.161.131.44:5432", "classification": "confirmed", "confidence": 0.95}
+  ],
+  "warnings": [
+    "PostgreSQL (5432/tcp) publicly reachable on web server IP",
+    "Apex AAAA record points to Optus residential IPv6 (likely stale/misconfigured)",
+    "www.imagesharer.xyz has no TLS SAN",
+    "No MX/SPF/DMARC records on domain"
+  ]
+}

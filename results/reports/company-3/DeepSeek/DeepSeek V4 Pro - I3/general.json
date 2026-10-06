@@ -1,0 +1,159 @@
+{
+  "id": "44eda6a0-8d12-497f-af47-5e88f304a21e",
+  "created": "2026-10-06T05:48:57.124287Z",
+  "updated": "2026-10-06T05:48:57.125259Z",
+  "name": "Imagur Security Assessment 2026-10-06",
+  "project_type": "befd2cb3-6a01-408c-88f3-d7f992cd8877",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/44eda6a0-8d12-497f-af47-5e88f304a21e",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/44eda6a0-8d12-497f-af47-5e88f304a21e/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/44eda6a0-8d12-497f-af47-5e88f304a21e/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-10-06T05:48:57.180983Z",
+      "updated": "2026-10-06T05:48:57.183240Z",
+      "project": "44eda6a0-8d12-497f-af47-5e88f304a21e",
+      "project_type": "befd2cb3-6a01-408c-88f3-d7f992cd8877",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "executive_summary": "# Executive Summary\n\nClawSec conducted a security assessment of **Imagur** (also operating as \"FShare\" / \"Image Sharer\"), a public-facing image-sharing web application at imagesharer.xyz, on 6 October 2026. The application runs on a single virtual private server and lets users create accounts, upload images, and share them publicly or keep them private.\n\nThe overall security posture is **moderate**. The application correctly requires users to sign in and, for the most part, correctly keeps private images out of other users' reach. However, the assessment confirmed **8 findings**: one high-severity, six medium-severity, and one informational.\n\nThe most important issue is a **stored cross-site scripting (XSS) vulnerability** in the image filename field. In practical terms, an attacker can upload an image whose filename contains hidden code; when any visitor (even someone who is not logged in) opens that image, the code runs in their browser. Because the application's login session is not properly protected, this can be escalated to taking over another user's account. This should be fixed first.\n\nThe remaining medium-severity issues concern how the application protects user actions and data: it does not defend against cross-site request forgery, its session cookie is missing important security flags, and image upload trusts a hidden field that lets an attacker place images in another user's account. In addition, the underlying database (PostgreSQL) is directly reachable from the internet, important security headers (HSTS and Content-Security-Policy) are missing, and the registration page reveals whether an email address already has an account.\n\nOne informational finding notes that the application discloses detailed server and software versions, which can aid a determined attacker.\n\nNo testing was destructive, and no sensitive data was accessed or exfiltrated. We recommend addressing the high-severity XSS and the session-cookie hardening immediately, followed by the access-control and CSRF fixes, and finally the remaining hardening items.\n\n## Risk Overview\n\n| Severity | Count |\n|:---|---:|\n| Critical | 0 |\n| High | 1 |\n| Medium | 6 |\n| Low | 0 |\n| Info | 1 |\n"
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-10-06T05:48:57.181236Z",
+      "updated": "2026-10-06T05:48:57.183256Z",
+      "project": "44eda6a0-8d12-497f-af47-5e88f304a21e",
+      "project_type": "befd2cb3-6a01-408c-88f3-d7f992cd8877",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "scope": "# Scope\n\nThe following systems were assessed on 6 October 2026.\n\n| System | Description |\n|:---|---|\n| imagesharer.xyz | Main public-facing \"Imager\" image-sharing web application (nginx + PHP 8.2.34) |\n| www.imagesharer.xyz | Alias of the main website (same server) |\n| 51.161.131.44 | OVH VPS hosting the application - ports 22 (OpenSSH 10.0p2), 80, 443 (nginx), 8080 (Apache 2.4.68), 5432 (PostgreSQL) |\n| 51.161.131.44:5432 | Exposed PostgreSQL database service |\n\nThe following assets were **out of scope** and were not tested: resources.imagesharer.xyz (CloudFront/S3), the apex IPv6 address (Optus residential), and third-party infrastructure (AWS CloudFront, OVH, Spaceship).\n\n## Methodology\n\n1. Authorization verification (authorization header check on the main website).\n2. Passive OSINT, DNS, and certificate-transparency enumeration.\n3. Fast TCP port scan followed by version/service fingerprinting.\n4. Web application testing: authentication, upload, IDOR/access control, injection, XSS, CSRF, session and security-header review.\n5. Targeted PostgreSQL protocol probing.\n\nAll testing was non-destructive. No brute force, credential stuffing, or exploitation beyond the minimum proof-of-concept was performed.\n\n## Coverage Summary\n\n* Full TCP port scan of the in-scope host.\n* Web endpoints: /login, /register, /dashboard, /profile, /images/upload, /images/<uuid> (detail, visibility, delete), /profile/avatar.\n* Upload validation and filename handling.\n* Cross-account access control.\n* SQL injection spot-checks on login/register (negative).\n* Session cookie and HTTP header review.\n\n## Limitations\n\n* SQL injection testing was limited to manual payloads on login/register (no automated scanner such as sqlmap).\n* No authenticated rate-limiting or brute-force testing was performed (outside allowed scope).\n* The S3 storage bucket and CloudFront distribution were treated as out of scope.\n* WHOIS registrant data was privacy-protected.\n",
+        "start_date": "2026-10-06",
+        "end_date": "2026-10-06",
+        "duration": "1 day",
+        "provided_users": "* No test accounts were provided; assessment was performed as an unauthenticated and self-registered user (black-box).\n"
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-10-06T05:48:57.181163Z",
+      "updated": "2026-10-06T05:48:57.183250Z",
+      "project": "44eda6a0-8d12-497f-af47-5e88f304a21e",
+      "project_type": "befd2cb3-6a01-408c-88f3-d7f992cd8877",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "customer_name": "Imagur (FShare / Image Sharer)",
+        "customer_address": {
+          "city": "Glengowrie SA 5044, Australia",
+          "street": "132 Morphett Rd"
+        },
+        "receiver_name": "Vinh Dinh (dinh0087@flinders.edu.au)"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-10-06T05:48:57.181351Z",
+      "updated": "2026-10-06T05:48:57.183270Z",
+      "project": "44eda6a0-8d12-497f-af47-5e88f304a21e",
+      "project_type": "befd2cb3-6a01-408c-88f3-d7f992cd8877",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "title": "Imagur Security Assessment 2026-10-06",
+        "report_date": "2026-10-06",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-10-06",
+            "description": "Initial report",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-10-06T05:48:57.181295Z",
+      "updated": "2026-10-06T05:48:57.183264Z",
+      "project": "44eda6a0-8d12-497f-af47-5e88f304a21e",
+      "project_type": "befd2cb3-6a01-408c-88f3-d7f992cd8877",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Severity Classification",
+            "content": "## Severity Classification\n\nFindings in this report are rated using the Common Vulnerability Scoring System (CVSS) v3.1 and grouped into the following categories.\n\n| Severity | CVSS v3.1 Base Score | Meaning |\n|:---|---:|---|\n| Critical | 9.0 - 10.0 | Immediate, high-impact issues that should be remediated as a priority. |\n| High | 7.0 - 8.9 | Serious issues that can lead to significant compromise. |\n| Medium | 4.0 - 6.9 | Notable weaknesses that should be addressed, but are harder to exploit or less severe in impact. |\n| Low | 0.1 - 3.9 | Minor issues that provide limited value to an attacker. |\n| Info | N/A | Informational observations with no direct security impact. |\n"
+          }
+        ]
+      }
+    }
+  ]
+}

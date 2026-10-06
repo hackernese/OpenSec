@@ -1,0 +1,20 @@
+{
+  "allowlist": [],
+  "denylist": [],
+  "third_party_exclusions": [],
+  "method_permissions": {
+    "recon": true,
+    "port_scan": true,
+    "service_fingerprint": true,
+    "web_application_testing": true,
+    "injection_testing": true,
+    "redos_testing": true,
+    "non_destructive": true
+  },
+  "prohibited": [
+    "ddos", "malware_spreading", "social_engineering", "phishing",
+    "credential_stuffing", "password_spraying", "brute_force",
+    "mfa_bypass", "lateral_movement", "stealth_evasion"
+  ],
+  "notes": "Allowlist populated after enumeration and user confirmation."
+}

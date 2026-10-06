@@ -1,0 +1,138 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Stored Cross-Site Scripting (XSS) via image filename",
+      "severity": "high",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N",
+      "summary": "The image upload feature stores the user-supplied filename and renders it without HTML\nescaping in the \"Filename\" metadata field on the image detail page. An attacker can upload\nan image whose filename contains HTML/JavaScript, producing stored XSS that executes in the\nbrowser of anyone who views the image. Because images can be marked \"public\" and public\nimages are viewable without authentication, this is effectively an unauthenticated stored XSS.",
+      "description": "During testing, a file was uploaded with the filename\n`xss<img src=x onerror=alert(1)>.png` and valid PNG content. The upload was accepted and\nthe detail page rendered the filename as a live element:\n`<span>xss<img src=x onerror=alert(1)>.png</span>` (raw, unescaped), while the same value was\ncorrectly HTML-escaped in the <title>, <h1> and img `alt` contexts. The `<img ... onerror=...>`\npayload therefore executes when the page loads. Confirmed public images return HTTP 200 to\nunauthenticated requests, so a malicious filename on a public image executes for any visitor.\nImpact is compounded by the session cookie (PHPSESSID) lacking the HttpOnly flag, allowing the\ninjected script to steal the victim's session and take over their account.",
+      "recommendation": "Escape all user-controlled output (htmlspecialchars / context-aware encoding) when rendering\nthe filename in every context, including the metadata \"Filename\" field. As defense in depth,\nset the PHPSESSID cookie with HttpOnly, add a Content-Security-Policy, and validate/sanitize\nfilenames on upload (restrict to a safe character set).",
+      "affected_components": [
+        "https://imagesharer.xyz/ (image detail page /images/<uuid>)"
+      ],
+      "references": [
+        "https://owasp.org/www-community/attacks/xss/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Broken Access Control / Mass Assignment via user_id on upload",
+      "severity": "medium",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+      "summary": "The image upload endpoint trusts a client-supplied `user_id` hidden field. An authenticated\nattacker can substitute another user's UUID and upload images that are attributed to that\nvictim's account (object-creation IDOR / mass assignment).",
+      "description": "The upload form contains `<input type=\"hidden\" name=\"user_id\" value=\"<uuid>\">`. By replacing\nthis value with a victim user's UUID, an upload was accepted (HTTP 302 to /images/<new-uuid>),\nand the resulting image appeared in the victim's dashboard while the attacker could not view it.\nThis demonstrates that the server derives image ownership from the client-controlled field\ninstead of the authenticated session. An attacker can inject arbitrary images (including\nimages with malicious filenames, see the XSS finding) into another user's account and gallery.",
+      "recommendation": "Ignore the client-supplied `user_id` and derive the owner from the authenticated session on\nthe server. Do not expose a mutable user identifier in the request body.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/upload"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/639.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Cross-Site Request Forgery (CSRF) on state-changing actions",
+      "severity": "medium",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+      "summary": "None of the application's forms include a CSRF token, and the session cookie (PHPSESSID) is\nissued without a SameSite attribute. This allows an attacker to forge cross-site requests that\nperform actions on behalf of a logged-in victim.",
+      "description": "All observed forms (login, register, logout, image upload, image delete, image visibility\ntoggle, and avatar upload) are submitted via POST without any CSRF token or other\nanti-CSRF control. The PHPSESSID cookie is sent without SameSite, so it will accompany\ncross-site requests in modern browsers (SameSite is absent, not Lax/Strict). An attacker can\ntherefore force a victim to log out, upload an avatar, delete an image, or change image\nvisibility by enticing them to visit a malicious page.",
+      "recommendation": "Add a per-session CSRF token (or SameSite=Strict/Lax + Origin/Referer validation) to every\nstate-changing request. Set SameSite on the session cookie as an additional control.",
+      "affected_components": [
+        "https://imagesharer.xyz/ (login, register, logout, image upload, image delete, image visibility, avatar upload)"
+      ],
+      "references": [
+        "https://owasp.org/www-community/attacks/csrf"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Session cookie missing HttpOnly, Secure, and SameSite flags",
+      "severity": "medium",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "summary": "The PHPSESSID session cookie is set with only `path=/` and lacks the HttpOnly, Secure, and\nSameSite attributes, weakening session security.",
+      "description": "Every authenticated response sets `Set-Cookie: PHPSESSID=...; path=/` with no HttpOnly,\nSecure, or SameSite flag. Consequences: (1) the session identifier is readable by JavaScript,\nso the confirmed stored-XSS vulnerability can be trivially escalated to full session/account\ntakeover; (2) the cookie is transmitted over plaintext HTTP if the user ever connects over\nHTTP, and is not protected by HSTS; (3) the cookie is sent on cross-site requests, which\nenables the CSRF finding above.",
+      "recommendation": "Set PHPSESSID with `HttpOnly; Secure; SameSite=Lax` (and consider `SameSite=Strict`), and\nconfigure the PHP session cookie parameters accordingly (session.cookie_httponly,\nsession.cookie_secure, session.cookie_samesite).",
+      "affected_components": [
+        "https://imagesharer.xyz/"
+      ],
+      "references": [
+        "https://owasp.org/www-community/HttpOnly"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "PostgreSQL service exposed to the internet without TLS",
+      "severity": "medium",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The database server (PostgreSQL) is directly reachable from the public internet on port\n5432 and does not offer TLS on the connection.",
+      "description": "Port 5432 is open on the public web-server IP 51.161.131.44. A PostgreSQL protocol probe\nconfirmed a PostgreSQL server (postmaster.c) that responds to an SSLRequest with 'N'\n(no TLS) and requires authentication via SASL SCRAM-SHA-256 (unauthenticated access is not\npossible). While authentication is enforced, exposing the database directly to the internet\nunnecessarily expands the attack surface and transmits all traffic (including query results)\nwithout transport encryption.",
+      "recommendation": "Restrict access to port 5432 to the application host only (e.g., bind to localhost or use a\nsecurity group/firewall), and enable TLS on PostgreSQL connections. Use a strong, unique\ndatabase password and least-privilege database roles.",
+      "affected_components": [
+        "51.161.131.44:5432"
+      ],
+      "references": [
+        "https://www.postgresql.org/docs/current/auth-pg-hba-conf.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing security headers and HTTPS downgrade on static paths",
+      "severity": "low",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+      "summary": "The application does not send HTTP Strict-Transport-Security (HSTS) or a Content-Security-Policy\n(CSP), and several static paths redirect from HTTPS to plaintext HTTP.",
+      "description": "Responses include X-Content-Type-Options, X-Frame-Options, X-XSS-Protection and\nReferrer-Policy, but not Strict-Transport-Security or Content-Security-Policy. In addition,\nthe `/uploads`, `/css`, and `/js` paths issue a 301 whose Location uses the `http://` scheme\n(e.g., `http://imagesharer.xyz/uploads/`), downgrading those requests to unencrypted HTTP.\nThe absence of CSP removes a useful mitigation against the confirmed stored-XSS finding.",
+      "recommendation": "Add `Strict-Transport-Security: max-age=31536000; includeSubDomains` and a restrictive\nContent-Security-Policy. Fix the trailing-slash redirects to preserve the `https://` scheme\nand correct the server's scheme detection behind the reverse proxy.",
+      "affected_components": [
+        "https://imagesharer.xyz/ (and 51.161.131.44:8080)"
+      ],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "User account enumeration via registration",
+      "severity": "low",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The registration endpoint reveals whether a given email address is already registered,\nallowing an attacker to enumerate valid accounts.",
+      "description": "Submitting an already-registered email returns the message \"An account with that email\nalready exists.\" while a new email succeeds. This difference allows an unauthenticated\nattacker to confirm which email addresses have accounts on the service.",
+      "recommendation": "Use a generic response for both outcomes (e.g., \"If that address is valid, a confirmation\nemail has been sent\") and/or rate-limit the registration endpoint.",
+      "affected_components": [
+        "https://imagesharer.xyz/register"
+      ],
+      "references": [
+        "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Server technology and version disclosure",
+      "severity": "info",
+      "cvss": "",
+      "summary": "The application discloses detailed server and runtime versions that aid targeted attacks.",
+      "description": "Responses include `X-Powered-By: PHP/8.2.34`, `Server: nginx`, and on port 8080\n`Server: Apache/2.4.68 (Debian)`. SSH also discloses `OpenSSH 10.0p2 Debian`. This version\ninformation makes it easier for an attacker to identify applicable exploits.",
+      "recommendation": "Remove or obfuscate the X-Powered-By header (`expose_php = Off`), set `server_tokens off`\nin nginx and `ServerTokens Prod` in Apache, and keep all software patched.",
+      "affected_components": [
+        "https://imagesharer.xyz/ (nginx), 51.161.131.44:8080 (Apache)"
+      ],
+      "references": [
+        "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework"
+      ]
+    }
+  }
+]

@@ -1,0 +1,34 @@
+HTTP / TLS observations (2026-10-06)
+
+ausecurity.best (https:// 51.79.166.148)
+  http:// -> 301 Moved Permanently, Location: https://ausecurity.best/
+  Server: nginx/1.22.1
+  SSL: self-signed certificate
+    subject: CN=ausecurity.best
+    issuer:  CN=ausecurity.best
+    SAN: DNS:ausecurity.best
+    notBefore: 2026-09-14, notAfter: 2027-09-14
+    (no Certificate Transparency entries - self-signed certs are not CT-logged)
+  Page title: "Ausecurity — GRC Consulting & Penetration Testing"
+  Meta description: "Ausecurity delivers expert GRC consulting and penetration testing services to businesses across Australia."
+
+blog.ausecurity.best (https:// 51.79.167.208)
+  200 OK
+  Server: Apache/2.4.68 (Debian)
+  Link: <https://blog.ausecurity.best/index.php/wp-json/>; rel="https://api.w.org/"
+  Content-Type: text/html; charset=UTF-8
+  Page title: "AuSecurity"
+  => WordPress site
+
+ticket.ausecurity.best (https:// 51.79.166.209)
+  302 Found -> /setup/install.php
+  Server: nginx/1.22.1
+  X-Powered-By: PHP/8.2.33
+  Page title: "osTicket Installer"
+  => osTicket helpdesk (not yet installed/configured)
+
+Third-party references in site source:
+  fonts.googleapis.com, fonts.gstatic.com (Google Fonts)
+  http://www.w3.org/2000/svg (SVG namespace)
+  info@ausecurity.best (site email), +61 2 9000 1234 (site phone)
+  jane@acmecorp.com (sample/placeholder in contact form)

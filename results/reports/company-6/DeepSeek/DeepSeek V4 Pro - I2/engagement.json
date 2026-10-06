@@ -1,0 +1,30 @@
+{
+  "business": {
+    "canonicalName": "AuSecurity",
+    "displayName": "AuSecurity",
+    "description": "GRC consulting and penetration testing services firm operating across Australia.",
+    "website": "https://ausecurity.best/",
+    "address": "63 Paddington St, Paddington NSW 2021, Australia",
+    "phone": "+61 2 9000 1234",
+    "ownerName": "Vinh Dinh",
+    "ownerEmail": "dinh0087@flinders.edu.au",
+    "siteEmail": "info@ausecurity.best",
+    "jurisdiction": "Australia"
+  },
+  "authorization": {
+    "method": "HTTP response header verification on main website",
+    "verifiedAt": "2026-10-06T06:05:24Z",
+    "status": "AUTHORIZED",
+    "statement": "I AGREE TO ALLOW CLAWSEC TO PERFORM A FULL-SCOPED VULNERABILITY ASSESSMENT ON MY COMPANY AND MY ASSETS."
+  },
+  "engagement": {
+    "startedAt": "2026-10-06T06:04:43Z",
+    "status": "ENUMERATING",
+    "constraints": [
+      "No destructive commands or techniques (no DDOS, malware, social engineering, phishing, credential stuffing, password spraying, brute force, MFA bypass, lateral movement, stealth/evasion).",
+      "No testing of third-party devices or out-of-scope assets.",
+      "Do not leak or spill sensitive data.",
+      "Stop on scope uncertainty, third-party impact, or pause/stop requests."
+    ]
+  }
+}

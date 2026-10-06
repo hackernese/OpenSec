@@ -1,0 +1,66 @@
+{
+  "sections": [
+    {
+      "id": "executive_summary",
+      "data": {
+        "executive_summary": "AuSecurity's public-facing infrastructure contains several serious security weaknesses that require immediate attention.\n\nThe most urgent issue is that the main website's administrator login accepts well-known default credentials (admin / admin). This means anyone on the internet can sign in as a full administrator and take complete control of the management interface. Making matters worse, the administrator dashboard is served to visitors without any login, and it exposes business information such as client contact details and revenue figures.\n\nA separate helpdesk subdomain (ticket.ausecurity.best) has been left in its installation-wizard state, so an outsider could complete the setup themselves and take over the ticketing system.\n\nOther issues include a cross-site scripting flaw on the site's success page, excessive disclosure of software versions and server identity, weak security headers, and a self-signed TLS certificate that browsers cannot trust.\n\nTaken together, these weaknesses allow an unauthenticated attacker to gain administrative control of the platform and access sensitive business and client data. We recommend immediate remediation, starting with the administrator credential, the exposed dashboard, and the osTicket installer. The Findings section of this report provides detailed technical descriptions and step-by-step remediation guidance for each issue."
+      }
+    },
+    {
+      "id": "scope",
+      "data": {
+        "scope": "AuSecurity provides GRC consulting and penetration testing services across Australia. This assessment covered the full web application and infrastructure attack surface of the following three in-scope hosts, all hosted on OVH Singapore infrastructure:\n\n| System | Address | Description |\n|:---|:---|:---|\n| ausecurity.best / www.ausecurity.best | 51.79.166.148 | nginx static site + FastAPI backend under /api |\n| blog.ausecurity.best | 51.79.167.208 | Apache 2.4.68 + WordPress |\n| ticket.ausecurity.best | 51.79.166.209 | nginx + PHP 8.2.33 osTicket v1.18.4 |\n\nThe following were explicitly excluded from scope: third-party and hosting-provider infrastructure (OVH), registrar nameservers, Google Fonts/W3C assets, and non-owned parked or squatted sibling domains (ausecurity.com/.net/.org/.io/.co/.com.au/.au).",
+        "start_date": "2026-10-06",
+        "end_date": "2026-10-06",
+        "duration": "1 day",
+        "provided_users": "No user accounts or credentials were provided for this engagement. All testing was performed unauthenticated (black-box)."
+      }
+    },
+    {
+      "id": "customer",
+      "data": {
+        "customer_name": "AuSecurity",
+        "customer_address": {
+          "street": "63 Paddington St",
+          "city": "Paddington NSW 2021, Australia"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "data": {
+        "title": "AuSecurity Security Assessment 2026-10-06",
+        "report_date": "2026-10-06",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "version": "1.0",
+            "description": "Initial report",
+            "date": "2026-10-06"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Assessment Methodology",
+            "content": "The assessment combined passive and light-active enumeration (DNS, WHOIS, and certificate analysis), fast port discovery followed by targeted service and version detection, manual web application testing (authentication, access control, input validation, cross-site scripting, and misconfiguration), and narrow-scope validation of material findings. No destructive or intrusive techniques were used."
+          },
+          {
+            "title": "Coverage Summary",
+            "content": "All three in-scope hosts were enumerated and tested across their open ports (main site: 22/80/443/8080; blog: 22/80/443; ticket: 22/443). The main site's API endpoints (/api/auth/login, /api/auth/me, /api/auth/logout, /api/contact, /api/health), the WordPress blog, and the osTicket installer were assessed."
+          },
+          {
+            "title": "Limitations",
+            "content": "No brute-force, password-spraying, or credential-stuffing testing was performed, nor any social engineering, phishing, lateral movement, or stealth/evasion testing. Shodan and certificate-transparency logs contained no data for these hosts (the certificates are self-signed). Email (MX/SPF/DMARC) was not configured and was outside scope. Database and session internals were not directly accessed."
+          }
+        ]
+      }
+    }
+  ]
+}

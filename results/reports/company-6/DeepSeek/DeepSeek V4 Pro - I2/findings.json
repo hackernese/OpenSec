@@ -1,0 +1,230 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Default administrator credentials on admin login",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "summary": "The administrative login of the AuSecurity web application accepts well-known default credentials (admin / admin). Anyone who can reach the site can sign in as administrator.",
+      "description": "A POST to /api/auth/login with {\"username\":\"admin\",\"password\":\"admin\"} returns HTTP 200 and {\"success\":true}, and issues a signed \"admin_token\" session cookie (HttpOnly, Max-Age 3600). The login endpoint is also reachable over plain HTTP on port 8080. This grants an unauthenticated attacker full administrative access to the management interface, from which they could view and manipulate client data and the application.",
+      "recommendation": "Immediately rotate the administrator password to a strong unique value, enforce account lockout/rate limiting on the login endpoint, disable the plain-HTTP port (8080), and require multi-factor authentication for administrative accounts.",
+      "affected_components": [
+        "https://ausecurity.best/ (API /api/auth/login, admin panel)"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/798.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Admin dashboard accessible without authentication (client data exposure)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "summary": "The administrator dashboard is served to unauthenticated visitors and exposes business metrics, revenue figures, and personally identifiable information of clients.",
+      "description": "GET /dashboard (and /dashboard.html) returns HTTP 200 without any authentication challenge. The page hard-codes: aggregate counters (enquiries, active clients, assessments, proposals), a \"Recent Enquiries\" panel listing roughly five client enquiries with company names, contact-person names, and email addresses, an activity log referencing client engagements, and a year-to-date revenue figure. The same page is served unencrypted over HTTP on port 8080. This is a broken-access-control issue combined with sensitive information disclosure (client PII and business intelligence).",
+      "recommendation": "Enforce server-side authentication and authorization on the dashboard (and its backing data) rather than relying on client-side checks. Remove business/PII data from static HTML and load it via authenticated API calls only. Disable the plain-HTTP service on 8080.",
+      "affected_components": [
+        "https://ausecurity.best/dashboard.html",
+        "https://ausecurity.best/dashboard",
+        "51.79.166.148:8080"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/306.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "osTicket installation wizard exposed to unauthenticated users",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "summary": "The osTicket helpdesk (v1.18.4) has not been configured and exposes its full installation wizard to anonymous users, including the database-configuration step.",
+      "description": "The root path and the staff control panel (/scp/login.php) both redirect (302) to /setup/install.php. The installer (\"osTicket v1.18.4\") is reachable unauthenticated and walks through prerequisite and database configuration. A remote attacker can complete the installation themselves (binding the application to a database they control or to the internal database if reachable), effectively taking over the ticketing system. The deployment has been left in its pre-installation state.",
+      "recommendation": "Complete or remove the installation immediately and delete the /setup/ directory from the web root. Place the helpdesk behind the intended access controls before exposing it, and confirm the staff control panel is only reachable after configuration.",
+      "affected_components": [
+        "https://ticket.ausecurity.best/ (51.79.166.209)"
+      ],
+      "references": [
+        "https://docs.osticket.com/en/latest/Getting%20Started/Installation.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "DOM-based cross-site scripting via \"name\" parameter (success page)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+      "summary": "The consultation-success page reflects the \"name\" URL parameter into the DOM using innerHTML without sanitization, allowing arbitrary script execution in the victim's browser.",
+      "description": "An inline script reads the \"name\" query parameter and assigns it to the #user-name element via innerHTML (a classic DOM XSS sink). A crafted URL such as /consultation-success.html?name=&lt;img src=x onerror=...&gt; executes attacker-controlled JavaScript in the page context. This was verified by loading a payload that changed the document title. The /api/contact endpoint further reflects the submitted full_name value into a redirect_url that points at this page, creating a self-XSS-to-URL chain.",
+      "recommendation": "Use textContent (or an equivalent safe API) instead of innerHTML for untrusted values, and URL-encode/sanitize reflected values. Apply a Content-Security-Policy that restricts script sources.",
+      "affected_components": [
+        "https://ausecurity.best/consultation-success.html"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/79.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing security response headers",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "summary": "The main website omits several important security headers, weakening protection against clickjacking, MIME sniffing, and connection downgrade.",
+      "description": "Public pages (index, services, about, case-studies, contact, login, dashboard) are served without Strict-Transport-Security (HSTS), Content-Security-Policy (CSP), X-Content-Type-Options, and (on most pages) X-Frame-Options and Referrer-Policy. The login and dashboard pages set X-Frame-Options: DENY, but the marketing pages do not, and no HSTS is sent anywhere, allowing HTTP-based downgrade and MITM.",
+      "recommendation": "Add a consistent set of security headers, including Strict-Transport-Security, Content-Security-Policy, X-Content-Type-Options: nosniff, X-Frame-Options (or CSP frame-ancestors), and Referrer-Policy, and enforce HTTPS site-wide with an HTTP-to-HTTPS redirect.",
+      "affected_components": [
+        "https://ausecurity.best/ (all public pages)"
+      ],
+      "references": [
+        "https://owasp.org/www-project-secure-headers/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Self-signed TLS certificate on main site",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "summary": "The main website presents a self-signed TLS certificate that cannot be validated against a trusted CA, exposing visitors to man-in-the-middle risk and browser trust warnings.",
+      "description": "The certificate for ausecurity.best is self-signed (issuer == subject), has no certificate transparency log entry, and fails OpenSSL verification (error 18, self-signed). The blog and ticket hosts use their own certificates. Visitors must bypass browser warnings to use the site, and traffic cannot be verified as authentic.",
+      "recommendation": "Deploy a certificate from a trusted public CA (e.g., Let's Encrypt) and enable automatic renewal. Consider a wildcard/SAN certificate covering all subdomains.",
+      "affected_components": [
+        "https://ausecurity.best/"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/295.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Admin panel and full site served over plain HTTP on port 8080",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+      "summary": "The same web application (including the admin dashboard and login) is served unencrypted over HTTP on port 8080.",
+      "description": "Port 8080 on 51.79.166.148 serves nginx/1.25.5 returning the identical site content over plain HTTP with no TLS. This includes the login page and the admin dashboard. Credentials and session cookies transmitted via this port are exposed to network eavesdropping.",
+      "recommendation": "Close port 8080 externally or redirect it to HTTPS. Serve the application exclusively over TLS.",
+      "affected_components": [
+        "51.79.166.148:8080 (ausecurity.best)"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/319.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress username enumeration",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The WordPress blog discloses the \"admin\" username through the author-archive redirect.",
+      "description": "Requesting /?author=1 returns a 301 redirect (X-Redirect-By: WordPress) to /index.php/author/admin/, revealing the \"admin\" login name. This aids targeted attacks against the login form.",
+      "recommendation": "Prevent author enumeration (e.g., disable author archives or neutralize the redirect), enable login rate limiting, and consider renaming the administrator account.",
+      "affected_components": [
+        "https://blog.ausecurity.best/"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/200.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress uploads directory listing enabled",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "Directory listing is enabled on the WordPress uploads directory, exposing its structure.",
+      "description": "GET /wp-content/uploads/ returns an Apache autoindex page (\"Index of /wp-content/uploads\") showing subdirectories (e.g., 2026/). This leaks the media directory layout to unauthenticated users.",
+      "recommendation": "Disable directory indexing (Options -Indexes) for wp-content and its subdirectories.",
+      "affected_components": [
+        "https://blog.ausecurity.best/wp-content/uploads/"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/548.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress version and readme disclosure",
+      "cvss": "",
+      "summary": "The WordPress installation discloses its version string and leaves readme.html accessible.",
+      "description": "The site's generator meta tag and asset query strings advertise the WordPress version, and /readme.html is publicly reachable. The Apache server banner (Apache/2.4.68) is also disclosed. This information assists attackers in targeting version-specific issues.",
+      "recommendation": "Remove readme.html and license/readme files, suppress the generator/version meta, and reduce server banner verbosity.",
+      "affected_components": [
+        "https://blog.ausecurity.best/"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/200.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress XML-RPC enabled",
+      "cvss": "",
+      "summary": "The WordPress XML-RPC endpoint is enabled and reachable.",
+      "description": "GET /xmlrpc.php returns \"XML-RPC server accepts POST requests only\" (405), confirming the endpoint is active. XML-RPC can be abused for amplified credential attacks and pingback SSRF when not required.",
+      "recommendation": "Disable XML-RPC (plugin or web-server rule) unless it is explicitly required.",
+      "affected_components": [
+        "https://blog.ausecurity.best/xmlrpc.php"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/799.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "osTicket session cookie missing HttpOnly flag",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+      "summary": "The osTicket PHPSESSID cookie is set without the HttpOnly attribute.",
+      "description": "The session cookie (PHPSESSID) is issued without the HttpOnly flag, so client-side script could read it if a script-execution vulnerability is present.",
+      "recommendation": "Set the HttpOnly (and Secure, SameSite) attributes on session cookies.",
+      "affected_components": [
+        "https://ticket.ausecurity.best/"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/1004.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Contact API returns unhandled server error for unexpected routing field",
+      "cvss": "",
+      "summary": "Submitting an unexpected value in the \"h\" routing field causes an unhandled HTTP 500 error.",
+      "description": "The contact endpoint accepts a client-supplied \"h\" field. Sending an unexpected value (e.g., \"evil.example.com\") returns HTTP 500 \"Internal Server Error\" with a generic body, indicating insufficient input validation and error handling (and confirming the field is processed server-side). No stack trace was leaked.",
+      "recommendation": "Validate and restrict the \"h\" field to an allowlist of known hostnames and return a structured 4xx response for invalid values.",
+      "affected_components": [
+        "https://ausecurity.best/api/contact"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/20.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Technology and version information disclosure",
+      "cvss": "",
+      "summary": "Multiple components disclose their exact software versions and framework fingerprints.",
+      "description": "Observed disclosures include nginx/1.22.1 and nginx/1.25.5 (also visible in the 404 page footer, indicating a reverse proxy), PHP/8.2.33 (X-Powered-By on ticket), Apache/2.4.68 (Debian), osTicket v1.18.4, the WordPress version, and FastAPI/Starlette-style JSON error envelopes on the API. These fingerprints help attackers select known exploits.",
+      "recommendation": "Suppress version banners (server_tokens off, expose_php off, remove X-Powered-By), and return generic error responses for the API.",
+      "affected_components": [
+        "ausecurity.best",
+        "blog.ausecurity.best",
+        "ticket.ausecurity.best"
+      ],
+      "references": [
+        "https://cwe.mitre.org/data/definitions/200.html"
+      ]
+    }
+  }
+]

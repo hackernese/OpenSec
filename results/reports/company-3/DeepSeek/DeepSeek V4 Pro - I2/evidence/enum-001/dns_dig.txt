@@ -1,0 +1,173 @@
+== A ==
+
+; <<>> DiG 9.20.27-1-Debian <<>> A imagesharer.xyz
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41450
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;imagesharer.xyz.		IN	A
+
+;; ANSWER SECTION:
+imagesharer.xyz.	1165	IN	A	51.161.131.44
+
+;; Query time: 16 msec
+;; SERVER: 192.168.4.1#53(192.168.4.1) (UDP)
+;; WHEN: Tue Oct 06 10:36:21 ACDT 2026
+;; MSG SIZE  rcvd: 75
+
+== AAAA ==
+
+; <<>> DiG 9.20.27-1-Debian <<>> AAAA imagesharer.xyz
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 58502
+;; flags: qr rd ra cd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;imagesharer.xyz.		IN	AAAA
+
+;; AUTHORITY SECTION:
+imagesharer.xyz.	265	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789376610 43200 3600 604800 3600
+
+;; Query time: 16 msec
+;; SERVER: 192.168.4.1#53(192.168.4.1) (UDP)
+;; WHEN: Tue Oct 06 10:36:21 ACDT 2026
+;; MSG SIZE  rcvd: 137
+
+== NS ==
+
+; <<>> DiG 9.20.27-1-Debian <<>> NS imagesharer.xyz
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 6541
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;imagesharer.xyz.		IN	NS
+
+;; ANSWER SECTION:
+imagesharer.xyz.	1182	IN	NS	launch1.spaceship.net.
+imagesharer.xyz.	1182	IN	NS	launch2.spaceship.net.
+
+;; Query time: 20 msec
+;; SERVER: 192.168.4.1#53(192.168.4.1) (UDP)
+;; WHEN: Tue Oct 06 10:36:21 ACDT 2026
+;; MSG SIZE  rcvd: 144
+
+== MX ==
+
+; <<>> DiG 9.20.27-1-Debian <<>> MX imagesharer.xyz
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 24184
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;imagesharer.xyz.		IN	MX
+
+;; AUTHORITY SECTION:
+imagesharer.xyz.	282	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789376610 43200 3600 604800 3600
+
+;; Query time: 16 msec
+;; SERVER: 192.168.4.1#53(192.168.4.1) (UDP)
+;; WHEN: Tue Oct 06 10:36:21 ACDT 2026
+;; MSG SIZE  rcvd: 137
+
+== TXT ==
+
+; <<>> DiG 9.20.27-1-Debian <<>> TXT imagesharer.xyz
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 16045
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;imagesharer.xyz.		IN	TXT
+
+;; AUTHORITY SECTION:
+imagesharer.xyz.	282	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789376610 43200 3600 604800 3600
+
+;; Query time: 20 msec
+;; SERVER: 192.168.4.1#53(192.168.4.1) (UDP)
+;; WHEN: Tue Oct 06 10:36:21 ACDT 2026
+;; MSG SIZE  rcvd: 137
+
+== SOA ==
+
+; <<>> DiG 9.20.27-1-Debian <<>> SOA imagesharer.xyz
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 58584
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;imagesharer.xyz.		IN	SOA
+
+;; ANSWER SECTION:
+imagesharer.xyz.	1182	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789376610 43200 3600 604800 3600
+
+;; Query time: 20 msec
+;; SERVER: 192.168.4.1#53(192.168.4.1) (UDP)
+;; WHEN: Tue Oct 06 10:36:21 ACDT 2026
+;; MSG SIZE  rcvd: 137
+
+== www A ==
+
+; <<>> DiG 9.20.27-1-Debian <<>> A www.imagesharer.xyz
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 42271
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;www.imagesharer.xyz.		IN	A
+
+;; ANSWER SECTION:
+www.imagesharer.xyz.	1182	IN	A	51.161.131.44
+
+;; Query time: 16 msec
+;; SERVER: 192.168.4.1#53(192.168.4.1) (UDP)
+;; WHEN: Tue Oct 06 10:36:21 ACDT 2026
+;; MSG SIZE  rcvd: 83
+
+== resources ==
+
+; <<>> DiG 9.20.27-1-Debian <<>> resources.imagesharer.xyz
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 60919
+;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;resources.imagesharer.xyz.	IN	A
+
+;; ANSWER SECTION:
+resources.imagesharer.xyz. 1194	IN	CNAME	d273uevi0662l0.cloudfront.net.
+d273uevi0662l0.cloudfront.net. 6 IN	A	13.32.126.182
+d273uevi0662l0.cloudfront.net. 6 IN	A	13.32.126.107
+d273uevi0662l0.cloudfront.net. 6 IN	A	13.32.126.132
+d273uevi0662l0.cloudfront.net. 6 IN	A	13.32.126.59
+
+;; Query time: 20 msec
+;; SERVER: 192.168.4.1#53(192.168.4.1) (UDP)
+;; WHEN: Tue Oct 06 10:36:21 ACDT 2026
+;; MSG SIZE  rcvd: 302
+

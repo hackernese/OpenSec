@@ -1,0 +1,44 @@
+{
+  "engagement": "Imagur",
+  "approved_at": "2026-10-05T23:59:00Z",
+  "approval": "All business-owned assets confirmed in scope; third-party providers and lookalike domains excluded.",
+  "in_scope": {
+    "web_application": [
+      "https://imagesharer.xyz/",
+      "https://www.imagesharer.xyz/"
+    ],
+    "origin_infrastructure": [
+      "51.161.131.44"
+    ],
+    "cdn": [
+      "resources.imagesharer.xyz",
+      "d273uevi0662l0.cloudfront.net"
+    ],
+    "aws_account": {
+      "account_id": "016170038077",
+      "region": "ap-southeast-2",
+      "resources": [
+        "S3 bucket filesharer-research",
+        "S3 bucket filesharer-research-testing (candidate)",
+        "RDS Aurora PostgreSQL database-2 (c9k4ckikk3g8)",
+        "CloudFront distribution EMOI8CZBQIEBR",
+        "IAM user console-admin",
+        "IAM user fokirohu",
+        "EC2 security group sg-0fb1d9ee18578a337",
+        "Default VPC vpc-06f86289a752c416d"
+      ]
+    }
+  },
+  "out_of_scope": [
+    "AS16276 OVH hosting ASN",
+    "OVH netblocks 51.161.130.0/23 and 51.161.128.0/17",
+    "CloudFront edge IPs 13.32.126.x",
+    "Spaceship nameservers launch1/2.spaceship.net",
+    "Lookalike domains: imagur.com, fshare.com, fshare.io, imagesharer.net, imager.xyz, imagur.xyz",
+    "S3 buckets imagesharer / fshare (other AWS accounts)"
+  ],
+  "method_permissions": {
+    "allowed": ["passive recon", "non-destructive web app testing", "cloud config review (read-only)", "safe exploit proof (minimal proof only)"],
+    "denied": ["DoS/DDoS", "phishing/social engineering", "credential stuffing/brute force/password spraying", "MFA bypass", "lateral movement", "stealth/evasion", "destructive commands", "data exfiltration"]
+  }
+}

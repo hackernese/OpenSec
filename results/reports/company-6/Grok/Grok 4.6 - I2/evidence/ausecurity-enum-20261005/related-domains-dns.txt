@@ -1,0 +1,53 @@
+===== ausecurity.com =====
+A: 139.99.130.38
+NS: ns2.netregistry.net.
+ns3.netregistry.net.
+ns1.netregistry.net.
+MX: 10 ALT4.ASPMX.L.GOOGLE.com.
+5 ALT2.ASPMX.L.GOOGLE.com.
+1 ASPMX.L.GOOGLE.com.
+10 ALT3.ASPMX.L.GOOGLE.com.
+5 ALT1.ASPMX.L.GOOGLE.com.
+===== ausecurity.com.au =====
+A: 110.232.143.152
+NS: ns2.syd5.hostingplatform.net.au.
+ns1.syd5.hostingplatform.net.au.
+MX: 0 ausecurity-com-au.mail.protection.outlook.com.
+===== ausecurity.net =====
+A: 108.167.140.175
+NS: pdns2.registrar-servers.com.
+pdns1.registrar-servers.com.
+MX: 0 ausecurity-net.mail.protection.outlook.com.
+===== ausecurity.org =====
+A: 13.248.169.48
+76.223.54.146
+NS: ns1.afternic.com.
+ns2.afternic.com.
+MX: 0 .
+===== ausecurity.au =====
+A: NS: MX: ===== ausecurity.co =====
+A: 52.60.87.163
+NS: ns1.101domain.com.
+ns2.101domain.com.
+ns5.101domain.com.
+MX: ===== ausecurity.io =====
+A: 52.60.87.163
+NS: ns1.101domain.com.
+ns2.101domain.com.
+ns5.101domain.com.
+MX: ===== security.au =====
+A: 103.42.108.46
+NS: ns1.nameserver.net.au.
+ns2.nameserver.net.au.
+ns3.nameserver.net.au.
+MX: 10 mx1.nameserver.net.au.
+20 mx3.nameserver.net.au.
+10 mx2.nameserver.net.au.
+===== au-security.com =====
+A: 108.160.140.113
+NS: ns3jkl.name.com.
+ns4hny.name.com.
+ns1cny.name.com.
+ns2ckr.name.com.
+MX: ===== auseecurity.best =====
+A: NS: MX: 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload image — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+            <div class="alert alert-error">File type &quot;text/html&quot; is not allowed. Accepted types: image/jpeg, image/png, image/gif, image/webp.</div>
+    
+    <div class="page-header">
+    <h1>Upload image</h1>
+    <a href="/dashboard" class="btn btn-ghost btn-sm">← Back</a>
+</div>
+
+<div class="card upload-card">
+    <form method="POST" action="/images/upload" enctype="multipart/form-data">
+
+        <!-- Hidden user ID field -->
+        <input type="hidden" name="user_id" value="9d66079a-db2b-4688-9c37-24e0be85921e">
+
+        <div class="form-group">
+            <label for="file">Image file</label>
+            <p class="text-muted mt-1" style="margin-bottom:.5rem">
+                JPEG, PNG, GIF or WebP — max 10 MB
+            </p>
+            <input
+                type="file"
+                id="file"
+                name="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                required
+                style="width:100%;padding:.45rem 0;"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Visibility</label>
+            <div class="visibility-toggle mt-1">
+                <label>
+                    <input type="radio" name="is_public" value="false" checked>
+                    🔒 Private (only you)
+                </label>
+                <label>
+                    <input type="radio" name="is_public" value="true">
+                    🌍 Public (anyone with the link)
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mt-2">
+            Upload
+        </button>
+    </form>
+</div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>

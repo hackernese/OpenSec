@@ -1,0 +1,39 @@
+# Sanitized HTTP identity — enum-imagur-20260918-001
+# Cookies and Set-Cookie values omitted on purpose.
+# Observed at 2026-09-18T06:34:03Z and 2026-09-18T06:39:21Z
+
+GET https://imagesharer.xyz/
+  HTTP/1.1 302 Found
+  Server: nginx
+  X-Powered-By: PHP/8.2.33
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Location: /dashboard
+  remote_ip: 51.161.131.44
+
+Followed unauthenticated redirects (no form submit, no login attempt):
+  / -> /dashboard -> /login
+  effective_url: https://imagesharer.xyz/login
+  HTTP/1.1 200 OK
+  title: Log in — Imager
+  brand text: Imager
+  register path present: /register
+  external hosts referenced in HTML:
+    - https://resources.imagesharer.xyz/icon.ico
+    - https://encrypted-tbn0.gstatic.com/ (Google thumbnail; third-party)
+
+GET http://imagesharer.xyz/
+  HTTP/1.1 301 Moved Permanently
+  Server: nginx
+  Location: https://imagesharer.xyz/
+
+GET https://www.imagesharer.xyz/
+  curl TLS verify failed (certificate SAN is only imagesharer.xyz)
+  httpx-toolkit (low-impact): https://www.imagesharer.xyz [302] [/dashboard] [nginx] [51.161.131.44] [Nginx,PHP:8.2.33]
+
+GET https://resources.imagesharer.xyz and /icon.ico
+  httpx-toolkit: 403 CloudFront "The request could not be satisfied"
+  CNAME: d273uevi0662l0.cloudfront.net
+  TLS presented: CN=*.cloudfront.net (no custom SAN for resources.imagesharer.xyz)

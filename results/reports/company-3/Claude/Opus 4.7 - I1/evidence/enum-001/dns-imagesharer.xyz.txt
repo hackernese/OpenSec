@@ -1,0 +1,7 @@
+;; Warning, extra type option
+;; Warning, extra type option
+;; Warning, extra type option
+;; Warning, extra type option
+;; Warning, extra type option
+imagesharer.xyz.	1682	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789376610 43200 3600 604800 3600
+;; communications error to 10.48.0.31#53: timed out

@@ -1,0 +1,74 @@
+DOMAIN imagur.xyz
+  A=[216.239.32.21
+216.239.34.21
+216.239.38.21
+216.239.36.21]
+  CNAME=[]
+  NS=[dns1.registrar-servers.com.
+dns2.registrar-servers.com.]
+DOMAIN imagur.com
+  A=[199.191.50.184]
+  CNAME=[]
+  NS=[ns211484.ztomy.com.
+ns111484.ztomy.com.]
+DOMAIN imagur.com.au
+  A=[]
+  CNAME=[]
+  NS=[]
+DOMAIN imagur.net
+  A=[]
+  CNAME=[]
+  NS=[]
+DOMAIN imager.xyz
+  A=[52.40.42.113
+44.232.173.249]
+  CNAME=[]
+  NS=[launch1.spaceship.net.
+launch2.spaceship.net.]
+DOMAIN imager.com
+  A=[40.108.138.93]
+  CNAME=[]
+  NS=[ns4.bdm.microsoftonline.com.
+ns1.bdm.microsoftonline.com.
+ns2.bdm.microsoftonline.com.
+ns3.bdm.microsoftonline.com.]
+DOMAIN imager.com.au
+  A=[103.224.182.240]
+  CNAME=[]
+  NS=[ns2.abovedomains.com.
+ns1.abovedomains.com.]
+DOMAIN imagesharer.com
+  A=[]
+  CNAME=[]
+  NS=[]
+DOMAIN imagesharer.com.au
+  A=[]
+  CNAME=[]
+  NS=[]
+DOMAIN imagesharer.net
+  A=[3.11.134.120
+13.135.35.209]
+  CNAME=[]
+  NS=[dns2.registrar-servers.com.
+dns1.registrar-servers.com.]
+DOMAIN fshare.xyz
+  A=[]
+  CNAME=[]
+  NS=[ximena.ns.cloudflare.com.
+roan.ns.cloudflare.com.]
+DOMAIN fshare.com.au
+  A=[]
+  CNAME=[]
+  NS=[]
+DOMAIN fshare.com.au
+  A=[]
+  CNAME=[]
+  NS=[]
+DOMAIN fshare.net.au
+  A=[]
+  CNAME=[]
+  NS=[]
+===== OWNER EMAIL DOMAIN =====
+0 flinders-edu-au.mail.protection.outlook.com.
+===== PTR OVH hostname =====
+51.161.131.44

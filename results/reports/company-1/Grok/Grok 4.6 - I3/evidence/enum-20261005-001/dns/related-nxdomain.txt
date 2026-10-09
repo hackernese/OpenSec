@@ -1,0 +1,70 @@
+===== thedownundernews.com =====
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 56879
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; AUTHORITY SECTION:
+com.			790	IN	SOA	a.gtld-servers.net. nstld.verisign-grs.com. 1791132659 1800 900 604800 900
+
+===== thedownundernews.com.au =====
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 30483
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; AUTHORITY SECTION:
+com.au.			790	IN	SOA	q.au. hostmaster.donuts.email. 1791132511 7200 900 1209600 3600
+
+===== thedownundernews.net =====
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 49447
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; AUTHORITY SECTION:
+net.			790	IN	SOA	a.gtld-servers.net. nstld.verisign-grs.com. 1791132659 1800 900 604800 900
+
+===== thedownundernews.org =====
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 63464
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; AUTHORITY SECTION:
+org.			790	IN	SOA	a0.org.afilias-nst.info. hostmaster.donuts.email. 1791132053 7200 900 1209600 3600
+
+===== downundernewsz.com =====
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 61944
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; AUTHORITY SECTION:
+com.			790	IN	SOA	a.gtld-servers.net. nstld.verisign-grs.com. 1791132659 1800 900 604800 900
+
+===== downundernewsz.online =====
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 33385
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; AUTHORITY SECTION:
+online.			244	IN	SOA	ns.trs-dns.com. trs-ops.tucows.com. 1791132508 1800 900 604800 300
+
+===== thedownundernews.news =====
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 47243
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; AUTHORITY SECTION:
+news.			844	IN	SOA	v0n0.nic.news. hostmaster.donuts.email. 1791132352 7200 900 1209600 3600
+

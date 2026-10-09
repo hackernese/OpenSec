@@ -1,0 +1,2 @@
+Password for user postgres: 
+psql: error: connection to server at "51.161.131.44", port 5432 failed: fe_sendauth: no password supplied

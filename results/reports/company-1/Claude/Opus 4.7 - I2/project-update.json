@@ -1,0 +1,51 @@
+{
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "in-progress",
+      "data": {
+        "executive_summary": "DownUnderNewsz commissioned a time-boxed, non-destructive external vulnerability assessment of its newly launched online newspaper platform. Testing was performed on 2026-10-05 under written authorisation from the owner, and covered the single public anchor domain (thedownundernews.online), its two subdomains (www, media), and the two OVH Sydney VPS instances that back them. The attack surface is small and well-defined, which allowed deep coverage of the entire production environment in a single short engagement window.\n\nThe assessment identified **eleven issues**: **two Critical, one High, five Medium, two Low, and one Informational**. Taken together, the two Critical findings mean that today a remote attacker with no credentials can execute code on the production web server, and separately that any low-privilege staff account can permanently destroy published content. The High-severity file-upload defect lets any staff account persistently host arbitrary HTML or JavaScript on the brand's own media host, and would silently become a remote-code-execution path the moment a script handler (such as PHP) is enabled on that server.\n\nThe five Medium findings are platform-hardening gaps that would normally be routine for a mature publisher but are material for a brand that is actively onboarding readers and advertisers: an anonymous FTP service exposing the entire media library, missing HTTP security headers, insecure session-cookie flags, missing login rate limiting combined with a username timing side-channel, and the business publicly advertising an **unregistered** mail domain (thedownundernews.it.com) for its editorial, advertising, and administrator mailboxes - which both silently drops inbound mail today and allows a third party to impersonate the newsroom tomorrow for roughly ten dollars.\n\n**Immediate priorities before any further publication:**\n\n1. Patch the /search endpoint so user input is no longer rendered as a Jinja2 template.\n2. Add the missing authorisation check on the article DELETE endpoint.\n3. Rotate the application's SECRET_KEY, JWT_SECRET_KEY, and every account currently using the shared default password `Admin@1234`.\n4. Register (or stop advertising) thedownundernews.it.com and move the administrator mailbox off the unregistered domain today.\n\n**Important engagement note:** During confirmation of the writer-role DELETE vulnerability, the server actually performed the deletion rather than refusing it as expected. As a result, one administrator-authored article (id 4, slug `australia-wins-back-to-back-test-series-england`) was permanently removed from the site. This destructive outcome is itself the proof of the Critical finding; it was promptly reported to the owner, and all other test artefacts created during the engagement were cleaned up successfully."
+      }
+    },
+    {
+      "id": "scope",
+      "status": "in-progress",
+      "data": {
+        "scope": "The engagement covered the full public attack surface of DownUnderNewsz as it existed on 2026-10-05. The in-scope assets were explicitly re-confirmed with the owner via a confirmation prompt before any active testing began. Authorisation to proceed was verified by retrieving the required `AuthorizedCode` HTTP response header on the main public site.\n\n**In-scope assets**\n\n| System | Description |\n|:---|:---|\n| thedownundernews.online | Anchor domain (apex) |\n| www.thedownundernews.online | Main production website and admin UI |\n| media.thedownundernews.online | Media / uploads host |\n| 51.161.130.70 | OVH Sydney VPS - main site (ports 80, 443) |\n| 51.161.131.195 | OVH Sydney VPS - media host (ports 21, 80, 443; FTP checks explicitly approved) |\n\n**Out of scope**\n\n* Any other IP in 51.161.130.0/23 (shared OVH tenancy)\n* Spaceship (registrar / DNS / mail forwarding) and the OVH control plane\n* Third-party CDNs (jsDelivr, Google Fonts static)\n* Destructive techniques: DDoS, malware, phishing, credential stuffing, brute force, MFA bypass, lateral movement, stealth / evasion\n\n**Methodology**\n\nA combined black-box and grey-box approach was used within a single short engagement window:\n\n* Public asset enumeration (WHOIS, RDAP, DNS, Certificate Transparency via certspotter, Shodan, light HTTP probing, Wayback).\n* Authenticated web-application testing using the three owner-supplied role accounts (admin, writer, editor).\n* API endpoint mapping behind the admin UI (fetch / XHR analysis).\n* Role separation and vertical / horizontal access-control testing on every mutating admin endpoint, using non-destructive differential probes (OPTIONS, empty-body PUTs) wherever possible.\n* Injection probing (SQLi, SSTI, XSS, path traversal, open redirect) on all discovered public endpoints at low rate.\n* File-upload validation testing through the writer account (SVG XSS, HTML XSS, double extension, path traversal, MIME-type lying, PHP polyglot); test artefacts cleaned up afterwards.\n* Jinja2 SSTI validated only to the depth of \"attribute access + OS primitive reachable\" - no secrets, environment variables, or file contents were extracted.\n* Offline JWT HS256 secret cracking against rockyou (passive; no server interaction).\n* Network-layer checks: nmap on approved ports only (-sS -sV -sC with safe NSE scripts), sslscan, TLS cipher enumeration.\n* FTP service identification on the approved port: banner, anonymous login, encryption posture, writability (non-destructive; upload refused).\n* HTTP security-header baseline, cookie-attribute inspection, and user-enumeration / rate-limit testing on the login endpoint.\n\n**Limitations**\n\n* No destructive techniques were used, by rule.\n* SSTI escalation was deliberately stopped at proof-of-concept; command execution and secret extraction were not performed.\n* crt.sh was rate-limited during enumeration; CT coverage relied on certspotter.\n* No Censys or GitHub-code-search credentials were available.\n* Coverage reflects the domain's very short history (registered 2026-08-04); any assets added after 2026-10-05 are not covered.\n\n**Coverage summary**\n\n* 1 anchor domain, 2 subdomains (both tested)\n* 2 IPs (both tested)\n* 1 web application fully tested across 3 role accounts\n* 1 public JSON API (/api/...) and 1 admin JSON API (/api/admin/...)\n* 1 FTP service enumerated\n* TLS stack reviewed on both HTTPS endpoints",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 day (approximately 50 minutes of active testing)",
+        "provided_users": "The owner provided three test accounts, all configured with the same default password `Admin@1234`:\n\n* `admin` / `Admin@1234` - administrator role\n* `writer` / `Admin@1234` - writer role\n* `editor` / `Admin@1234` - editor role\n\nThe shared default password itself is a hardening concern and is addressed in the login-hardening finding."
+      }
+    },
+    {
+      "id": "customer",
+      "status": "in-progress",
+      "data": {
+        "customer_name": "DownUnderNewsz (also stylised \"The Down Under News\")",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh (dinh0087@flinders.edu.au)"
+      }
+    },
+    {
+      "id": "other",
+      "status": "in-progress",
+      "data": {
+        "title": "DownUnderNewsz External Vulnerability Assessment 2026-10-05",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "description": "Initial report",
+            "date": "2026-10-05",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    }
+  ]
+}

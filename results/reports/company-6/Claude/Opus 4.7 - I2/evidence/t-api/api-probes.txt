@@ -1,0 +1,222 @@
+=== GET /api/auth/me (unauth) ===
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:10 GMT
+Content-Type: application/json
+Content-Length: 30
+Connection: keep-alive
+
+{"detail":"Not authenticated"}=== GET /api/auth/me on 8080 (unauth) ===
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.25.5
+Date: Mon, 05 Oct 2026 09:18:10 GMT
+Content-Type: application/json
+Content-Length: 30
+Connection: keep-alive
+
+{"detail":"Not authenticated"}=== POST /api/auth/login empty body ===
+HTTP/1.1 422 Unprocessable Entity
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:12 GMT
+Content-Type: application/json
+Content-Length: 170
+Connection: keep-alive
+
+{"detail":[{"type":"missing","loc":["body","username"],"msg":"Field required","input":{}},{"type":"missing","loc":["body","password"],"msg":"Field required","input":{}}]}=== POST /api/auth/login bogus creds ===
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:13 GMT
+Content-Type: application/json
+Content-Length: 32
+Connection: keep-alive
+
+{"detail":"Invalid credentials"}=== POST /api/auth/login username only - enumeration test ===
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:14 GMT
+Content-Type: application/json
+Content-Length: 32
+Connection: keep-alive
+
+{"detail":"Invalid credentials"}=== POST /api/auth/login - SQLi time probe (single bounded 2s sleep) ===
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:15 GMT
+Content-Type: application/json
+Content-Length: 32
+Connection: keep-alive
+
+elapsed_ms=1226
+=== POST /api/auth/login - NoSQL injection shape ===
+HTTP/1.1 422 Unprocessable Entity
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:17 GMT
+Content-Type: application/json
+Content-Length: 230
+Connection: keep-alive
+
+{"detail":[{"type":"string_type","loc":["body","username"],"msg":"Input should be a valid string","input":{"$ne":null}},{"type":"string_type","loc":["body","password"],"msg":"Input should be a valid string","input":{"$ne":null}}]}=== POST /api/auth/login - XML/XXE probe (wrong CT just to see error) ===
+HTTP/1.1 422 Unprocessable Entity
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:18 GMT
+Content-Type: application/json
+Content-Length: 242
+Connection: keep-alive
+
+{"detail":[{"type":"model_attributes_type","loc":["body"],"msg":"Input should be a valid dictionary or object to extract fields from","input":"<?xml version=\"1.0\"?><!DOCTYPE a [<!ENTITY xxe SYSTEM \"file:///etc/hostname\">]><a>&xxe;</a>"}]}=== GET /api/ (index) ===
+HTTP/1.1 404 Not Found
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:19 GMT
+Content-Type: application/json
+Content-Length: 22
+Connection: keep-alive
+
+=== GET /api/auth/ (index) ===
+HTTP/1.1 404 Not Found
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:20 GMT
+Content-Type: application/json
+Content-Length: 22
+Connection: keep-alive
+
+=== GET /api/users ===
+HTTP/1.1 404 Not Found
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:21 GMT
+Content-Type: application/json
+Content-Length: 22
+Connection: keep-alive
+
+=== GET /api/admin ===
+HTTP/1.1 404 Not Found
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:23 GMT
+Content-Type: application/json
+Content-Length: 22
+Connection: keep-alive
+
+=== GET /dashboard.html ===
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:24 GMT
+Content-Type: text/html
+Content-Length: 16497
+Connection: keep-alive
+Last-Modified: Mon, 14 Sep 2026 16:15:07 GMT
+ETag: "6aa81d8b-4071"
+Accept-Ranges: bytes
+
+=== GET /dashboard.html body (first 60 lines) ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Ausecurity</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ---- Dashboard layout ---- */
+    .dash-shell {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg);
+    }
+
+    /* ---- Sidebar ---- */
+    .dash-sidebar {
+      width: 240px;
+      background: var(--navy);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 0;
+      flex-shrink: 0;
+    }
+
+    .dash-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dash-brand span { color: var(--blue); }
+
+    .dash-nav {
+      list-style: none;
+      margin-top: 1.25rem;
+      flex: 1;
+    }
+
+    .dash-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1.5rem;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+=== GET /login?redirect=https://evil.example (open redirect check) ===
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:27 GMT
+Content-Type: text/html
+Content-Length: 4842
+Connection: keep-alive
+Last-Modified: Mon, 14 Sep 2026 16:15:07 GMT
+ETag: "6aa81d8b-12ea"
+X-Robots-Tag: noindex, nofollow
+X-Frame-Options: DENY
+Accept-Ranges: bytes
+
+=== GET /login.html?redirect=https://evil.example ===
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:28 GMT
+Content-Type: text/html
+Content-Length: 4842
+Connection: keep-alive
+Last-Modified: Mon, 14 Sep 2026 16:15:07 GMT
+ETag: "6aa81d8b-12ea"
+Accept-Ranges: bytes
+
+=== OPTIONS /api/auth/login (CORS probe) ===
+HTTP/1.1 400 Bad Request
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:29 GMT
+Content-Type: text/plain; charset=utf-8
+Content-Length: 22
+Connection: keep-alive
+vary: Origin
+access-control-allow-methods: DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT
+access-control-max-age: 600
+access-control-allow-credentials: true
+
+=== Verbose headers on bogus /api/foobar - verify 404 page shape ===
+HTTP/1.1 404 Not Found
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:30 GMT
+Content-Type: application/json
+Content-Length: 22
+Connection: keep-alive
+
+=== POST /api/auth/login no-body (potential 500) ===
+HTTP/1.1 422 Unprocessable Entity
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:18:31 GMT
+Content-Type: application/json
+Content-Length: 82
+Connection: keep-alive
+
+{"detail":[{"type":"missing","loc":["body"],"msg":"Field required","input":null}]}

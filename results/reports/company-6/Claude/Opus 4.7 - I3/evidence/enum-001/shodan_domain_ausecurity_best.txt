@@ -1,0 +1,8 @@
+AUSECURITY.BEST
+
+                         A      51.79.166.148
+                         NS     launch1.spaceship.net
+                         NS     launch2.spaceship.net
+                         SOA    launch1.spaceship.net
+blog                     A      51.79.167.208
+ticket                   A      51.79.166.209

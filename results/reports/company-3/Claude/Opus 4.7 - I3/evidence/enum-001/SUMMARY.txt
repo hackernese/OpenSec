@@ -1,0 +1,8 @@
+=== DNS enumeration summary ===
+imagesharer.xyz A -> 51.161.131.44 (OVH Australia PTY LTD, Sydney, AS16276)
+www.imagesharer.xyz A -> 51.161.131.44 (same host)
+resources.imagesharer.xyz CNAME -> d273uevi0662l0.cloudfront.net (AWS CloudFront, misconfigured TLS)
+
+Rejected/co-tenancy on same VPS 51.161.131.44 (not promoted): cataierc.com, mail.cataierc.com, webmail.cataierc.com, www.cataierc.com
+Shodan reports open ports: 80 (nginx), 443 (nginx — Imager app), 5432 (PostgreSQL)
+AWS creds referenced in /js/awsvalid.js (AKIAQHQ6PGM62T2FFPGU, region ap-southeast-2) — recorded as evidence only

@@ -1,0 +1,121 @@
+{
+  "approved_at": "2026-09-18",
+  "approval": "owner_approved_recommended_scope",
+  "source": "assets.init.json",
+  "task_id": "enum-20260918-ausecurity",
+  "allowlist": [
+    {
+      "id": "dom-001",
+      "type": "root_domain",
+      "value": "ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 98
+    },
+    {
+      "id": "sub-001",
+      "type": "subdomain",
+      "value": "www.ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 96
+    },
+    {
+      "id": "sub-002",
+      "type": "subdomain",
+      "value": "blog.ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 94
+    },
+    {
+      "id": "sub-003",
+      "type": "subdomain",
+      "value": "ticket.ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 93
+    },
+    {
+      "id": "sub-004",
+      "type": "subdomain",
+      "value": "contact.ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 90
+    },
+    {
+      "id": "web-001",
+      "type": "website",
+      "value": "https://ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 98
+    },
+    {
+      "id": "web-002",
+      "type": "website",
+      "value": "https://www.ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 96
+    },
+    {
+      "id": "web-003",
+      "type": "website",
+      "value": "https://blog.ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 94
+    },
+    {
+      "id": "web-004",
+      "type": "website",
+      "value": "https://ticket.ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 93
+    },
+    {
+      "id": "web-005",
+      "type": "website",
+      "value": "https://contact.ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 90
+    },
+    {
+      "id": "ip-001",
+      "type": "ip_address",
+      "value": "51.79.166.148",
+      "classification": "confirmed",
+      "confidence": 97,
+      "hosts": ["ausecurity.best", "www.ausecurity.best", "contact.ausecurity.best"]
+    },
+    {
+      "id": "ip-002",
+      "type": "ip_address",
+      "value": "51.79.167.208",
+      "classification": "confirmed",
+      "confidence": 94,
+      "hosts": ["blog.ausecurity.best"]
+    },
+    {
+      "id": "ip-003",
+      "type": "ip_address",
+      "value": "51.79.166.209",
+      "classification": "confirmed",
+      "confidence": 93,
+      "hosts": ["ticket.ausecurity.best"]
+    }
+  ],
+  "denylist": [
+    {"id": "asn-001", "value": "AS16276", "reason": "OVH provider ASN"},
+    {"id": "net-001", "value": "51.79.164.0/22", "reason": "OVH netblock; neighbours not org-owned"},
+    {"id": "net-002", "value": "51.79.128.0/17", "reason": "OVH parent prefix"},
+    {"id": "dns-001", "value": "launch1.spaceship.net", "reason": "third-party DNS"},
+    {"id": "dns-002", "value": "launch2.spaceship.net", "reason": "third-party DNS"},
+    {"id": "tp-001", "value": "vps-10f1e4c3.vps.ovh.ca", "reason": "OVH PTR"},
+    {"id": "tp-002", "value": "vps-d64a720c.vps.ovh.ca", "reason": "OVH PTR"},
+    {"id": "tp-003", "value": "vps-91287016.vps.ovh.ca", "reason": "OVH PTR"},
+    {"id": "tp-004", "value": "https://fonts.googleapis.com", "reason": "Google Fonts"},
+    {"id": "rej-001", "value": "ausecurity.com.au", "reason": "unrelated organisation"},
+    {"id": "rej-002", "value": "ausecurity.net", "reason": "unrelated organisation"},
+    {"id": "rej-003", "value": "ausecurity.com", "reason": "unrelated organisation"},
+    {"id": "rej-004", "value": "flinders.edu.au", "reason": "owner contact mailbox only"}
+  ],
+  "warnings": [
+    "Do not scan neighbouring IPs in OVH space.",
+    "Published phone +61 2 9000 1234 and ABN 00 000 000 000 may be placeholders."
+  ]
+}

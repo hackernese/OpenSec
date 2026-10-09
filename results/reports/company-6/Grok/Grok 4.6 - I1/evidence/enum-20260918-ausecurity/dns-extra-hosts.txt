@@ -1,0 +1,2 @@
+contact.ausecurity.best A: 51.79.166.148
+contact.ausecurity.best CNAME: api.ausecurity.best A: api.ausecurity.best CNAME: login.ausecurity.best A: login.ausecurity.best CNAME: dashboard.ausecurity.best A: dashboard.ausecurity.best CNAME: mail.ausecurity.best A: mail.ausecurity.best CNAME: autodiscover.ausecurity.best A: autodiscover.ausecurity.best CNAME: 

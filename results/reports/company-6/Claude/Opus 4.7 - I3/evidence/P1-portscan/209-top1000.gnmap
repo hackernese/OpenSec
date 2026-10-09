@@ -1,0 +1,4 @@
+# Nmap 7.99 scan initiated Mon Oct  5 21:22:26 2026 as: /usr/lib/nmap/nmap --privileged -sT -Pn -T4 --top-ports 1000 --open -oA /home/research/Projects/AuSecurity/evidence/P1-portscan/209-top1000 51.79.166.209
+Host: 51.79.166.209 (ticket.ausecurity.best)	Status: Up
+Host: 51.79.166.209 (ticket.ausecurity.best)	Ports: 22/open/tcp//ssh///, 443/open/tcp//https///, 8080/open/tcp//http-proxy///
+# Nmap done at Mon Oct  5 21:22:46 2026 -- 1 IP address (1 host up) scanned in 20.15 seconds

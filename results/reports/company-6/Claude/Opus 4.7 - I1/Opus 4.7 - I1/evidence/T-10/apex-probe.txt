@@ -1,0 +1,56 @@
+=== /robots.txt ===
+  status=404 size=153 type=text/html
+=== /sitemap.xml ===
+  status=404 size=153 type=text/html
+=== /humans.txt ===
+  status=404 size=153 type=text/html
+=== /security.txt ===
+  status=404 size=153 type=text/html
+=== /.well-known/security.txt ===
+  status=404 size=153 type=text/html
+=== /.env ===
+  status=404 size=153 type=text/html
+=== /.git/HEAD ===
+  status=404 size=153 type=text/html
+=== /.git/config ===
+  status=404 size=153 type=text/html
+=== /.htaccess ===
+  status=404 size=153 type=text/html
+=== /backup.zip ===
+  status=404 size=153 type=text/html
+=== /backup.tar.gz ===
+  status=404 size=153 type=text/html
+=== /site.zip ===
+  status=404 size=153 type=text/html
+=== /index.php.bak ===
+  status=404 size=153 type=text/html
+=== /index.html.bak ===
+  status=404 size=153 type=text/html
+=== /admin/ ===
+  status=404 size=153 type=text/html
+=== /wp-admin/ ===
+  status=404 size=153 type=text/html
+=== /administrator/ ===
+  status=404 size=153 type=text/html
+=== /phpmyadmin/ ===
+  status=404 size=153 type=text/html
+=== /adminer.php ===
+  status=404 size=153 type=text/html
+=== /config.php ===
+  status=404 size=153 type=text/html
+=== /config.php.bak ===
+  status=404 size=153 type=text/html
+=== /server-status ===
+  status=404 size=153 type=text/html
+=== /nginx_status ===
+  status=404 size=153 type=text/html
+=== /README ===
+  status=404 size=153 type=text/html
+=== /README.md ===
+  status=404 size=153 type=text/html
+=== /CHANGELOG.md ===
+  status=404 size=153 type=text/html
+=== /package.json ===
+  status=404 size=153 type=text/html
+=== /composer.json ===
+  status=404 size=153 type=text/html

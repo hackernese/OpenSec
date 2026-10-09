@@ -1,0 +1,150 @@
+# Finding: Stored Cross-Site Scripting (XSS) via Article Content
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N
+Affected: https://thedownundernews.online/ (article create/edit, POST/PUT /api/admin/articles)
+References: OWASP Top 10 (2021) A03: Injection; CWE-79
+
+Summary:
+The article editor stores raw, unsanitized HTML and renders it directly on the public site. Any authenticated user with article-write privileges (writer, editor, or admin) can inject JavaScript that executes in the browser of every visitor who views the article.
+
+Description:
+The article "content" field is accepted verbatim by POST /api/admin/articles and PUT /api/admin/articles/{id} with no HTML sanitization. During testing, a test article (id 17, slug "clawsec-xss-9917") was created with content "<p>test</p><script>alert(document.domain)</script>" and status "published". The server persisted the raw payload and the public page https://thedownundernews.online/article/clawsec-xss-9917 rendered it unescaped inside <div class="article-body prose">. The lowest-privileged role (writer) is able to create articles, so this is achievable with minimal privilege. Because the application also lacks CSRF protections (see the CSRF finding), the injected script can perform authenticated admin actions on behalf of a logged-in administrator who views the article, escalating to full CMS compromise. The test article was deleted after verification.
+
+Recommendation:
+Sanitize article HTML server-side on input and/or output (e.g., Bleach or NH3 allowlist), disallow <script> and event-handler attributes, and consider rendering content with a strict Content-Security-Policy. Re-validate the writer/editor role's ability to publish before publication.
+
+---
+
+# Finding: Malicious File Upload — HTML Served as text/html (Stored XSS)
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N
+Affected: https://thedownundernews.online/ (POST /api/admin/media/upload); https://media.thedownundernews.online/
+References: OWASP Top 10 (2021) A03: Injection; CWE-434
+
+Summary:
+The media library accepts HTML file uploads and the media host serves them with Content-Type: text/html and no anti-sniffing or CSP protections, so uploaded files render as executable web pages.
+
+Description:
+An uploaded file (dunhtml7731.html) stored at https://media.thedownundernews.online/images/37550846eae5457d93ddd8e1d2faeaca.html is served with Content-Type: text/html and contains "<script>alert(document.domain)</script>". The response includes no X-Content-Type-Options: nosniff, no Content-Disposition, and no Content-Security-Policy. Any authenticated user with media-upload access (writer role included) can host arbitrary JavaScript/HTML on the media subdomain, enabling stored XSS, phishing, or content injection. The upload endpoint itself correctly requires authentication (401 when unauthenticated).
+
+Recommendation:
+Restrict uploads to a safe allowlist of MIME types (images, PDF), reject or sanitize HTML, serve uploaded files with X-Content-Type-Options: nosniff and Content-Disposition: attachment, and serve media from a domain isolated from the application.
+
+---
+
+# Finding: Anonymous FTP Read Access to Media Server
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: media.thedownundernews.online (51.161.131.195) — FTP/21
+References: CWE-276; CWE-284
+
+Summary:
+The media server's FTP service (port 21) permits anonymous, unauthenticated directory listing and file download, exposing uploaded media assets.
+
+Description:
+An anonymous FTP connection to media.thedownundernews.online successfully listed and downloaded media files (two PNG images, a PDF, and an HTML file) without credentials. An attempted anonymous upload returned FTP 553 (denied), indicating the anonymous account is read-only. Nonetheless, media assets intended to be managed through the authenticated application are exposed to anyone on the internet.
+
+Recommendation:
+Disable anonymous FTP, require authentication with strong credentials, and restrict the FTP service (or replace it with SFTP/HTTPS upload with access controls).
+
+---
+
+# Finding: Missing Cross-Site Request Forgery (CSRF) Protection
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N
+Affected: https://thedownundernews.online/ (admin login, article CRUD, user management, media upload/delete, comment form)
+References: OWASP Top 10 (2021) A01: Broken Access Control; CWE-352
+
+Summary:
+State-changing endpoints (login, article create/edit/delete, user create/update/delete/reset-password, media upload/delete, and public comment submission) are protected only by the session cookie, with no CSRF tokens, and the session cookie lacks a SameSite attribute.
+
+Description:
+No CSRF token or Origin/Referer validation is present on any observed form or JSON endpoint. The session is carried in an "access_token_cookie" (JWT) cookie with no SameSite attribute. An attacker who lures an authenticated user (e.g., an admin) to a malicious page can issue forged state-changing requests (e.g., creating a new admin user, deleting content) using the victim's cookie. Modern browsers default to SameSite=Lax, which partially mitigates cross-site POSTs, but this reliance is fragile and does not cover all request types/browsers.
+
+Recommendation:
+Implement CSRF tokens on all state-changing requests (or enforce SameSite=Strict/Lax explicitly plus Origin/Referer validation), and use the X-CSRF-Token pattern for the JSON API.
+
+---
+
+# Finding: Session Cookie Missing Secure and SameSite Flags
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N
+Affected: https://thedownundernews.online/ (login)
+References: OWASP Secure Cookie guidance; CWE-614; CWE-1004
+
+Summary:
+The session cookie (access_token_cookie) is issued with HttpOnly but without the Secure and SameSite attributes.
+
+Description:
+On successful login the server sets "access_token_cookie=<JWT>; HttpOnly; Path=/". The cookie lacks the Secure flag (so it would be transmitted over any plaintext HTTP connection if the site were ever served over HTTP) and lacks SameSite. Combined with the absence of CSRF tokens, this weakens the session's protections.
+
+Recommendation:
+Set the Secure flag (and HSTS) so cookies only travel over HTTPS, and set SameSite=Lax (or Strict) explicitly.
+
+---
+
+# Finding: Sensitive Information Disclosure via Unauthenticated API
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://thedownundernews.online/ (GET /api/articles, /api/articles/{slug}, /api/search)
+References: CWE-200; OWASP Top 10 (2021) A01: Broken Access Control
+
+Summary:
+Public, unauthenticated API endpoints return full author objects including internal usernames and email addresses.
+
+Description:
+The unauthenticated endpoints /api/articles, /api/articles/{slug}, and /api/search embed a full nested "author" object for every article, exposing the administrator's username ("admin"), email ("admin@thedownundernews.it.com"), role, account status, and creation timestamps to anyone. This aids targeting, phishing, and account enumeration.
+
+Recommendation:
+Remove internal author fields (email, username, role, timestamps) from public responses, or return only a public display name.
+
+---
+
+# Finding: Weak and Shared Administrator/User Credentials
+Severity: low
+CVSS: (blank)
+Affected: https://thedownundernews.online/admin (admin, writer, editor accounts)
+References: CWE-521; NIST SP 800-63B
+
+Summary:
+The provided accounts all use the same weak password, indicating no password complexity or uniqueness policy.
+
+Description:
+The admin, writer, and editor accounts were all provisioned with the same short, easily-guessable password (a common "Admin@123"-style credential). While these are dummy accounts supplied for this assessment, they demonstrate a weak/shared-password posture; if real accounts follow the same pattern, a single weak credential would grant broad access. The login page also shows no rate-limiting or account-lockout indicators.
+
+Recommendation:
+Enforce strong, unique passwords, enable multi-factor authentication for administrative accounts, and add account lockout/rate-limiting on login.
+
+---
+
+# Finding: TLS Certificate Hostname Mismatch on www Subdomain
+Severity: low
+CVSS: (blank)
+Affected: https://www.thedownundernews.online/
+References: CWE-295
+
+Summary:
+The TLS certificate served for www.thedownundernews.online does not include "www" in its Subject Alternative Names, causing browser certificate warnings.
+
+Description:
+The certificate presented for www.thedownundernews.online has CN/SAN of "thedownundernews.online" only (issued by Let's Encrypt). Accessing the site via "www" triggers a hostname-mismatch warning, which erodes user trust and can train users to bypass warnings.
+
+Recommendation:
+Reissue the certificate to include both the apex and www (or redirect www to apex over a correctly-issued certificate).
+
+---
+
+# Finding: Missing Security Headers
+Severity: info
+CVSS: (blank)
+Affected: https://thedownundernews.online/ (all pages)
+References: OWASP Secure Headers Project; CWE-693
+
+Summary:
+HTTP responses omit modern security headers, weakening the browser's defense-in-depth.
+
+Description:
+Responses lack Content-Security-Policy, X-Frame-Options/frame-ancestors, X-Content-Type-Options, Strict-Transport-Security, and Referrer-Policy. This enables clickjacking and content-type sniffing, and leaves no CSP to constrain injected scripts (compounding the XSS findings).
+
+Recommendation:
+Add a strict CSP, X-Content-Type-Options: nosniff, X-Frame-Options: DENY (or frame-ancestors), Strict-Transport-Security, and Referrer-Policy headers.

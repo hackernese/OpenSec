@@ -1,0 +1,75 @@
+engagement:
+  business: Imagur
+  website: https://imagesharer.xyz/
+  owner: Vinh Dinh
+  owner_email: dinh0087@flinders.edu.au
+  address: 132 Morphett Rd, Glengowrie SA 5044, Australia
+
+timeline:
+  started_utc: "2026-10-05T03:04:00Z"      # moment the intake was received and authorization verified
+  completed_utc: "2026-10-05T04:05:00Z"    # moment the report PDF was finalised
+  duration_minutes_approx: 61
+
+workflow_stages_completed:
+  - INTAKE
+  - AUTHORIZED
+  - ENUMERATED
+  - ASSESSING
+  - VALIDATING
+  - REPORTING
+  - COMPLETE
+
+findings_summary:
+  total: 19
+  critical: 2
+  high: 3
+  medium: 8
+  low: 5
+  info: 1
+
+deliverables:
+  engagement_file: /home/research/Projects/Imagur/engagement.json
+  scope_file: /home/research/Projects/Imagur/scope.json
+  assets_file: /home/research/Projects/Imagur/assets.json
+  assessment_plan: /home/research/Projects/Imagur/assessment-plan.md
+  findings_file: /home/research/Projects/Imagur/findings.txt
+  evidence_dir: /home/research/Projects/Imagur/evidence/
+  report_pdf: /home/research/Projects/Imagur/report/Imagur-VulnAssessment-2026-10-05.pdf
+  sysreptor_project_id: a65d324a-b174-4bc9-b99e-a9358a20da9d
+  sysreptor_project_url: http://localhost:8000/projects/a65d324a-b174-4bc9-b99e-a9358a20da9d
+
+cost_and_token_usage:
+  note: >
+    Token usage and billing-cost figures are not directly observable from inside the
+    orchestrator session. The runtime platform's own usage dashboard should be
+    consulted for the authoritative numbers for this session; this file records the
+    engagement timing and deliverables.
+  total_cost_usd: unknown_consult_platform_dashboard
+  input_tokens: unknown_consult_platform_dashboard
+  output_tokens: unknown_consult_platform_dashboard
+
+untested_areas_and_limitations:
+  - No credential brute-force / password spraying was performed (prohibited by scope); rate-limiting and lockout controls are therefore documented as absent based on observation of 10 non-destructive requests, not on an actual guessing attempt.
+  - The exposed AWS keys were NOT used by the assessor against the AWS account; validity was confirmed solely by matching the exposed Access Key ID with the one the live application places in its own pre-signed URLs.
+  - The /api/v1/* surface could not be exercised beyond /auth/login and /health because the Apache stack strips the Authorization header before PHP (documented as its own finding). JWT secret strength and API-level BOLA could therefore not be tested with real tokens.
+  - PostgreSQL on 5432 was banner-grabbed only; no login attempts were made.
+  - No DoS, ReDoS, zip-bomb, or availability-impacting tests were run.
+  - The second S3 bucket "imagesharer" in ap-northeast-1 was probed only for anonymous read/list (both denied); its policy and object inventory are not known.
+  - CloudFront, Spaceship DNS, Google static CDN, and OVH neighbour IPs were explicitly excluded.
+
+next_steps_for_owner:
+  immediate_same_day:
+    - Disable AWS access key AKIAQHQ6PGM62T2FFPGU in the AWS console; rotate and move the new key into a secrets manager; delete /js/awsvalid.js from the deployment.
+    - Enable "Block all public access" on bucket filesharer-research; remove any Principal "*" statements from its bucket policy / ACL.
+    - Audit AWS CloudTrail for use of the exposed key from unexpected IPs over the entire exposure window.
+  this_week:
+    - Fix the upload BOLA (read user_id from the session, not from the hidden form field; remove the field).
+    - Add CSRF tokens to all state-changing POST endpoints and validate Origin/Referer.
+    - Firewall PostgreSQL 5432 so only the application host can reach it; prefer binding to localhost.
+  this_sprint:
+    - Fix verbose error disclosure (production error boundary).
+    - Add Secure/HttpOnly/SameSite to PHPSESSID; stop echoing session_id in last_login cookie.
+    - Add rate limiting and account lockout.
+    - Add a password change / forgot-password flow and strengthen the password policy.
+    - Add HSTS, Content-Security-Policy, Permissions-Policy, SPF/DMARC/null-MX records, www SAN on the TLS cert.
+    - Bind Apache :8080 to localhost (or firewall it); configure Apache to pass the Authorization header to PHP (CGIPassAuth / SetEnvIf) so the API becomes functional before re-auditing it.

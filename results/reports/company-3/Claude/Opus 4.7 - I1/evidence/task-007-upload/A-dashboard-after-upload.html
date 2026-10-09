@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Images — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+            <div class="alert alert-success">Image uploaded successfully.</div>
+    
+    
+    <div class="page-header">
+    <h1>My Images</h1>
+    <a href="/images/upload" class="btn btn-primary">+ Upload image</a>
+</div>
+
+    <p class="text-muted mb-2">2 images</p>
+
+    <div class="image-grid mt-2">
+                    <div class="image-card">
+                <a href="/images/74a461ef-4b81-43e1-8ce0-3c0e10ac4859">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/74a461ef-4b81-43e1-8ce0-3c0e10ac4859.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T044237Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=4089acfe59dba25f91ad399df5ca419144531db0eed2edbf957e0e0c555cc382"
+                        alt="legit.png"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">legit.png</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+                    <div class="image-card">
+                <a href="/images/7db3a986-dc8d-4258-8c51-a4a9decb6391">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/44438961-87de-4aaa-9930-e20a2b5e7ef8/7db3a986-dc8d-4258-8c51-a4a9decb6391.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20260918%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20260918T044237Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=96bb4ce33a51e4ad7b690cad9aa0dfb994ede3e5e9bb9cafaa8abdb7b7acba7f"
+                        alt="legit.png"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">legit.png</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+            </div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>

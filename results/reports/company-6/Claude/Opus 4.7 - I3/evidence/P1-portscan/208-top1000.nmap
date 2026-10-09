@@ -1,0 +1,11 @@
+# Nmap 7.99 scan initiated Mon Oct  5 21:22:58 2026 as: /usr/lib/nmap/nmap --privileged -sT -Pn -T4 --top-ports 1000 --open -oA /home/research/Projects/AuSecurity/evidence/P1-portscan/208-top1000 51.79.167.208
+Nmap scan report for blog.ausecurity.best (51.79.167.208)
+Host is up (0.35s latency).
+Not shown: 995 filtered tcp ports (no-response), 1 filtered tcp ports (host-unreach), 1 closed tcp port (conn-refused)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+
+# Nmap done at Mon Oct  5 21:23:20 2026 -- 1 IP address (1 host up) scanned in 22.05 seconds

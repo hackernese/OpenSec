@@ -1,0 +1,21 @@
+
+; <<>> DiG 9.20.27-1-Debian <<>> @8.8.8.8 ausecurity.best A
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 10203
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;ausecurity.best.		IN	A
+
+;; ANSWER SECTION:
+ausecurity.best.	1800	IN	A	51.79.166.148
+
+;; Query time: 592 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8) (UDP)
+;; WHEN: Mon Oct 05 18:50:05 ACDT 2026
+;; MSG SIZE  rcvd: 60
+

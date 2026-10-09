@@ -1,0 +1,56 @@
+===== whois ausecurity.com.au =====
+Status: serverRenewProhibited https://identitydigital.au/whois-status-codes#serverRenewProhibited
+Status Reason: Not Currently Eligible For Renewal
+Registrant Contact ID: 724adf8765f842f189714630ed602e12-AU
+Registrant Contact Name: Russell Morgan
+Name Server: ns1.syd5.hostingplatform.net.au
+Name Server IP: 2400:b800:7::2e9
+Name Server IP: 43.250.142.236
+Name Server: ns2.syd5.hostingplatform.net.au
+Name Server IP: 223.130.24.242
+Name Server IP: 2400:b800:0:1::23b
+Registrant: RUSSELL MORGAN THE TRUSTEE FOR MORGAN FAMILY TRUST
+Eligibility Type: Trust
+Eligibility Name: The Trustee for Morgan Family Trust
+Eligibility ID: ABN 52647032384
+===== whois ausecurity.com =====
+   Registrar WHOIS Server: whois.webcentralgroup.com.au
+   Registrar URL: http://www.melbourneit.com.au
+   Creation Date: 2003-06-27T08:35:13Z
+   Registrar: Netregistry Wholesale Pty Ltd
+   Registrar IANA ID: 13
+   Registrar Abuse Contact Email: abuse@melbourneit.com.au
+   Registrar Abuse Contact Phone: +61342060102
+   Name Server: NS1.NETREGISTRY.NET
+   Name Server: NS2.NETREGISTRY.NET
+   Name Server: NS3.NETREGISTRY.NET
+registrar's sponsorship of the domain name registration in the registry is
+date of the domain name registrant's agreement with the sponsoring
+registrar.  Users may consult the sponsoring registrar's Whois database to
+view the registrar's reported date of expiration for this registration.
+Registrars.
+Registrar WHOIS Server: whois.webcentralgroup.com.au
+Registrar URL: hrs-admin.webcentralgroup.com.au
+Creation Date: 2003-06-27T08:35:13
+Registrar Registration Expiration Date: 2027-06-27T08:35:13
+Registrar: Webcentral Group Ltd
+Registrar IANA ID: 13
+Registry Registrant ID: 
+Registrant Name: REDACTED FOR PRIVACY
+Registrant Organization: REDACTED FOR PRIVACY
+Registrant Street: REDACTED FOR PRIVACY 
+Registrant City: REDACTED FOR PRIVACY
+Registrant State/Province: VIC
+Registrant Postal Code: REDACTED FOR PRIVACY
+Registrant Country: AU
+Registrant Phone: REDACTED FOR PRIVACY
+Registrant Phone Ext: 
+Registrant Fax: REDACTED FOR PRIVACY
+Registrant Fax Ext: 
+Registrant Email: https://tieredaccess.com/contact/99ff849e-daa8-46d7-891f-ec93d9e48bb3
+Name Server: ns3.netregistry.net
+Name Server: ns1.netregistry.net
+Name Server: ns2.netregistry.net
+Registrar Abuse Contact Email: abuse@melbourneit.com.au
+Registrar Abuse Contact Phone: +61.299340501
+The Data in the Webcentral Group Ltd Registrar WHOIS database is provided to you by Webcentral Group Ltd for information purposes only, and may be used to assist you in obtaining information about or related to a domain name's registration record. Your access to, and use of, our WHOIS database and the information made available on our WHOIS database is subject to these Terms of Use and the Webcentral Group Ltd Privacy Policy. 

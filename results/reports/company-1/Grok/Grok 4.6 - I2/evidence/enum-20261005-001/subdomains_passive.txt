@@ -1,0 +1,10 @@
+===== subfinder thedownundernews.online =====
+media.thedownundernews.online
+www.thedownundernews.online
+
+===== subfinder thedownundernews.it.com =====
+
+===== assetfinder thedownundernews.online =====
+thedownundernews.online
+
+===== assetfinder thedownundernews.it.com =====

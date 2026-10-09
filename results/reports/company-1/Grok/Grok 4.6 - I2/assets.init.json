@@ -1,0 +1,153 @@
+{
+  "task_id": "enum-20261005-001",
+  "generated_at": "2026-10-05T03:04:00Z",
+  "state": "enumerated_pending_owner_approval",
+  "organization": {
+    "canonical_name": "DownUnderNewsz",
+    "display_name": "The Down Under News",
+    "identity_status": "confirmed",
+    "identity_confidence": 97
+  },
+  "confirmed": [
+    {
+      "identifier": "thedownundernews.online",
+      "type": "root_domain",
+      "confidence": 98,
+      "notes": "Live domain, Spaceship registrar, apex A 51.161.130.70"
+    },
+    {
+      "identifier": "www.thedownundernews.online",
+      "type": "subdomain",
+      "confidence": 99,
+      "notes": "Canonical public hostname, A 51.161.130.70"
+    },
+    {
+      "identifier": "media.thedownundernews.online",
+      "type": "subdomain",
+      "confidence": 94,
+      "notes": "Separate OVH VPS 51.161.131.195, HTTPS 502"
+    },
+    {
+      "identifier": "https://www.thedownundernews.online/",
+      "type": "website",
+      "confidence": 99
+    },
+    {
+      "identifier": "https://thedownundernews.online/",
+      "type": "website",
+      "confidence": 90,
+      "notes": "Same content; cert SAN is www-only"
+    },
+    {
+      "identifier": "https://www.thedownundernews.online/api/articles",
+      "type": "application_endpoint",
+      "confidence": 92
+    },
+    {
+      "identifier": "51.161.130.70",
+      "type": "ip_address",
+      "confidence": 96,
+      "notes": "OVH VPS-SYD2; provider-owned; do not expand range"
+    },
+    {
+      "identifier": "51.161.131.195",
+      "type": "ip_address",
+      "confidence": 93,
+      "notes": "media host; provider-owned; do not expand range"
+    },
+    {
+      "identifier": "cert:www.thedownundernews.online",
+      "type": "certificate",
+      "confidence": 97
+    },
+    {
+      "identifier": "cert:media.thedownundernews.online",
+      "type": "certificate",
+      "confidence": 94
+    }
+  ],
+  "likely": [
+    {
+      "identifier": "thedownundernews.it.com",
+      "type": "root_domain",
+      "confidence": 76,
+      "notes": "Claimed on official site; currently NXDOMAIN"
+    },
+    {
+      "identifier": "editorial@thedownundernews.it.com",
+      "type": "contact_email",
+      "confidence": 80
+    },
+    {
+      "identifier": "advertising@thedownundernews.it.com",
+      "type": "contact_email",
+      "confidence": 80
+    },
+    {
+      "identifier": "corrections@thedownundernews.it.com",
+      "type": "contact_email",
+      "confidence": 80
+    }
+  ],
+  "candidate": [
+    {
+      "identifier": "51.161.131.195:21/tcp",
+      "type": "service_observation",
+      "confidence": 45,
+      "notes": "Shodan only; not probed"
+    },
+    {
+      "identifier": "historical-ct:thedownundernews.online-apex-certs",
+      "type": "certificate_history",
+      "confidence": 70
+    }
+  ],
+  "rejected": [
+    "your@email.com",
+    "51.161.130.0/23 organization ownership",
+    "downundernewsz.com",
+    "downundernewsz.com.au",
+    "thedownundernews.com",
+    "thedownundernews.com.au",
+    "thedownundernews.net",
+    "downundernewsz.online",
+    "thedownundernews.org",
+    "the-down-under-news.com",
+    "downundernews.com.au",
+    "downundernews.com"
+  ],
+  "cloud_cdn": [
+    "AS16276 OVH SAS",
+    "51.161.128.0/17",
+    "51.161.130.0/23 VPS-SYD2",
+    "vps-8d3f63bd.vps.ovh.ca",
+    "vps-edee2c79.vps.ovh.ca",
+    "cdn.jsdelivr.net"
+  ],
+  "third_party": [
+    "Spaceship, Inc.",
+    "launch1.spaceship.net",
+    "launch2.spaceship.net",
+    "mx1.efwd.spaceship.net",
+    "mx2.efwd.spaceship.net",
+    "spf.efwd.spaceship.net",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+    "it.com",
+    "Let's Encrypt"
+  ],
+  "warnings": [
+    "Apex certificate does not include apex SAN",
+    "thedownundernews.it.com claimed but NXDOMAIN",
+    "media.thedownundernews.online HTTPS 502",
+    "No DMARC or CAA on thedownundernews.online",
+    "OVH IPs are shared hosting; co-tenancy must not expand scope"
+  ],
+  "unavailable_sources": [
+    "crt.sh HTTP 502",
+    "censys no API credentials",
+    "whois.spaceship.com did not resolve",
+    "amass_passive empty",
+    "google_maps_webfetch requires JavaScript"
+  ]
+}

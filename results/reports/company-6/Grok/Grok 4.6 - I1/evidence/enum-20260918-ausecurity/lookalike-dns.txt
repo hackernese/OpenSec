@@ -1,0 +1,16 @@
+---- ausecurity.com ----
+  NS: ns2.netregistry.net. ns1.netregistry.net. ns3.netregistry.net. 
+  A: 139.99.130.38 
+  SOA: ns1.netregistry.net. dmain.netregistry.net. 2023112803 86400 7200 604800 7200
+---- ausecurity.com.au ----
+  NS: ns2.syd5.hostingplatform.net.au. ns1.syd5.hostingplatform.net.au. 
+  A: 110.232.143.152 
+  SOA: ns1.syd5.hostingplatform.net.au. root.s07ae.syd5.hostingplatform.net.au. 2026082303 86400 7200 3600000 1800
+---- ausecurity.net ----
+  NS: pdns2.registrar-servers.com. pdns1.registrar-servers.com. 
+  A: 108.167.140.175 
+  SOA: pdns1.registrar-servers.com. hostmaster.registrar-servers.com. 1789359083 43200 3600 604800 3601
+---- ausecurity.au ----
+  NS: ;; communications error to 10.48.0.31#53: timed out 
+  A: ;; communications error to 10.48.0.31#53: timed out ;; communications error to 10.48.0.31#53: timed out ;; communications error to 10.48.0.31#53: timed out ;; communications error to 10.48.1.42#53: timed out ;; no servers could be reached 
+  SOA: 

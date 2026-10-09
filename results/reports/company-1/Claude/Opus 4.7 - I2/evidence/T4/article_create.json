@@ -1,0 +1,4 @@
+{
+  "error": "Unauthorized",
+  "reason": "Missing JWT in headers or cookies (Missing Authorization Header; Missing cookie \"access_token_cookie\")"
+}

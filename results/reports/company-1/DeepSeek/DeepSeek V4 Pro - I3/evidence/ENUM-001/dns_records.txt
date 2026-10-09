@@ -1,0 +1,26 @@
+# DNS records for thedownundernews.online (collected 2026-09-19)
+## A
+51.161.130.70
+## AAAA
+## NS
+launch2.spaceship.net.
+launch1.spaceship.net.
+## MX
+0 mx1.efwd.spaceship.net.
+0 mx2.efwd.spaceship.net.
+## TXT
+"v=spf1 include:spf.efwd.spaceship.net ~all"
+## SOA
+launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+## CAA
+## www A
+51.161.130.70
+## media A
+51.161.131.195
+## media CNAME
+## reverse 51.161.130.70
+vps-8d3f63bd.vps.ovh.ca.
+## reverse 51.161.131.195
+vps-edee2c79.vps.ovh.ca.
+## thedownundernews.it.com A (referenced domain)
+## thedownundernews.it.com MX

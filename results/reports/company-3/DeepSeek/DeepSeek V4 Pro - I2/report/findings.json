@@ -1,0 +1,178 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "AWS root account credentials exposed in client-side JavaScript",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+      "summary": "The image-sharing web application serves a JavaScript file (/js/awsvalid.js) that\ncontains hardcoded AWS access key ID and secret access key for the AWS ROOT account.\nAnyone on the internet can download the file and take full control of the business's\nAWS account.",
+      "description": "The file /js/awsvalid.js is publicly reachable (HTTP 200) without authentication. It\nembeds a long-term access key ID (AKIA...) and the corresponding 40-character secret\naccess key inside a comment block, together with a region hint (ap-southeast-2). The\ncode implements AWS Signature V4 signing and an STS GetCallerIdentity call.\nRead-only validation performed during the assessment (STS GetCallerIdentity) returned\nAccount=016170038077 and Arn=arn:aws:iam::016170038077:root, confirming the credentials\nbelong to the AWS account root identity. These credentials were then used strictly in a\nread-only fashion to enumerate the account (S3 buckets, RDS database, IAM users, security\ngroups, CloudFront distribution) and were never used to modify, read user data, or\notherwise act destructively.\nBusiness impact: complete compromise of the AWS account, including the user-upload storage\nbucket (filesharer-research), the application database (RDS Aurora PostgreSQL \"database-2\"),\nIAM, and CloudFront. An attacker could read, modify, or delete all customer data and\ninfrastructure.",
+      "recommendation": "1. Immediately rotate/delete the exposed root access key from the AWS IAM console and\n   remove the credentials from the JavaScript file (and any git history).\n2. Never embed long-term AWS credentials in client-side code; use short-lived scoped\n   credentials (e.g. Cognito Identity, STS, or a server-side proxy).\n3. Remove root access keys entirely; create least-privilege IAM roles/users for the\n   application.\n4. Audit CloudTrail for any unauthorized use of the exposed key.",
+      "affected_components": [
+        "https://imagesharer.xyz/js/awsvalid.js (AWS account 016170038077)"
+      ],
+      "references": [
+        "https://imagesharer.xyz/js/awsvalid.js"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "S3 bucket publicly listable and world-readable (user uploads exposed)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "summary": "The S3 bucket that stores all user image uploads is configured to be both publicly\nlistable and publicly readable. An anonymous visitor can enumerate every stored object\n(and therefore every user folder/ID) and download any image without authentication.",
+      "description": "Two unauthenticated checks were performed:\n- GET /?list-type=2&max-keys=50 returned HTTP 200 with an object listing (IsTruncated=true,\n  i.e. more than 50 objects). Object keys follow the pattern users/<user_id>/<image_uuid>.<ext>,\n  exposing every user's internal UUID.\n- GET on a specific object key (without any signature/presigned parameters) returned\n  HTTP 200 with the image bytes (Content-Type image/png).\nThis means the application's \"Private (only you)\" visibility setting is ineffective at the\nstorage layer: the metadata page may be hidden, but the underlying image bytes are directly\ndownloadable by anyone who knows or guesses the object key (and the keys are enumerable via\nthe public listing).\nBusiness impact: unauthorized disclosure of all customer-uploaded images (including those\nmarked private), plus enumeration of user identifiers.",
+      "recommendation": "1. Remove public ListBucket and GetObject permissions. Enforce \"Block all public access\" on\n   the bucket.\n2. Serve objects only through the application (server-side authorization) or CloudFront with\n   signed URLs/OAC, so private images require authentication.\n3. Review bucket policy/ACL and apply least privilege (only the application's IAM role should\n   have access).",
+      "affected_components": [
+        "s3://filesharer-research (ap-southeast-2)"
+      ],
+      "references": [
+        "https://filesharer-research.s3.ap-southeast-2.amazonaws.com/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "\"Private\" image visibility is not enforced (broken access control)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "summary": "Images uploaded with visibility \"Private\" are only hidden at the application layer; the actual\nimage bytes remain publicly readable in S3, so the privacy control can be trivially bypassed.",
+      "description": "A test account uploaded an image with is_public=false. An unauthenticated request to the image\ndetail page returned HTTP 302 (redirected to login), confirming the metadata page is protected.\nHowever, an unauthenticated GET of the underlying S3 object\n(https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/<user_id>/<uuid>.png) returned\nHTTP 200 with the full image, with no authentication or presigned URL required. The object key is\npredictable and enumerable via the public S3 listing (see prior finding).\nBusiness impact: the \"private\" feature does not protect user content; private images are publicly\naccessible.",
+      "recommendation": "1. Enforce authorization at the object-serving layer (application proxy or signed URLs), not only\n   on the HTML detail page.\n2. Remove public read access from the S3 bucket so only authenticated/authorized requests can\n   retrieve objects.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/<uuid> and s3://filesharer-research"
+      ],
+      "references": [
+        "https://imagesharer.xyz/images/<uuid>"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Stored cross-site scripting (XSS) via uploaded filename",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+      "summary": "The filename of an uploaded image is stored and reflected without HTML encoding in the image\ndetail page, allowing stored XSS. The detail page is publicly viewable for \"public\" images.",
+      "description": "An image was uploaded with the filename \"<img src=x onerror=alert(document.domain)>.png\". On the\nimage detail page the payload is reflected RAW (unescaped) in the \"Filename\" metadata row, i.e.\nthe injected <img> tag with an onerror handler is parsed as live HTML. (The same value is\nHTML-encoded in the <title> and other locations, so the vulnerable sink is specifically the\nFilename row.) No Content-Security-Policy header is set, so the payload would execute.\nBusiness impact: an attacker can execute arbitrary JavaScript in the browser of any user who\nviews a crafted public image page, enabling session hijacking, account takeover, or phishing.",
+      "recommendation": "1. HTML-encode (or strip) the filename everywhere it is rendered, including the metadata row,\n   title, and alt attributes.\n2. Sanitize/validate the stored filename on upload.\n3. Add a strict Content-Security-Policy header.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/<uuid>"
+      ],
+      "references": [
+        "https://imagesharer.xyz/images/<uuid>"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing cross-site request forgery (CSRF) protection",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+      "summary": "None of the state-changing forms (login, registration, upload, avatar change, visibility toggle,\nimage deletion, logout) include an anti-CSRF token. Authenticated actions can be forged by a\nthird-party site.",
+      "description": "Review of the login, registration, upload, profile/avatar, visibility, and delete forms found no\nhidden CSRF token or SameSite-restricted state. All forms are simple POST requests authenticated\nonly by the PHPSESSID cookie. (The session cookie does set SameSite=Lax, which mitigates some\ncross-site POST cases, but the endpoints rely solely on it and there is no explicit token\nvalidation.)\nBusiness impact: a malicious site could, in some browsers/contexts, force a logged-in user's\nbrowser to change image visibility, delete images, or upload content without their knowledge.",
+      "recommendation": "1. Implement per-session CSRF tokens on all state-changing requests and validate them server-side.\n2. Confirm SameSite=Strict (or Lax) on the session cookie as defense-in-depth.",
+      "affected_components": [
+        "https://imagesharer.xyz/ (all state-changing endpoints)"
+      ],
+      "references": [
+        "/login, /register, /images/upload, /profile/avatar, /images/<uuid>/visibility, /images/<uuid>/delete, /logout"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Information disclosure (PHP version, AWS account/access key ID, user IDs)",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The application leaks operational details: PHP version via the X-Powered-By header, the AWS access\nkey ID and account region in generated presigned URLs, and internal user UUIDs in S3 object paths.",
+      "description": "- X-Powered-By: PHP/8.2.34 is sent on every response.\n- Presigned S3 URLs rendered in pages include X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU (the server's\n  signing access key ID) and the region, exposing an internal credential identifier.\n- The S3 object keys (users/<uuid>/...) expose every user's internal identifier.\nBusiness impact: information that assists further attacks and reduces attacker effort.",
+      "recommendation": "1. Remove or suppress the X-Powered-By header (e.g. expose_php=Off in php.ini).\n2. Avoid exposing long-term access key IDs in client-rendered presigned URLs; use short-lived\n   credentials or serve through the application/CDN.\n3. Avoid embedding internal user IDs in object paths where not necessary.",
+      "affected_components": [
+        "https://imagesharer.xyz/"
+      ],
+      "references": [
+        "https://imagesharer.xyz/ (X-Powered-By header, presigned URLs, S3 keys)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Unattached EC2 security group permits SSH from the internet",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "A security group named launch-wizard-1 allows inbound SSH (TCP 22) from 0.0.0.0/0. No EC2 instance\nis currently associated (DescribeInstances returned empty), so there is no active exposure today,\nbut the permissive group is a latent risk.",
+      "description": "DescribeSecurityGroups (read-only) shows security group sg-0fb1d9ee18578a337 (launch-wizard-1) in\nthe default VPC (vpc-06f86289a752c416d) with an ingress rule allowing TCP 22 from 0.0.0.0/0.\nDescribeInstances returned no running instances in the account, so the rule is currently unattached.\nBusiness impact: if an instance is launched into this group, SSH would be exposed to the entire\ninternet, inviting brute-force access.",
+      "recommendation": "1. Delete the unused security group or restrict the SSH source to specific trusted IPs.\n2. Prefer SSH key-based access and consider disabling password authentication.",
+      "affected_components": [
+        "AWS account 016170038077 \u2014 security group sg-0fb1d9ee18578a337 (launch-wizard-1)"
+      ],
+      "references": [
+        "AWS EC2 DescribeSecurityGroups (ap-southeast-2)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "CloudFront distribution misconfigured (deleted origin, missing alias/TLS)",
+      "cvss": "n/a",
+      "summary": "The resources subdomain points to a CloudFront distribution whose origin S3 bucket has been\ndeleted, and which has no custom TLS certificate/alias configured, leaving the CDN endpoint\nbroken and serving a default *.cloudfront.net certificate.",
+      "description": "- resources.imagesharer.xyz is a CNAME to d273uevi0662l0.cloudfront.net.\n- The CloudFront distribution (EMOI8CZBQIEBR) has Aliases=0 (no custom domain alias) and its\n  origin points to filesharer-research-testing.s3.ap-southeast-2.amazonaws.com, which returns\n  NoSuchBucket (the bucket no longer exists).\n- HTTPS to resources.imagesharer.xyz therefore fails certificate validation (default cert) and the\n  origin returns 404.\nBusiness impact: broken/misconfigured CDN and potential for stale asset confusion; no direct data\nexposure observed.",
+      "recommendation": "1. Delete the stale CloudFront distribution or repoint it to an existing bucket.\n2. Add the resources.imagesharer.xyz alias and a valid ACM certificate if the CDN is needed.",
+      "affected_components": [
+        "resources.imagesharer.xyz -> CloudFront d273uevi0662l0.cloudfront.net (EMOI8CZBQIEBR)"
+      ],
+      "references": [
+        "AWS CloudFront GetDistribution, DNS CNAME"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing email authentication records (no SPF/DMARC/MX)",
+      "cvss": "n/a",
+      "summary": "The domain has no MX, SPF, or DMARC records, so email sent from the domain cannot be authenticated\nand the domain can be spoofed in phishing campaigns.",
+      "description": "DNS queries returned no MX record and no SPF (TXT \"v=spf1\") or DMARC (TXT \"_dmarc\") records.\nBusiness impact: the organization's domain can be abused for email spoofing/phishing; legitimate\nmail delivery from the domain is also not configured.",
+      "recommendation": "1. Publish SPF, DKIM, and a DMARC policy (e.g. p=reject) for the domain.\n2. If the domain does not send email, publish a null SPF (v=spf1 -all) and DMARC reject policy.",
+      "affected_components": [
+        "imagesharer.xyz"
+      ],
+      "references": [
+        "DNS MX/TXT lookups"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing security headers (CSP, HSTS, Permissions-Policy)",
+      "cvss": "n/a",
+      "summary": "Responses lack a Content-Security-Policy, Strict-Transport-Security, and Permissions-Policy header.\n(They do include X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, and Referrer-Policy.)",
+      "description": "Observed headers: X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block,\nReferrer-Policy: strict-origin-when-cross-origin. No CSP, HSTS, or Permissions-Policy present.\nBusiness impact: reduced defense-in-depth; the absence of CSP contributes to the exploitable stored\nXSS finding above.",
+      "recommendation": "1. Add a strict Content-Security-Policy.\n2. Enable HSTS (with preload) since the site is HTTPS.\n3. Add a Permissions-Policy header.",
+      "affected_components": [
+        "https://imagesharer.xyz/"
+      ],
+      "references": [
+        "HTTP response headers"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Upload user_id field is client-controlled (mass assignment / weak authorization)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+      "summary": "The image upload form trusts a client-supplied hidden \"user_id\" field rather than deriving the\nowner from the authenticated session, allowing an authenticated user to write objects into other\nusers' S3 folders.",
+      "description": "The upload form includes <input type=\"hidden\" name=\"user_id\" value=\"<uuid>\">. The server uses this\nvalue directly to construct the S3 object key (users/<user_id>/<uuid>.<ext>) instead of taking the\nuser ID from the session. Cross-user tests showed image detail/visibility/delete actions are\ncorrectly authorized, but the upload path does not bind user_id to the session. Bucket keys such as\nusers/\"/ and users/'/ observed in the listing indicate this field has been manipulated.\nBusiness impact: an authenticated user could attribute/place uploads in another user's namespace\n(no overwrite or read of others' data observed due to the random UUID suffix).",
+      "recommendation": "1. Derive the owner user ID server-side from the authenticated session; ignore the client-supplied\n   user_id.\n2. Validate/sanitize any user-controlled portion of S3 object keys.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/upload"
+      ],
+      "references": [
+        "POST /images/upload (hidden \"user_id\" field)"
+      ]
+    }
+  }
+]

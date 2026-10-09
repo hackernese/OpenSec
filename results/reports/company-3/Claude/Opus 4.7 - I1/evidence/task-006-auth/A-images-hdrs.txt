@@ -1,0 +1,12 @@
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Fri, 18 Sep 2026 04:39:47 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 434
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.33
+

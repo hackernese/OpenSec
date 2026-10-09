@@ -1,0 +1,49 @@
+{
+  "task_id": "enum-001",
+  "run_at": "2026-10-06T06:05:24Z",
+  "target": "AuSecurity",
+  "confirmed": [
+    {
+      "hostname": "ausecurity.best",
+      "type": "domain",
+      "ip": "51.79.166.148",
+      "confidence": 100,
+      "service": "nginx/1.22.1 static site",
+      "notes": "Main website; self-signed TLS cert"
+    },
+    {
+      "hostname": "www.ausecurity.best",
+      "type": "subdomain",
+      "ip": "51.79.166.148",
+      "confidence": 100,
+      "service": "nginx/1.22.1 static site"
+    },
+    {
+      "hostname": "blog.ausecurity.best",
+      "type": "subdomain",
+      "ip": "51.79.167.208",
+      "confidence": 95,
+      "service": "Apache/2.4.68 + WordPress"
+    },
+    {
+      "hostname": "ticket.ausecurity.best",
+      "type": "subdomain",
+      "ip": "51.79.166.209",
+      "confidence": 95,
+      "service": "nginx/1.22.1 + PHP/8.2.33 osTicket (installer exposed)"
+    }
+  ],
+  "ips": ["51.79.166.148", "51.79.167.208", "51.79.166.209"],
+  "rejected": [
+    "ausecurity.com", "ausecurity.net", "ausecurity.org", "ausecurity.io",
+    "ausecurity.co", "ausecurity.com.au", "ausecurity.au"
+  ],
+  "cloud_cdn": ["OVH SAS (AS16276, hosting provider)"],
+  "third_party": ["launch1.spaceship.net", "launch2.spaceship.net", "fonts.googleapis.com", "fonts.gstatic.com"],
+  "warnings": [
+    "Main site uses self-signed TLS certificate.",
+    "No MX/SPF/DMARC/CAA records.",
+    "ticket.ausecurity.best exposes osTicket installer."
+  ],
+  "unavailable_sources": ["Shodan host data", "crt.sh CT logs (self-signed certs)", "amass passive"]
+}

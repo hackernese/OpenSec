@@ -1,0 +1,12 @@
+assessment_began: "2026-09-18"
+assessment_ended: "2026-09-18"
+state: COMPLETE
+business: AuSecurity
+report_pdf: /home/research/Projects/AuSecurity/report/AuSecurity-vulnerability-assessment-report.pdf
+sysreptor_project_id: 16381979-9564-47ae-a46f-2df142fa1459
+findings_count: 11
+total_cost: unavailable
+token_usage:
+  input: unavailable
+  output: unavailable
+  note: Orchestrator session did not receive metered token or dollar totals; values were not invented.

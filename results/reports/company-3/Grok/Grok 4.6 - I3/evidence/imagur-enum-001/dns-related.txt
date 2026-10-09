@@ -1,0 +1,30 @@
+# Additional DNS observations 2026-10-04T23:33Z (dig)
+
+resources.imagesharer.xyz.  CNAME  d273uevi0662l0.cloudfront.net.
+resources.imagesharer.xyz.  A      13.32.126.132 13.32.126.182 13.32.126.107 13.32.126.59  (CloudFront anycast)
+
+www.imagesharer.xyz.        A      51.161.131.44
+imagesharer.xyz.            A      51.161.131.44
+imagesharer.xyz.            MX     (none)
+imagesharer.xyz.            TXT    (none)
+imagesharer.xyz.            AAAA   (none)
+imagesharer.xyz.            CAA    (none)
+
+PTR 51.161.131.44           vps-ad2c3eab.vps.ovh.ca.
+vps-ad2c3eab.vps.ovh.ca.    A      51.161.131.44
+
+imagur.xyz                  A      216.239.32.21 216.239.34.21 216.239.36.21 216.239.38.21 (Google)
+imagur.xyz                  NS     dns1.registrar-servers.com. dns2.registrar-servers.com.
+imagur.xyz                  MX     eforward*.registrar-servers.com (Namecheap forwarding)
+www.imagur.xyz              CNAME  ghs.google.com.
+
+imager.xyz                  A      52.40.42.113 44.232.173.249 (Amazon)
+imager.xyz                  NS     launch1.spaceship.net. launch2.spaceship.net.
+www.imager.xyz              CNAME  imager.xyz.
+HTTP title imager.xyz       "Imager.xyz for sale | Spaceship.com"  -> rejected lookalike/parking
+
+fshare.xyz                  NS     roan.ns.cloudflare.com. ximena.ns.cloudflare.com.
+fshare.xyz                  A      (none / NXDOMAIN for HTTPS host)
+
+ASN 51.161.131.44           AS16276 OVH SAS | 51.161.128.0/17
+ARIN assignment             NET-51-161-130-0-1 VPS-SYD2 51.161.130.0/23 OVH Australia PTY LTD

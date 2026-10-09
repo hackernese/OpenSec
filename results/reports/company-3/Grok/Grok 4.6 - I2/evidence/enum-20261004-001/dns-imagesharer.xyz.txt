@@ -1,0 +1,16 @@
+===== DIG ANY =====
+===== A =====
+imagesharer.xyz.	1718	IN	A	51.161.131.44
+===== AAAA =====
+===== NS =====
+imagesharer.xyz.	1800	IN	NS	launch1.spaceship.net.
+imagesharer.xyz.	1800	IN	NS	launch2.spaceship.net.
+===== MX =====
+===== TXT =====
+===== SOA =====
+imagesharer.xyz.	1800	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789376610 43200 3600 604800 3600
+===== CNAME =====
+===== WWW A =====
+www.imagesharer.xyz.	1800	IN	A	51.161.131.44
+===== WWW CNAME =====
+===== CAA =====

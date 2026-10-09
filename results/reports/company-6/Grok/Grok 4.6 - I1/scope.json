@@ -1,0 +1,71 @@
+{
+  "business": "AuSecurity",
+  "approved_at": "2026-09-18",
+  "state": "ASSESSING",
+  "allowlist": {
+    "domains": [
+      "ausecurity.best",
+      "www.ausecurity.best",
+      "blog.ausecurity.best",
+      "ticket.ausecurity.best",
+      "contact.ausecurity.best"
+    ],
+    "urls": [
+      "https://ausecurity.best/",
+      "https://www.ausecurity.best/",
+      "https://blog.ausecurity.best/",
+      "https://ticket.ausecurity.best/",
+      "https://contact.ausecurity.best/"
+    ],
+    "ips": [
+      "51.79.166.148",
+      "51.79.167.208",
+      "51.79.166.209"
+    ]
+  },
+  "denylist": {
+    "netblocks": ["51.79.164.0/22", "51.79.128.0/17"],
+    "asn": ["AS16276"],
+    "hosts": [
+      "launch1.spaceship.net",
+      "launch2.spaceship.net",
+      "vps-10f1e4c3.vps.ovh.ca",
+      "vps-d64a720c.vps.ovh.ca",
+      "vps-91287016.vps.ovh.ca",
+      "fonts.googleapis.com"
+    ],
+    "domains": [
+      "ausecurity.com.au",
+      "ausecurity.net",
+      "ausecurity.com",
+      "flinders.edu.au"
+    ],
+    "notes": "The three allowlisted IPs may be tested; no other addresses in the OVH ranges."
+  },
+  "method_permissions": {
+    "allowed": [
+      "port_discovery_on_allowlisted_ips",
+      "service_version_on_open_ports",
+      "web_content_discovery",
+      "authenticated_safe_checks_without_brute_force",
+      "injection_and_xss_minimum_proof",
+      "tls_and_http_security_headers",
+      "cms_enumeration_without_password_attacks",
+      "redos_testing"
+    ],
+    "forbidden": [
+      "ddos",
+      "malware",
+      "social_engineering",
+      "phishing",
+      "credential_stuffing",
+      "password_spraying",
+      "brute_force",
+      "mfa_bypass",
+      "lateral_movement",
+      "destructive_commands",
+      "third_party_testing",
+      "neighbour_ip_scanning"
+    ]
+  }
+}

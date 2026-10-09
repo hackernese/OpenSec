@@ -1,0 +1,122 @@
+=== version.bind ===
+;; Warning: Message parser reports malformed message packet.
+
+; <<>> DiG 9.20.27-1-Debian <<>> +tcp @51.161.131.44 version.bind chaos txt
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 17279
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; OPT=65401: 1f (".")
+;; QUESTION SECTION:
+;version.bind.			CH	TXT
+
+;; AUTHORITY SECTION:
+.			3600	IN	SOA	a.root-servers.net. nstld.verisign-grs.com. 2026100500 1800 900 604800 86400
+
+;; Query time: 19 msec
+;; SERVER: 51.161.131.44#53(51.161.131.44) (TCP)
+;; WHEN: Mon Oct 05 14:23:05 AEDT 2026
+;; MSG SIZE  rcvd: 121
+
+=== hostname.bind ===
+;; Warning: Message parser reports malformed message packet.
+
+; <<>> DiG 9.20.27-1-Debian <<>> +tcp @51.161.131.44 hostname.bind chaos txt
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 45405
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; OPT=65401: 1f (".")
+;; QUESTION SECTION:
+;hostname.bind.			CH	TXT
+
+;; AUTHORITY SECTION:
+.			3600	IN	SOA	a.root-servers.net. nstld.verisign-grs.com. 2026100500 1800 900 604800 86400
+
+;; Query time: 19 msec
+;; SERVER: 51.161.131.44#53(51.161.131.44) (TCP)
+;; WHEN: Mon Oct 05 14:23:05 AEDT 2026
+;; MSG SIZE  rcvd: 122
+
+=== recursion test (example.com +rec) ===
+
+; <<>> DiG 9.20.27-1-Debian <<>> +tcp +time=5 @51.161.131.44 example.com a +rec
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 51333
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;example.com.			IN	A
+
+;; ANSWER SECTION:
+example.com.		67	IN	A	172.66.147.243
+example.com.		67	IN	A	104.20.23.154
+
+;; Query time: 19 msec
+;; SERVER: 51.161.131.44#53(51.161.131.44) (TCP)
+;; WHEN: Mon Oct 05 14:23:05 AEDT 2026
+;; MSG SIZE  rcvd: 94
+
+=== recursion test (example.com +norec) ===
+
+; <<>> DiG 9.20.27-1-Debian <<>> +tcp +time=5 @51.161.131.44 example.com a +norec
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 47661
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;example.com.			IN	A
+
+;; ANSWER SECTION:
+example.com.		66	IN	A	172.66.147.243
+example.com.		66	IN	A	104.20.23.154
+
+;; Query time: 19 msec
+;; SERVER: 51.161.131.44#53(51.161.131.44) (TCP)
+;; WHEN: Mon Oct 05 14:23:06 AEDT 2026
+;; MSG SIZE  rcvd: 94
+
+=== AXFR imagesharer.xyz ===
+
+; <<>> DiG 9.20.27-1-Debian <<>> +tcp +time=5 @51.161.131.44 imagesharer.xyz axfr
+; (1 server found)
+;; global options: +cmd
+; Transfer failed.
+=== ANY imagesharer.xyz ===
+
+; <<>> DiG 9.20.27-1-Debian <<>> +tcp +time=5 @51.161.131.44 imagesharer.xyz any
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOTIMP, id: 25318
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
+
+;; WARNING: EDNS query returned status NOTIMP - retry with '+noedns'
+
+;; QUESTION SECTION:
+;imagesharer.xyz.		IN	ANY
+
+;; Query time: 15 msec
+;; SERVER: 51.161.131.44#53(51.161.131.44) (TCP)
+;; WHEN: Mon Oct 05 14:23:06 AEDT 2026
+;; MSG SIZE  rcvd: 33
+

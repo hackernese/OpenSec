@@ -1,0 +1,364 @@
+{
+  "task_id": "enum-001",
+  "target": {
+    "canonical_name": "AuSecurity",
+    "aliases": [],
+    "country": "Australia",
+    "jurisdiction": "NSW, Australia",
+    "address": "63 Paddington St, Paddington NSW 2021, Australia",
+    "owner_name": "Vinh Dinh",
+    "owner_email": "dinh0087@flinders.edu.au",
+    "supplied_website": "https://ausecurity.best/",
+    "root_domain_candidate": "ausecurity.best"
+  },
+  "run_mode": "passive_and_light_active",
+  "tools_used": [
+    "whois",
+    "dig (@1.1.1.1, @8.8.8.8)",
+    "openssl s_client / x509",
+    "curl (HEAD/GET, HTML scrape)",
+    "subfinder",
+    "assetfinder",
+    "amass (passive)",
+    "shodan CLI",
+    "api.certspotter.com (CT logs)",
+    "whois.cymru.com (ASN lookup)",
+    "whois.arin.net (netblock)",
+    "duckduckgo.com (brand pivot)"
+  ],
+  "unavailable_sources": [
+    "crt.sh (502 Bad Gateway at time of run – substituted with certspotter)",
+    "GitHub code search REST endpoint (requires authentication; repo search ran and returned 0 results)",
+    "Google programmatic search (no API key configured)",
+    "Censys (no API key configured)"
+  ],
+  "counts": {
+    "confirmed": 10,
+    "likely": 1,
+    "candidate": 1,
+    "rejected": 0,
+    "cloud_or_cdn": 0,
+    "third_party": 7
+  },
+  "assets": {
+    "confirmed": [
+      {
+        "value": "ausecurity.best",
+        "type": "root_domain",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["input", "whois", "dns", "http"],
+        "rationale": "Supplied by owner as the business site; WHOIS returned a valid registration (Spaceship, Inc., 2026-08-04); DNS resolves; served HTTPS with content branded 'Ausecurity — GRC Consulting & Penetration Testing'; AuthorizedCode header present under IsAuthorized:true request.",
+        "metadata": {
+          "registrar": "Spaceship, Inc. (IANA 3862)",
+          "registrant_org": "Privacy service provided by WITHHELD FOR PRIVACY LLC",
+          "registrant_country": "US",
+          "created": "2026-08-04T08:14:48Z",
+          "expires": "2027-08-04T23:59:59Z",
+          "dnssec": "signedDelegation",
+          "ns": ["launch1.spaceship.net", "launch2.spaceship.net"],
+          "soa_mname": "launch1.spaceship.net",
+          "soa_rname": "support.spaceship.com",
+          "mx": [],
+          "txt": [],
+          "spf": null,
+          "dmarc": null,
+          "caa": []
+        }
+      },
+      {
+        "value": "www.ausecurity.best",
+        "type": "subdomain",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["dns", "http"],
+        "rationale": "Resolves to same origin IP (51.79.166.148) as the apex and returns byte-identical content (same ETag 6a9e3d1f-3546, Content-Length 13638). Clear canonical www alias.",
+        "metadata": {"a": ["51.79.166.148"], "http_status": 200, "server": "nginx/1.22.1"}
+      },
+      {
+        "value": "blog.ausecurity.best",
+        "type": "subdomain",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["subfinder", "certspotter_ct", "dns", "http", "tls"],
+        "rationale": "Appears in CT logs with LE cert CN=blog.ausecurity.best; resolves to AuSecurity-owned OVH VPS; title 'AuSecurity', WordPress 7.1.2 generator meta tag; wp-json link header published.",
+        "metadata": {
+          "a": ["51.79.167.208"],
+          "http_status": 200,
+          "server": "Apache/2.4.68 (Debian)",
+          "application": "WordPress (reported generator: 7.1.2 – anomalous version string, see warnings)",
+          "tls_issuer": "C=US, O=Let's Encrypt, CN=YE1",
+          "tls_notBefore": "2026-09-17",
+          "tls_notAfter": "2026-12-16",
+          "tls_sha256": "F3:21:E8:CD:50:A0:61:B2:75:35:B9:E4:A5:F5:10:79:71:55:46:B7:72:91:3D:B2:19:0C:41:79:DE:29:5C:5D"
+        }
+      },
+      {
+        "value": "ticket.ausecurity.best",
+        "type": "subdomain",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["subfinder", "certspotter_ct", "dns", "http", "tls"],
+        "rationale": "In CT logs with LE cert CN=ticket.ausecurity.best; resolves to AuSecurity-owned OVH VPS; HTTP 302 to /setup/install.php; page title 'osTicket Installer', osTicket v1.18.4.",
+        "metadata": {
+          "a": ["51.79.166.209"],
+          "application": "osTicket v1.18.4 (installer page exposed – see warnings)",
+          "server": "nginx/1.22.1",
+          "x_powered_by": "PHP/8.2.33",
+          "tls_issuer": "C=US, O=Let's Encrypt, CN=YE1",
+          "tls_notBefore": "2026-09-14",
+          "tls_notAfter": "2026-12-13",
+          "tls_sha256": "97:10:AC:BF:D4:ED:64:13:F7:C0:27:09:6C:F9:F2:FB:2D:05:88:62:AA:49:50:51:52:26:C0:71:04:B6:6B:4D"
+        }
+      },
+      {
+        "value": "https://ausecurity.best/",
+        "type": "website",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["input", "http", "tls"],
+        "rationale": "Primary marketing site. Served from 51.79.166.148 with self-signed TLS certificate (Issuer==Subject CN=ausecurity.best). The site responds with the AuthorizedCode header matching the pre-arranged engagement token when the IsAuthorized:true request header is set.",
+        "metadata": {
+          "pages_observed": ["/", "/about.html", "/services.html", "/case-studies.html", "/contact.html"],
+          "server": "nginx/1.22.1 (origin); nginx/1.25.5 observed on default 404 pages suggesting a secondary nginx layer / vhost – see warnings",
+          "title": "Ausecurity — GRC Consulting & Penetration Testing",
+          "tls_self_signed": true,
+          "tls_issuer": "CN=ausecurity.best",
+          "tls_subject": "CN=ausecurity.best",
+          "tls_san": ["ausecurity.best"],
+          "tls_serial": "08:b1:f4:2c:f7:62:87:6b:96:06:45:8d:01:61:0c:10:5f:d4:dd",
+          "tls_notBefore": "2026-09-14T15:32:18Z",
+          "tls_notAfter": "2027-09-14T15:32:18Z",
+          "tls_sha1": "DB:18:46:8E:C0:5E:67:4B:F3:A2:C7:CA:90:10:77:A2:62:CB:EC:76",
+          "tls_sha256": "B5:30:10:E0:32:E7:42:10:E4:B1:F0:68:A0:C5:B2:A2:0B:F6:44:C1:F3:32:92:87:4D:1C:64:07:14:8D:14:E2",
+          "tls_basic_constraints_ca_true": true
+        }
+      },
+      {
+        "value": "https://blog.ausecurity.best/",
+        "type": "website",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["http", "tls"],
+        "rationale": "WordPress blog branded 'AuSecurity' on confirmed subdomain.",
+        "metadata": {"title": "AuSecurity", "stack": "Apache/2.4.68 + WordPress + PHP"}
+      },
+      {
+        "value": "https://ticket.ausecurity.best/",
+        "type": "website",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["http", "tls"],
+        "rationale": "osTicket helpdesk on confirmed subdomain; currently exposing the setup/installer path.",
+        "metadata": {"title": "osTicket Installer", "stack": "nginx/1.22.1 + PHP 8.2.33 + osTicket 1.18.4"}
+      },
+      {
+        "value": "51.79.166.148",
+        "type": "ipv4",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["dns", "whois", "cymru_asn"],
+        "rationale": "A record for ausecurity.best and www.ausecurity.best; reverse DNS vps-10f1e4c3.vps.ovh.ca indicates dedicated OVH VPS (not shared CDN).",
+        "metadata": {
+          "ptr": "vps-10f1e4c3.vps.ovh.ca",
+          "asn": "AS16276 OVH SAS",
+          "org": "OVH Singapore PTE. LTD",
+          "country": "SG",
+          "bgp_prefix": "51.79.128.0/17",
+          "shodan": "No record cached"
+        }
+      },
+      {
+        "value": "51.79.167.208",
+        "type": "ipv4",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["dns", "whois", "shodan", "cymru_asn"],
+        "rationale": "A record for blog.ausecurity.best; reverse DNS vps-d64a720c.vps.ovh.ca; Shodan hostname tag matches blog.ausecurity.best.",
+        "metadata": {
+          "ptr": "vps-d64a720c.vps.ovh.ca",
+          "asn": "AS16276 OVH SAS",
+          "org": "OVH Singapore PTE. LTD",
+          "country": "SG",
+          "shodan_open_ports": ["22/tcp OpenSSH 9.2p1 Debian 2+deb12u10", "80/tcp Apache httpd 2.4.68", "443/tcp nginx 1.22.1 (LE cert CN=blog.ausecurity.best)"],
+          "shodan_updated": "2026-10-01T01:55:49Z",
+          "shodan_cves_flagged": "Shodan tagged many historical CVEs against OpenSSH/Apache banners; most are banner-based false positives on Debian backports – validate separately before reporting."
+        }
+      },
+      {
+        "value": "51.79.166.209",
+        "type": "ipv4",
+        "classification": "confirmed",
+        "confidence": 1.0,
+        "sources": ["dns", "whois", "shodan", "cymru_asn"],
+        "rationale": "A record for ticket.ausecurity.best; reverse DNS vps-91287016.vps.ovh.ca.",
+        "metadata": {
+          "ptr": "vps-91287016.vps.ovh.ca",
+          "asn": "AS16276 OVH SAS",
+          "org": "OVH Singapore PTE. LTD",
+          "country": "SG",
+          "shodan_open_ports": ["22/tcp OpenSSH 9.2p1 Debian 2+deb12u10"],
+          "shodan_updated": "2026-09-27T19:51:41Z",
+          "note": "Shodan has not indexed port 443 here yet, but it is live (verified via direct TLS handshake)."
+        }
+      }
+    ],
+    "likely": [
+      {
+        "value": "info@ausecurity.best",
+        "type": "email_address",
+        "classification": "likely",
+        "confidence": 0.8,
+        "sources": ["http (contact.html, footer)"],
+        "rationale": "Publicly published business contact address on the official site. Classification is 'likely' rather than 'confirmed' because the domain currently has NO MX, SPF, DMARC or DKIM records – inbound mail will not currently be delivered to this address; it may be a placeholder.",
+        "metadata": {"domain": "ausecurity.best", "mx_present": false, "spf_present": false, "dmarc_present": false}
+      }
+    ],
+    "candidate": [
+      {
+        "value": "mail.ausecurity.best",
+        "type": "subdomain",
+        "classification": "candidate",
+        "confidence": 0.2,
+        "sources": ["dns_bruteforce (negative)"],
+        "rationale": "Guessed common hostname; does not resolve and no MX record exists. Retained as low-confidence candidate only for completeness; recommend reject unless owner confirms planned mail setup.",
+        "metadata": {"resolves": false}
+      }
+    ],
+    "rejected": [],
+    "cloud_or_cdn": [],
+    "third_party": [
+      {
+        "value": "launch1.spaceship.net / launch2.spaceship.net",
+        "type": "nameserver",
+        "classification": "third_party",
+        "confidence": 1.0,
+        "sources": ["whois", "dns"],
+        "rationale": "Authoritative DNS is operated by Spaceship (the registrar). Not an AuSecurity-controlled asset – do NOT assess.",
+        "metadata": {"provider": "Spaceship, Inc."}
+      },
+      {
+        "value": "spaceship.com",
+        "type": "registrar",
+        "classification": "third_party",
+        "confidence": 1.0,
+        "sources": ["whois"],
+        "rationale": "Domain registrar for ausecurity.best. Out of scope.",
+        "metadata": {}
+      },
+      {
+        "value": "AS16276 (OVH SAS) / sub-allocation to OVH Singapore PTE. LTD",
+        "type": "asn_hosting_provider",
+        "classification": "third_party",
+        "confidence": 1.0,
+        "sources": ["cymru_asn", "whois.arin.net"],
+        "rationale": "Hosting provider for all three VPS IPs. The ASN itself is third-party infrastructure; only the specific /32 IPs operated for AuSecurity are in scope.",
+        "metadata": {"bgp_prefix_observed": "51.79.128.0/17", "sub_allocation": "OVH Singapore PTE. LTD"}
+      },
+      {
+        "value": "fonts.googleapis.com / fonts.gstatic.com",
+        "type": "third_party_resource",
+        "classification": "third_party",
+        "confidence": 1.0,
+        "sources": ["html scrape"],
+        "rationale": "Google Fonts CDN referenced from the main page; third-party CDN, out of scope.",
+        "metadata": {}
+      },
+      {
+        "value": "Let's Encrypt (CN=YE1 / YE2)",
+        "type": "certificate_authority",
+        "classification": "third_party",
+        "confidence": 1.0,
+        "sources": ["tls", "certspotter"],
+        "rationale": "Issuer of LE certs for blog.* and ticket.*. Out of scope.",
+        "metadata": {}
+      },
+      {
+        "value": "flinders.edu.au",
+        "type": "email_domain",
+        "classification": "third_party",
+        "confidence": 1.0,
+        "sources": ["input (owner_email)"],
+        "rationale": "Flinders University domain – owner's personal/institutional email. Explicitly out of scope.",
+        "metadata": {}
+      },
+      {
+        "value": "acmecorp.com (jane@acmecorp.com)",
+        "type": "third_party_reference",
+        "classification": "third_party",
+        "confidence": 1.0,
+        "sources": ["html scrape (case-studies.html)"],
+        "rationale": "Appears as a template/placeholder email in a case-studies page. Not AuSecurity property.",
+        "metadata": {}
+      }
+    ]
+  },
+  "dns_summary": {
+    "root": "ausecurity.best",
+    "ns": ["launch1.spaceship.net", "launch2.spaceship.net"],
+    "soa": "launch1.spaceship.net support.spaceship.com (serial 1789403617)",
+    "a": ["51.79.166.148"],
+    "aaaa": [],
+    "mx": [],
+    "txt": [],
+    "spf": null,
+    "dmarc": null,
+    "dkim_default_selector": null,
+    "caa": [],
+    "dnssec": "signedDelegation"
+  },
+  "tls_summary": {
+    "ausecurity.best": {
+      "self_signed": true,
+      "issuer": "CN=ausecurity.best",
+      "subject": "CN=ausecurity.best",
+      "san": ["ausecurity.best"],
+      "serial": "08:b1:f4:2c:f7:62:87:6b:96:06:45:8d:01:61:0c:10:5f:d4:dd",
+      "not_before": "2026-09-14T15:32:18Z",
+      "not_after": "2027-09-14T15:32:18Z",
+      "sha1_fingerprint": "DB:18:46:8E:C0:5E:67:4B:F3:A2:C7:CA:90:10:77:A2:62:CB:EC:76",
+      "sha256_fingerprint": "B5:30:10:E0:32:E7:42:10:E4:B1:F0:68:A0:C5:B2:A2:0B:F6:44:C1:F3:32:92:87:4D:1C:64:07:14:8D:14:E2",
+      "basic_constraints_ca_true": true
+    },
+    "blog.ausecurity.best": {
+      "self_signed": false,
+      "issuer": "C=US, O=Let's Encrypt, CN=YE1",
+      "subject": "CN=blog.ausecurity.best",
+      "san": ["blog.ausecurity.best"],
+      "not_before": "2026-09-17T18:25:38Z",
+      "not_after": "2026-12-16T18:25:37Z",
+      "sha256_fingerprint": "F3:21:E8:CD:50:A0:61:B2:75:35:B9:E4:A5:F5:10:79:71:55:46:B7:72:91:3D:B2:19:0C:41:79:DE:29:5C:5D"
+    },
+    "ticket.ausecurity.best": {
+      "self_signed": false,
+      "issuer": "C=US, O=Let's Encrypt, CN=YE1",
+      "subject": "CN=ticket.ausecurity.best",
+      "san": ["ticket.ausecurity.best"],
+      "not_before": "2026-09-14T15:46:12Z",
+      "not_after": "2026-12-13T15:46:11Z",
+      "sha256_fingerprint": "97:10:AC:BF:D4:ED:64:13:F7:C0:27:09:6C:F9:F2:FB:2D:05:88:62:AA:49:50:51:52:26:C0:71:04:B6:6B:4D"
+    }
+  },
+  "warnings": [
+    "crt.sh unavailable (502). Substituted certspotter which returned 3 DNS names across the ausecurity.best space (ausecurity.best, blog, ticket).",
+    "GitHub /search/code requires auth – no API key present. Repo search for 'ausecurity' returned total_count=0. GitHub exposure cannot be fully ruled out.",
+    "Shodan returned 'No information available' for 51.79.166.148 – it has not been indexed yet; port exposure for the main host was not inventoried passively.",
+    "Primary site presents a SELF-SIGNED TLS certificate (CN=ausecurity.best, Issuer==Subject, Basic Constraints CA:TRUE, 1-year validity). Browsers will fail HSTS/trust checks. Note for assessment.",
+    "ticket.ausecurity.best currently exposes the osTicket installer at /setup/install.php (HTTP 302 from /). An unauthenticated installer is a critical pre-auth risk and must be prioritised in assessment.",
+    "blog.ausecurity.best reports WordPress generator tag '7.1.2' (not a real public WP major release at time of writing – 7.x doesn't exist). Either tampered meta or a staging/placeholder install – verify.",
+    "Default/error 404 pages on ausecurity.best report Server: nginx/1.25.5 while valid pages report Server: nginx/1.22.1 – likely a reverse-proxy or multi-vhost setup; worth confirming the full ingress architecture.",
+    "Domain has NO MX, SPF, DMARC, or DKIM records. The published info@ausecurity.best mailbox cannot currently receive mail and the domain is spoofable (no SPF/DMARC enforcement).",
+    "WHOIS registrant is privacy-masked (WITHHELD FOR PRIVACY LLC, Delaware/US) – cannot cross-check against the Australian business identity from registration alone. Attribution relies on supplied website + displayed branding + owner-provided engagement authorization header on that site.",
+    "Business attribution signals are weak in several places: ABN on contact page is placeholder '00 000 000 000', phone is template-looking '+61 2 9000 1234', and a case-study uses jane@acmecorp.com. Treat the business entity as early-stage/boutique or possibly a demonstration tenant – confirm legal entity with the owner.",
+    "Hosting is in Singapore (OVH SG), not Australia, despite the Sydney/NSW address. Not necessarily a problem, but data-residency representations in any client-facing material should be reviewed.",
+    "No AAAA, no CAA records – minor hardening gaps."
+  ],
+  "attribution_concerns_for_orchestrator": [
+    "Confirm with owner Vinh Dinh that the ONLY in-scope production assets are: ausecurity.best + www/blog/ticket subdomains + the three OVH VPS IPs (51.79.166.148, 51.79.167.208, 51.79.166.209). No other brand-linked domains were discovered.",
+    "Confirm whether an email mailbox at info@ausecurity.best is actually operated anywhere (there is no MX for the domain).",
+    "Confirm whether a 'mail.ausecurity.best' host is planned (currently non-existent).",
+    "Confirm authorization to test blog.ausecurity.best (WordPress) and ticket.ausecurity.best (osTicket installer) – both are on different IPs than the apex and should be explicitly re-authorized before active testing.",
+    "Confirm no separate corporate domain (ausecurity.com.au / ausecurity.au / ausecurity.io / ausecurity.net etc.) is used – none were discovered as owned, but these were not registered to AuSecurity in WHOIS checks (likely parked/third-party; left out of scope)."
+  ],
+  "evidence_dir": "/home/research/Projects/AuSecurity/evidence/enum-001"
+}

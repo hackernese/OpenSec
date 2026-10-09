@@ -1,0 +1,72 @@
+{
+  "approved_at": "2026-10-05",
+  "source": "assets.init.json plus owner validation",
+  "in_scope": [
+    {
+      "id": "A-001",
+      "type": "root_domain",
+      "value": "imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 98,
+      "ownership": "organization"
+    },
+    {
+      "id": "A-004",
+      "type": "website",
+      "value": "https://imagesharer.xyz/",
+      "host": "imagesharer.xyz",
+      "status": "confirmed",
+      "confidence": 98,
+      "title": "Log in — Imager",
+      "server": "nginx",
+      "technologies": ["nginx", "PHP/8.2.34"]
+    },
+    {
+      "id": "A-007",
+      "type": "ip_address",
+      "value": "51.161.131.44",
+      "status": "confirmed",
+      "confidence": 95,
+      "ownership": "cloud-provider",
+      "related_hosts": ["imagesharer.xyz"],
+      "notes": "OVH VPS. Test this IP only. Do not scan sibling OVH addresses."
+    }
+  ],
+  "owner_declined": [
+    {
+      "id": "A-002",
+      "value": "www.imagesharer.xyz",
+      "reason": "Not selected during owner validation"
+    },
+    {
+      "id": "A-003",
+      "value": "resources.imagesharer.xyz",
+      "reason": "Not selected during owner validation"
+    },
+    {
+      "id": "A-005",
+      "value": "https://www.imagesharer.xyz/",
+      "reason": "Not selected during owner validation"
+    },
+    {
+      "id": "A-006",
+      "value": "https://resources.imagesharer.xyz/",
+      "reason": "Not selected during owner validation"
+    },
+    {
+      "id": "A-011",
+      "value": "imagur.xyz",
+      "reason": "Owner selected none of the uncertain extra domains"
+    },
+    {
+      "id": "A-012",
+      "value": "fshare.xyz",
+      "reason": "Owner selected none of the uncertain extra domains"
+    }
+  ],
+  "warnings": [
+    "Website public brand is Imager; engagement name is Imagur.",
+    "www.imagesharer.xyz and resources.imagesharer.xyz were enumerated but not owner-approved.",
+    "Do not expand onto OVH netblocks, CloudFront, Spaceship DNS, or Flinders University."
+  ]
+}

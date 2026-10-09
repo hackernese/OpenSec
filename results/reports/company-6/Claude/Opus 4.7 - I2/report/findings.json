@@ -1,0 +1,363 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Unauthenticated Exposure of Confidential Client Data on Admin Dashboard",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "severity": "critical",
+      "summary": "The internal admin dashboard page is served to anyone on the Internet without any authentication check at the server. The HTML itself is hardcoded with real-looking client company names, personal names, email addresses, business metrics (revenue, number of active clients), and an engagement activity log that discloses specific client-and-service combinations (for example, who received a penetration-test report or who had an ISO 27001 audit).",
+      "description": "A GET request to https://ausecurity.best/dashboard.html returns HTTP 200 with the full admin UI (16,497 bytes) directly from the web server. The only \"access control\" is a client-side JavaScript check in /assets/js/main.js (isAuthenticated() \u2192 redirectToLogin()) which runs AFTER the HTML has already been delivered. Because the sensitive content is baked into the static HTML and not fetched post-auth, anyone with the URL can read it before the JavaScript runs, by disabling JavaScript, or simply by using curl / wget / View-Source. The same resource is also exposed on the plaintext HTTP port 8080 (nginx/1.25.5).\n\nConfirmed hardcoded disclosures in the HTML body include:\n  - Business metrics: \"Total Enquiries: 47\", \"Active Clients: 12\", \"Assessments YTD: 19\", \"Open Proposals: 5\", \"Revenue YTD: $1.2M\".\n  - Client identities + contact emails of five organisations (Meridian Financial Solutions / James Hargreaves <james@meridianfs.com.au>, ShopStream Pty Ltd / Lara Whitfield <lara@shopstream.io>, Nexahealth Clinics / Mark Okonkwo <m.okonkwo@nexahealth.au>, Orion Logistics / Chen Wei <cwei@orionlogistics.com.au>, Starfield Technologies / Priya Nair <priya@starfieldtech.io>).\n  - Engagement activity log tying individual clients to specific delivered services (e.g. \"ISO 27001 audit completed \u2014 Meridian FS\", \"Pentest report delivered \u2014 ShopStream\", \"Contract signed \u2014 Orion Logistics GRC\").\n\nBusiness impact: For a GRC + penetration-testing consultancy, publicly disclosing client identities, engagement types, and revenue figures is a direct breach of client confidentiality, likely in conflict with every signed Non-Disclosure Agreement and with the Australian Privacy Act 1988 (APP 11) obligations around personal information. It also hands competitors a target list and gives attackers a highly curated phishing list of individuals who already trust AuSecurity.\n\nEvidence stored under: evidence/t-api2/probe2.txt (full dashboard HTML dump).",
+      "recommendation": "1. Enforce authentication SERVER-SIDE before the dashboard HTML is ever returned. In the nginx / backend configuration, require a valid session cookie (or JWT) for every request to /dashboard.html and respond with HTTP 302 to /login (not 200) when the session is absent or invalid.\n2. Remove ALL hardcoded client PII, metrics, and activity entries from the HTML template. The page should render only a layout shell and fetch its content from authenticated API endpoints at runtime.\n3. If a demo dashboard is desired for marketing, use clearly fictional data and place it on a separate, labelled page (e.g. /demo-dashboard.html).\n4. Review and notify any clients whose details may have been exposed, in line with the Notifiable Data Breach scheme.\n5. Audit for any Google / Bing / internet archive caching of the page content and request removal if indexed.",
+      "affected_components": [
+        "https://ausecurity.best/dashboard.html",
+        "http://ausecurity.best:8080/dashboard.html"
+      ],
+      "references": [
+        "CWE-200 (Exposure of Sensitive Information)",
+        "CWE-306 (Missing Authentication for Critical Function)",
+        "OWASP A01:2021 Broken Access Control"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Publicly Reachable osTicket Installation Wizard (Pre-Authentication System Takeover)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+      "severity": "critical",
+      "summary": "The osTicket installation wizard is still reachable without authentication on both the HTTPS (443) and plaintext HTTP (8080) ports of ticket.ausecurity.best. Any unauthenticated attacker can walk through the installer, point osTicket at an attacker-controlled database, and emerge as the admin of the ticketing system \u2014 which generally runs code as the web server user and ships customer support messages, attachments, and (often) credentials for integrations.",
+      "description": "GET https://ticket.ausecurity.best/setup/install.php returns HTTP 200 with the interactive osTicket Installer page (title \"osTicket Installer\", 4,825 bytes), including a visible POST form with a hidden `s=prereq` field. The same page is identically reachable in plaintext over http://ticket.ausecurity.best:8080/setup/install.php. In addition, visiting the application root (https://ticket.ausecurity.best/) and the staff login (/scp/login.php) both HTTP 302 the browser to /setup/install.php, confirming that the osTicket deployment is in a \"setup-not-finished\" state and that the installer is the live front door.\n\nThe installer wizard, when completed by an attacker, allows them to:\n  - choose or recreate the admin account (immediate privileged account takeover);\n  - redirect the installation to a different MySQL/MariaDB server (data exfiltration path, and potential RCE via maliciously crafted DB callbacks);\n  - import malicious plugins or language packs post-setup;\n  - from the admin panel, upload server-side templates / signatures, often reachable as a path to remote code execution.\n\nService info disclosed by the installer response headers: osTicket v1.18.4, PHP/8.2.33, dual front-ends nginx/1.22.1 (443) and Apache/2.4.68 (8080). PHPSESSID cookies are set with no HttpOnly and no Secure flags (see separate finding).\n\nEvidence stored under: evidence/t4-osticket-installer/install-443.html , install-8080.html; evidence/t10-nuclei/results-focused.txt (nuclei \"osticket-installer\" HIGH); evidence/t1-ports/stage2-services.nmap (NSE http-title \"osTicket Installer\").",
+      "recommendation": "1. Immediately take ticket.ausecurity.best offline (or restrict access to a known admin IP via firewall / nginx `allow`/`deny`) until the installer is dealt with.\n2. Complete the osTicket installation, then DELETE the entire /setup/ directory from the web root as the official osTicket post-install step requires.\n3. Verify no residual files remain (/setup/install.php, /setup/*.php, /setup/images/, /setup/js/, /setup/css/).\n4. Disable the plaintext HTTP service on port 8080 (Apache 2.4.68) or at minimum force an HTTPS redirect and apply the same /setup/ removal there.\n5. Rotate any credentials / tokens that may have been configured in osTicket during this exposure window.\n6. After cleanup, re-run a controlled vulnerability scan to confirm the installer is 404.",
+      "affected_components": [
+        "https://ticket.ausecurity.best/setup/install.php",
+        "http://ticket.ausecurity.best:8080/setup/install.php"
+      ],
+      "references": [
+        "CWE-1188 (Insecure Default Initialization of Resource)",
+        "CWE-284 (Improper Access Control)",
+        "osTicket post-install hardening guide"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Email Domain Trivially Spoofable (No SPF, DKIM, DMARC, or MX)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:N",
+      "severity": "critical",
+      "summary": "The ausecurity.best domain publishes no SPF record, no DMARC policy, no DKIM selectors, and no MX records. Any sender anywhere on the Internet can forge email with \"From: anything@ausecurity.best\" and most receiving mail systems will accept it. There is also no mailbox listening on the domain, so the \"info@ausecurity.best\" address advertised on the website cannot actually receive mail.",
+      "description": "Direct DNS queries against 1.1.1.1 return:\n  - MX ausecurity.best \u2192 (empty)\n  - TXT ausecurity.best \u2192 (no SPF record)\n  - TXT _dmarc.ausecurity.best \u2192 (no DMARC record)\n  - TXT default._domainkey / google._domainkey / k1._domainkey / selector1._domainkey / selector2._domainkey / mail._domainkey / dkim._domainkey / smtp._domainkey \u2192 (all empty)\n  - CAA ausecurity.best \u2192 (none)\n\nBusiness impact for a security consultancy is especially severe:\n  - An attacker can send a convincing phishing email purporting to be from a Director or a known consultant at AuSecurity to the business's actual clients (whose identities are already leaked publicly via the dashboard disclosure, see other finding). The receiving organisation has no DMARC signal to reject or quarantine the message.\n  - Combined with the exposed client list and the DOM-based XSS and open-redirect on ausecurity.best (both separate findings), a highly convincing credential-harvesting campaign can be launched entirely under the \"ausecurity.best\" brand.\n  - Advertised mailbox info@ausecurity.best cannot receive responses because no MX record exists; legitimate client enquiries that bounce may be perceived as unprofessional or as a sign of compromise.\n\nEvidence stored under: evidence/t3-email/dns.txt.",
+      "recommendation": "1. Publish a strict SPF record. If AuSecurity does not send any email at all from the domain, set `v=spf1 -all`. Otherwise, enumerate every legitimate sender (Google Workspace, Microsoft 365, SendGrid, etc.) and include them explicitly.\n2. Publish a DMARC record on `_dmarc.ausecurity.best` starting with `v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; rua=mailto:dmarc-reports@ausecurity.best; fo=1`. Begin with `p=none` for a short monitoring window if there is uncertainty, then move to `p=reject`.\n3. If the domain IS used for email: configure DKIM with 2048-bit keys on every sender (Google Workspace etc.), ensure the DKIM d= aligns with ausecurity.best, and enforce DMARC alignment strict.\n4. If the domain is NOT used for email: publish an explicit \"null MX\" record (`ausecurity.best. 300 IN MX 0 .`) per RFC 7505, publish `v=spf1 -all`, publish a DKIM `*._domainkey.ausecurity.best. TXT \"v=DKIM1; p=\"` (empty key) record, and remove info@ausecurity.best from the website; publish a working contact form or a different authenticated channel.\n5. Publish a CAA record limiting certificate issuance to the specific CA(s) actually used (`0 issue \"letsencrypt.org\"`).",
+      "affected_components": [
+        "ausecurity.best (sender domain)",
+        "info@ausecurity.best (advertised mailbox)"
+      ],
+      "references": [
+        "RFC 7208 (SPF)",
+        "RFC 6376 (DKIM)",
+        "RFC 7489 (DMARC)",
+        "MITRE ATT&CK T1566.001 (Spearphishing Attachment)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Reflected DOM-based XSS on Consultation Success Page (name Parameter)",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:L",
+      "severity": "critical",
+      "summary": "The /consultation-success.html page reads the `name` query parameter from the URL and writes it directly into the DOM using `.innerHTML`, without sanitisation or encoding. An attacker-crafted URL under the trusted ausecurity.best domain will execute arbitrary JavaScript in the victim's browser. Because the application uses same-origin session cookies for its /api/auth/* endpoints, this is enough for session riding against any authenticated AuSecurity admin.",
+      "description": "The HTML served from /consultation-success.html contains the following inline script (verbatim from the server response, lines 383\u2013401 of the body):\n\n    document.addEventListener('DOMContentLoaded', () => {\n      const urlParams   = new URLSearchParams(window.location.search);\n      const userName    = urlParams.get('name');\n      const companyName = urlParams.get('company');\n      if (userName) {\n        document.getElementById('user-name').innerHTML = userName;   // <-- SINK\n      } else {\n        document.getElementById('user-name').textContent = 'there';\n      }\n      if (companyName) {\n        document.getElementById('company-name').textContent = companyName;\n      } else {\n        const companyPart = document.getElementById('company-name').parentElement;\n        companyPart.style.display = 'none';\n      }\n    });\n\nThe sink `element.innerHTML = userName` interprets any HTML (including <img onerror=\u2026>, <svg onload=\u2026>, <iframe srcdoc=\u2026>) placed in the `name` parameter. Note that the `company` parameter uses the safer `.textContent`, confirming that the developer knows the difference \u2014 this is a mistake, not a framework limitation.\n\nThe success page is reachable WITHOUT first submitting the contact form, by simply visiting:\n  https://ausecurity.best/consultation-success.html?name=<img%20src=x%20onerror=alert(1)>&company=X\n\nThe attacker payload executes with origin https://ausecurity.best, which gives it:\n  - Full ability to read the DOM of the trusted site (defacement, keylogging on other open forms via same-origin iframes).\n  - Ability to call fetch('/api/*', {credentials:'same-origin'}) \u2014 if a logged-in admin visits the link, the attacker can read the admin's data from /api/auth/me and trigger admin actions.\n  - Ability to redirect the victim to an attacker-controlled login clone.\n  - Credential theft via a fake \"please re-authenticate\" overlay rendered on the real domain.\n\nThe vulnerability is especially damaging in combination with the spoofable ausecurity.best email domain (see separate finding) \u2014 a phishing email purportedly from AuSecurity, containing a link to the attacker's XSS URL under the real ausecurity.best domain, is extremely likely to be clicked.\n\nEvidence stored under: evidence/t-finalprobe/final2.txt (full HTML body with the vulnerable script).",
+      "recommendation": "1. Replace `.innerHTML = userName` with `.textContent = userName`. This is a one-line fix and preserves the existing display intent (plain text name).\n2. Add server-side output encoding and server-side validation of the `name` and `company` parameters on this and every page that reflects user input.\n3. Add a strict Content-Security-Policy to ausecurity.best that at minimum sets `default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self';` \u2014 this would have broken this specific attack even without changing the vulnerable code.\n4. Grep the entire frontend codebase for other uses of `.innerHTML =`, `document.write`, and template interpolation and apply the same fix.",
+      "affected_components": [
+        "https://ausecurity.best/consultation-success.html (parameter `name`)",
+        "http://ausecurity.best:8080/consultation-success.html"
+      ],
+      "references": [
+        "CWE-79 (Improper Neutralization of Input in Web Page)",
+        "OWASP DOM-based XSS Prevention Cheat Sheet"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Client-Side Open Redirect on Login Flow",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+      "severity": "high",
+      "summary": "After a successful login, the JavaScript handler blindly navigates the browser to whatever URL was supplied in the `redirect` query-string parameter, with no origin or scheme check. The comment above the code even claims \"Safety check: only allow same-origin redirects\" but the check is not implemented. Any attacker-controlled URL is accepted, enabling phishing campaigns that redirect through the real ausecurity.best login page.",
+      "description": "Relevant excerpt from https://ausecurity.best/assets/js/main.js (verbatim from the server):\n\n    if (res.ok) {\n      const params = new URLSearchParams(window.location.search);\n      const redirect = params.get('redirect');\n      // Safety check: only allow same-origin redirects\n      if (redirect) {\n        window.location.href = redirect;         // <-- NO VALIDATION PERFORMED\n      } else {\n        window.location.href = '/dashboard';\n      }\n    }\n\nA victim clicking a link like `https://ausecurity.best/login?redirect=https://evil.example/aus-login-session-expired` will:\n  1. See the real AuSecurity login page under the real HTTPS AuSecurity domain.\n  2. Submit real credentials to the real backend.\n  3. On success, be redirected to the attacker-controlled site which can present a pixel-perfect \"session expired, please re-enter your password\" prompt or deliver malware.\n\nImpact drivers:\n  - This is particularly effective combined with the spoofable email domain (no SPF/DMARC/DKIM), the exposed client list (dashboard disclosure), and the self-signed TLS cert training users to click past warnings.\n  - The server-side `/login?redirect=` endpoint itself does NOT emit a 3xx with a Location header (we confirmed HTTP 200 with no Location on the first query); the vulnerability is strictly on the client side after a 200 OK /api/auth/login response.\n\nEvidence stored under: evidence/t-api2/probe2.txt (main.js source).",
+      "recommendation": "1. Actually implement the \"same-origin\" check promised in the comment. For example:\n      const url = new URL(redirect, window.location.origin);\n      if (url.origin !== window.location.origin) {\n        window.location.href = '/dashboard';\n      } else {\n        window.location.href = url.pathname + url.search + url.hash;\n      }\n2. Even better, keep the redirect state server-side (opaque token mapped to a path) rather than echoing it from the URL.\n3. Add a server-side allow-list and strip the `redirect` parameter when the login endpoint returns the login page.\n4. Combine with CSP `frame-ancestors 'self'` and `Referrer-Policy: strict-origin-when-cross-origin` to reduce residual phishing utility.",
+      "affected_components": [
+        "https://ausecurity.best/login.html (and /login) \u2014 handler in /assets/js/main.js"
+      ],
+      "references": [
+        "CWE-601 (URL Redirection to Untrusted Site)",
+        "OWASP ASVS V5.1.5"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Self-Signed TLS Certificate with CA:TRUE on Primary Website",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+      "severity": "high",
+      "summary": "The TLS certificate presented by the apex website is self-signed. All major browsers will show a full-page interstitial warning (\"Your connection is not private\" / \"NET::ERR_CERT_AUTHORITY_INVALID\") when a visitor opens https://ausecurity.best/. The certificate is additionally marked as a Certificate Authority (`CA:TRUE`) in its Basic Constraints, which is incorrect for a leaf certificate. For a security consultancy, serving an untrusted certificate at the brand's primary web presence is both a credibility problem and a real security problem because it conditions visitors to ignore browser warnings.",
+      "description": "openssl / nmap ssl-cert output confirms:\n  Subject    : CN=ausecurity.best\n  Issuer     : CN=ausecurity.best           (self-issued \u2192 self-signed)\n  SAN        : DNS:ausecurity.best\n  Not before : 2026-09-14T15:32:18Z\n  Not after  : 2027-09-14T15:32:18Z          (1 year, atypical for a self-signed cert)\n  Key        : RSA 2048-bit\n  Signature  : sha256WithRSAEncryption\n  SHA256 fp  : B5:30:10:E0:32:E7:42:10:E4:B1:F0:68:A0:C5:B2:A2:0B:F6:44:C1:F3:32:92:87:4D:1C:64:07:14:8D:14:E2\n  Basic constraints: CA:TRUE   <-- ABNORMAL FOR A LEAF CERT\n\nImpact:\n  - Every normal visitor sees a browser interstitial and either (a) abandons the site, (b) clicks through, training themselves and clients to ignore TLS warnings. This is destructive to a security brand.\n  - The CA:TRUE flag means an attacker who ever obtains the certificate's private key could issue arbitrary subordinate certificates in that chain and present them in man-in-the-middle attacks against anyone who had chosen to \"always trust\" the AuSecurity cert in their trust store.\n  - Subdomains blog.* and ticket.* correctly use Let's Encrypt certificates (CN=YE1, EC P-256). The misconfig is specific to the apex.\n\nEvidence stored under: evidence/t1-ports/stage2-services.nmap , evidence/t2-tls/ssl-nse.nmap , evidence/enum-001/* .",
+      "recommendation": "1. Obtain a trusted certificate from a public CA (Let's Encrypt is already in use for the subdomains and is free; HTTP-01 or DNS-01 works). Install for ausecurity.best (apex) and www.ausecurity.best.\n2. Automate renewal (certbot timer / acme.sh cron).\n3. Publish a CAA record restricting issuance to the chosen CA(s): `ausecurity.best. CAA 0 issue \"letsencrypt.org\"`.\n4. Remove the current self-signed cert and the CA:TRUE basic constraint.\n5. Enable HSTS (`Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`) and submit to the HSTS preload list once stable.",
+      "affected_components": [
+        "https://ausecurity.best:443 (apex)",
+        "nginx/1.22.1"
+      ],
+      "references": [
+        "CWE-295 (Improper Certificate Validation)",
+        "CA/Browser Forum Baseline Requirements",
+        "Mozilla CA policy"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress Admin Username Enumeration via REST API and Author Redirect",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "severity": "high",
+      "summary": "The WordPress REST API at /?rest_route=/wp/v2/users and /?rest_route=/wp/v2/users/1 returns unauthenticated JSON that identifies the administrator account by username and slug (`admin`), along with the author permalink and gravatar hash. The `?author=1` \u2192 301 redirect also leaks the slug. Both are standard precursors to targeted credential attacks (brute-force, password reuse, credential stuffing) against the known admin username.",
+      "description": "Confirmed enumeration vectors:\n  1. GET https://blog.ausecurity.best/?rest_route=/wp/v2/users\n       \u2192 HTTP 200 JSON array containing {id:1, name:\"admin\", slug:\"admin\",\n         link:\"https://blog.ausecurity.best/index.php/author/admin/\",\n         avatar_urls:{..., gravatar_hash: \"25e5434e5d0e1a62822d3670d4cf46e6b59a88908848f9bb1c91d11c819aa61b\"}}\n  2. GET https://blog.ausecurity.best/?rest_route=/wp/v2/users/1\n       \u2192 HTTP 200 JSON with the same admin data.\n  3. GET https://blog.ausecurity.best/?author=1\n       \u2192 HTTP 301 Moved Permanently with Location containing \"/author/admin/\".\n  4. The direct `/wp-json/wp/v2/users` endpoint is blocked (404), but the `?rest_route=` fallback (which WordPress enables when permalinks are not configured for the API) is not \u2014 so the mitigation is incomplete.\n\nThe gravatar hash additionally allows an attacker to confirm the admin's registered email across the public Gravatar database if the user is a Gravatar member, extending the identity disclosure beyond just the username.\n\nEvidence stored under: evidence/t6-wordpress/manual-probes.txt , evidence/t-api2/probe2.txt , evidence/t10-nuclei/results-focused.txt (nuclei \"wp-user-enum\" LOW).",
+      "recommendation": "1. In WordPress, filter the REST API `/wp/v2/users` endpoint to require `edit_users` capability for anonymous callers. Can be done with a `rest_authentication_errors` or `rest_endpoints` filter in a mu-plugin.\n2. Disable the `?rest_route=` fallback by configuring permalinks and enforcing routing so the only REST entry point is `/wp-json/*`, which is already 404.\n3. Disable WordPress author archive URLs (`?author=N` redirect) via a `template_redirect` hook that 404s unauthenticated requests.\n4. Rename the admin account from \"admin\" to a non-guessable value. Add a secondary account as the user-facing writer with no admin rights.\n5. Enforce 2FA on all WordPress admins (plugin: Two-Factor, Wordfence, etc.).\n6. Confirm that the WordPress login page is also protected by rate limiting and/or a CAPTCHA.",
+      "affected_components": [
+        "https://blog.ausecurity.best/"
+      ],
+      "references": [
+        "CWE-204 (Observable Response Discrepancy)",
+        "WordPress REST API users endpoint"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress XML-RPC Enabled with Pingback / User-Enumeration Methods",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+      "severity": "high",
+      "summary": "The XML-RPC endpoint on the WordPress blog is enabled and advertises 82+ methods, including `pingback.ping` (SSRF / amplified-DoS vector), `wp.getUsersBlogs`, `wp.getAuthors`, `metaWeblog.getUsersBlogs`, and `system.multicall` (brute-force amplification). The endpoint responds correctly to a benign method call (demo.sayHello \u2192 \"Hello!\"), confirming it is live and processing requests.",
+      "description": "Observed behaviour:\n  - GET https://blog.ausecurity.best/xmlrpc.php \u2192 HTTP 405 Method Not Allowed (expected; XML-RPC accepts POST).\n  - POST text/xml with `system.listMethods` \u2192 HTTP 200 OK, 82 method names returned, including `pingback.ping`, `pingback.extensions.getPingbacks`, `wp.getUsersBlogs`, `metaWeblog.getUsersBlogs`, `blogger.getUserInfo`, `wp.getAuthors`, `system.multicall`, `system.listMethods`, `demo.sayHello` (which returned \"Hello!\").\n  - X-Pingback: https://blog.ausecurity.best/xmlrpc.php header is advertised on content pages.\n\nAttack scenarios:\n  - `pingback.ping` can be abused to make the WordPress server fetch arbitrary attacker-chosen URLs (SSRF against internal services on 51.79.167.208 or the OVH internal network). Historically it has also been used for amplified DDoS.\n  - `system.multicall` lets an attacker pack dozens of `wp.getUsersBlogs` authentication attempts into a single HTTP request, bypassing simple rate-limit heuristics; combined with the known admin username this materially lowers brute-force cost. (Note: Our methodology forbade brute force; we did not test credentials.)\n  - User-enumeration methods confirm individual usernames exist / do not exist by error-message differentiation.\n\nEvidence stored under: evidence/t6-wordpress/manual-probes.txt (listMethods response, demo.sayHello proof), evidence/t-webprobe/webprobe.txt.",
+      "recommendation": "1. If XML-RPC is not required by any plugin, disable it entirely:\n     - Add `add_filter('xmlrpc_enabled', '__return_false');` in a mu-plugin, AND\n     - At the web-server level, block POST to /xmlrpc.php with an Apache `<Files xmlrpc.php> Require all denied </Files>` or equivalent.\n2. If XML-RPC is required (e.g. legacy Jetpack flows), restrict it to known partner IPs at the web-server level, and specifically disable `pingback.*` methods via the `xmlrpc_methods` filter.\n3. Remove the `X-Pingback` header via the `wp_headers` filter.\n4. Combine with rate limiting on the WAF / nginx for /xmlrpc.php (e.g. 5 requests per minute per IP).",
+      "affected_components": [
+        "https://blog.ausecurity.best/xmlrpc.php"
+      ],
+      "references": [
+        "CWE-918 (SSRF)",
+        "CWE-307 (Improper Restriction of Excessive Authentication Attempts)",
+        "CVE-2013-0235 (pingback DDoS pattern)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Plaintext HTTP Mirror Exposing the Same Application Content on Port 8080",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+      "severity": "high",
+      "summary": "A plaintext HTTP service is exposed on port 8080 of two in-scope hosts and serves the same sensitive application content as the HTTPS site, including the login page, the admin dashboard HTML (with hardcoded client data), the API endpoints, and the osTicket installer. Session cookies set over HTTPS cannot carry the `Secure` flag safely while a plaintext mirror exists, and all data on the plaintext channel is interceptable on the path between the client and OVH Singapore.",
+      "description": "Confirmed:\n  - http://ausecurity.best:8080/ \u2192 HTTP 200, title \"Ausecurity \u2014 GRC Consulting & Penetration Testing\" (same as HTTPS). nginx/1.25.5.\n  - http://ausecurity.best:8080/dashboard.html \u2192 HTTP 200, same hardcoded client PII content.\n  - http://ausecurity.best:8080/api/auth/me \u2192 HTTP 401 (API live over cleartext).\n  - http://ticket.ausecurity.best:8080/ \u2192 HTTP 302 \u2192 /setup/install.php \u2192 HTTP 200 (osTicket installer, with Set-Cookie PHPSESSID in cleartext).\n  - Port 8080 was NOT confirmed to be an open HTTP proxy \u2014 the earlier nmap NSE \"http-open-proxy\" alert turned out to be a false positive: proxy-style requests to external hosts were not forwarded (verified).\n\nEvidence stored under: evidence/t1-ports/stage2-services.nmap , evidence/t-misc/misc-probes.txt , evidence/t4-osticket-installer/install-8080.html.",
+      "recommendation": "1. Disable the plaintext HTTP listener on port 8080 of 51.79.166.148 (apex) and 51.79.166.209 (ticket). If port 8080 is used for internal health checks, bind it to 127.0.0.1 or restrict with nginx `allow`/`deny` to known monitoring IPs only.\n2. Enforce HTTPS everywhere on ports 80 and 443 only, with a strict 301 redirect from 80 \u2192 443 and HSTS preload on 443.\n3. Ensure every session / auth cookie carries the `Secure` attribute so it cannot be sent over cleartext.\n4. Remove the osTicket installer first (see critical finding) before deciding how to re-expose anything on 8080.",
+      "affected_components": [
+        "http://ausecurity.best:8080/ (nginx/1.25.5)",
+        "http://ticket.ausecurity.best:8080/ (Apache/2.4.68)"
+      ],
+      "references": [
+        "CWE-319 (Cleartext Transmission of Sensitive Information)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "PHPSESSID Session Cookie Missing HttpOnly and Secure Flags",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+      "severity": "medium",
+      "summary": "The PHPSESSID session cookie set by the osTicket application has neither the HttpOnly nor the Secure attribute. Any client-side script that runs in the osTicket origin can read the session cookie (session theft via XSS), and the cookie is additionally transmitted in cleartext when the user hits the port-8080 HTTP mirror.",
+      "description": "Observed Set-Cookie headers (verbatim) include:\n  Set-Cookie: PHPSESSID=1498870558d9b2068a011152394bc681; path=/\n  Set-Cookie: PHPSESSID=65d8bde750a84975f5af5d4a258a3232; path=/\n\nnmap NSE http-cookie-flags explicitly reports `httponly flag not set`. The cookie is set without `Secure`, without `HttpOnly`, and without `SameSite`. On port 8080 the cookie is additionally delivered over cleartext HTTP (see separate HTTP-mirror finding).\n\nImpact: once an attacker finds any XSS in osTicket (or in any content served from the ticket subdomain), they can read `document.cookie` and silently hijack the admin's session. On port 8080 the cookie is observable to any on-path attacker.\n\nEvidence stored under: evidence/t2-tls/ssl-nse.nmap , evidence/t4-osticket-installer/install-*.html , evidence/t-finalprobe/nikto-ticket.txt.",
+      "recommendation": "1. In the osTicket php.ini (or `ini_set` in a bootstrap file), set:\n     session.cookie_httponly = 1\n     session.cookie_secure   = 1\n     session.cookie_samesite = Strict          (or Lax if cross-site navigations are needed)\n     session.use_only_cookies = 1\n     session.use_strict_mode  = 1\n2. Regenerate session IDs on login (`session_regenerate_id(true)`) to defeat fixation.\n3. Disable the port-8080 HTTP mirror (see separate finding) so the Secure flag can actually be enforced.\n4. After rotation, invalidate all currently issued PHPSESSID values.",
+      "affected_components": [
+        "https://ticket.ausecurity.best/*",
+        "http://ticket.ausecurity.best:8080/* (osTicket)"
+      ],
+      "references": [
+        "CWE-1004 (Sensitive Cookie Without HttpOnly)",
+        "CWE-614 (Sensitive Cookie Without Secure)",
+        "OWASP ASVS V3.4"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing HTTP Security Headers on All Three Web Assets",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "severity": "medium",
+      "summary": "The apex, blog, and ticket sites do not emit Strict-Transport-Security, Content-Security-Policy, X-Content-Type-Options, Referrer-Policy, or Permissions-Policy on their primary pages. X-Frame-Options is also missing on the apex and ticket; the WordPress blog does send a modest X-Frame-Options: SAMEORIGIN and a very narrow CSP (`frame-ancestors 'self'`). Properly configured, these headers would have independently blunted the DOM-based XSS, open-redirect, and SSL-stripping attacks already identified in this report.",
+      "description": "HTTP response-header matrix (confirmed via curl and nmap http-security-headers NSE):\n\n  Header                          | apex :443 | apex :8080 | blog :443      | ticket :443 | ticket :8080\n  --------------------------------+-----------+------------+----------------+-------------+-------------\n  Strict-Transport-Security       | missing   | N/A        | missing        | missing     | N/A\n  Content-Security-Policy         | missing   | missing    | frame-ancestors| missing     | missing\n  X-Frame-Options                 | missing   | missing    | SAMEORIGIN     | missing     | missing\n  X-Content-Type-Options          | missing   | missing    | missing        | missing     | missing\n  Referrer-Policy                 | missing   | missing    | strict-origin* | missing     | missing\n  Permissions-Policy              | missing   | missing    | missing        | missing     | missing\n\n(* strict-origin-when-cross-origin on blog)\n\nImpact: these headers are low-cost defence-in-depth that would have significantly reduced the exploitability of several higher-severity findings (DOM XSS, open-redirect, SSL-stripping, clickjacking).\n\nEvidence stored under: evidence/t2-tls/ssl-nse.nmap , evidence/t-finalprobe/nikto-*.txt .",
+      "recommendation": "Apply the following minimum header set at the nginx / Apache layer on all three sites (tune CSP per actual needs):\n\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload\n  Content-Security-Policy:   default-src 'self'; img-src 'self' data: https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'\n  X-Frame-Options:           DENY\n  X-Content-Type-Options:    nosniff\n  Referrer-Policy:           strict-origin-when-cross-origin\n  Permissions-Policy:        camera=(), microphone=(), geolocation=(), interest-cohort=()\n  Cross-Origin-Opener-Policy: same-origin\n  Cross-Origin-Resource-Policy: same-origin\n\nThen validate on Mozilla Observatory and address any remaining A/B-grade recommendations.",
+      "affected_components": [
+        "https://ausecurity.best/",
+        "https://blog.ausecurity.best/",
+        "https://ticket.ausecurity.best/ (and the port-8080 mirrors)"
+      ],
+      "references": [
+        "OWASP Secure Headers Project",
+        "Mozilla Observatory"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress Uploads Directory Listing Enabled",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "severity": "medium",
+      "summary": "Apache serves a browsable directory index at /wp-content/uploads/ on the WordPress blog, listing the yearly/monthly folders that WordPress creates and (recursively) every file ever uploaded. Even if no sensitive files are currently indexed, this is a persistent reconnaissance vector that will leak draft media, private attachments, and backup artefacts the moment they are placed under /wp-content/uploads/.",
+      "description": "GET https://blog.ausecurity.best/wp-content/uploads/ returns HTTP 200 with an auto-generated Apache \"Index of /wp-content/uploads\" listing. Observed indexed child: `2026/` folder. The behaviour is confirmed by both the WPScan output and manual curl probes.\n\nEvidence stored under: evidence/t6-wordpress/manual-probes.txt , evidence/t6-wordpress/wpscan.txt.",
+      "recommendation": "1. Disable Apache directory listings globally: in the main Apache config remove `Indexes` from the `Options` line, or add an explicit `Options -Indexes` directive.\n2. Alternatively (less preferred) drop a `.htaccess` file in /wp-content/uploads/ containing `Options -Indexes` plus `IndexIgnore *`.\n3. Verify that no media files under /wp-content/uploads/ contain sensitive customer data (invoices, exported reports). If any do, move them out of the public uploads path and serve them through an authenticated download endpoint.",
+      "affected_components": [
+        "https://blog.ausecurity.best/wp-content/uploads/"
+      ],
+      "references": [
+        "CWE-548 (Exposure of Information Through Directory Listing)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Contact Form Lacks Rate Limiting and Message Length Validation",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+      "severity": "medium",
+      "summary": "The public /api/contact endpoint accepts an unlimited number of submissions per source IP in rapid succession, and it accepts message bodies at least 10,000 characters long without rejection. This is sufficient to abuse the ticketing/mail backend for log flooding, storage exhaustion, operator-mailbox denial-of-service, and (if forwarded to a client-facing CRM) to inject disruptive content.",
+      "description": "Observations from the final probe (benign test marker payloads only):\n  1. Five back-to-back POST /api/contact requests all returned HTTP 200 within ~1.1s each. No HTTP 429, no delay, no CAPTCHA.\n  2. A 10 KB `message` body was accepted with HTTP 200.\n  3. The successful response reflects the submitted `full_name` into a `redirect_url` field: `/consultation-success.html?name=<URL-encoded-name>&company=<company>` \u2014 this is the entry point for the related DOM-XSS finding.\n  4. A honeypot `h` field IS correctly enforced (missing-field submissions get HTTP 422 \"Field required\") \u2014 this is the only existing anti-abuse mechanism and is defeatable by any human attacker.\n\nImpact: without rate limiting an attacker (or a worm leveraging the no-SPF-DMARC spoofability) can submit thousands of enquiries per minute, overwhelming the back-office inbox or CRM queue; this effectively denies service to real leads and may be used to bury a targeted phishing lead among noise.\n\nEvidence stored under: evidence/t-finalprobe/final.txt (benign markers tagged \"AUSEC-TEST-20261005\").",
+      "recommendation": "1. Apply a per-IP rate limit at the nginx or application layer (e.g. 5 requests / minute / IP, with a short-term burst allowance).\n2. Enforce server-side maximum lengths on every field: full_name \u2264 100 chars, company_name \u2264 150, email RFC5321 (254), phone \u2264 30, service_interest from an enum, message \u2264 2000 chars.\n3. Add a server-side CAPTCHA or Turnstile check for anonymous submissions, in addition to the existing honeypot `h` field.\n4. Log the source IP, user-agent, and timestamp of every submission to allow detection of abuse.\n5. Note the benign test submissions tagged \"[CLAWSEC AUTHORIZED PENTEST]\" / marker \"AUSEC-TEST-20261005\" and delete them from the ingestion queue.",
+      "affected_components": [
+        "POST https://ausecurity.best/api/contact"
+      ],
+      "references": [
+        "CWE-770 (Allocation of Resources Without Limits or Throttling)",
+        "CWE-20 (Improper Input Validation)",
+        "OWASP ASVS V5.1.3"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "/api/health Endpoint Exposed Without Authentication",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "severity": "low",
+      "summary": "The /api/health endpoint responds HTTP 200 with a small JSON body to any anonymous caller. This is a minor information disclosure that confirms the backend framework is live and reachable, and it is often used by automated scanners to confirm a target is \"up\" before deeper enumeration.",
+      "description": "GET https://ausecurity.best/api/health returns HTTP 200 with a 15-byte body. The endpoint is likely intended for infrastructure load-balancer health probes but is exposed to the public Internet.\n\nEvidence stored under: evidence/t-api2/probe2.txt.",
+      "recommendation": "1. Restrict /api/health to the internal load balancer / OVH health-check IP ranges via nginx `allow`/`deny` or a middleware check.\n2. If a public-facing liveness endpoint is required for third-party uptime monitoring, keep the response generic (e.g. literal \"ok\") and ensure it does not disclose dependency, framework, or build-version data.",
+      "affected_components": [
+        "https://ausecurity.best/api/health"
+      ],
+      "references": [
+        "CWE-200 (Exposure of Sensitive Information)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "osTicket web.config File Exposed",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "severity": "low",
+      "summary": "The IIS/ASP.NET-style web.config shipped with osTicket is served as plain text and reveals the application's internal URL rewrite rules (e.g. /api/* \u2192 /api/http.php/*, /scp/apps/* \u2192 /scp/apps/dispatcher.php/*, /pages/* \u2192 /pages/index.php/*). This is intended for IIS deployments only and does nothing on the current nginx + Apache stack other than help attackers map the application.",
+      "description": "GET https://ticket.ausecurity.best/web.config returns HTTP 200 with a 2,197-byte XML body containing the IIS URL Rewrite Module configuration. The directives disclose at least three internal dispatcher endpoints and the overall PHP routing structure. Directory browsing is disabled per the file; the file itself is not used by the running web servers (nginx and Apache do not process web.config), so deleting it has no functional impact.\n\nEvidence stored under: evidence/t-webprobe/webprobe.txt , evidence/t10-nuclei/results-focused.txt (nuclei \"web-config\" LOW).",
+      "recommendation": "1. Delete /web.config from the osTicket web root; it is only used by IIS, not by nginx or Apache.\n2. In nginx, add a global deny for `location ~* /web\\.config$ { deny all; }` as defence-in-depth.\n3. While cleaning up, also delete /setup/ (see critical finding) and any `*.ini`, `*.sql`, `README*`, `CHANGELOG*` left over from the install.",
+      "affected_components": [
+        "https://ticket.ausecurity.best/web.config",
+        "http://ticket.ausecurity.best:8080/web.config"
+      ],
+      "references": [
+        "CWE-538 (Insertion of Sensitive Information into Externally-Accessible File)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Verbose Server Version Headers Across All Three Web Assets",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "severity": "low",
+      "summary": "Every HTTP response from the three in-scope sites discloses the exact web-server version (and, on the ticket host, the PHP minor version via X-Powered-By). This lets attackers skip the fingerprinting step and go directly to CVE lookup. Suppressing the version number does not fix the underlying software but materially raises the bar for mass-exploitation worms.",
+      "description": "Observed headers:\n  https://ausecurity.best/        : Server: nginx/1.22.1\n  http://ausecurity.best:8080/    : Server: nginx/1.25.5\n  https://blog.ausecurity.best/   : Server: Apache/2.4.68 (Debian)\n  https://ticket.ausecurity.best/ : Server: nginx/1.22.1 ; X-Powered-By: PHP/8.2.33\n  http://ticket.ausecurity.best:8080/ : Server: Apache/2.4.68 (Debian) ; X-Powered-By: PHP/8.2.33\n\nNikto additionally flagged nginx/1.22.1 and nginx/1.25.5 as \"outdated\". We did NOT confirm any specific exploitable CVE in these specific versions during this engagement \u2014 reduction here is defence-in-depth, not a direct exploit.\n\nEvidence stored under: evidence/t1-ports/stage2-services.nmap , evidence/t-finalprobe/nikto-*.txt .",
+      "recommendation": "1. nginx: add `server_tokens off;` globally in nginx.conf. For full version-string removal install nginx-extras + the Headers More module and `more_clear_headers 'Server';`.\n2. Apache: add `ServerTokens Prod` and `ServerSignature Off` in the main config.\n3. PHP: in php.ini set `expose_php = Off` to drop the X-Powered-By header.\n4. Independently of the version-string change, plan an upgrade cycle: nginx mainline 1.27+, keep Apache on the current Debian security track, keep PHP on a maintained 8.3+ branch when available.",
+      "affected_components": [
+        "ausecurity.best (nginx/1.22.1",
+        "nginx/1.25.5)",
+        "blog.ausecurity.best (Apache/2.4.68)",
+        "ticket.ausecurity.best (nginx/1.22.1",
+        "Apache/2.4.68",
+        "PHP/8.2.33)"
+      ],
+      "references": [
+        "CWE-200 (Exposure of Sensitive Information)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "CAA, AAAA, robots.txt, sitemap.xml and security.txt Not Published for Apex",
+      "cvss": "",
+      "severity": "low",
+      "summary": "Several standard, low-cost hygiene items are not published for the apex website: there is no Certificate Authority Authorization (CAA) record restricting which CA may issue certificates, no IPv6 (AAAA) record, no robots.txt, no sitemap.xml, and no /.well-known/security.txt disclosing a coordinated-disclosure contact.",
+      "description": "Confirmed with direct DNS and HTTP probes:\n  - CAA ausecurity.best \u2192 (none)\n  - AAAA ausecurity.best \u2192 (none)\n  - GET https://ausecurity.best/robots.txt \u2192 HTTP 404\n  - GET https://ausecurity.best/sitemap.xml \u2192 HTTP 404\n  - GET https://ausecurity.best/.well-known/security.txt \u2192 HTTP 404\n\nImpact: these are low-impact items individually but collectively they signal to attackers that security hygiene has not been through a baseline hardening pass, and the missing security.txt specifically makes it harder for third-party researchers to responsibly report issues.\n\nEvidence stored under: evidence/t3-email/dns.txt , evidence/t-misc/misc-probes.txt .",
+      "recommendation": "1. Publish a CAA record: `ausecurity.best. 300 IN CAA 0 issue \"letsencrypt.org\"` and `0 iodef \"mailto:security@ausecurity.best\"`.\n2. Publish a security.txt at /.well-known/security.txt per RFC 9116, listing a monitored email, PGP key (optional), scope, and preferred languages.\n3. Publish a robots.txt declaring (at minimum) crawling policy for /dashboard.html, /login.html, /consultation-success.html (though this must NOT be used as a substitute for proper access control \u2014 see the dashboard finding).\n4. Publish a sitemap.xml for SEO purposes if desired.\n5. Add AAAA records once the hosting supports IPv6 reachably.",
+      "affected_components": [
+        "ausecurity.best"
+      ],
+      "references": [
+        "RFC 6844 (CAA)",
+        "RFC 9116 (security.txt)",
+        "sitemap.org"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Advertised Mailbox info@ausecurity.best Cannot Receive Mail",
+      "cvss": "",
+      "severity": "low",
+      "summary": "The public contact page advertises \"info@ausecurity.best\" as a point of contact, but the domain publishes no MX record and no mail server is reachable, so mail sent to that address will bounce or silently drop. Prospective clients attempting to reach AuSecurity by email will fail.",
+      "description": "`dig +short MX ausecurity.best @1.1.1.1` returns empty. The address appears in /contact.html as a user-facing contact method. This is also related to the critical \"domain spoofability\" finding.",
+      "recommendation": "1. Either stand up a real mailbox for info@ausecurity.best (through Google Workspace, Microsoft 365, or any ESP) and publish correct MX / SPF / DKIM / DMARC (see the critical spoofability finding), or\n2. Remove the info@ mailbox reference from the website and replace with the authenticated /api/contact form only, plus publish an explicit null MX (`ausecurity.best. 300 IN MX 0 .`) per RFC 7505.",
+      "affected_components": [
+        "ausecurity.best (contact page)"
+      ],
+      "references": [
+        "RFC 7505 (null MX)"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Hosting Jurisdiction Mismatch (OVH Singapore vs Advertised Sydney Address)",
+      "cvss": "",
+      "severity": "info",
+      "summary": "The three VPS hosts serving the website, blog, and ticketing system are physically located in Singapore (OVH), not in Australia, despite the business presenting a Sydney, NSW postal address. For a GRC consultancy whose Australian clients may expect data residency to match the business's advertised jurisdiction, this is a disclosure that should be made in the privacy policy and in client agreements.",
+      "description": "WHOIS / reverse DNS confirms:\n  - 51.79.166.148 \u2192 vps-10f1e4c3.vps.ovh.ca (OVH Singapore)\n  - 51.79.167.208 \u2192 vps-d64a720c.vps.ovh.ca (OVH Singapore)\n  - 51.79.166.209 \u2192 vps-91287016.vps.ovh.ca (OVH Singapore)\n\nAdvertised business address: 63 Paddington St, Paddington NSW 2021, Australia.",
+      "recommendation": "1. Update the privacy policy / terms of service to clearly disclose the hosting country (Singapore) and the chain of OVH entities involved, as required under APP 8.\n2. If client contracts assume Australian data residency, migrate hosting to an Australian region (OVH BHS/GRA do not cover AU; AWS ap-southeast-2 / Azure Australia East / Google asia-southeast4 would).\n3. If migration is not planned, obtain written consent from clients for cross-border disclosure to Singapore.",
+      "affected_components": [
+        "51.79.166.148",
+        "51.79.167.208",
+        "51.79.166.209 (AS16276 OVH SAS / OVH Singapore PTE LTD)"
+      ],
+      "references": [
+        "Australian Privacy Act 1988 APP 8 (Cross-border disclosure of personal information)"
+      ]
+    }
+  }
+]

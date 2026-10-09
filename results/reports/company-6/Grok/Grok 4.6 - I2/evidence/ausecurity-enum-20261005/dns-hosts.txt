@@ -1,0 +1,42 @@
+===== ausecurity.best =====
+ausecurity.best.	1010	IN	A	51.79.166.148
+===== www.ausecurity.best =====
+www.ausecurity.best.	1732	IN	A	51.79.166.148
+===== blog.ausecurity.best =====
+blog.ausecurity.best.	953	IN	A	51.79.167.208
+===== ticket.ausecurity.best =====
+ticket.ausecurity.best.	973	IN	A	51.79.166.209
+===== mail.ausecurity.best =====
+===== smtp.ausecurity.best =====
+===== imap.ausecurity.best =====
+===== pop.ausecurity.best =====
+===== ns1.ausecurity.best =====
+===== ns2.ausecurity.best =====
+===== api.ausecurity.best =====
+===== app.ausecurity.best =====
+===== portal.ausecurity.best =====
+===== vpn.ausecurity.best =====
+===== remote.ausecurity.best =====
+===== staging.ausecurity.best =====
+===== dev.ausecurity.best =====
+===== test.ausecurity.best =====
+===== admin.ausecurity.best =====
+===== cdn.ausecurity.best =====
+===== assets.ausecurity.best =====
+===== ftp.ausecurity.best =====
+===== git.ausecurity.best =====
+===== gitlab.ausecurity.best =====
+===== status.ausecurity.best =====
+===== docs.ausecurity.best =====
+===== support.ausecurity.best =====
+===== help.ausecurity.best =====
+===== autodiscover.ausecurity.best =====
+===== webmail.ausecurity.best =====
+===== contact.ausecurity.best =====
+contact.ausecurity.best. 1800	IN	A	51.79.166.148
+===== PTR blog IP =====
+208.167.79.51.in-addr.arpa. 86374 IN	PTR	vps-d64a720c.vps.ovh.ca.
+===== vps names =====
+51.79.167.208
+51.79.166.209
+51.79.166.148

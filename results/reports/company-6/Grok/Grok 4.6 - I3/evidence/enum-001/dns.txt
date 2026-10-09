@@ -1,0 +1,23 @@
+=== A ausecurity.best ===
+ausecurity.best.	621	IN	A	51.79.166.148
+=== A www ===
+www.ausecurity.best.	1445	IN	A	51.79.166.148
+=== A blog ===
+blog.ausecurity.best.	622	IN	A	51.79.167.208
+=== A ticket ===
+ticket.ausecurity.best.	1647	IN	A	51.79.166.209
+=== NS ===
+ausecurity.best.	1517	IN	NS	launch2.spaceship.net.
+ausecurity.best.	1517	IN	NS	launch1.spaceship.net.
+=== SOA ===
+ausecurity.best.	1542	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789403617 43200 3600 604800 3600
+=== MX ===
+=== TXT ===
+=== PTR 148 ===
+148.166.79.51.in-addr.arpa. 80241 IN	PTR	vps-10f1e4c3.vps.ovh.ca.
+=== PTR 209 ===
+209.166.79.51.in-addr.arpa. 80352 IN	PTR	vps-91287016.vps.ovh.ca.
+=== PTR 208 ===
+208.167.79.51.in-addr.arpa. 80351 IN	PTR	vps-d64a720c.vps.ovh.ca.
+contact.ausecurity.best
+contact.ausecurity.best. 1790	IN	A	51.79.166.148

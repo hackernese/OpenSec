@@ -1,0 +1,3 @@
+Query credits available: 199995
+Scan credits available: 65536
+    

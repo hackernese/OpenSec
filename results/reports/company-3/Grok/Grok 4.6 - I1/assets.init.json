@@ -1,0 +1,166 @@
+{
+  "task_id": "enum-imagur-20260918-001",
+  "generated_at": "2026-09-18T06:39:56Z",
+  "source": "/home/research/Projects/Imagur/evidence/enum-imagur-20260918-001/enumeration.yaml",
+  "identity": {
+    "canonical_name": "Imagur",
+    "public_brand": "Imager",
+    "official_root_domain": "imagesharer.xyz",
+    "address": "132 Morphett Rd, Glengowrie SA 5044, Australia"
+  },
+  "warnings": [
+    "Domain imagesharer.xyz registered 2026-09-06; passive subdomain sources lag.",
+    "WHOIS/RDAP does not publish a registrant name.",
+    "Google Maps alias FShare was not technically corroborated.",
+    "Owner email is a Flinders University mailbox (third-party).",
+    "Origin IP 51.161.131.44 is a rented OVH Australia VPS; do not expand the netblock.",
+    "resources.imagesharer.xyz points at shared AWS CloudFront; do not expand co-tenants.",
+    "TLS SAN is only imagesharer.xyz; www has certificate name mismatch.",
+    "Lookalikes imgur.com and fshare.vn are not Imagur.",
+    "No MX/SPF/DMARC on imagesharer.xyz."
+  ],
+  "unavailable_sources": [
+    "amass (sudo required)",
+    "crt.sh empty for newly issued certificate",
+    "SECURITYTRAILS_API_KEY missing",
+    "VIRUSTOTAL_API_KEY missing",
+    "CENSYS_API_ID/SECRET missing",
+    "whois.spaceship.com",
+    "rdap.org empty body",
+    "local stub resolver timeout; 1.1.1.1 used",
+    "subfinder returned 0 names"
+  ],
+  "assets": [
+    {
+      "value": "imagesharer.xyz",
+      "type": "domain",
+      "classification": "confirmed",
+      "confidence": 0.98,
+      "ownership": "organization",
+      "notes": "Official root. Live Imager PHP/nginx app."
+    },
+    {
+      "value": "www.imagesharer.xyz",
+      "type": "subdomain",
+      "classification": "confirmed",
+      "confidence": 0.90,
+      "ownership": "organization",
+      "notes": "Same origin IP as apex. Certificate SAN omits www."
+    },
+    {
+      "value": "resources.imagesharer.xyz",
+      "type": "subdomain",
+      "classification": "confirmed",
+      "confidence": 0.92,
+      "ownership": "organization_dns_rented_hosting",
+      "notes": "Referenced by login HTML. CNAME to Amazon CloudFront."
+    },
+    {
+      "value": "https://imagesharer.xyz/",
+      "type": "url",
+      "classification": "confirmed",
+      "confidence": 0.98,
+      "ownership": "organization"
+    },
+    {
+      "value": "https://imagesharer.xyz/login",
+      "type": "url",
+      "classification": "confirmed",
+      "confidence": 0.98,
+      "ownership": "organization"
+    },
+    {
+      "value": "http://imagesharer.xyz/",
+      "type": "url",
+      "classification": "confirmed",
+      "confidence": 0.95,
+      "ownership": "organization",
+      "notes": "Redirects to HTTPS."
+    },
+    {
+      "value": "https://www.imagesharer.xyz/",
+      "type": "url",
+      "classification": "likely",
+      "confidence": 0.80,
+      "ownership": "organization"
+    },
+    {
+      "value": "https://resources.imagesharer.xyz/",
+      "type": "url",
+      "classification": "confirmed",
+      "confidence": 0.88,
+      "ownership": "rented",
+      "notes": "CloudFront 403 on root."
+    },
+    {
+      "value": "51.161.131.44",
+      "type": "ip",
+      "classification": "cloud_cdn",
+      "confidence": 0.95,
+      "ownership": "cloud-provider",
+      "notes": "OVH Australia VPS origin for imagesharer.xyz. Do not scan neighbors."
+    },
+    {
+      "value": "imagur.xyz",
+      "type": "domain",
+      "classification": "candidate",
+      "confidence": 0.45,
+      "ownership": "unknown",
+      "notes": "Name match. Google hosting 404. Different registrar."
+    },
+    {
+      "value": "imager.xyz",
+      "type": "domain",
+      "classification": "candidate",
+      "confidence": 0.52,
+      "ownership": "unknown",
+      "notes": "Brand match. Spaceship NS. No web address."
+    },
+    {
+      "value": "imagesharer.net",
+      "type": "domain",
+      "classification": "candidate",
+      "confidence": 0.36,
+      "ownership": "unknown",
+      "notes": "Name similarity. ASP.NET 404, not Imager stack."
+    },
+    {
+      "value": "fshare.xyz",
+      "type": "domain",
+      "classification": "candidate",
+      "confidence": 0.30,
+      "ownership": "unknown",
+      "notes": "Maps alias lead only. No A record."
+    }
+  ],
+  "rejected": [
+    "FShare (Maps alias only)",
+    "imager.com.au",
+    "imagur.com",
+    "imagesharer.com",
+    "flinders.edu.au",
+    "imgur.com",
+    "fshare.vn",
+    "mail.imagesharer.xyz",
+    "api.imagesharer.xyz",
+    "app.imagesharer.xyz"
+  ],
+  "third_party_exclusions": [
+    "dinh0087@flinders.edu.au / flinders.edu.au",
+    "encrypted-tbn0.gstatic.com",
+    "ghs.google.com",
+    "Spaceship nameservers / Cloudflare AS13335",
+    "Amazon CloudFront anycast and co-tenants",
+    "OVH VPS-SYD2 netblock except the single origin IP as website host"
+  ],
+  "owner_review_needed": [
+    "imagesharer.xyz",
+    "www.imagesharer.xyz",
+    "resources.imagesharer.xyz",
+    "51.161.131.44",
+    "imagur.xyz",
+    "imager.xyz",
+    "imagesharer.net",
+    "fshare.xyz"
+  ]
+}

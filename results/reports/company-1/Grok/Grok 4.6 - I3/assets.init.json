@@ -1,0 +1,130 @@
+{
+  "taskId": "enum-20261005-001",
+  "generatedAt": "2026-10-05T03:55:00+11:00",
+  "canonicalName": "DownUnderNewsz",
+  "displayName": "The Down Under News",
+  "warnings": [
+    "Official pages claim publication domain thedownundernews.it.com, but that name is currently NXDOMAIN and has no certificates.",
+    "Apex https://thedownundernews.online/ serves the same site as www, but the TLS certificate only names www.thedownundernews.online.",
+    "media.thedownundernews.online currently returns nginx 502 Bad Gateway.",
+    "51.161.130.70 and 51.161.131.195 are OVH Australia VPS addresses. The surrounding provider netblock is not organization-owned.",
+    "No port scanning was performed during enumeration. Open-port notes are Shodan passive observations only.",
+    "No IPv6 records observed. No organization-operated mail hosts. No DMARC record."
+  ],
+  "unavailableSources": [
+    "crt.sh (intermittent 502/timeouts)",
+    "censys (no API credentials)",
+    "amass (flag incompatibility)",
+    "theHarvester (empty output)",
+    "securitytrails / chaos / virustotal (no credentials)"
+  ],
+  "confirmed": [
+    {
+      "id": "root-online",
+      "name": "thedownundernews.online",
+      "type": "root_domain",
+      "confidence": 100,
+      "status": "confirmed"
+    },
+    {
+      "id": "www",
+      "name": "www.thedownundernews.online",
+      "type": "hostname",
+      "ip": "51.161.130.70",
+      "confidence": 100,
+      "status": "confirmed",
+      "urls": ["https://www.thedownundernews.online/", "http://www.thedownundernews.online/"]
+    },
+    {
+      "id": "apex",
+      "name": "thedownundernews.online",
+      "type": "hostname",
+      "ip": "51.161.130.70",
+      "confidence": 90,
+      "status": "confirmed",
+      "urls": ["https://thedownundernews.online/", "http://thedownundernews.online/"],
+      "notes": "TLS name mismatch: certificate SAN is www only"
+    },
+    {
+      "id": "media",
+      "name": "media.thedownundernews.online",
+      "type": "hostname",
+      "ip": "51.161.131.195",
+      "confidence": 92,
+      "status": "confirmed",
+      "urls": ["https://media.thedownundernews.online/"],
+      "notes": "nginx 502 Bad Gateway at enumeration time"
+    },
+    {
+      "id": "ip-www",
+      "name": "51.161.130.70",
+      "type": "ipv4",
+      "ptr": "vps-8d3f63bd.vps.ovh.ca",
+      "hosting": "OVH Australia PTY LTD (VPS-SYD2, Sydney)",
+      "confidence": 98,
+      "status": "confirmed",
+      "shodanPassivePorts": ["80/tcp", "443/tcp"]
+    },
+    {
+      "id": "ip-media",
+      "name": "51.161.131.195",
+      "type": "ipv4",
+      "ptr": "vps-edee2c79.vps.ovh.ca",
+      "hosting": "OVH Australia PTY LTD (VPS-SYD2, Sydney)",
+      "confidence": 92,
+      "status": "confirmed",
+      "shodanPassivePorts": ["21/tcp", "80/tcp", "443/tcp"]
+    }
+  ],
+  "likely": [
+    {
+      "id": "it-com",
+      "name": "thedownundernews.it.com",
+      "type": "claimed_domain",
+      "confidence": 72,
+      "status": "likely",
+      "dnsStatus": "NXDOMAIN",
+      "notes": "Listed as publication domain and mailbox suffix on the official site, but not live"
+    }
+  ],
+  "candidate": [],
+  "rejected": [
+    "thedownundernews.com",
+    "thedownundernews.com.au",
+    "thedownundernews.net",
+    "thedownundernews.org",
+    "downundernewsz.com",
+    "downundernewsz.online",
+    "thedownundernews.news",
+    "vps-8d3f63bd.vps.ovh.ca",
+    "vps-edee2c79.vps.ovh.ca"
+  ],
+  "thirdPartyExclusions": [
+    "OVH VPS-SYD2 remainder (51.161.130.0/23 except the two confirmed IPs)",
+    "AS16276 OVH SAS",
+    "Spaceship registrar, nameservers, and email forwarding",
+    "it.com parent (Intis Telecom Limited)",
+    "Flinders University mailbox",
+    "Google Maps, Google Fonts",
+    "jsDelivr",
+    "Let's Encrypt",
+    "Twitter/Facebook/LinkedIn share endpoints"
+  ],
+  "cloudCdn": [
+    {
+      "name": "OVH Australia VPS Sydney",
+      "relationship": "organization_tenant_on_provider",
+      "assets": ["51.161.130.70", "51.161.131.195"]
+    }
+  ],
+  "inScopeRecommendation": [
+    "thedownundernews.online",
+    "www.thedownundernews.online",
+    "media.thedownundernews.online",
+    "51.161.130.70",
+    "51.161.131.195",
+    "https://www.thedownundernews.online/",
+    "https://thedownundernews.online/",
+    "https://media.thedownundernews.online/"
+  ]
+}

@@ -1,0 +1,20 @@
+assessment_began: "2026-09-18"
+assessment_ended: "2026-09-18"
+state: COMPLETE
+total_cost: not_captured
+token_usage:
+  input: not_captured
+  output: not_captured
+report_pdf: /home/research/Projects/Imagur/report/Imagur_Vulnerability_Assessment_Report.pdf
+findings_count: 14
+findings_by_severity:
+  critical: 2
+  high: 2
+  medium: 4
+  low: 5
+  info: 1
+notes: >
+  Cost and token usage were not provided by the orchestrator session.
+  SysReptor finding cards show CVSS 0.0 because source CVSS fields were
+  intentionally left blank (not invented). Qualitative severities in
+  findings.txt and the executive-summary table are the authoritative ratings.

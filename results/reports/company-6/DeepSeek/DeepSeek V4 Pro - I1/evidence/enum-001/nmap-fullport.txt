@@ -1,0 +1,28 @@
+# Nmap 7.99 scan initiated Fri Sep 18 05:10:27 2026 as: /usr/lib/nmap/nmap --privileged -sS -Pn -p- --min-rate 4000 --max-retries 2 -T4 -oN /home/research/Projects/AuSecurity/evidence/enum-001/nmap-fullport.txt 51.79.166.148 51.79.167.208 51.79.166.209
+Nmap scan report for vps-10f1e4c3.vps.ovh.ca (51.79.166.148)
+Host is up (0.18s latency).
+Not shown: 65531 filtered tcp ports (no-response)
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+443/tcp  open  https
+8080/tcp open  http-proxy
+
+Nmap scan report for vps-d64a720c.vps.ovh.ca (51.79.167.208)
+Host is up (0.18s latency).
+Not shown: 65532 filtered tcp ports (no-response)
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+
+Nmap scan report for vps-91287016.vps.ovh.ca (51.79.166.209)
+Host is up (0.18s latency).
+Not shown: 65531 filtered tcp ports (no-response)
+PORT     STATE  SERVICE
+22/tcp   open   ssh
+80/tcp   closed http
+443/tcp  open   https
+8080/tcp open   http-proxy
+
+# Nmap done at Fri Sep 18 05:12:07 2026 -- 3 IP addresses (3 hosts up) scanned in 99.80 seconds

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ausecurity — GRC Consulting & Penetration Testing</title>
+  <meta name="description" content="Ausecurity delivers expert GRC consulting and penetration testing services to businesses across Australia. Know your risk. Secure your future." />
+  <meta property="og:title" content="Ausecurity — GRC Consulting & Penetration Testing" />
+  <meta property="og:description" content="Expert cybersecurity consulting for businesses that take security seriously." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ausecurity.best/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Ausecurity home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-link

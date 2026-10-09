@@ -1,0 +1,74 @@
+[
+	{
+		"id": "17004319838",
+		"tbs_sha256": "3f9a5b83df29293e199bb9f777336bed7dac3bb3416b90b55f617d708f8d0a96",
+		"cert_sha256": "31b9c8a27d7bedf65776fcdbfa839c6544b53c3dab62c53b0dca651889dc1ec0",
+		"dns_names": [
+			"thedownundernews.online"
+		],
+		"pubkey_sha256": "4490aaf3abc19641148e7d6f7b7c420ee86b5f72b660d84decde4a28838f0f0a",
+		"not_before": "2026-09-05T14:52:24Z",
+		"not_after": "2026-12-04T14:52:23Z",
+		"revoked": false
+	},
+	{
+		"id": "17015550033",
+		"tbs_sha256": "64f5aa380bde653e3ef9dbdbc50bc2091caab869975df0f3a3cd7b0d6be51ae3",
+		"cert_sha256": "550e7a7eab08d1b240e9efebdc807624d32c720148983ea9aa72169ceb1ff976",
+		"dns_names": [
+			"media.thedownundernews.online"
+		],
+		"pubkey_sha256": "2125865d3bf9b7f3f4777841c974cfe12ef45e4d7122cda19cdadda9a01a1906",
+		"not_before": "2026-09-06T05:22:26Z",
+		"not_after": "2026-12-05T05:22:25Z",
+		"revoked": false
+	},
+	{
+		"id": "17213001438",
+		"tbs_sha256": "25c31896efdd682dc5db02cc3c511e93771cd4cbf565102556b8adb4a052d28b",
+		"cert_sha256": "b0e95daf5a5c3572effb24659bef810e26d5c2ed82a23391c365872b8717bd5c",
+		"dns_names": [
+			"thedownundernews.online"
+		],
+		"pubkey_sha256": "f255f21fab9a6cec1ccbe5aa29f3c82171f9a3f231fdf8910e2d01dcde680db1",
+		"not_before": "2026-09-16T12:42:59Z",
+		"not_after": "2026-12-15T12:42:58Z",
+		"revoked": false
+	},
+	{
+		"id": "17213005418",
+		"tbs_sha256": "80fdde23e2ae7fdfc2ffc723e75ca6959d32cffcbdb1a0d7cd040387c7006c9c",
+		"cert_sha256": "1c8a9f3d7d05250cc93b1579238ce62dbec7bea2ff224a4fb4c11a3ece616cc6",
+		"dns_names": [
+			"media.thedownundernews.online"
+		],
+		"pubkey_sha256": "f9fa514ded793621aaafbcc220c8f902d55460543d1453e2be4c5fce7ced1146",
+		"not_before": "2026-09-16T12:43:26Z",
+		"not_after": "2026-12-15T12:43:25Z",
+		"revoked": false
+	},
+	{
+		"id": "17270283877",
+		"tbs_sha256": "7a7b6163599d8c7554c4365a6de9079aa9dab3b979f3867e14ddd52c9631dd79",
+		"cert_sha256": "e2881f69288aaf14896d1d244f95309fc7210f61ca45e487491d49b6081936e2",
+		"dns_names": [
+			"www.thedownundernews.online"
+		],
+		"pubkey_sha256": "f58c6bee92d0e7df9b5785dd5ca0d6c0c2dadf80f1a78237690271bd4830943e",
+		"not_before": "2026-09-19T03:32:43Z",
+		"not_after": "2026-12-18T03:32:42Z",
+		"revoked": false
+	},
+	{
+		"id": "17578634758",
+		"tbs_sha256": "51b549c3ca97ebe3d500a601c2264351d3f22c52ca0fed53fe25b232905c1b80",
+		"cert_sha256": "f0124bc5d56c4fb0ad55fc5a561be24a038173f0885409a655cd386a57126558",
+		"dns_names": [
+			"www.thedownundernews.online"
+		],
+		"pubkey_sha256": "6eb5d2c2745898532293dbf06c2380e756f64c529f66e27323baffbcbaf0d447",
+		"not_before": "2026-10-04T11:51:02Z",
+		"not_after": "2027-01-02T11:51:01Z",
+		"revoked": false
+	}
+]

@@ -1,0 +1,54 @@
+{
+  "allowlist": [
+    "thedownundernews.online",
+    "www.thedownundernews.online",
+    "51.161.130.70",
+    "https://www.thedownundernews.online/",
+    "http://www.thedownundernews.online/",
+    "https://thedownundernews.online/",
+    "http://thedownundernews.online/"
+  ],
+  "denylist": [
+    "media.thedownundernews.online",
+    "51.161.131.195",
+    "thedownundernews.it.com",
+    "51.161.130.0/23 except 51.161.130.70",
+    "Spaceship infrastructure",
+    "Cloudflare Spaceship NS IPs",
+    "jsDelivr",
+    "Google Fonts",
+    "Google Maps",
+    "Flinders University",
+    "social networks",
+    "Let's Encrypt"
+  ],
+  "thirdPartyExclusions": [
+    "OVH provider netblock remainder",
+    "AS16276 OVH SAS as a whole",
+    "Spaceship, Inc.",
+    "Intis Telecom / it.com",
+    "cdn.jsdelivr.net",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com"
+  ],
+  "methodPermissions": {
+    "passiveOsint": true,
+    "portDiscoveryOnAllowlistedIp": true,
+    "serviceVersionOnOpenPorts": true,
+    "tlsInspection": true,
+    "webCrawlingInScope": true,
+    "authenticatedTestingWithOwnerProvidedAccounts": true,
+    "injectionTestingNonDestructive": true,
+    "redosTesting": true,
+    "destructiveTechniques": false,
+    "ddos": false,
+    "malware": false,
+    "socialEngineering": false,
+    "phishing": false,
+    "credentialStuffing": false,
+    "passwordSpraying": false,
+    "bruteForce": false,
+    "mfaBypass": false,
+    "lateralMovement": false
+  }
+}

@@ -1,0 +1,2 @@
+launch1.spaceship.net 162.159.26.38 
+launch2.spaceship.net 162.159.27.32 

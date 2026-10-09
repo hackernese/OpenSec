@@ -1,0 +1,8 @@
+# Nmap 7.99 scan initiated Mon Oct  5 21:23:47 2026 as: /usr/lib/nmap/nmap --privileged -sT -Pn -sV -sC --version-intensity 7 -p 22,80,443,8080 -oA /home/research/Projects/AuSecurity/evidence/P1-sv/sv-all 51.79.166.148 51.79.166.209 51.79.167.208
+Host: 51.79.166.148 (www.ausecurity.best)	Status: Up
+Host: 51.79.166.148 (www.ausecurity.best)	Ports: 22/open/tcp//ssh//OpenSSH 9.2p1 Debian 2+deb12u10 (protocol 2.0)/, 80/open/tcp//http//nginx 1.22.1/, 443/open/tcp//ssl|http//nginx 1.22.1/, 8080/open/tcp//http//nginx 1.25.5/
+Host: 51.79.166.209 (ticket.ausecurity.best)	Status: Up
+Host: 51.79.166.209 (ticket.ausecurity.best)	Ports: 22/open/tcp//ssh//OpenSSH 9.2p1 Debian 2+deb12u10 (protocol 2.0)/, 80/closed/tcp//http///, 443/open/tcp//ssl|http//nginx 1.22.1/, 8080/open/tcp//http//Apache httpd 2.4.68 ((Debian))/
+Host: 51.79.167.208 (blog.ausecurity.best)	Status: Up
+Host: 51.79.167.208 (blog.ausecurity.best)	Ports: 22/open/tcp//ssh//OpenSSH 9.2p1 Debian 2+deb12u10 (protocol 2.0)/, 80/open/tcp//http//Apache httpd 2.4.68 ((Debian))/, 443/open/tcp//ssl|http//Apache httpd 2.4.68 ((Debian))/, 8080/filtered/tcp//http-proxy///
+# Nmap done at Mon Oct  5 21:24:32 2026 -- 3 IP addresses (3 hosts up) scanned in 45.19 seconds

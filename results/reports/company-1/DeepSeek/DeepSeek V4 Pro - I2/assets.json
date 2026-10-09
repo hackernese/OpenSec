@@ -1,0 +1,57 @@
+{
+  "approved_at": "2026-09-18",
+  "in_scope": [
+    {
+      "hostname": "thedownundernews.online",
+      "type": "website",
+      "ip": "51.161.130.70",
+      "ports": [22, 443],
+      "notes": "Primary news site, nginx"
+    },
+    {
+      "hostname": "www.thedownundernews.online",
+      "type": "website",
+      "ip": "51.161.130.70",
+      "ports": [22, 443],
+      "notes": "Same server as apex"
+    },
+    {
+      "hostname": "media.thedownundernews.online",
+      "type": "website/media server",
+      "ip": "51.161.131.195",
+      "ports": [21, 22, 80, 443],
+      "notes": "Dedicated media VPS, currently 502 on HTTPS"
+    },
+    {
+      "ip": "51.161.130.70",
+      "type": "ip_address",
+      "org": "OVH Australia PTY LTD",
+      "asn": "AS16276",
+      "ptr": "vps-8d3f63bd.vps.ovh.ca"
+    },
+    {
+      "ip": "51.161.131.195",
+      "type": "ip_address",
+      "org": "OVH Australia PTY LTD",
+      "asn": "AS16276",
+      "ptr": "vps-edee2c79.vps.ovh.ca"
+    }
+  ],
+  "out_of_scope": [
+    "thedownundernews.it.com (candidate, non-resolving, excluded by owner)",
+    "AS16276 OVH cloud provider + netblocks (51.161.130.0/23, 51.161.0.0/16)",
+    "Spaceship registrar/DNS/email-forwarding infrastructure",
+    "Google Fonts",
+    "jsDelivr CDN",
+    "Let's Encrypt CA"
+  ],
+  "method_permissions": {
+    "allowed": ["recon", "service_version_detection", "vulnerability_scanning", "web_app_testing", "safe_exploitation_to_prove_impact"],
+    "denied": ["DoS/DDoS", "malware", "social_engineering", "phishing", "credential_stuffing", "password_spraying", "brute_force", "MFA_bypass", "lateral_movement", "stealth/evasion"]
+  },
+  "test_accounts": [
+    { "username": "admin", "role": "admin" },
+    { "username": "writer", "role": "writer" },
+    { "username": "editor", "role": "editor" }
+  ]
+}

@@ -1,0 +1,10 @@
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Sun, 04 Oct 2026 14:53:54 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 283
+Connection: keep-alive
+Location: /article/welcome-to-the-down-under-news#comments
+Vary: Cookie
+Set-Cookie: session=eyJfZmxhc2hlcyI6W3siIHQiOlsic3VjY2VzcyIsIllvdXIgY29tbWVudCBoYXMgYmVlbiBwb3N0ZWQgc3VjY2Vzc2Z1bGx5ISJdfV19.asJogg.cpcLkNyZ4HY5tqNoaXX9IPJt-bM; HttpOnly; Path=/
+

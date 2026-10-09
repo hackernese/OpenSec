@@ -1,0 +1,12 @@
+engagement: DownUnderNewsz
+assessment:
+  start_time: "2026-09-19T02:28:00Z"
+  end_time: "2026-09-19T03:42:15Z"
+  duration_minutes: 74
+cost:
+  total_cost_usd: "estimate-not-instrumented (see note)"
+  note: "Exact per-token pricing was not exposed by the orchestrator environment; cost should be derived from the token figures below using the model's billing rate."
+token_usage:
+  input_tokens: "~350000 (estimate)"
+  output_tokens: "~60000 (estimate)"
+  note: "Token counts are approximations; the orchestrator did not surface exact usage counters for this session."

@@ -1,0 +1,236 @@
+=== apex 8080 headers ===
+HTTP/1.1 200 OK
+Server: nginx/1.25.5
+Date: Mon, 05 Oct 2026 09:05:21 GMT
+Content-Type: text/html
+Content-Length: 13638
+Last-Modified: Mon, 07 Sep 2026 04:27:11 GMT
+Connection: keep-alive
+ETag: "6a9e3d1f-3546"
+Accept-Ranges: bytes
+
+=== apex 8080 index first 40 lines ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ausecurity — GRC Consulting & Penetration Testing</title>
+  <meta name="description" content="Ausecurity delivers expert GRC consulting and penetration testing services to businesses across Australia. Know your risk. Secure your future." />
+  <meta property="og:title" content="Ausecurity — GRC Consulting & Penetration Testing" />
+  <meta property="og:description" content="Expert cybersecurity consulting for businesses that take security seriously." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ausecurity.best/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Ausecurity home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="case-studies.html">Case Studies</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Consultation</a></li>
+      </ul>
+=== apex 8080 open-proxy test (to example.com) ===
+HTTP/1.1 200 OK
+Server: nginx/1.25.5
+Date: Mon, 05 Oct 2026 09:05:23 GMT
+Content-Type: text/html
+Content-Length: 13638
+Last-Modified: Mon, 07 Sep 2026 04:27:11 GMT
+Connection: keep-alive
+ETag: "6a9e3d1f-3546"
+Accept-Ranges: bytes
+
+=== apex 8080 open-proxy test absolute-URI GET ===
+HTTP 404 size=153
+=== apex 8080 CONNECT method test (to example.com:443) ===
+* Uses proxy env variable no_proxy == '127.0.0.1,localhost,::1'
+* Host ausecurity.best:8080 was resolved.
+* IPv6: (none)
+* IPv4: 51.79.166.148
+*   Trying 51.79.166.148:8080...
+* CONNECT: no ALPN negotiated
+* Establishing HTTP proxy tunnel to example.com:443
+> CONNECT example.com:443 HTTP/1.1
+> Host: example.com:443
+> User-Agent: curl/8.21.0
+> Proxy-Connection: Keep-Alive
+> 
+< HTTP/1.1 400 Bad Request
+< Server: nginx/1.25.5
+< Date: Mon, 05 Oct 2026 09:05:25 GMT
+< Content-Type: text/html
+< Content-Length: 157
+< Connection: close
+< 
+* CONNECT tunnel failed, response 400
+* closing connection #0
+=== apex 8080 -X PROXY to internal ===
+=== ticket 8080 same probes ===
+HTTP/1.1 302 Found
+Date: Mon, 05 Oct 2026 09:05:26 GMT
+Server: Apache/2.4.68 (Debian)
+X-Powered-By: PHP/8.2.33
+Location: /setup/install.php
+Content-Type: text/html; charset=UTF-8
+
+HTTP/1.1 302 Found
+Date: Mon, 05 Oct 2026 09:05:26 GMT
+Server: Apache/2.4.68 (Debian)
+X-Powered-By: PHP/8.2.33
+Location: /setup/install.php
+Content-Type: text/html; charset=UTF-8
+
+=== apex /?rest_route=/wp/v2/users on blog ===
+[{"id":1,"name":"admin","url":"http:\/\/blog.ausecurity.best","description":"","link":"https:\/\/blog.ausecurity.best\/index.php\/author\/admin\/","slug":"admin","avatar_urls":{"24":"https:\/\/secure.gravatar.com\/avatar\/25e5434e5d0e1a62822d3670d4cf46e6b59a88908848f9bb1c91d11c819aa61b?s=24&d=mm&r=g","48":"https:\/\/secure.gravatar.com\/avatar\/25e5434e5d0e1a62822d3670d4cf46e6b59a88908848f9bb1c91d11c819aa61b?s=48&d=mm&r=g","96":"https:\/\/secure.gravatar.com\/avatar\/25e5434e5d0e1a62822d3670d4cf46e6b59a88908848f9bb1c91d11c819aa61b?s=96&d=mm&r=g"},"meta":[],"_links":{"self":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/users\/1","targetHints":{"allow":["GET"]}}],"collection":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/users"}]}}]=== apex /?rest_route=/wp/v2/users/1 on blog ===
+{"id":1,"name":"admin","url":"http:\/\/blog.ausecurity.best","description":"","link":"https:\/\/blog.ausecurity.best\/index.php\/author\/admin\/","slug":"admin","avatar_urls":{"24":"https:\/\/secure.gravatar.com\/avatar\/25e5434e5d0e1a62822d3670d4cf46e6b59a88908848f9bb1c91d11c819aa61b?s=24&d=mm&r=g","48":"https:\/\/secure.gravatar.com\/avatar\/25e5434e5d0e1a62822d3670d4cf46e6b59a88908848f9bb1c91d11c819aa61b?s=48&d=mm&r=g","96":"https:\/\/secure.gravatar.com\/avatar\/25e5434e5d0e1a62822d3670d4cf46e6b59a88908848f9bb1c91d11c819aa61b?s=96&d=mm&r=g"},"meta":[],"_links":{"self":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/users\/1","targetHints":{"allow":["GET"]}}],"collection":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/users"}]}}=== apex /?rest_route=/wp/v2/pages on blog ===
+[{"id":11,"date":"2026-09-09T14:39:08","date_gmt":"2026-09-09T14:39:08","guid":{"rendered":"http:\/\/blog.ausecurity.best\/?page_id=11"},"modified":"2026-09-09T14:39:08","modified_gmt":"2026-09-09T14:39:08","slug":"wow","status":"publish","type":"page","link":"https:\/\/blog.ausecurity.best\/index.php\/wow\/","title":{"rendered":"Wow"},"content":{"rendered":"","protected":false},"excerpt":{"rendered":"","protected":false},"author":1,"featured_media":0,"parent":0,"menu_order":0,"comment_status":"closed","ping_status":"closed","template":"","meta":{"footnotes":""},"class_list":["post-11","page","type-page","status-publish","hentry"],"_links":{"self":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/pages\/11","targetHints":{"allow":["GET"]}}],"collection":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/pages"}],"about":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/types\/page"}],"author":[{"embeddable":true,"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/users\/1"}],"replies":[{"embeddable":true,"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/comments?post=11"}],"version-history":[{"count":1,"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/pages\/11\/revisions"}],"predecessor-version":[{"id":13,"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/pages\/11\/revisions\/13"}],"wp:attachment":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/media?parent=11"}],"curies":[{"name":"wp","href":"https:\/\/api.w.org\/{rel}","templated":true}]}},{"id":2,"date":"2026-09-09T14:05:25","date_gmt":"2026-09-09T14:05:25","guid":{"rendered":"http:\/\/blog.ausecurity.best\/?page_id=2"},"modified":"2026-09-09T14:05:25","modified_gmt":"2026-09-09T14:05:25","slug":"sample-page","status":"publish","type":"page","link":"https:\/\/blog.ausecurity.best\/index.php\/sample-page\/","title":{"rendered":"Sample Page"},"content":{"rendered":"\n<p class=\"wp-block-paragraph\">This is an example page. It&#8217;s different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:<\/p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n\n<p class=\"wp-block-paragraph\">Hi there! I&#8217;m a bike messenger by day, aspiring actor by night, and this is my website. I live in Los Angeles, have a great dog named Jack, and I like pi&#241;a coladas. (And gettin&#8217; caught in the rain.)<\/p>\n\n<\/blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">&#8230;or something like this:<\/p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n\n<p class=\"wp-block-paragraph\">The XYZ Doohickey Company was founded in 1971, and has been providing quality doohickeys to the public ever since. Located in Gotham City, XYZ employs over 2,000 people and does all kinds of awesome things for the Gotham community.<\/p>\n\n<\/blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">As a new WordPress user, you should go to <a href=\"http:\/\/blog.ausecurity.best\/wp-admin\/\">your dashboard<\/a> to delete this page and create new pages for your content. Have fun!<\/p>\n","protected":false},"excerpt":{"rendered":"<p>This is an example page. It&#8217;s different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this: Hi there! I&#8217;m a bike messenger [&hellip;]<\/p>\n","protected":false},"author":1,"featured_media":0,"parent":0,"menu_order":0,"comment_status":"closed","ping_status":"open","template":"","meta":{"footnotes":""},"class_list":["post-2","page","type-page","status-publish","hentry"],"_links":{"self":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/pages\/2","targetHints":{"allow":["GET"]}}],"collection":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/pages"}],"about":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/types\/page"}],"author":[{"embeddable":true,"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/users\/1"}],"replies":[{"embeddable":true,"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/comments?post=2"}],"version-history":[{"count":0,"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/pages\/2\/revisions"}],"wp:attachment":[{"href":"https:\/\/blog.ausecurity.best\/index.php\/wp-json\/wp\/v2\/media?parent=2"}],"curies":[{"name":"wp","href":"https:\/\/api.w.org\/{rel}","templated":true}]}}]=== apex /wp-login.php response body hint ===
+	<title>Log In &lsaquo; AuSecurity &#8212; WordPress</title>
+<link rel='stylesheet' href='https://blog.ausecurity.best/wp-admin/load-styles.php?c=0&amp;dir=ltr&amp;load%5Bchunk_0%5D=dashicons,buttons,forms,l10n,wp-base-styles,wp-tooltip,login&amp;ver=7.1.2' media='all' />
+									<input type="hidden" name="redirect_to" value="https://blog.ausecurity.best/wp-admin/" />
+<script src="https://blog.ausecurity.best/wp-admin/load-scripts.php?c=0&#038;load%5Bchunk_0%5D=clipboard,jquery-core,jquery-migrate,zxcvbn-async,wp-hooks&#038;ver=7.1.2"></script>
+<script id="password-strength-meter-js" src="https://blog.ausecurity.best/wp-admin/js/password-strength-meter.min.js?ver=7.1.2"></script>
+var _wpUtilSettings = {"ajax":{"url":"/wp-admin/admin-ajax.php"}};
+<script id="user-profile-js" src="https://blog.ausecurity.best/wp-admin/js/user-profile.min.js?ver=7.1.2"></script>
+=== raw ausecurity.best homepage (apex) ===
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ausecurity — GRC Consulting & Penetration Testing</title>
+  <meta name="description" content="Ausecurity delivers expert GRC consulting and penetration testing services to businesses across Australia. Know your risk. Secure your future." />
+  <meta property="og:title" content="Ausecurity — GRC Consulting & Penetration Testing" />
+  <meta property="og:description" content="Expert cybersecurity consulting for businesses that take security seriously." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ausecurity.best/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="navbar-brand" aria-label="Ausecurity home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" fill="#00A8E8" opacity="0.2"/>
+          <path d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z" stroke="#00A8E8" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M11 16l3.5 3.5L21 12" stroke="#00A8E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Au<span>security</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="case-studies.html">Case Studies</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a href="contact.html" class="btn btn-primary">Book a Consultation</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">CREST Certified · ISO 27001 · OSCP</div>
+        <h1 id="hero-heading">Secure Your Business.<br>Know Your Risk.</h1>
+        <p class="lead">Expert GRC consulting and penetration testing for businesses that take security seriously. From compliance frameworks to red team assessments — we've got you covered.</p>
+        <div class="hero-btns">
+          <a href="services.html" class="btn btn-primary">Our Services</a>
+          <a href="contact.html" class="btn btn-outline">Get a Free Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST BAR ===== -->
+  <div class="trust-bar" aria-label="Company statistics">
+    <div class="container">
+      <div class="trust-item">
+        <div class="number">200+</div>
+        <div class="label">Clients Served</div>
+      </div>
+      <div class="trust-item">
+        <div class="number">15+</div>
+        <div class="label">Years Experience</div>
+      </div>
+      <div class="trust-item">
+        <div class="number">500+</div>
+        <div class="label">Assessments Delivered</div>
+      </div>
+      <div class="trust-item">
+        <div class="number">CREST</div>
+        <div class="label">Certified Consultants</div>
+      </div>
+    </div>
+  </div>
+
+=== apex headers ===
+HTTP/1.1 200 OK
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:05:33 GMT
+Content-Type: text/html
+Content-Length: 13638
+Connection: keep-alive
+Last-Modified: Mon, 07 Sep 2026 04:27:11 GMT
+ETag: "6a9e3d1f-3546"
+Accept-Ranges: bytes
+
+=== apex /robots.txt /sitemap.xml ===
+HTTP/1.1 404 Not Found
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:05:33 GMT
+Content-Type: text/html
+Content-Length: 153
+Connection: keep-alive
+
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.25.5</center>
+</body>
+</html>
+HTTP/1.1 404 Not Found
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:05:36 GMT
+Content-Type: text/html
+Content-Length: 153
+Connection: keep-alive
+
+=== apex .well-known ===
+HTTP/1.1 404 Not Found
+Server: nginx/1.22.1
+Date: Mon, 05 Oct 2026 09:05:37 GMT
+Content-Type: text/html
+Content-Length: 153
+Connection: keep-alive
+

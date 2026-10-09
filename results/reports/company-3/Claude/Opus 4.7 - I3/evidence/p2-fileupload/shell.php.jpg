@@ -1,0 +1,1 @@
+<?php echo 'PWN:'.php_sapi_name().':'.phpversion(); ?>

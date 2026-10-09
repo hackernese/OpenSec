@@ -1,0 +1,49 @@
+# HTTP/HTTPS validation (2026-09-19)
+## apex
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sat, 19 Sep 2026 02:33:49 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 23012
+Connection: keep-alive
+
+## www (cert mismatch)
+curl: (60) SSL: no alternative certificate subject name matches target hostname 'www.thedownundernews.online'
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+## media
+HTTP/1.1 502 Bad Gateway
+Server: nginx
+Date: Sat, 19 Sep 2026 02:33:50 GMT
+Content-Type: text/html
+Content-Length: 150
+Connection: keep-alive
+
+## media http
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Sat, 19 Sep 2026 02:33:50 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Location: https://media.thedownundernews.online/
+
+## /admin
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sat, 19 Sep 2026 02:33:50 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 2894
+Connection: keep-alive
+
+## /api/articles headers
+curl: (28) Operation timed out after 15001 milliseconds with 0 bytes received
+## TLS cert (apex)
+subject=CN=thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE2
+notBefore=Sep 16 12:42:59 2026 GMT
+notAfter=Dec 15 12:42:58 2026 GMT
+X509v3 Subject Alternative Name: 
+    DNS:thedownundernews.online

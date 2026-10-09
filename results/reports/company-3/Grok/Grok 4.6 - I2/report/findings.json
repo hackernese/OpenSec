@@ -1,0 +1,183 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Stored XSS in image filename on the image detail page",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N",
+      "summary": "A logged-in user can upload an image whose filename contains HTML. When that image is opened, the filename is inserted into the page without encoding and the browser runs the attacker’s script.",
+      "description": "The upload form at POST /images/upload stores the original filename and later renders it in the image detail view inside an unescaped HTML span. A test file named `<img src=x onerror=alert(1)>.png` produced this markup on the detail page: a raw img tag with an onerror handler. Title, heading, and alt text were encoded, but the “Filename” row was not. The session cookie PHPSESSID is not marked HttpOnly, so this script can read the session. Combined with the user_id upload flaw, an attacker can also plant such a file in another user’s library so that the victim triggers the script while viewing their own image.",
+      "recommendation": "HTML-encode filenames everywhere they are shown. Reject or sanitise characters such as < > \" ' in filenames. Set HttpOnly on the session cookie. Add a Content-Security-Policy that disallows inline script.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/{id}"
+      ],
+      "references": [
+        "CWE-79"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "IDOR — upload form trusts client-supplied user_id",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N",
+      "summary": "The upload page includes a hidden user_id field. The server uses that value when saving the image, so a logged-in user can place files into another user’s private library if they know that user’s ID.",
+      "description": "GET /images/upload returns a hidden input user_id set to the current account UUID. POST /images/upload inserts that value into the images table (confirmed by a PostgreSQL foreign-key error when a fake UUID was sent). Using a second test account’s UUID while authenticated as the first account stored a test file in the second account’s dashboard under that user’s storage prefix. Image detail pages for other users’ private files were not readable by the uploader, but the victim’s library was modified without their consent. User IDs are shown on /profile, so they are available to anyone who can view or phish a profile, and they are also present in upload HTML.",
+      "recommendation": "Ignore client-supplied user_id. Bind uploads to the authenticated session user on the server. Treat user IDs as internal, not as a writable form field.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/upload"
+      ],
+      "references": [
+        "CWE-639",
+        "CWE-915"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Hard-coded AWS credential material in public JavaScript",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+      "summary": "A publicly downloadable script on the website contains AWS access-key-style material and code that calls AWS STS GetCallerIdentity.",
+      "description": "GET /js/awsvalid.js returns live JavaScript (about 5298 bytes). It includes GetCallerIdentity against sts.amazonaws.com, region strings ap-southeast-2 and us-east-1, one AKIA-format access key on a non-comment line, and secret-key-like fields. The login layout currently comments out the script tag, but the file itself is world-readable with no authentication. The keys were not used against AWS during this assessment, so live privilege was not confirmed. If they are valid, anyone on the internet can impersonate the associated cloud identity. Secret values are not included in this report.",
+      "recommendation": "Remove the file from the web root immediately. Rotate every AWS access key that has ever been in this file. Store cloud credentials only in server-side secrets, never in client JavaScript. Scan the repository and deployment bundle for other leaked keys.",
+      "affected_components": [
+        "https://imagesharer.xyz/js/awsvalid.js"
+      ],
+      "references": [
+        "CWE-798",
+        "CWE-200"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "SQL error messages disclose database internals",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "Invalid upload input returns a 500 JSON body that includes raw PostgreSQL error text, table names, and constraint names.",
+      "description": "POST /images/upload with a user_id that does not exist returned HTTP 500 JSON INTERNAL_ERROR whose detail field contained SQLSTATE[23503], the images table, and constraint images_user_id_fkey, including the submitted key. That confirms PostgreSQL, the schema around images.user_id, and that the client field is used in an INSERT. It helps an attacker refine further attacks.",
+      "recommendation": "Return a generic error to users. Log full SQL errors only on the server. Disable detailed exception output in production.",
+      "affected_components": [
+        "https://imagesharer.xyz/images/upload"
+      ],
+      "references": [
+        "CWE-209"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Session cookie missing Secure, HttpOnly, and SameSite",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+      "summary": "The PHP session cookie is not marked Secure, HttpOnly, or SameSite, so it can be read by script and may be sent over HTTP.",
+      "description": "Set-Cookie for PHPSESSID is issued with only path=/. Other cookies (page_views, last_login) correctly use Secure, HttpOnly, and SameSite=Lax. Because HttpOnly is missing, the stored XSS finding can steal the session. Because Secure is missing, the cookie can be sent on unencrypted HTTP, including after the HTTPS-to-HTTP redirects described separately. last_login also stores a copy of the session id inside its value. Session identifier values are not included in this report.",
+      "recommendation": "Set PHPSESSID with Secure; HttpOnly; SameSite=Lax (or Strict). Do not duplicate the session id in other cookies. Prefer session.cookie_secure, session.cookie_httponly, and session.cookie_samesite in PHP.",
+      "affected_components": [
+        "https://imagesharer.xyz/"
+      ],
+      "references": [
+        "CWE-614",
+        "CWE-1004",
+        "CWE-1275"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "HTTPS directory URLs redirect to HTTP",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+      "summary": "Some HTTPS links are redirected to http:// on the same host, which can expose the session cookie on the clear-text hop.",
+      "description": "Requests to https://imagesharer.xyz/uploads, /js, and /css (no trailing slash) return 301 Location: http://imagesharer.xyz/.../ (http scheme). A following HTTP request is then redirected back to HTTPS. Combined with PHPSESSID lacking the Secure flag, the browser may attach the session cookie to that HTTP request. Directory listings themselves returned 403.",
+      "recommendation": "Issue slash-normalising redirects only to https://. Enable HSTS so browsers refuse the HTTP hop.",
+      "affected_components": [
+        "https://imagesharer.xyz/uploads",
+        "https://imagesharer.xyz/js",
+        "https://imagesharer.xyz/css"
+      ],
+      "references": [
+        "CWE-319",
+        "CWE-757"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing HSTS",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+      "summary": "The site does not send Strict-Transport-Security, so browsers are not told to stay on HTTPS.",
+      "description": "Response headers on the login and dashboard flows include X-Content-Type-Options, X-Frame-Options, and Referrer-Policy, but not Strict-Transport-Security. That leaves room for SSL stripping and for the HTTP downgrade redirects above.",
+      "recommendation": "Send Strict-Transport-Security: max-age=31536000; includeSubDomains on all HTTPS responses, after confirming HTTP-to-HTTPS works for every path.",
+      "affected_components": [
+        "https://imagesharer.xyz/"
+      ],
+      "references": [
+        "CWE-319"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Unauthenticated image-existence oracle on the JSON API",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The public API answers differently for real image IDs versus unknown IDs, so anyone can test whether an image ID exists.",
+      "description": "GET /api/v1/images/{existing-uuid} without a token returns 403 FORBIDDEN “You do not have access to this image.” GET /api/v1/images/{random-uuid} returns 404 “Image not found.” Invalid non-UUID paths return a different 404. /api/v1/health is unauthenticated and returns {\"status\":\"ok\",\"service\":\"imager\"}. /api/v1/images without an ID returns 401 asking for an authentication token.",
+      "recommendation": "Require authentication first. Return the same 404 for missing and forbidden objects. Do not leak service identity on health if that is not intended to be public.",
+      "affected_components": [
+        "https://imagesharer.xyz/api/v1/images/{id}"
+      ],
+      "references": [
+        "CWE-203"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing Content-Security-Policy",
+      "cvss": "",
+      "summary": "Pages do not send a Content-Security-Policy header, so a successful XSS has no extra browser brake.",
+      "description": "Security headers include nosniff, DENY framing, and Referrer-Policy, but no CSP. That makes the stored XSS finding easier to exploit.",
+      "recommendation": "Add a strict CSP (default-src 'self'; object-src 'none'; base-uri 'self') and avoid unsafe-inline if possible.",
+      "affected_components": [
+        "https://imagesharer.xyz/"
+      ],
+      "references": [
+        "CWE-693"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "PHP version disclosed",
+      "cvss": "",
+      "summary": "Every PHP response includes X-Powered-By: PHP/8.2.34, which tells attackers the exact runtime version.",
+      "description": "nginx plus X-Powered-By PHP/8.2.34 appeared on login, register, dashboard, and upload responses. Version details help someone match known PHP issues.",
+      "recommendation": "Disable expose_php and remove X-Powered-By in nginx/PHP.",
+      "affected_components": [
+        "https://imagesharer.xyz/"
+      ],
+      "references": [
+        "CWE-200"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Registration email check is not enforced",
+      "cvss": "",
+      "summary": "The sign-up form says email verification is required, but a new account reached the dashboard immediately with no verification step.",
+      "description": "GET /register shows an email field hint that verification is required. POST /register for a test mailbox returned 302 /dashboard and a logged-in session. That is weaker than the advertised control and allows automated account creation (no password guessing was performed).",
+      "recommendation": "Enforce verification before session issue, or remove the misleading hint. Add CSRF tokens to register, login, upload, visibility, delete, and logout forms.",
+      "affected_components": [
+        "https://imagesharer.xyz/register"
+      ],
+      "references": []
+    }
+  }
+]

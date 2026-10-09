@@ -1,0 +1,6 @@
+X509v3 Subject Alternative Name: 
+    DNS:www.thedownundernews.online
+subject=CN=www.thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE1
+notBefore=Oct  4 11:51:02 2026 GMT
+notAfter=Jan  2 11:51:01 2027 GMT

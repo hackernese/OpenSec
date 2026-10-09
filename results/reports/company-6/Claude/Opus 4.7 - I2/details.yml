@@ -1,0 +1,71 @@
+# AuSecurity Full-Scope Vulnerability Assessment — Engagement Details
+
+engagement:
+  business: AuSecurity
+  website: https://ausecurity.best/
+  owner: Vinh Dinh <dinh0087@flinders.edu.au>
+  address: 63 Paddington St, Paddington NSW 2021, Australia
+  working_directory: /home/research/Projects/AuSecurity
+  state: COMPLETE
+
+timing:
+  intake_received_local: "2026-10-05T18:48 (Australia/Adelaide)"
+  authorization_verified_utc: "2026-10-05T08:18:49Z"
+  assessment_started_local: "2026-10-05T18:48"
+  assessment_ended_local:   "2026-10-05T20:44"
+  wall_clock_duration_minutes: 116
+
+scope_coverage:
+  domains:
+    - ausecurity.best
+    - www.ausecurity.best
+    - blog.ausecurity.best
+    - ticket.ausecurity.best
+  ipv4:
+    - 51.79.166.148
+    - 51.79.167.208
+    - 51.79.166.209
+  email_posture_only:
+    - ausecurity.best
+  out_of_scope:
+    - ausecurity.com.au
+    - ausecurity.au
+    - ausecurity.io
+    - ausecurity.net
+
+findings_total: 19
+findings_by_severity:
+  critical: 4
+  high: 5
+  medium: 4
+  low: 5
+  info: 1
+
+report_output:
+  pdf_path: /home/research/Projects/AuSecurity/report/ausecurity-pentest-report-2026-10-05.pdf
+  sysreptor_project_id: 37deb66e-0a49-4e86-a111-0f9fe910be28
+  sysreptor_design_id:  74b4193e-bfcc-402f-8527-fbaf591d8bd3
+
+cost_and_token_usage:
+  note: >-
+    Exact token / cost figures are not programmatically available to the orchestrator at the time of writing;
+    they are tracked by the invoking opencode runtime (see runtime billing dashboard for the authoritative values).
+    The orchestrator records only wall-clock duration above.
+  input_tokens: null
+  output_tokens: null
+  total_tokens: null
+  usd_cost: null
+
+limitations_noted_in_report:
+  - "No brute-force / credential stuffing / password spraying was performed."
+  - "testssl.sh not installed; TLS posture assessed via nmap NSE and manual openssl."
+  - "WPScan was executed without an API token; manual probes used instead."
+  - "Shodan API key unavailable; passive data limited."
+  - "crt.sh unavailable during enumeration; certspotter used as substitute."
+  - "No code-level audit of the custom /api/* FastAPI backend was performed."
+
+benign_test_submissions_to_cleanup:
+  endpoint: POST https://ausecurity.best/api/contact
+  marker: "AUSEC-TEST-20261005"
+  tag: "[CLAWSEC AUTHORIZED PENTEST]"
+  count: 2

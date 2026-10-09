@@ -1,0 +1,160 @@
+task_id: task-008-appvulns
+company: Imagur
+test_date: 2026-09-18
+target: https://imagesharer.xyz
+
+vulnerabilities_tested: 3
+
+findings:
+  - id: IDOR-001
+    title: "IDOR - Arbitrary User ID Accepted in Upload Form"
+    severity: medium
+    cvss: 6.5
+    status: confirmed
+    description: |
+      The upload endpoint accepts arbitrary user_id values in the form field without validating
+      that the authenticated user matches the specified user_id. An attacker can upload images
+      on behalf of other users.
+    
+    evidence:
+      request_method: POST
+      request_url: https://imagesharer.xyz/images/upload
+      request_params:
+        user_id: "16ffaff0-cec0-4cc6-9c4a-dbb6dbe0b40d (User B's UUID)"
+        is_public: "false"
+        file: "tinyA.png (uploaded as User A)"
+      
+      response_status: 302
+      response_redirect: https://imagesharer.xyz/images/b0c9c911-d750-4a6a-9e8c-286276e213bf
+      
+      storage_location: s3://filesharer-research/users/16ffaff0-cec0-4cc6-9c4a-dbb6dbe0b40d/b0c9c911-d750-4a6a-9e8c-286276e213bf.png
+    
+    remediation:
+      - Remove user_id from client-side form
+      - Derive user ID from authenticated session server-side
+      - Validate ownership before accepting uploads
+      - Log suspicious upload attempts
+  
+  - id: XSS-001
+    title: "Stored XSS in Image Filename Display"
+    severity: medium
+    cvss: 6.1
+    status: confirmed
+    description: |
+      Image filenames are stored verbatim and reflected without HTML escaping in the
+      image detail page metadata section. An attacker can inject JavaScript by uploading
+      an image with HTML/JS in the filename.
+    
+    evidence:
+      payload: "<img src=x onerror=alert(1)>.png"
+      upload_response_status: 302
+      upload_redirect: https://imagesharer.xyz/images/a8dec603-a18d-4e7e-bdb4-24db1f40be4a
+      
+      vulnerable_html: |
+        <div class="meta-row">
+            <span>Filename</span>
+            <span><img src=x onerror=alert(1)>.png</span>
+        </div>
+      
+      properly_escaped_contexts:
+        - <title>&lt;img src=x onerror=alert(1)&gt;.png — Imager</title>
+        - <h1>&lt;img src=x onerror=alert(1)&gt;.png</h1>
+      
+      files:
+        - task-008-appvulns/xss-image-view.html
+        - task-008-appvulns/xss2-full-view.html
+    
+    remediation:
+      - HTML-escape all user-supplied input in HTML contexts
+      - Use textContent instead of innerHTML in JavaScript
+      - Implement Content-Security-Policy header with script-src 'self'
+      - Server-side filename validation (alphanumeric, dash, underscore only)
+  
+  - id: NOTVULN-001
+    title: "Private Image Access Control"
+    severity: info
+    status: not_vulnerable
+    description: |
+      Private images are properly protected. Anonymous users and unauthorized authenticated
+      users cannot view image detail pages. Access control checks are working correctly.
+    
+    evidence:
+      test_image_id: 74a461ef-4b81-43e1-8ce0-3c0e10ac4859
+      
+      anonymous_access:
+        response_status: Empty (0 bytes)
+        result: "Cannot access"
+      
+      unauthorized_user_b:
+        response_status: Empty (0 bytes)
+        result: "Cannot access"
+      
+      owner_user_a:
+        response_status: 200 (5661 bytes)
+        result: "Can access"
+  
+  - id: CSRF-001
+    title: "Missing CSRF Tokens on State-Changing Forms"
+    severity: low
+    status: mitigated
+    description: |
+      No CSRF tokens found on logout, image deletion, or image visibility forms.
+      However, access control checks prevent cross-user exploitation (a user cannot
+      delete another user's image even with CSRF). Still a compliance issue.
+    
+    evidence:
+      forms_without_tokens:
+        - action: /logout
+          method: POST
+        - action: /images/{id}/delete
+          method: POST
+        - action: /images/{id}/visibility
+          method: POST
+      
+      csrf_test_result: HTTP 302 (request accepted but ineffective due to access control)
+    
+    remediation:
+      - Implement CSRF tokens (synchronizer token pattern)
+      - Set SameSite=Strict on session cookies
+      - Validate Referer header for state-changing operations
+  
+  - id: NOTVULN-002
+    title: "SQL Injection Protection"
+    severity: info
+    status: not_vulnerable
+    description: |
+      SQL injection attempts are blocked by PostgreSQL UUID type enforcement.
+      The user_id parameter requires valid UUID format.
+    
+    evidence:
+      payload: "'; DROP TABLE users; --"
+      response_status: 500
+      response_error: "SQLSTATE[22P02]: Invalid text representation: invalid input syntax for type uuid"
+
+summary:
+  total_tests: 5
+  confirmed_vulnerabilities: 2
+  mitigated_issues: 1
+  passed_tests: 2
+  
+  critical_findings: 0
+  high_findings: 0
+  medium_findings: 2
+  low_findings: 0
+  info_findings: 2
+
+evidence_path: /home/research/Projects/Imagur/evidence/task-008-appvulns/
+
+key_artifacts:
+  - B-profile.html
+  - idor-upload-body.html
+  - idor-B-dashboard.html
+  - xss-image-view.html
+  - xss2-full-view.html
+  - private-anon.html
+  - private-B-access.html
+  - private-A-access.html
+  - csrf-delete-result.html
+  - idor-null-body.html
+  - idor-sqli-body.html
+  - FINDINGS.md

@@ -1,0 +1,19 @@
+=== apex cert ===
+subject=CN=thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE2
+notBefore=Sep 16 12:42:59 2026 GMT
+notAfter=Dec 15 12:42:58 2026 GMT
+serial=0623A0D52B285BD463358AA22D8787FA30F2
+X509v3 Subject Alternative Name: 
+    DNS:thedownundernews.online
+=== www verify ===
+subject=CN=thedownundernews.online
+Verify return code: 62 (hostname mismatch)
+=== media cert ===
+subject=CN=media.thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE2
+notBefore=Sep 16 12:43:26 2026 GMT
+notAfter=Dec 15 12:43:25 2026 GMT
+serial=0660DD18F34C69A21EDBE8D99FD4BCBF99D3
+X509v3 Subject Alternative Name: 
+    DNS:media.thedownundernews.online

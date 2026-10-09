@@ -1,0 +1,10 @@
+assessment_began: "2026-09-18T05:40:00Z"
+assessment_ended: "2026-09-18T07:30:00Z"
+total_cost: unknown
+token_usage:
+  input: unknown
+  output: unknown
+notes: Exact token counts and dollar cost were not provided by the orchestrator session. Dates are the engagement calendar day (Australia/Adelaide local work occurred 18 Sep 2026). Start is approximate from intake/authorization; end is after report PDF verification.
+report_pdf: /home/research/Projects/DownUnderNewsz/report/DownUnderNewsz-vulnerability-assessment.pdf
+findings_count: 8
+state: COMPLETE

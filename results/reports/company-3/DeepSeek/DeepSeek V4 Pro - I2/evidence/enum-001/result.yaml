@@ -1,0 +1,385 @@
+engagement:
+  task_id: enum-001
+  run_mode: enumeration-only (non-intrusive, read-only)
+  target_identity:
+    canonical_name: Imagur
+    aliases: [FShare, Image Sharer]
+    supplied_website: "https://imagesharer.xyz/"
+    address: "132 Morphett Rd, Glengowrie SA 5044, Australia"
+    country: Australia
+    owner_name: Vinh Dinh
+  tools_used:
+    - dig
+    - whois
+    - nslookup
+    - curl
+    - openssl (TLS cert inspection)
+    - subfinder (passive; no results)
+    - crt.sh (certificate transparency; no entries)
+    - AWS SigV4 API (read-only: STS, S3, EC2, RDS, CloudFront, Route53, IAM)
+  unavailable_sources:
+    - crt.sh (no certificate transparency entries for the domain; likely too new — created 2026-09-06)
+    - subfinder (returned zero subdomains)
+    - amass (not run)
+    - reverse-WHOIS (no free provider)
+  warnings:
+    - "Sandbox clock is ~10.5h ahead of real UTC; worked around for AWS SigV4 signing."
+    - "resources.imagesharer.xyz serves CloudFront default cert (*.cloudfront.net) — no custom TLS cert/alias configured, so HTTPS to that hostname fails cert validation."
+    - "CloudFront distribution origin points to S3 bucket filesharer-research-testing, which no longer exists (NoSuchBucket); CDN returns 404."
+    - "S3 bucket filesharer-research is publicly listable (anonymous) and holds user image uploads — flagged as a finding, not downloaded."
+    - "Root AWS access key (AKIA...) and secret were exposed in /js/awsvalid.js; used read-only to enumerate the account."
+    - "MX/SPF/DMARC records absent for imagesharer.xyz (no email infrastructure)."
+
+root_domains:
+  - name: imagesharer.xyz
+    type: domain
+    classification: confirmed
+    confidence: 98
+    evidence:
+      - source: input
+        source_type: input
+        observed_value: "https://imagesharer.xyz/"
+        reason: "Supplied by business owner as the official public-facing website"
+      - source: dig
+        source_type: dns_active
+        observed_value: "A 51.161.131.44"
+        reason: "Domain resolves to a single IPv4 A record"
+      - source: openssl
+        source_type: tls_certificate
+        observed_value: "CN=imagesharer.xyz, SAN=imagesharer.xyz, issuer=Let's Encrypt"
+        reason: "TLS certificate is issued specifically for this domain"
+      - source: http
+        source_type: http_validation
+        observed_value: "HTTP 302 -> /dashboard -> /login; nginx + PHP/8.2.34; page title 'Imager'"
+        reason: "Live web application branded 'Imager'/'FShare' image sharing service"
+      - source: whois
+        source_type: whois
+        observed_value: "Registrar Spaceship Inc., created 2026-09-06, NS launch1/launch2.spaceship.net"
+        reason: "Domain registration metadata"
+
+subdomains:
+  - name: www.imagesharer.xyz
+    type: host
+    classification: confirmed
+    confidence: 90
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "A 51.161.131.44"
+        reason: "Resolves to the same origin IP as the apex domain"
+      - source: http
+        source_type: http_validation
+        observed_value: "HTTPS fails (cert SAN only covers imagesharer.xyz, not www)"
+        reason: "Same server; certificate does not include www SAN"
+
+  - name: resources.imagesharer.xyz
+    type: host
+    classification: confirmed
+    confidence: 92
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "CNAME d273uevi0662l0.cloudfront.net"
+        reason: "Alias to AWS CloudFront distribution"
+      - source: http
+        source_type: http_validation
+        observed_value: "Referenced in /login and /register HTML as favicon source (https://resources.imagesharer.xyz/icon.ico)"
+        reason: "Static asset/CDN subdomain referenced by the application"
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "CloudFront distribution EMOI8CZBQIEBR in AWS account 016170038077"
+        reason: "CNAME target is a CloudFront distribution owned by the organization's AWS account"
+
+websites:
+  - name: "https://imagesharer.xyz/"
+    type: website
+    classification: confirmed
+    confidence: 98
+    evidence:
+      - source: http
+        source_type: http_validation
+        observed_value: "nginx, PHP/8.2.34; / redirects to /dashboard -> /login; title 'Log in — Imager'"
+        reason: "Primary web application"
+      - source: input
+        source_type: input
+        observed_value: "https://imagesharer.xyz/"
+        reason: "Supplied website"
+
+ip_addresses:
+  - name: 51.161.131.44
+    type: ip
+    classification: confirmed
+    confidence: 92
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "A record for imagesharer.xyz and www.imagesharer.xyz"
+        reason: "Origin IP serving the web application"
+      - source: rdap
+        source_type: rdap
+        observed_value: "OVH Australia PTY LTD, netname VPS-SYD2, reverse DNS vps-ad2c3eab.vps.ovh.ca"
+        reason: "OVH VPS hosted in Sydney, Australia"
+
+  - name: 13.32.126.132
+    type: ip
+    classification: cloud_cdn
+    confidence: 90
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "A record returned for resources.imagesharer.xyz (CloudFront edge)"
+        reason: "AWS CloudFront edge IP, not organization-controlled"
+
+  - name: 13.32.126.59
+    type: ip
+    classification: cloud_cdn
+    confidence: 90
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "A record returned for resources.imagesharer.xyz (CloudFront edge)"
+        reason: "AWS CloudFront edge IP"
+
+  - name: 13.32.126.107
+    type: ip
+    classification: cloud_cdn
+    confidence: 90
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "A record returned for resources.imagesharer.xyz (CloudFront edge)"
+        reason: "AWS CloudFront edge IP"
+
+  - name: 13.32.126.182
+    type: ip
+    classification: cloud_cdn
+    confidence: 90
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "A record returned for resources.imagesharer.xyz (CloudFront edge)"
+        reason: "AWS CloudFront edge IP"
+
+asns:
+  - name: AS16276
+    type: asn
+    classification: third_party
+    confidence: 85
+    evidence:
+      - source: whois
+        source_type: whois
+        observed_value: "as-name OVH, org-name OVH SAS"
+        reason: "Hosting provider for 51.161.131.44"
+
+netblocks:
+  - name: 51.161.130.0/23
+    type: netblock
+    classification: third_party
+    confidence: 90
+    evidence:
+      - source: rdap
+        source_type: rdap
+        observed_value: "ARIN handle NET-51-161-130-0-1, name VPS-SYD2, registrant OVH Australia PTY LTD"
+        reason: "OVH Sydney VPS allocation containing 51.161.131.44"
+  - name: 51.161.128.0/17
+    type: netblock
+    classification: third_party
+    confidence: 85
+    evidence:
+      - source: rdap
+        source_type: rdap
+        observed_value: "ARIN parent handle NET-51-161-128-0-1"
+        reason: "Broader OVH allocation"
+
+cloud_infrastructure:
+  - name: "AWS account 016170038077"
+    type: cloud_account
+    classification: confirmed
+    confidence: 95
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "STS GetCallerIdentity returned Account=016170038077, Arn=arn:aws:iam::016170038077:root"
+        reason: "AWS account identified from credentials exposed in application source (/js/awsvalid.js)"
+
+  - name: "CloudFront distribution d273uevi0662l0.cloudfront.net (EMOI8CZBQIEBR)"
+    type: service
+    classification: confirmed
+    confidence: 92
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "resources.imagesharer.xyz CNAME target"
+        reason: "CDN distribution backing the resources subdomain"
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "ARN arn:aws:cloudfront::016170038077:distribution/EMOI8CZBQIEBR, origin filesharer-research-testing.s3.ap-southeast-2.amazonaws.com, OAC E3P01S5ZIDDNU1"
+        reason: "CloudFront distribution owned by the organization's AWS account"
+
+  - name: "S3 bucket filesharer-research"
+    type: service
+    classification: confirmed
+    confidence: 93
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "S3 ListBuckets returned filesharer-research (created 2026-09-14), region ap-southeast-2"
+        reason: "Storage bucket in the organization's AWS account"
+      - source: http
+        source_type: http_validation
+        observed_value: "Anonymous GET https://filesharer-research.s3.ap-southeast-2.amazonaws.com/ returns list (publicly listable); keys under users/<uuid>/<uuid>.<ext>"
+        reason: "Publicly accessible bucket storing user-uploaded images"
+
+  - name: "S3 bucket filesharer-research-testing"
+    type: service
+    classification: candidate
+    confidence: 60
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "Referenced as CloudFront origin DomainName, but GetBucketLocation returns NoSuchBucket"
+        reason: "Stale/deleted origin bucket referenced by the CloudFront distribution"
+
+  - name: "RDS Aurora PostgreSQL database-2 (cluster endpoint database-2.cluster-c9k4ckikk3g8.ap-southeast-2.rds.amazonaws.com)"
+    type: service
+    classification: confirmed
+    confidence: 90
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "DescribeDBInstances/DescribeDBClusters: DBClusterIdentifier=database-2, engine aurora-postgresql 17.7, instance database-2-instance-1, PubliclyAccessible=false, port 5432"
+        reason: "Application database in the organization's AWS account (ap-southeast-2)"
+
+  - name: "RDS instance database-2-instance-1.c9k4ckikk3g8.ap-southeast-2.rds.amazonaws.com"
+    type: service
+    classification: confirmed
+    confidence: 90
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "DescribeDBInstances Endpoint.Address"
+        reason: "Primary DB instance endpoint"
+
+  - name: "RDS reader endpoint database-2.cluster-ro-c9k4ckikk3g8.ap-southeast-2.rds.amazonaws.com"
+    type: service
+    classification: confirmed
+    confidence: 88
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "DescribeDBClusters ReaderEndpoint"
+        reason: "DB cluster reader endpoint"
+
+  - name: "IAM user console-admin"
+    type: cloud_identity
+    classification: confirmed
+    confidence: 88
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "IAM ListUsers: UserName=console-admin, created 2026-09-28"
+        reason: "IAM identity in the organization's AWS account"
+
+  - name: "IAM user fokirohu"
+    type: cloud_identity
+    classification: confirmed
+    confidence: 88
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "IAM ListUsers: UserName=fokirohu, created 2026-09-16"
+        reason: "IAM identity in the organization's AWS account"
+
+  - name: "EC2 security group sg-0fb1d9ee18578a337 (launch-wizard-1)"
+    type: cloud_network
+    classification: confirmed
+    confidence: 85
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "DescribeSecurityGroups: launch-wizard-1, allows TCP 22 from 0.0.0.0/0, VPC vpc-06f86289a752c416d"
+        reason: "Security group in the organization's AWS account (SSH open to internet)"
+
+  - name: "Default VPC vpc-06f86289a752c416d"
+    type: cloud_network
+    classification: confirmed
+    confidence: 85
+    evidence:
+      - source: aws_api
+        source_type: api_enumeration
+        observed_value: "DescribeVpcs: default VPC 172.31.0.0/16"
+        reason: "Default VPC in the organization's AWS account"
+
+dns_mail_infrastructure:
+  - name: "launch1.spaceship.net"
+    type: nameserver
+    classification: third_party
+    confidence: 90
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "NS record for imagesharer.xyz"
+        reason: "Registrar-provided nameserver (Spaceship Inc.)"
+  - name: "launch2.spaceship.net"
+    type: nameserver
+    classification: third_party
+    confidence: 90
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "NS record for imagesharer.xyz"
+        reason: "Registrar-provided nameserver (Spaceship Inc.)"
+  - name: "MX (none)"
+    type: mail
+    classification: rejected
+    confidence: 80
+    evidence:
+      - source: dig
+        source_type: dns_active
+        observed_value: "No MX record returned"
+        reason: "No mail infrastructure configured for the domain"
+
+rejected_candidates:
+  - name: "S3 bucket imagesharer (s3.amazonaws.com)"
+    type: service
+    reason: "Returns AccessDenied but is NOT present in the organization's AWS account ListBuckets; belongs to a different AWS account."
+    confidence: 20
+  - name: "S3 bucket fshare (s3.amazonaws.com)"
+    type: service
+    reason: "Returns AccessDenied but is NOT present in the organization's AWS account ListBuckets; belongs to a different AWS account."
+    confidence: 20
+  - name: "imagur.com"
+    type: domain
+    reason: "Resolves to 199.191.50.184 (unrelated infrastructure); no evidence of attribution. Lookalike of the unrelated 'imgur.com' brand."
+    confidence: 5
+  - name: "fshare.com"
+    type: domain
+    reason: "Resolves to 212.7.194.68 (unrelated Vietnamese file-sharing service); no attribution evidence."
+    confidence: 5
+  - name: "fshare.io"
+    type: domain
+    reason: "Resolves to 209.38.191.42; unrelated."
+    confidence: 5
+  - name: "imagesharer.net"
+    type: domain
+    reason: "Resolves to AWS 13.135.35.209/3.11.134.120; no evidence tying it to this organization."
+    confidence: 5
+  - name: "imager.xyz"
+    type: domain
+    reason: "Resolves to AWS 52.40.42.113/44.232.173.249; no DNS/TLS/content evidence tying it to this organization."
+    confidence: 10
+  - name: "imagur.xyz"
+    type: domain
+    reason: "Resolves to Google parking IPs (216.239.x); unrelated."
+    confidence: 5
+
+summary:
+  root_domains: 1
+  subdomains: 2
+  websites: 1
+  ip_addresses: 5
+  asns: 1
+  netblocks: 2
+  cloud_infrastructure: 11
+  dns_mail_infrastructure: 3
+  rejected_candidates: 8

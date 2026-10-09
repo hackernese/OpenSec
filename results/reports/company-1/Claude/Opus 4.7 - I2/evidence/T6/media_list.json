@@ -1,0 +1,37 @@
+{
+  "media": [
+    {
+      "file_name": "62f660efe1274f67a9216d6d2ff6986f.html",
+      "file_size": 103,
+      "id": 3,
+      "media_type": "image",
+      "media_url": "https://media.thedownundernews.online/images/62f660efe1274f67a9216d6d2ff6986f.html",
+      "original_name": "evil2.html",
+      "uploaded_at": "2026-10-04T13:32:25.617769+00:00",
+      "uploaded_by": "writer"
+    },
+    {
+      "file_name": "ed139f3fb09747fb8d36b267c7e8a3e5.php",
+      "file_size": 39,
+      "id": 2,
+      "media_type": "image",
+      "media_url": "https://media.thedownundernews.online/images/ed139f3fb09747fb8d36b267c7e8a3e5.php",
+      "original_name": "polyglot.php",
+      "uploaded_at": "2026-10-04T13:31:23.503137+00:00",
+      "uploaded_by": "writer"
+    },
+    {
+      "file_name": "93b10db0611a4c008c38a2c3aca8a713.php",
+      "file_size": 26,
+      "id": 1,
+      "media_type": "image",
+      "media_url": "https://media.thedownundernews.online/images/93b10db0611a4c008c38a2c3aca8a713.php",
+      "original_name": "pix.jpg.php",
+      "uploaded_at": "2026-10-04T13:31:22.131885+00:00",
+      "uploaded_by": "writer"
+    }
+  ],
+  "page": 1,
+  "total": 3,
+  "totalPages": 1
+}

@@ -1,0 +1,39 @@
+{
+  "initial_seed": {
+    "domain": "ausecurity.best",
+    "url": "https://ausecurity.best/"
+  },
+  "allowlist": [
+    "ausecurity.best",
+    "*.ausecurity.best"
+  ],
+  "denylist": [
+    "Any third-party SaaS provider (unless explicitly reconfirmed as owned)",
+    "Any shared CDN edge (Cloudflare/Fastly/etc. infrastructure itself)",
+    "Any asset that resolves to a shared hosting provider IP not exclusively owned by AuSecurity",
+    "Any external DNS/email provider infrastructure"
+  ],
+  "method_permissions": {
+    "allowed": [
+      "Passive reconnaissance (public DNS, WHOIS, certificate transparency, search)",
+      "Active but non-destructive enumeration (port scan, service/version fingerprinting, subdomain brute-force at reasonable rate, directory/file enumeration)",
+      "Vulnerability probing (nuclei, nikto, safe wpscan, safe SQLi/XSS/SSRF/IDOR/auth probes)",
+      "Manual verification with a minimum proof-of-concept payload"
+    ],
+    "forbidden": [
+      "DDoS / volumetric attacks",
+      "Malware upload or persistence",
+      "Social engineering / phishing",
+      "Credential stuffing / password spraying / brute force against production auth",
+      "MFA bypass attempts",
+      "Lateral movement / post-exploitation beyond minimum PoC",
+      "Stealth / evasion techniques",
+      "Data exfiltration beyond what is minimally required to prove impact (redact any real PII)",
+      "Testing against systems that appear to belong to third parties"
+    ]
+  },
+  "rate_limits": {
+    "principle": "Low-and-slow. Prefer targeted queries over exhaustive brute force. Stop on 429/503 or clear WAF blocking; report and adapt."
+  },
+  "assets_status": "PENDING_ENUMERATION"
+}

@@ -1,0 +1,9 @@
+assessment_began: "2026-10-04T23:30:17Z"
+assessment_ended: "2026-10-05"
+state: COMPLETE
+total_cost: not_available
+token_usage:
+  input: not_available
+  output: not_available
+report_pdf: /home/research/Projects/Imagur/report/Imagur-vulnerability-assessment-report.pdf
+findings_count: 12

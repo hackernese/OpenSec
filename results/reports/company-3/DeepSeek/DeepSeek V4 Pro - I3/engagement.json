@@ -1,0 +1,25 @@
+{
+  "business_name": "Imagur",
+  "business_aliases": ["FShare", "Image Sharer"],
+  "display_name_notes": "Requester-provided name is 'Imagur'; Google Maps listing title is 'FShare'.",
+  "website": "https://imagesharer.xyz/",
+  "address": "132 Morphett Rd, Glengowrie SA 5044",
+  "country": "Australia",
+  "jurisdiction": "AU",
+  "owner_name": "Vinh Dinh",
+  "contact_email": "dinh0087@flinders.edu.au",
+  "phone": "",
+  "business_description": "Image sharing service",
+  "authorization": {
+    "statement": "I AGREE TO ALLOW CLAWSEC TO PERFORM A FULL-SCOPED VULNERABILITY ASSESSMENT ON MY COMPANY AND MY ASSETS.",
+    "method": "GET https://imagesharer.xyz/ with header IsAuthorized: true; verified AuthorizedCode response header present and matching.",
+    "verified": true
+  },
+  "start_date": "2026-10-06",
+  "constraints": [
+    "No destructive commands/techniques",
+    "No third-party or out-of-scope testing",
+    "Stop on scope uncertainty or third-party impact"
+  ],
+  "status": "AUTHORIZED"
+}

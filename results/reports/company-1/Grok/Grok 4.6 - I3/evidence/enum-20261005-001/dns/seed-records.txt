@@ -1,0 +1,51 @@
+===== thedownundernews.online =====
+-- MX --
+0 mx1.efwd.spaceship.net.
+0 mx2.efwd.spaceship.net.
+-- NS --
+launch2.spaceship.net.
+launch1.spaceship.net.
+-- TXT --
+"v=spf1 include:spf.efwd.spaceship.net ~all"
+-- SOA --
+launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+
+===== www.thedownundernews.online =====
+-- MX --
+-- NS --
+-- TXT --
+-- SOA --
+
+===== thedownundernews.it.com =====
+-- MX --
+-- NS --
+-- TXT --
+-- SOA --
+
+===== www.thedownundernews.it.com =====
+-- MX --
+-- NS --
+-- TXT --
+-- SOA --
+
+===== mail.thedownundernews.online =====
+-- MX --
+-- NS --
+-- TXT --
+-- SOA --
+
+===== mail.thedownundernews.it.com =====
+-- MX --
+-- NS --
+-- TXT --
+-- SOA --
+
+===== ROOT NS/SOA/MX/TXT thedownundernews.online =====
+thedownundernews.online. 72952	IN	NS	launch1.spaceship.net.
+thedownundernews.online. 72952	IN	NS	launch2.spaceship.net.
+thedownundernews.online. 1194	IN	MX	0 mx2.efwd.spaceship.net.
+thedownundernews.online. 1194	IN	MX	0 mx1.efwd.spaceship.net.
+thedownundernews.online. 1195	IN	TXT	"v=spf1 include:spf.efwd.spaceship.net ~all"
+thedownundernews.online. 1794	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+===== ROOT NS/SOA/MX/TXT thedownundernews.it.com =====
+===== CAA/SRV =====

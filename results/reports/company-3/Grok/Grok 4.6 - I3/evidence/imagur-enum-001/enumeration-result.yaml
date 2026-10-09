@@ -1,0 +1,571 @@
+task_id: imagur-enum-001
+schema_version: "1.0"
+company:
+  canonical_name: Imagur
+  aliases:
+    - Imager
+    - FShare
+  country: Australia
+  jurisdiction: South Australia, Australia
+  address: 132 Morphett Rd, Glengowrie SA 5044, Australia
+  supplied_website: https://imagesharer.xyz/
+  identity_confidence: 90
+  identity_notes: >
+    Authorized engagement seed https://imagesharer.xyz/ is live and brands as
+    "Imager" (title "Log in — Imager"). Independent OSINT did not corroborate
+    the Glengowrie address, owner name, or Google Maps "FShare" listing on the
+    website. FShare remains an input alias only.
+run:
+  mode: passive+low-impact-validation
+  started_at: "2026-10-04T23:30:17Z"
+  completed_at: "2026-10-04T23:37:30Z"
+  tools_used:
+    - dig
+    - whois
+    - curl
+    - openssl
+    - subfinder
+    - assetfinder
+    - amass
+    - httpx-toolkit
+    - shodan
+    - whois.cymru.com
+    - rdap.arin.net
+  sources_used:
+    - input
+    - authoritative_dns
+    - whois
+    - arin_rdap
+    - tls
+    - http_homepage
+    - html_source
+    - shodan
+    - cymru_asn
+  unavailable_sources:
+    - crt.sh (HTTP 502 then 429)
+    - censys (API credentials not configured)
+    - securitytrails (SECURITYTRAILS_API_KEY unset)
+    - virustotal (VIRUSTOTAL_API_KEY unset)
+    - amass_passive (timeout, no results)
+    - ABR/ASIC public search (HTTP 404)
+    - yellowpages.com.au (HTTP 403)
+    - Google Maps/Search extract (JavaScript-only)
+    - websearch tool (not available)
+    - rdap.identitydigital.services domain object (404)
+    - rdap.nic.xyz (DNS resolution failed)
+  warnings:
+    - "Website public brand is 'Imager'; legal/engagement name is 'Imagur'. Treat as the same authorized seed, not a second org."
+    - "FShare Google Maps listing at the supplied address was not corroborated by imagesharer.xyz content."
+    - "Owner email dinh0087@flinders.edu.au is a Flinders University address; flinders.edu.au is third-party and out of scope."
+    - "imagesharer.xyz was registered 2026-09-06 (very new); empty CT/subfinder results are expected, not proof of no other hosts."
+    - "Do not expand scope from OVH VPS IP 51.161.131.44, CloudFront anycast, Spaceship nameservers, or Google/Amazon co-tenancy."
+    - "TLS certificate SAN is only DNS:imagesharer.xyz; www.imagesharer.xyz is not on the certificate."
+    - "Shodan listed CVE-2007-3205 and CVE-2013-2220 on the VPS; unverified banner noise, not enumerated findings."
+    - "Shodan passively observed TCP/5432 PostgreSQL on 51.161.131.44; recorded as a note on the hosting IP, not a separate org-owned database asset."
+    - "imager.xyz shares Spaceship launch NS but is a public 'for sale' parking page; nameserver co-tenancy is not ownership."
+    - "Low-impact HTTP followed the site's own redirects from / to /dashboard to /login; no path fuzzing or crawling."
+assets:
+  - id: A-001
+    type: root_domain
+    value: imagesharer.xyz
+    status: confirmed
+    confidence: 98
+    ownership: organization
+    notes: >
+      Authorized official root. Registrar Spaceship, Inc. Created 2026-09-06.
+      DNSSEC signedDelegation. No MX/TXT/SPF/DMARC/AAAA observed.
+    evidence:
+      - source: input
+        source_type: input
+        observed_value: https://imagesharer.xyz/
+        reason: User-supplied official website converted to registrable domain
+        target_contact: false
+        observed_at: "2026-10-04T23:30:17Z"
+      - source: dig
+        source_type: dns
+        observed_value: "imagesharer.xyz. IN A 51.161.131.44"
+        reason: Authoritative A record for the official root
+        target_contact: true
+        observed_at: "2026-10-04T23:30:20Z"
+      - source: whois
+        source_type: whois
+        observed_value: "Domain Name: IMAGESHARER.XYZ; Registrar: Spaceship, Inc.; Creation Date: 2026-09-06T07:50:15.0Z"
+        reason: Registry WHOIS confirms the domain is registered and delegated to Spaceship launch NS
+        target_contact: false
+        observed_at: "2026-10-04T23:30:27Z"
+      - source: openssl
+        source_type: tls
+        observed_value: "CN=imagesharer.xyz SAN=DNS:imagesharer.xyz issuer=Let's Encrypt"
+        reason: Live TLS certificate issued to the official hostname
+        target_contact: true
+        observed_at: "2026-10-04T23:30:40Z"
+      - source: curl
+        source_type: http
+        observed_value: "HTTP 302 /dashboard then /login; 200 title Log in — Imager; Server nginx; X-Powered-By PHP/8.2.34"
+        reason: Official site is live and presents Imager login branding
+        target_contact: true
+        observed_at: "2026-10-04T23:30:25Z"
+  - id: A-002
+    type: subdomain
+    value: www.imagesharer.xyz
+    root_domain: imagesharer.xyz
+    status: confirmed
+    confidence: 92
+    ownership: organization
+    resolves: true
+    a:
+      - 51.161.131.44
+    notes: Same A record and login application as the apex. Certificate SAN does not include www.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "www.imagesharer.xyz. IN A 51.161.131.44"
+        reason: www hostname of confirmed root resolves to the same official VPS IP
+        target_contact: true
+        observed_at: "2026-10-04T23:30:20Z"
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "https://www.imagesharer.xyz title=Log in — Imager status_chain=302,302,200 final=/login ip=51.161.131.44"
+        reason: Live HTTPS service matches the official Imager application
+        target_contact: true
+        observed_at: "2026-10-04T23:34:21Z"
+  - id: A-003
+    type: subdomain
+    value: resources.imagesharer.xyz
+    root_domain: imagesharer.xyz
+    status: confirmed
+    confidence: 88
+    ownership: organization
+    resolves: true
+    cname:
+      - d273uevi0662l0.cloudfront.net
+    a:
+      - 13.32.126.59
+      - 13.32.126.107
+      - 13.32.126.132
+      - 13.32.126.182
+    notes: >
+      Org hostname referenced in official HTML (commented favicon URL).
+      Content is served via Amazon CloudFront. Apex GET returns CloudFront 403.
+      CloudFront IPs are CDN anycast, not organization-owned. Exclude CDN
+      infrastructure from attack testing.
+    evidence:
+      - source: curl
+        source_type: http
+        observed_value: "https://resources.imagesharer.xyz/icon.ico (HTML comment on https://imagesharer.xyz/login)"
+        reason: Official homepage HTML comments a resources.imagesharer.xyz URL
+        target_contact: true
+        observed_at: "2026-10-04T23:30:25Z"
+      - source: dig
+        source_type: dns
+        observed_value: "resources.imagesharer.xyz CNAME d273uevi0662l0.cloudfront.net"
+        reason: Subdomain of confirmed root is delegated to a CloudFront distribution
+        target_contact: true
+        observed_at: "2026-10-04T23:33:10Z"
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "https://resources.imagesharer.xyz status=403 title=ERROR: The request could not be satisfied webserver=CloudFront"
+        reason: Hostname is live on CloudFront; origin/path not publicly served at /"
+        target_contact: true
+        observed_at: "2026-10-04T23:34:21Z"
+  - id: A-004
+    type: website
+    value: https://imagesharer.xyz/
+    host: imagesharer.xyz
+    status: confirmed
+    confidence: 98
+    status_code: 200
+    title: "Log in — Imager"
+    server: nginx
+    technologies:
+      - nginx
+      - PHP/8.2.34
+    redirect: "https://imagesharer.xyz/login"
+    cdn: null
+    notes: Root GET 302 /dashboard then 302 /login then 200 login page. Do not treat /login /dashboard /register as separate hosts.
+    evidence:
+      - source: curl
+        source_type: http
+        observed_value: "302 Location:/dashboard then 302 Location:/login then 200 Log in — Imager"
+        reason: Low-impact homepage validation of the authorized public website
+        target_contact: true
+        observed_at: "2026-10-04T23:30:25Z"
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "https://imagesharer.xyz chain_status_codes=[302,302,200] title=Log in — Imager"
+        reason: Independent low-impact HTTP confirmation of the same live site
+        target_contact: true
+        observed_at: "2026-10-04T23:34:21Z"
+  - id: A-005
+    type: website
+    value: https://www.imagesharer.xyz/
+    host: www.imagesharer.xyz
+    status: confirmed
+    confidence: 92
+    status_code: 200
+    title: "Log in — Imager"
+    server: nginx
+    technologies:
+      - nginx
+      - PHP/8.2.34
+    redirect: "https://www.imagesharer.xyz/login"
+    notes: HTTP also redirects to HTTPS www. Same application as apex.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "https://www.imagesharer.xyz final_url=https://www.imagesharer.xyz/login title=Log in — Imager"
+        reason: www site is the same live Imager application
+        target_contact: true
+        observed_at: "2026-10-04T23:34:21Z"
+  - id: A-006
+    type: website
+    value: https://resources.imagesharer.xyz/
+    host: resources.imagesharer.xyz
+    status: confirmed
+    confidence: 80
+    status_code: 403
+    title: "ERROR: The request could not be satisfied"
+    server: CloudFront
+    cdn: Amazon CloudFront
+    notes: Org hostname on third-party CDN. 403 at /. Not a second application origin for testing beyond the hostname itself. Do not attack CloudFront shared infrastructure.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "status=403 webserver=CloudFront cdn_name=aws cname=d273uevi0662l0.cloudfront.net"
+        reason: Live CDN vhost for the confirmed resources subdomain
+        target_contact: true
+        observed_at: "2026-10-04T23:34:21Z"
+  - id: A-007
+    type: ip_address
+    value: 51.161.131.44
+    version: 4
+    status: confirmed
+    confidence: 95
+    ownership: cloud-provider
+    related_hosts:
+      - imagesharer.xyz
+      - www.imagesharer.xyz
+    relation: authoritative_a_record
+    asn: AS16276
+    prefix: 51.161.130.0/23
+    notes: >
+      OVH Australia Sydney VPS (VPS-SYD2). PTR vps-ad2c3eab.vps.ovh.ca.
+      Provider-owned address currently dedicated to imagesharer.xyz per Shodan
+      hostnames. Do not scan other hosts on OVH netblocks. Shodan passively
+      observed 80/tcp nginx, 443/tcp nginx, 5432/tcp PostgreSQL.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "imagesharer.xyz A 51.161.131.44; www.imagesharer.xyz A 51.161.131.44"
+        reason: Official hostnames resolve to this address
+        target_contact: true
+        observed_at: "2026-10-04T23:30:20Z"
+      - source: rdap.arin.net
+        source_type: rdap
+        observed_value: "NET-51-161-130-0-1 VPS-SYD2 51.161.130.0/23 registrant OVH Australia PTY LTD"
+        reason: ARIN assignment is OVH Australia VPS space, not an Imagur netblock
+        target_contact: false
+        observed_at: "2026-10-04T23:30:50Z"
+      - source: whois.cymru.com
+        source_type: bgp
+        observed_value: "16276 | 51.161.131.44 | 51.161.128.0/17 | OVH SAS"
+        reason: BGP origin is OVH SAS AS16276
+        target_contact: false
+        observed_at: "2026-10-04T23:31:00Z"
+      - source: shodan
+        source_type: passive_osint
+        observed_value: "Hostnames imagesharer.xyz;vps-ad2c3eab.vps.ovh.ca org=OVH Australia PTY LTD city=Sydney ports=80,443,5432 http_title=Log in — Imager"
+        reason: Passive host record ties the IP to the official hostname and OVH VPS
+        target_contact: false
+        observed_at: "2026-10-04T23:31:40Z"
+  - id: A-008
+    type: asn
+    value: AS16276
+    name: OVH SAS
+    status: rejected
+    confidence: 95
+    ownership: cloud-provider
+    notes: Hosting ASN for the official VPS. Not organization-owned. Exclude entire ASN from testing.
+    evidence:
+      - source: whois.cymru.com
+        source_type: bgp
+        observed_value: "AS16276 OVH - OVH SAS, FR origin of 51.161.131.44"
+        reason: Routing origin of the official site IP is OVH, not Imagur
+        target_contact: false
+        observed_at: "2026-10-04T23:31:00Z"
+  - id: A-009
+    type: netblock
+    value: 51.161.130.0/23
+    asn: AS16276
+    status: rejected
+    confidence: 95
+    ownership: cloud-provider
+    notes: ARIN VPS-SYD2 assignment to OVH Australia PTY LTD. Do not treat sibling IPs as Imagur.
+    evidence:
+      - source: rdap.arin.net
+        source_type: rdap
+        observed_value: "handle NET-51-161-130-0-1 name VPS-SYD2 cidr 51.161.130.0/23 registrant OAPL-2 OVH Australia PTY LTD"
+        reason: Containing assignment is OVH VPS space
+        target_contact: false
+        observed_at: "2026-10-04T23:30:50Z"
+  - id: A-010
+    type: dns_cname
+    value: d273uevi0662l0.cloudfront.net
+    status: third-party
+    confidence: 90
+    ownership: cdn
+    related_hosts:
+      - resources.imagesharer.xyz
+    notes: Amazon CloudFront distribution used by resources.imagesharer.xyz. TLS presented CN=*.cloudfront.net. Exclude CloudFront shared infra and anycast IPs.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "resources.imagesharer.xyz CNAME d273uevi0662l0.cloudfront.net"
+        reason: CDN target of the confirmed resources hostname
+        target_contact: true
+        observed_at: "2026-10-04T23:33:10Z"
+      - source: openssl
+        source_type: tls
+        observed_value: "CN=*.cloudfront.net issuer=Amazon RSA 2048 M04 SAN=*.cloudfront.net,cloudfront.net"
+        reason: TLS is the CloudFront wildcard, not an Imagur certificate
+        target_contact: true
+        observed_at: "2026-10-04T23:33:20Z"
+  - id: A-011
+    type: root_domain
+    value: imagur.xyz
+    status: candidate
+    confidence: 42
+    ownership: unknown
+    notes: >
+      Exact match to canonical company name Imagur. Created 2026-08-28
+      (Namecheap), 9 days before imagesharer.xyz. www CNAME ghs.google.com;
+      HTTP 404 Google ghs default page; HTTPS TLS EOF. No content tying it to
+      imagesharer.xyz. If owned, hosting is Google (third-party). Manual owner
+      review required. Do not include Google IPs 216.239.32.0/24 as org assets.
+    evidence:
+      - source: input
+        source_type: input
+        observed_value: Imagur
+        reason: Domain matches the canonical company name
+        target_contact: false
+        observed_at: "2026-10-04T23:30:17Z"
+      - source: whois
+        source_type: whois
+        observed_value: "IMAGUR.XYZ registrar NameCheap creation 2026-08-28 NS dns1/dns2.registrar-servers.com"
+        reason: Recently registered name-match domain; different registrar than imagesharer.xyz
+        target_contact: false
+        observed_at: "2026-10-04T23:32:40Z"
+      - source: dig
+        source_type: dns
+        observed_value: "A 216.239.32/34/36/38.21; www CNAME ghs.google.com; MX eforward.registrar-servers.com"
+        reason: Points at Google hosting / Namecheap mail forwarding, unpublished site
+        target_contact: true
+        observed_at: "2026-10-04T23:33:00Z"
+      - source: curl
+        source_type: http
+        observed_value: "http://imagur.xyz Server=ghs 404 Error 404 (Not Found)!!1"
+        reason: No published site content for attribution
+        target_contact: true
+        observed_at: "2026-10-04T23:35:04Z"
+  - id: A-012
+    type: root_domain
+    value: fshare.xyz
+    status: candidate
+    confidence: 32
+    ownership: unknown
+    notes: >
+      Name similar to Google Maps alias FShare. Porkbun registrar, Cloudflare NS,
+      no A/AAAA (HTTPS host did not resolve). No website content. Keep for owner
+      review only; do not test Cloudflare.
+    evidence:
+      - source: input
+        source_type: input
+        observed_value: "Alias FShare from Google Maps listing at 132 Morphett Rd, Glengowrie SA 5044"
+        reason: Input alias prompted a name-similarity domain check
+        target_contact: false
+        observed_at: "2026-10-04T23:30:17Z"
+      - source: whois
+        source_type: whois
+        observed_value: "FSHARE.XYZ registrar Porkbun LLC created 2026-05-30 NS roan/ximena.ns.cloudflare.com"
+        reason: Domain exists but uses Cloudflare DNS with no public web address
+        target_contact: false
+        observed_at: "2026-10-04T23:32:50Z"
+      - source: dig
+        source_type: dns
+        observed_value: "fshare.xyz NS cloudflare; A none"
+        reason: No resolvable web endpoint
+        target_contact: true
+        observed_at: "2026-10-04T23:33:00Z"
+dns_mail:
+  nameservers:
+    - launch1.spaceship.net
+    - launch2.spaceship.net
+  mx: []
+  spf: []
+  dmarc: []
+  notes: Nameservers are Spaceship registrar DNS (third-party). No mail records on imagesharer.xyz.
+rejected_candidates:
+  - value: imager.xyz
+    type: root_domain
+    reason: HTTP title "Imager.xyz for sale | Spaceship.com"; AWS IPs AS16509; registrar West263/hkdns.hk created 2020-04-24. Shared Spaceship NS is parking, not ownership.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "title=Imager.xyz for sale | Spaceship.com a=52.40.42.113,44.232.173.249"
+        reason: Public for-sale parking page, not the Imagur application
+        target_contact: true
+        observed_at: "2026-10-04T23:34:22Z"
+  - value: www.imager.xyz
+    type: subdomain
+    reason: CNAME to rejected for-sale imager.xyz parking page
+    evidence:
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "www.imager.xyz CNAME imager.xyz title=Imager.xyz for sale | Spaceship.com"
+        reason: Same Spaceship for-sale content
+        target_contact: true
+        observed_at: "2026-10-04T23:34:22Z"
+  - value: imagur.com
+    type: root_domain
+    reason: Parked/redirect domain (ztomy/PDR, created 2009) redirecting to unrelated hppymel.com tracking URL. Name collision only.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "imagur.com 302 to hppymel.com/r/... NS ns111484.ztomy.com"
+        reason: Unrelated parked redirect, not Imagur
+        target_contact: true
+        observed_at: "2026-10-04T23:34:27Z"
+  - value: imagesharer.net
+    type: root_domain
+    reason: Namecheap 2021 domain on AWS/Kestrel returning RFC9110 404 JSON. No branding or DNS link to imagesharer.xyz.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http
+        observed_value: "status=404 server=Kestrel content-type=application/problem+json"
+        reason: Unrelated service, no Imagur attribution
+        target_contact: true
+        observed_at: "2026-10-04T23:34:22Z"
+  - value: vps-ad2c3eab.vps.ovh.ca
+    type: hostname
+    reason: OVH-assigned PTR for the VPS. Provider infrastructure hostname, not an Imagur domain.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "44.131.161.51.in-addr.arpa PTR vps-ad2c3eab.vps.ovh.ca"
+        reason: Reverse DNS is OVH VPS naming
+        target_contact: true
+        observed_at: "2026-10-04T23:31:00Z"
+  - value: flinders.edu.au
+    type: root_domain
+    reason: Owner contact mailbox domain is Flinders University. Third-party education network; out of scope.
+    evidence:
+      - source: input
+        source_type: input
+        observed_value: dinh0087@flinders.edu.au
+        reason: Attribution-only contact, not a business domain
+        target_contact: false
+        observed_at: "2026-10-04T23:30:17Z"
+  - value: encrypted-tbn0.gstatic.com
+    type: hostname
+    reason: Third-party Google thumbnail used as favicon on the login page. Certificate/CDN co-tenancy not ownership.
+    evidence:
+      - source: curl
+        source_type: http
+        observed_value: "login HTML link rel=icon href=https://encrypted-tbn0.gstatic.com/images?q=tbn:..."
+        reason: Third-party static asset, not an Imagur host
+        target_contact: true
+        observed_at: "2026-10-04T23:30:25Z"
+  - value: imagur.net
+    type: root_domain
+    reason: No NS/A/AAAA observed; not registered or not delegated.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "imagur.net A/NS empty"
+        reason: No DNS delegation
+        target_contact: true
+        observed_at: "2026-10-04T23:33:00Z"
+  - value: api.imagesharer.xyz
+    type: subdomain
+    reason: Guessed hostname; no A/AAAA/CNAME. Not promoted.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "api.imagesharer.xyz no records"
+        reason: Does not resolve
+        target_contact: true
+        observed_at: "2026-10-04T23:33:00Z"
+third_party_exclusions:
+  - value: AS16276
+    type: asn
+    owner: OVH SAS
+    reason: Cloud hosting ASN; only 51.161.131.44 is related via the official A record
+  - value: 51.161.130.0/23
+    type: netblock
+    owner: OVH Australia PTY LTD
+    reason: VPS-SYD2 assignment; sibling IPs are other OVH customers
+  - value: 51.161.128.0/17
+    type: netblock
+    owner: OVH SAS
+    reason: BGP covering prefix; far broader than the official host
+  - value: launch1.spaceship.net
+    type: nameserver
+    owner: Spaceship, Inc.
+    reason: Registrar DNS; do not test registrar infrastructure
+  - value: launch2.spaceship.net
+    type: nameserver
+    owner: Spaceship, Inc.
+    reason: Registrar DNS; do not test registrar infrastructure
+  - value: d273uevi0662l0.cloudfront.net
+    type: cdn
+    owner: Amazon CloudFront
+    reason: Shared CDN distribution; do not attack CloudFront or anycast IPs 13.32.126.0/24 and 2600:9000::/24
+  - value: ghs.google.com
+    type: saas
+    owner: Google LLC
+    reason: Google Sites/App Engine target of candidate www.imagur.xyz only
+  - value: eforward.registrar-servers.com
+    type: mx
+    owner: Namecheap
+    reason: Mail forwarding on candidate imagur.xyz
+  - value: flinders.edu.au
+    type: email_domain
+    owner: Flinders University
+    reason: Owner mailbox provider; out of scope
+  - value: encrypted-tbn0.gstatic.com
+    type: cdn
+    owner: Google
+    reason: Third-party favicon hotspot on login page
+warnings:
+  - "Website public brand is 'Imager'; legal/engagement name is 'Imagur'."
+  - "FShare Google Maps listing at 132 Morphett Rd was not corroborated by the website."
+  - "Owner email is Flinders University; do not include university assets."
+  - "imagesharer.xyz created 2026-09-06; CT/subfinder empty is expected."
+  - "Do not expand from OVH VPS IP, CloudFront, Spaceship NS, or Google/Amazon co-tenancy."
+  - "www.imagesharer.xyz is not on the Let's Encrypt SAN (only imagesharer.xyz)."
+  - "Shodan CVE-2007-3205/CVE-2013-2220 are unverified banner noise, not findings."
+  - "Shodan observed PostgreSQL/5432 on 51.161.131.44; same VPS note only."
+  - "imager.xyz is a Spaceship for-sale page despite brand/NS similarity."
+unavailable_sources:
+  - crt.sh (502/429)
+  - censys (no API credentials)
+  - securitytrails (no API key)
+  - virustotal (no API key)
+  - amass passive (timeout, empty)
+  - ABR/ASIC (404)
+  - yellowpages.com.au (403)
+  - Google Maps/Search (JS-only)
+  - websearch tool (unavailable)
+  - Identity Digital RDAP domain object (404)
+summary:
+  confirmed_root_domains: 1
+  subdomains: 2
+  live_websites: 2
+  related_ips: 1
+  organization_owned_ips: 0
+  organization_asns: 0
+  organization_netblocks: 0
+  candidate_root_domains: 2
+  rejected_candidates: 9
+  third_party_exclusions: 10
+evidence_dir: /home/research/Projects/Imagur/evidence/imagur-enum-001/

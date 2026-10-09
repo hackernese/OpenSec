@@ -1,0 +1,80 @@
+# Nmap 7.99 scan initiated Mon Oct  5 00:48:40 2026 as: /usr/lib/nmap/nmap --privileged -sS -sV -sC -Pn -p 21,80,443 --script "default,ftp-anon,ftp-syst,ftp-bounce,ssl-cert,ssl-enum-ciphers,http-methods,http-title,http-headers and not brute and not dos" --max-rate 100 -oN /home/research/Projects/DownUnderNewsz/evidence/T10/nmap_51.161.131.195.txt 51.161.131.195
+Nmap scan report for vps-edee2c79.vps.ovh.ca (51.161.131.195)
+Host is up (0.023s latency).
+
+PORT    STATE SERVICE  VERSION
+21/tcp  open  ftp      vsftpd 3.0.5
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+| -rw-r--r--    1 1001     33             76 Sep 17 22:10 37550846eae5457d93ddd8e1d2faeaca.html
+| -rw-r--r--    1 1001     33         230599 Sep 06 06:51 58e75939c3d24841806d3a069e919576.png
+| -rw-r--r--    1 1001     33         167268 Sep 06 07:19 66ea642847be4ef0a800fb8cb8432d79.png
+|_-rw-r--r--    1 1001     33         624807 Sep 13 09:07 d2273a1a2576489fb419cc1049c4c62f.pdf
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:129.96.85.136
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 1
+|      vsFTPd 3.0.5 - secure, fast, stable
+|_End of status
+80/tcp  open  http     nginx
+| http-headers: 
+|   Server: nginx
+|   Date: Sun, 04 Oct 2026 13:48:53 GMT
+|   Content-Type: text/html
+|   Content-Length: 162
+|   Connection: close
+|   Location: https://vps-edee2c79.vps.ovh.ca/
+|   
+|_  (Request type: GET)
+|_http-title: Did not follow redirect to https://vps-edee2c79.vps.ovh.ca/
+443/tcp open  ssl/http nginx
+| http-headers: 
+|   Server: nginx
+|   Date: Sun, 04 Oct 2026 13:48:53 GMT
+|   Content-Type: text/html
+|   Content-Length: 150
+|   Connection: close
+|   
+|_  (Request type: GET)
+| ssl-cert: Subject: commonName=media.thedownundernews.online
+| Subject Alternative Name: DNS:media.thedownundernews.online
+| Not valid before: 2026-09-16T12:43:26
+|_Not valid after:  2026-12-15T12:43:25
+|_http-title: 502 Bad Gateway
+|_ssl-date: TLS randomness does not represent time
+| ssl-enum-ciphers: 
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_128_CCM (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_CCM (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_ARIA_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_ARIA_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_CAMELLIA_128_CBC_SHA256 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_CAMELLIA_256_CBC_SHA384 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|   TLSv1.3: 
+|     ciphers: 
+|       TLS_AKE_WITH_AES_128_GCM_SHA256 (X25519MLKEM768) - A
+|       TLS_AKE_WITH_AES_256_GCM_SHA384 (X25519MLKEM768) - A
+|       TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (X25519MLKEM768) - A
+|     cipher preference: client
+|_  least strength: A
+Service Info: OS: Unix
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Oct  5 00:49:00 2026 -- 1 IP address (1 host up) scanned in 20.15 seconds

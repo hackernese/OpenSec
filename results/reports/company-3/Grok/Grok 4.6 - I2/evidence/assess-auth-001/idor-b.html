@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Images — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+            <div class="alert alert-success">Image uploaded successfully.</div>
+    
+            <div class="alert alert-error">You do not have access to this image.</div>
+    
+    <div class="page-header">
+    <h1>My Images</h1>
+    <a href="/images/upload" class="btn btn-primary">+ Upload image</a>
+</div>
+
+    <p class="text-muted mb-2">2 images</p>
+
+    <div class="image-grid mt-2">
+                    <div class="image-card">
+                <a href="/images/987d94eb-3b78-4b92-abb9-9b8796552f00">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/9d66079a-db2b-4688-9c37-24e0be85921e/987d94eb-3b78-4b92-abb9-9b8796552f00.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261004%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261004T230024Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=aa020e1e363d81c1398a61e2ad324ae45c16e842a13a5332671b899201dadb12"
+                        alt="t.php.png"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">t.php.png</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+                    <div class="image-card">
+                <a href="/images/05949bdd-21a3-4860-8aba-857deeab7b50">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/9d66079a-db2b-4688-9c37-24e0be85921e/05949bdd-21a3-4860-8aba-857deeab7b50.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261004%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261004T230024Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=1aa7accdd331d706caa285be5aebf726f4159670be9ec035a41e01968f490480"
+                        alt="tiny.png"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">tiny.png</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+            </div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>

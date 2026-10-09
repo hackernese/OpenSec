@@ -1,0 +1,68 @@
+{
+  "id": "eb9eb060-d860-4bda-9f86-8c2fec7c8afc",
+  "name": "AuSecurity Vulnerability Assessment 2026-10-05",
+  "project_type": "c5a50818-ac65-47c8-923f-bc9b37c4943b",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "override_finding_order": false,
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "in-progress",
+      "data": {
+        "executive_summary": "AuSecurity engaged an independent vulnerability assessment of its public internet-facing environment on 5 October 2026. The environment consists of three OVH (Singapore) virtual private servers hosting the marketing website (ausecurity.best), the WordPress blog (blog.ausecurity.best) and the osTicket customer-support portal (ticket.ausecurity.best). The attack surface is small, but it contains issues that materially affect the firm's security posture and brand.\n\n**Headline results**\n\n* **One critical issue** was identified: the customer-support portal (osTicket) is still showing its first-time installation page to the open internet. Anyone on the internet could complete that installer before AuSecurity does, and would then own the support platform. This should be fixed within hours, not days.\n* **Three high-severity issues** were identified: (1) email sent as `@ausecurity.best` can be freely spoofed by any attacker because the domain publishes no email-authentication records, and the advertised contact address does not actually receive mail; (2) the backend web server behind the support portal is reachable from the open internet on an unencrypted port, bypassing the firm's own HTTPS protections; and (3) the main marketing website presents a self-signed TLS certificate, which triggers a full-page browser warning for every visitor and is especially damaging for a security-consulting brand.\n* **Seven medium-severity issues** affect WordPress hardening (admin username is publicly discoverable, XML-RPC can be abused for amplification, several directories are publicly browsable), the support portal (information-leaking error messages, session cookies missing standard security flags), the marketing site (no security response headers), and all three servers (SSH still accepts password login).\n* **Five low-severity issues** and **one informational observation** cover certificate-authority pinning, software version disclosure, a leftover Windows configuration file, missing rate-limiting on the WordPress login, an older nginx release, and WordPress install/upgrade endpoints that reveal state.\n\n**What this means for the business**\n\nThere is no evidence that any of these issues has been exploited. However, the critical installer exposure allows total takeover of the support portal within minutes of discovery, and the email-authentication gap allows anyone to send convincing phishing messages that appear to come from AuSecurity staff. Both represent direct and immediate risk to the firm and its clients and should be remediated inside 72 hours. The remaining issues reflect common hardening gaps on newly deployed infrastructure; none require architectural change, and most can be resolved by configuration changes delivered in a single maintenance window.\n\n**Recommended priority order**\n\n1. Secure the osTicket installer (block `/setup/`, complete installation, close port 8080 to the public).\n2. Publish SPF and DMARC records (and a working inbound mail path) for `ausecurity.best`.\n3. Replace the self-signed certificate on the marketing site with a trusted (Let's Encrypt) certificate.\n4. Harden WordPress (rename `admin`, restrict REST user enumeration, disable or rate-limit XML-RPC, remove directory listings).\n5. Switch all three servers to SSH key-only authentication.\n6. Add standard security response headers to all sites.\n7. Address the remaining low and informational items as part of regular maintenance.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "status": "in-progress",
+      "data": {
+        "scope": "The engagement was a full-scope external vulnerability assessment of the publicly reachable AuSecurity environment, performed from the public internet with no prior credentials or internal network access.\n\n**In-scope assets**\n\n| System | Description |\n|:---|:---|\n| ausecurity.best (apex) | Primary marketing website |\n| www.ausecurity.best | Marketing website (www alias) |\n| blog.ausecurity.best | WordPress blog |\n| ticket.ausecurity.best | osTicket customer-support portal |\n| 51.79.166.148 | OVH Singapore VPS hosting apex/www (ports tcp/22, 80, 443, 8080) |\n| 51.79.166.209 | OVH Singapore VPS hosting ticket (ports tcp/22, 80, 443, 8080) |\n| 51.79.167.208 | OVH Singapore VPS hosting blog (ports tcp/22, 80, 443) |\n| ausecurity.best DNS / email posture | SPF, DKIM, DMARC, MX, MTA-STS, TLS-RPT, CAA, DNSSEC |\n| info@ausecurity.best | Published public contact address |\n\n**Methodology**\n\nTesting followed an adapted combination of PTES, OWASP Web Security Testing Guide (WSTG) and NIST SP 800-115. The following phases were executed:\n\n* Passive and active enumeration (DNS, certificate transparency, subdomain discovery, Shodan hostname search).\n* Infrastructure assessment (TCP port discovery, service and version fingerprinting, SSH configuration review).\n* TLS inspection (certificate validation, chain verification, cipher review).\n* DNS and email-posture review (SPF, DKIM, DMARC, MX, MTA-STS, TLS-RPT, CAA, DNSSEC, zone-transfer attempts).\n* WordPress assessment (REST API, XML-RPC, author enumeration, plugin and theme fingerprinting, directory listing, admin endpoint reachability).\n* osTicket assessment (installer exposure, source leakage, header hygiene, cookie flags, backend bypass).\n* Cross-cutting web-application testing with templated checks covering common exposure, configuration, backup, disclosure, injection, SSRF, LFI, panel and login patterns.\n\n**Safety constraints applied throughout the engagement**\n\n* No credential bruteforce, password spraying or MFA bypass.\n* No denial-of-service or destructive payloads.\n* No data exfiltration or interaction with third parties.\n* No social engineering or phishing.\n* All exploitation probes stopped at minimum proof-of-concept.\n\n**Limitations**\n\n* Certificate-transparency enumeration via crt.sh was rate-limited; certspotter was used as a substitute. A follow-up crt.sh pass is recommended.\n* No commercial API access was available for Censys, SecurityTrails, PassiveTotal or GitHub Code Search.\n* The domain was first registered on 2026-08-04, so the Wayback Machine has no historical snapshots.\n* The engagement was executed in a single day. Long-tail checks (large-wordlist content discovery, authenticated testing of osTicket once configured) were explicitly deferred.\n* A full-template web scan timed out at approximately 49% and was replaced by a focused, tag-filtered re-run that completed successfully.\n* No credential testing was performed, in line with the engagement rules.\n\n**Coverage summary**\n\n* 100% of enumerated in-scope hosts and web applications were probed.\n* SSH, HTTP, HTTPS and HTTP-8080 were covered on every exposed host.\n* The DNS and email posture of `ausecurity.best` was fully reviewed.\n* WordPress core, REST API, XML-RPC, plugin and theme fingerprinting, directory listing and admin endpoints were all covered.\n* osTicket installer exposure, source leakage, header hygiene, cookie flags and backend bypass were all covered.\n",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 person day",
+        "provided_users": "No user accounts, credentials or internal network access were provided. The assessment was performed entirely as an unauthenticated external attacker from the public internet.\n"
+      }
+    },
+    {
+      "id": "customer",
+      "status": "in-progress",
+      "data": {
+        "customer_name": "AuSecurity",
+        "customer_address": {
+          "city": "Paddington NSW 2021, Australia",
+          "street": "63 Paddington St"
+        },
+        "receiver_name": "Vinh Dinh (dinh0087@flinders.edu.au)"
+      }
+    },
+    {
+      "id": "other",
+      "status": "in-progress",
+      "data": {
+        "title": "AuSecurity External Vulnerability Assessment",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-10-05",
+            "version": "1.0",
+            "description": "Initial report",
+            "author": "ClawSec"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "status": "in-progress",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

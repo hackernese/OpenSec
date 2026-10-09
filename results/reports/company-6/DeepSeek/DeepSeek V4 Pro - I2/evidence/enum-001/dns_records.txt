@@ -1,0 +1,24 @@
+DNS enumeration for ausecurity.best (2026-10-06)
+
+A records:
+  ausecurity.best        -> 51.79.166.148
+  www.ausecurity.best    -> 51.79.166.148
+  blog.ausecurity.best   -> 51.79.167.208
+  ticket.ausecurity.best -> 51.79.166.209
+
+AAAA: none
+CNAME: none
+MX: none
+TXT: none (no SPF, no DMARC)
+CAA: none
+NS: launch1.spaceship.net, launch2.spaceship.net
+SOA: launch1.spaceship.net. support.spaceship.com. 1789403617 43200 3600 604800 3600
+
+Nameserver hosts (third-party Spaceship/Cloudflare infra):
+  launch1.spaceship.net -> 162.159.26.38
+  launch2.spaceship.net -> 162.159.27.32
+
+Reverse DNS:
+  51.79.166.148 -> vps-10f1e4c3.vps.ovh.ca
+  51.79.167.208 -> vps-d64a720c.vps.ovh.ca
+  51.79.166.209 -> vps-91287016.vps.ovh.ca

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create account — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/login">Log in</a>
+            <a href="/register" class="btn btn-primary btn-sm">Sign up</a>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="auth-wrap">
+    <div class="card auth-card">
+        <h1>Create account</h1>
+
+        <form method="POST" action="/register">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autofocus
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="new-password"
+                    placeholder="Min. 8 characters"
+                    minlength="8"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm">Confirm password</label>
+                <input
+                    type="password"
+                    id="confirm"
+                    name="confirm"
+                    required
+                    autocomplete="new-password"
+                    placeholder="••••••••"
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-2">
+                Create account
+            </button>
+        </form>
+
+        <p class="form-footer">
+            Already have an account? <a href="/login">Log in</a>
+        </p>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>

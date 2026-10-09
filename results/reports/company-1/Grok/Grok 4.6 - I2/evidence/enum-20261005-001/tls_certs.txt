@@ -1,0 +1,23 @@
+===== cert www.thedownundernews.online:443 =====
+subject=CN=www.thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE1
+notBefore=Oct  4 11:51:02 2026 GMT
+notAfter=Jan  2 11:51:01 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:www.thedownundernews.online
+
+===== cert thedownundernews.online:443 (SNI apex) =====
+subject=CN=www.thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE1
+notBefore=Oct  4 11:51:02 2026 GMT
+notAfter=Jan  2 11:51:01 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:www.thedownundernews.online
+
+===== cert connect by IP 51.161.130.70 SNI www =====
+subject=CN=www.thedownundernews.online
+issuer=C=US, O=Let's Encrypt, CN=YE1
+notBefore=Oct  4 11:51:02 2026 GMT
+notAfter=Jan  2 11:51:01 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:www.thedownundernews.online

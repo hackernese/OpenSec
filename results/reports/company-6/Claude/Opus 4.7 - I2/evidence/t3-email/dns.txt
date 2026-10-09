@@ -1,0 +1,22 @@
+=== MX ===
+=== TXT (apex) ===
+=== SPF (explicit) ===
+=== DMARC ===
+=== DKIM (default selectors) ===
+--- selector: default ---
+--- selector: google ---
+--- selector: k1 ---
+--- selector: selector1 ---
+--- selector: selector2 ---
+--- selector: mail ---
+--- selector: dkim ---
+--- selector: smtp ---
+=== CAA ===
+=== NS ===
+launch1.spaceship.net.
+launch2.spaceship.net.
+=== SOA ===
+launch1.spaceship.net. support.spaceship.com. 1789403617 43200 3600 604800 3600
+=== DNSSEC (DNSKEY existence) ===
+256 3 13 DBuQ7Ej+v6xGbD3SeCk3ViWD0zygHhDvFXDtk6/CWpa4/nPLCqpnC4KQ 1hKAglvTOmRe0oGurl8yZBx8Og7v8w==
+257 3 13 RKwH5QjIiVaRPZ3/+ary+yXBL55gB8xDt8gWOV3U9mf8M8ZkO80ZQf5y Gdjdtv41mKe14kMsTA3wb3QZF7inOw==

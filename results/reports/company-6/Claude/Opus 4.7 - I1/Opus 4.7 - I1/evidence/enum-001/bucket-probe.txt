@@ -1,0 +1,14 @@
+https://ausecurity.s3.amazonaws.com -> 404
+https://ausecurity.storage.googleapis.com -> 404
+https://ausecurity-au.s3.amazonaws.com -> 404
+https://ausecurity-au.storage.googleapis.com -> 404
+https://aus-security.s3.amazonaws.com -> 404
+https://aus-security.storage.googleapis.com -> 404
+https://ausec-backup.s3.amazonaws.com -> 404
+https://ausec-backup.storage.googleapis.com -> 404
+https://ausecurity-blog.s3.amazonaws.com -> 404
+https://ausecurity-blog.storage.googleapis.com -> 404
+https://ausecurity-static.s3.amazonaws.com -> 404
+https://ausecurity-static.storage.googleapis.com -> 404
+https://ausecurity-dev.s3.amazonaws.com -> 404
+https://ausecurity-dev.storage.googleapis.com -> 404

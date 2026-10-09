@@ -1,0 +1,43 @@
+{
+  "approved_at": "2026-10-05T01:25:00+11:00",
+  "intensity": "standard_safety_first",
+  "allowlist": {
+    "domains": [
+      "thedownundernews.online",
+      "www.thedownundernews.online",
+      "media.thedownundernews.online"
+    ],
+    "ips": [
+      "51.161.130.70",
+      "51.161.131.195"
+    ]
+  },
+  "denylist": [
+    "51.161.130.0/23 (entire OVH VPS netblock — only the two specific IPs above)",
+    "spaceship.net, efwd.spaceship.net (DNS/mail provider)",
+    "flinders.edu.au (owner's university)",
+    "fonts.googleapis.com, fonts.gstatic.com, cdn.jsdelivr.net (CDNs)",
+    "thedownundernews.it.com (unregistered — reported as finding only)"
+  ],
+  "method_rules": {
+    "allowed": [
+      "Passive OSINT",
+      "DNS enumeration",
+      "HTTP(S) probing and content discovery with reasonable wordlists",
+      "Authenticated testing with the three supplied dummy accounts (admin/writer/editor, pw Admin@1234)",
+      "Single-attempt auth testing to characterize responses (no brute force)",
+      "Reflected input / injection payload probing (XSS, SQLi, SSTI, CMDi, SSRF, LFI, open redirect, CSRF, IDOR, business logic) with proof-of-concept only",
+      "FTP banner grab + anonymous login check (one attempt)",
+      "TLS configuration review (testssl.sh/sslyze style)"
+    ],
+    "forbidden": [
+      "Brute force / password spraying / credential stuffing",
+      "DoS / DDoS / resource exhaustion",
+      "Destructive write/delete operations beyond harmless test records",
+      "Data exfiltration beyond minimum proof-of-concept",
+      "Phishing / social engineering",
+      "Lateral movement, persistence, stealth evasion",
+      "Scanning hosts outside the allowlist"
+    ]
+  }
+}

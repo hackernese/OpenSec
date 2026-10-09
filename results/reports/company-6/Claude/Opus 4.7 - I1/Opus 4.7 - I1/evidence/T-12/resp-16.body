@@ -1,0 +1,1 @@
+{"detail":[{"type":"enum","loc":["body","service_interest"],"msg":"Input should be 'GRC Consulting', 'Penetration Testing' or 'Not Sure'","input":"x","ctx":{"expected":"'GRC Consulting', 'Penetration Testing' or 'Not Sure'"}}]}

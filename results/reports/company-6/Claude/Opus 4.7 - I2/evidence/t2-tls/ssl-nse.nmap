@@ -1,0 +1,178 @@
+# Nmap 7.99 scan initiated Mon Oct  5 19:10:21 2026 as: /usr/lib/nmap/nmap --privileged -Pn -sV --script ssl-cert,ssl-enum-ciphers,ssl-dh-params,ssl-heartbleed,ssl-poodle,ssl-ccs-injection,ssl-known-key,http-security-headers,http-cookie-flags -p 443,8080 -oA /home/research/Projects/AuSecurity/evidence/t2-tls/ssl-nse ausecurity.best blog.ausecurity.best ticket.ausecurity.best
+Nmap scan report for ausecurity.best (51.79.166.148)
+Host is up (0.33s latency).
+rDNS record for 51.79.166.148: www.ausecurity.best
+
+Bug in http-security-headers: no string output.
+PORT     STATE SERVICE  VERSION
+443/tcp  open  ssl/http nginx 1.22.1
+|_http-server-header: nginx/1.22.1
+| ssl-cert: Subject: commonName=ausecurity.best
+| Subject Alternative Name: DNS:ausecurity.best
+| Issuer: commonName=ausecurity.best
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2026-09-14T15:32:18
+| Not valid after:  2027-09-14T15:32:18
+| MD5:     3365 01d7 7ed2 c8bf 8c40 66a9 5110 227f
+| SHA-1:   db18 468e c05e 674b f3a2 c7ca 9010 77a2 62cb ec76
+|_SHA-256: b530 10e0 32e7 4210 e4b1 f068 a0c5 b2a2 0bf6 44c1 f332 9287 4d1c 6407 148d 14e2
+| ssl-enum-ciphers: 
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_ARIA_256_GCM_SHA384 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_ARIA_128_GCM_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_CAMELLIA_256_CBC_SHA384 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (ecdh_x25519) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (ecdh_x25519) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CCM_8 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CCM (rsa 2048) - A
+|       TLS_RSA_WITH_ARIA_256_GCM_SHA384 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CCM_8 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CCM (rsa 2048) - A
+|       TLS_RSA_WITH_ARIA_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|   TLSv1.3: 
+|     ciphers: 
+|       TLS_AKE_WITH_AES_256_GCM_SHA384 (ecdh_x25519) - A
+|       TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (ecdh_x25519) - A
+|       TLS_AKE_WITH_AES_128_GCM_SHA256 (ecdh_x25519) - A
+|     cipher preference: server
+|_  least strength: A
+| http-security-headers: 
+|   Strict_Transport_Security: 
+|_    HSTS not configured in HTTPS Server
+8080/tcp open  http     nginx 1.25.5
+|_http-server-header: nginx/1.25.5
+
+Nmap scan report for blog.ausecurity.best (51.79.167.208)
+Host is up (0.33s latency).
+
+PORT     STATE    SERVICE    VERSION
+443/tcp  open     ssl/http   Apache httpd 2.4.68
+| http-security-headers: 
+|   Strict_Transport_Security: 
+|_    HSTS not configured in HTTPS Server
+| ssl-enum-ciphers: 
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|   TLSv1.3: 
+|     ciphers: 
+|       TLS_AKE_WITH_AES_128_GCM_SHA256 (ecdh_x25519) - A
+|       TLS_AKE_WITH_AES_256_GCM_SHA384 (ecdh_x25519) - A
+|       TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (ecdh_x25519) - A
+|     cipher preference: client
+|_  least strength: A
+|_http-server-header: Apache/2.4.68 (Debian)
+| ssl-cert: Subject: commonName=blog.ausecurity.best
+| Subject Alternative Name: DNS:blog.ausecurity.best
+| Issuer: commonName=YE1/organizationName=Let's Encrypt/countryName=US
+| Public Key type: ec
+| Public Key bits: 256
+| Signature Algorithm: ecdsa-with-SHA384
+| Not valid before: 2026-09-17T18:25:38
+| Not valid after:  2026-12-16T18:25:37
+| MD5:     8d69 8b85 50e6 f4a7 f946 c8e6 96c9 c683
+| SHA-1:   3b26 da18 29ef 0902 080e 43cc 68ce 5b3c cc11 cda9
+|_SHA-256: f321 e8cd 50a0 61b2 7535 b9e4 a5f5 1079 7155 46b7 7291 3db2 190c 4179 de29 5c5d
+8080/tcp filtered http-proxy
+
+Nmap scan report for ticket.ausecurity.best (51.79.166.209)
+Host is up (0.33s latency).
+
+PORT     STATE SERVICE  VERSION
+443/tcp  open  ssl/http nginx 1.22.1
+| ssl-cert: Subject: commonName=ticket.ausecurity.best
+| Subject Alternative Name: DNS:ticket.ausecurity.best
+| Issuer: commonName=YE1/organizationName=Let's Encrypt/countryName=US
+| Public Key type: ec
+| Public Key bits: 256
+| Signature Algorithm: ecdsa-with-SHA384
+| Not valid before: 2026-09-14T15:46:12
+| Not valid after:  2026-12-13T15:46:11
+| MD5:     2ffb 725e 28f5 1289 d9ea 9f62 db45 e8fc
+| SHA-1:   3712 84cd 3e2c 03c8 8e61 32c9 69ee a742 3b10 4d9e
+|_SHA-256: 9710 acbf d4ed 6413 f7c0 2709 6cf9 f2fb 2d05 8862 aa49 5051 5226 c071 04b6 6b4d
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-server-header: nginx/1.22.1
+| http-security-headers: 
+|   Strict_Transport_Security: 
+|     HSTS not configured in HTTPS Server
+|   Cache_Control: 
+|     Header: Cache-Control: no-store, no-cache, must-revalidate
+|   Pragma: 
+|     Header: Pragma: no-cache
+|   Expires: 
+|_    Header: Expires: Thu, 19 Nov 1981 08:52:00 GMT
+| ssl-enum-ciphers: 
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_CCM (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_ARIA_256_GCM_SHA384 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_128_CCM (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_ARIA_128_GCM_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_CAMELLIA_256_CBC_SHA384 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_CAMELLIA_128_CBC_SHA256 (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (ecdh_x25519) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (ecdh_x25519) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|   TLSv1.3: 
+|     ciphers: 
+|       TLS_AKE_WITH_AES_256_GCM_SHA384 (ecdh_x25519) - A
+|       TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (ecdh_x25519) - A
+|       TLS_AKE_WITH_AES_128_GCM_SHA256 (ecdh_x25519) - A
+|     cipher preference: server
+|_  least strength: A
+8080/tcp open  http     Apache httpd 2.4.68 ((Debian))
+| http-security-headers: 
+|   Cache_Control: 
+|     Header: Cache-Control: no-store, no-cache, must-revalidate
+|   Pragma: 
+|     Header: Pragma: no-cache
+|   Expires: 
+|_    Header: Expires: Thu, 19 Nov 1981 08:52:00 GMT
+|_http-server-header: Apache/2.4.68 (Debian)
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Oct  5 19:11:23 2026 -- 3 IP addresses (3 hosts up) scanned in 61.88 seconds

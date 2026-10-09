@@ -1,0 +1,38 @@
+{
+  "approved_on": "2026-09-18",
+  "approval_channel": "Owner interactive confirmation (Approve as-is)",
+  "in_scope": [
+    {"asset": "imagesharer.xyz", "type": "domain"},
+    {"asset": "www.imagesharer.xyz", "type": "subdomain"},
+    {"asset": "resources.imagesharer.xyz", "type": "subdomain (CloudFront-fronted)"},
+    {"asset": "51.161.131.44", "type": "ip (OVH VPS Sydney)"},
+    {"asset": "51.161.131.44:80/tcp", "type": "service (nginx)"},
+    {"asset": "51.161.131.44:443/tcp", "type": "service (nginx + PHP 8.2.33 'Imager' app)"}
+  ],
+  "out_of_scope": [
+    "AWS CloudFront edge IPs (shared infrastructure)",
+    "51.161.130.0/23 sibling OVH VPS pool",
+    "launch1.spaceship.net / launch2.spaceship.net (registrar DNS)",
+    "flinders.edu.au (owner's employer domain)",
+    "encrypted-tbn0.gstatic.com and other Google static hosts"
+  ],
+  "method_permissions": {
+    "allowed": [
+      "Passive OSINT",
+      "DNS/SSL/HTTP fingerprinting",
+      "Port and service scanning against the origin IP",
+      "Web application vulnerability testing (OWASP Top 10 + auth flows, IDOR, SSRF, file uploads, template injection, deserialisation, business logic)",
+      "Directory / content discovery with rate limits",
+      "Manual PoC exploitation limited to minimum evidence"
+    ],
+    "prohibited": [
+      "DDoS or resource exhaustion",
+      "Password brute force / credential stuffing / spraying",
+      "MFA bypass, phishing, social engineering",
+      "Destructive commands (data deletion, ransomware simulation, malware)",
+      "Lateral movement / stealth tradecraft",
+      "Use of any discovered credentials to interact with third-party services (e.g., AWS APIs)",
+      "Testing of any asset in the out_of_scope list"
+    ]
+  }
+}

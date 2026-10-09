@@ -1,0 +1,5 @@
+imagesharer.xyz.	162	IN	A	51.161.131.44
+imagesharer.xyz.	1800	IN	NS	launch2.spaceship.net.
+imagesharer.xyz.	1800	IN	NS	launch1.spaceship.net.
+imagesharer.xyz.	1800	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1789376610 43200 3600 604800 3600
+www.imagesharer.xyz.	1800	IN	A	51.161.131.44

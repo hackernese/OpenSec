@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.99 scan initiated Mon Oct  5 19:02:57 2026 as: /usr/lib/nmap/nmap -&#45;privileged -Pn -sS -p- -&#45;min-rate 3000 -&#45;max-retries 2 -T4 -&#45;open -oA /home/research/Projects/AuSecurity/evidence/t1-ports/stage1-allports 51.79.166.148 51.79.167.208 51.79.166.209 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -&#45;privileged -Pn -sS -p- -&#45;min-rate 3000 -&#45;max-retries 2 -T4 -&#45;open -oA /home/research/Projects/AuSecurity/evidence/t1-ports/stage1-allports 51.79.166.148 51.79.167.208 51.79.166.209" start="1791189177" startstr="Mon Oct  5 19:02:57 2026" version="7.99" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1791189177" endtime="1791189374"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="51.79.166.148" addrtype="ipv4"/>
+<hostnames>
+<hostname name="www.ausecurity.best" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65530">
+<extrareasons reason="no-response" count="65528" proto="tcp" ports="1-21,23-24,26-79,81-112,114-442,444-8079,8081-11210,11212-65535"/>
+<extrareasons reason="admin-prohibited" count="2" proto="tcp" ports="25,11211"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1" proto="tcp" ports="113"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http-proxy" method="table" conf="3"/></port>
+</ports>
+<times srtt="261582" rttvar="10088" to="301934"/>
+</host>
+<host starttime="1791189177" endtime="1791189374"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="51.79.167.208" addrtype="ipv4"/>
+<hostnames>
+<hostname name="blog.ausecurity.best" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-response" count="65531" proto="tcp" ports="1-21,23-79,81-112,114-442,444-65535"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1" proto="tcp" ports="113"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="260372" rttvar="7211" to="289216"/>
+</host>
+<host starttime="1791189177" endtime="1791189374"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="51.79.166.209" addrtype="ipv4"/>
+<hostnames>
+<hostname name="ticket.ausecurity.best" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65530">
+<extrareasons reason="no-response" count="65528" proto="tcp" ports="1-21,23-24,26-79,81-112,114-442,444-8079,8081-11210,11212-65535"/>
+<extrareasons reason="admin-prohibited" count="2" proto="tcp" ports="25,11211"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="reset" count="2" proto="tcp" ports="80,113"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="247"/><service name="http-proxy" method="table" conf="3"/></port>
+</ports>
+<times srtt="260787" rttvar="11910" to="308427"/>
+</host>
+<runstats><finished time="1791189374" timestr="Mon Oct  5 19:06:14 2026" summary="Nmap done at Mon Oct  5 19:06:14 2026; 3 IP addresses (3 hosts up) scanned in 197.20 seconds" elapsed="197.20" exit="success"/><hosts up="3" down="0" total="3"/>
+</runstats>
+</nmaprun>

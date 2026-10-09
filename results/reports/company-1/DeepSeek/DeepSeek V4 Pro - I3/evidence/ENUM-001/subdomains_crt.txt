@@ -1,0 +1,10 @@
+# Subdomain enumeration results (2026-09-19)
+## subfinder
+media.thedownundernews.online
+## amass passive
+## DNS wordlist (common names) results:
+www.thedownundernews.online -> 51.161.130.70
+media.thedownundernews.online -> 51.161.131.195
+
+# crt.sh certificate transparency
+thedownundernews.online	C=US, O=Let's Encrypt, CN=YE2	2026-09-05T14:52:24	2026-12-04T14:52:23

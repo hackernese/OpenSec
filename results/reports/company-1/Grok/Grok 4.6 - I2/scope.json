@@ -1,0 +1,60 @@
+{
+  "allowlist": [
+    "www.thedownundernews.online",
+    "https://www.thedownundernews.online/"
+  ],
+  "allowlist_paths": [
+    "https://www.thedownundernews.online/*"
+  ],
+  "denylist": [
+    "media.thedownundernews.online",
+    "thedownundernews.it.com",
+    "51.161.131.195",
+    "51.161.130.0/23 except traffic to www.thedownundernews.online",
+    "cdn.jsdelivr.net",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+    "launch1.spaceship.net",
+    "launch2.spaceship.net",
+    "mx1.efwd.spaceship.net",
+    "mx2.efwd.spaceship.net",
+    "*.ovh.ca",
+    "it.com"
+  ],
+  "third_party_exclusions": [
+    "OVH SAS / OVH Australia PTY LTD infrastructure beyond the approved website",
+    "Spaceship registrar, DNS, and email forwarding",
+    "jsDelivr CDN",
+    "Google Fonts",
+    "Let's Encrypt",
+    "Intis Telecom it.com namespace"
+  ],
+  "method_permissions": {
+    "web_application_testing": true,
+    "authenticated_testing_with_owner_provided_accounts": true,
+    "same_origin_api_testing": true,
+    "tls_and_http_header_review_on_www_only": true,
+    "non_destructive_injection_testing": true,
+    "redos_testing": true,
+    "brute_force": false,
+    "password_spraying": false,
+    "credential_stuffing": false,
+    "ddos": false,
+    "malware": false,
+    "phishing_social_engineering": false,
+    "mfa_bypass": false,
+    "lateral_movement": false,
+    "host_wide_port_scan_of_51.161.130.70": false
+  },
+  "test_accounts_authorized": [
+    "admin",
+    "writer",
+    "editor"
+  ],
+  "safety": {
+    "stop_on_scope_uncertainty": true,
+    "stop_on_third_party_impact": true,
+    "no_destructive_writes": true,
+    "minimum_proof_only": true
+  }
+}

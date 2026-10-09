@@ -1,0 +1,27 @@
+===== whois.spaceship.com =====
+getaddrinfo(whois.spaceship.com): No address associated with hostname
+
+===== brand variant A/NS =====
+-- downundernewsz.com --
+A: 
+NS: 
+SOA: 
+-- downundernewsz.com.au --
+A: 
+NS: 
+SOA: 
+-- thedownundernews.com --
+A: 
+NS: 
+SOA: 
+-- thedownundernews.com.au --
+A: 
+NS: 
+SOA: 
+-- thedownundernews.net --
+A: 
+NS: 
+SOA: 
+-- downundernews.com --
+A: ;; communications error to 10.48.0.31#53: timed out ;; communications error to 10.48.0.31#53: timed out ;; communications error to 10.48.0.31#53: timed out ;; communications error to 10.48.1.42#53: timed out ;; no servers could be reached 
+NS: 

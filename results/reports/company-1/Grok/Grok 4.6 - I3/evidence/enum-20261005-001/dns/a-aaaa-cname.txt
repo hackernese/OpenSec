@@ -1,0 +1,38 @@
+===== A/AAAA/CNAME detailed =====
+----- thedownundernews.online A -----
+thedownundernews.online. 1800	IN	A	51.161.130.70
+----- thedownundernews.online AAAA -----
+----- thedownundernews.online CNAME -----
+----- www.thedownundernews.online A -----
+www.thedownundernews.online. 862 IN	A	51.161.130.70
+----- www.thedownundernews.online AAAA -----
+----- www.thedownundernews.online CNAME -----
+----- thedownundernews.it.com A -----
+it.com.			883	IN	SOA	ns5.it.com. hostmaster.it.com. 2026100866 10800 3600 604800 3600
+----- thedownundernews.it.com AAAA -----
+----- thedownundernews.it.com CNAME -----
+----- www.thedownundernews.it.com A -----
+it.com.			885	IN	SOA	ns5.it.com. hostmaster.it.com. 2026100866 10800 3600 604800 3600
+----- www.thedownundernews.it.com AAAA -----
+----- www.thedownundernews.it.com CNAME -----
+===== ANY extra records =====
+-- thedownundernews.online NS --
+thedownundernews.online. 72939	IN	NS	launch2.spaceship.net.
+thedownundernews.online. 72939	IN	NS	launch1.spaceship.net.
+-- thedownundernews.online MX --
+thedownundernews.online. 1181	IN	MX	0 mx1.efwd.spaceship.net.
+thedownundernews.online. 1181	IN	MX	0 mx2.efwd.spaceship.net.
+-- thedownundernews.online TXT --
+thedownundernews.online. 1182	IN	TXT	"v=spf1 include:spf.efwd.spaceship.net ~all"
+-- thedownundernews.online SOA --
+thedownundernews.online. 1781	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+-- thedownundernews.online CAA --
+-- thedownundernews.online DS --
+thedownundernews.online. 72939	IN	DS	8128 13 2 2561F63995B8D9F308DB4293232B381C22A3FBA9CB3EDA2C23831ECE E6E34F97
+-- thedownundernews.online DNSKEY --
+thedownundernews.online. 859	IN	DNSKEY	257 3 13 D54qkdmk47b0Gz9WdJwYU5bmXIu6d/Ek2guk6/PghDKJPPMV+723jYZ7 8JO0EolH4DpM0igB1BlI5Xd4UPavJw==
+thedownundernews.online. 859	IN	DNSKEY	256 3 13 lzZ9Dv5YPcziQBlxTlHhMoUgyGqRaRloV1r+9KnJJ8CVAAdV4rw4mhor TQteuInkR3hnix5MWa+98D5oN+FOXQ==
+===== it.com NS (parent) =====
+ns6.it.com.
+ns5.it.com.
+it.com.			881	IN	SOA	ns5.it.com. hostmaster.it.com. 2026100866 10800 3600 604800 3600

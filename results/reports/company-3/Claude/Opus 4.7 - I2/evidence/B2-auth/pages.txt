@@ -1,0 +1,416 @@
+===== GET /dashboard =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:09 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1488
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: page_views=%5B%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171196%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171196%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%5D; expires=Wed, 04 Nov 2026 03:34:09 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Vary: Accept-Encoding
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Images — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>My Images</h1>
+    <a href="/images/upload" class="btn btn-primary">+ Upload image</a>
+</div>
+
+    <div class="empty-state">
+        <div class="icon">🖼️</div>
+        <p>You haven't uploaded any images yet.</p>
+        <a href="/images/upload" class="btn btn-primary">Upload your first image</a>
+    </div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>
+
+===== GET /profile =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:09 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 4352
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: page_views=%5B%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171196%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171196%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22profile%5C%2Fshow%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%5D; expires=Wed, 04 Nov 2026 03:34:09 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Vary: Accept-Encoding
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>My Profile</h1>
+</div>
+
+<div class="profile-grid">
+
+    <!-- ── Avatar card ────────────────────────────────────────────────────── -->
+    <div class="card profile-avatar-card">
+
+        <div class="avatar-wrap">
+                            <div class="avatar-placeholder">
+                    C                </div>
+                    </div>
+
+        <h2 class="profile-email">clawsec.a.1791171194@mailinator.com</h2>
+        <p class="text-muted profile-since">
+            Member since October 2026        </p>
+
+        <div class="profile-stats">
+            <div class="stat">
+                <span class="stat-value">0</span>
+                <span class="stat-label">Images</span>
+            </div>
+        </div>
+
+        <!-- Upload / change avatar -->
+        <form
+            method="POST"
+            action="/profile/avatar"
+            enctype="multipart/form-data"
+            class="avatar-form"
+        >
+            <label class="btn btn-ghost btn-sm btn-block" for="avatar" style="cursor:pointer;justify-content:center;">
+                📷 Upload profile picture            </label>
+            <input
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                style="display:none"
+                onchange="this.form.submit()"
+            >
+        </form>
+
+        
+    </div>
+
+    <!-- ── Info card ──────────────────────────────────────────────────────── -->
+    <div>
+        <div class="card" style="padding:1.5rem">
+            <h2 style="font-size:.75rem;font-weight:600;color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem">
+                Account details
+            </h2>
+
+            <div class="meta-row">
+                <span>Email</span>
+                <span>clawsec.a.1791171194@mailinator.com</span>
+            </div>
+            <div class="meta-row">
+                <span>User ID</span>
+                <span style="font-family:monospace;font-size:.8rem">740532d8-b0f3-4cad-a69a-43a0de29a4c8</span>
+            </div>
+            <div class="meta-row">
+                <span>Joined</span>
+                <span>05 Oct 2026</span>
+            </div>
+            <div class="meta-row">
+                <span>Images uploaded</span>
+                <span>0</span>
+            </div>
+        </div>
+
+        <div class="card mt-2" style="padding:1.5rem">
+            <h2 style="font-size:.75rem;font-weight:600;color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem">
+                Quick links
+            </h2>
+            <div style="display:flex;flex-direction:column;gap:.5rem">
+                <a href="/dashboard" class="btn btn-ghost btn-sm">🖼️ My images</a>
+                <a href="/images/upload" class="btn btn-ghost btn-sm">⬆️ Upload image</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>
+
+===== GET /images/upload =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:09 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 2636
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: page_views=%5B%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171196%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171196%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22profile%5C%2Fshow%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22images%5C%2Fupload%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%5D; expires=Wed, 04 Nov 2026 03:34:09 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Vary: Accept-Encoding
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload image — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>Upload image</h1>
+    <a href="/dashboard" class="btn btn-ghost btn-sm">← Back</a>
+</div>
+
+<div class="card upload-card">
+    <form method="POST" action="/images/upload" enctype="multipart/form-data">
+
+        <!-- Hidden user ID field -->
+        <input type="hidden" name="user_id" value="740532d8-b0f3-4cad-a69a-43a0de29a4c8">
+
+        <div class="form-group">
+            <label for="file">Image file</label>
+            <p class="text-muted mt-1" style="margin-bottom:.5rem">
+                JPEG, PNG, GIF or WebP — max 10 MB
+            </p>
+            <input
+                type="file"
+                id="file"
+                name="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                required
+                style="width:100%;padding:.45rem 0;"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Visibility</label>
+            <div class="visibility-toggle mt-1">
+                <label>
+                    <input type="radio" name="is_public" value="false" checked>
+                    🔒 Private (only you)
+                </label>
+                <label>
+                    <input type="radio" name="is_public" value="true">
+                    🌍 Public (anyone with the link)
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mt-2">
+            Upload
+        </button>
+    </form>
+</div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>
+
+===== GET /api/v1/images =====
+HTTP/1.1 401 Unauthorized
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:10 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 79
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"UNAUTHORIZED","message":"Authentication token is required."}}
+===== GET /api/v1/me =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:10 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/v1/token =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:10 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/v1/auth/token =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:10 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== OPTIONS /api/v1/images =====
+HTTP/1.1 204 No Content
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:10 GMT
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+
+===== POST /api/v1/images (no auth) =====
+HTTP/1.1 401 Unauthorized
+Server: nginx
+Date: Mon, 05 Oct 2026 03:34:10 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 79
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"UNAUTHORIZED","message":"Authentication token is required."}}

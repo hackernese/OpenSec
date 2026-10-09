@@ -1,0 +1,30 @@
+{
+  "business": {
+    "canonical_name": "Imagur",
+    "aliases": [],
+    "website": "https://imagesharer.xyz/",
+    "address": "132 Morphett Rd, Glengowrie SA 5044, Australia",
+    "owner_name": "Vinh Dinh",
+    "contact_email": "dinh0087@flinders.edu.au",
+    "google_maps": "https://www.google.com/maps/place/FShare/@-34.9861886,138.5378511,94m/"
+  },
+  "authorization": {
+    "status": "AUTHORIZED",
+    "method": "AuthorizedCode header verified on main public-facing website",
+    "verified_at_utc": "2026-10-05T03:04:00Z",
+    "verified_target": "https://imagesharer.xyz/"
+  },
+  "engagement": {
+    "start_date_utc": "2026-10-05T03:04:00Z",
+    "end_date_utc": null,
+    "scope_summary": "Full-scoped vulnerability assessment on all assets attributable to the business.",
+    "constraints": [
+      "No destructive techniques (DDoS, malware spreading, social engineering, phishing, credential stuffing, password spraying, brute force, MFA bypass, lateral movement, evasion).",
+      "No testing of third-party owned infrastructure.",
+      "No actions against other devices in the local network.",
+      "Minimum proof-of-concept only; stop after proof is obtained.",
+      "No sensitive data exfiltration or disclosure."
+    ],
+    "notes": "Owner authorized broad discovery; find as many vulnerabilities as possible on in-scope assets."
+  }
+}

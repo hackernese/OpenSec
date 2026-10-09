@@ -1,0 +1,10 @@
+HTTP/1.1 404 Not Found
+Date: Fri, 18 Sep 2026 04:34:42 GMT
+Server: Apache/2.4.68 (Debian)
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.33
+Content-Type: text/html; charset=UTF-8
+

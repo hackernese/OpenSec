@@ -1,0 +1,48 @@
+{
+  "approved_at": "2026-10-05",
+  "approved_by": "owner_selection",
+  "state": "approved",
+  "in_scope": [
+    {
+      "identifier": "www.thedownundernews.online",
+      "type": "subdomain",
+      "confidence": 99,
+      "notes": "Owner-approved. Canonical public hostname."
+    },
+    {
+      "identifier": "https://www.thedownundernews.online/",
+      "type": "website",
+      "confidence": 99,
+      "notes": "Owner-approved. Public newspaper site including same-origin paths and /api/articles."
+    },
+    {
+      "identifier": "https://www.thedownundernews.online/api/articles",
+      "type": "application_endpoint",
+      "confidence": 92,
+      "notes": "Same-origin API on the approved website; included with main website approval."
+    }
+  ],
+  "supporting_not_independently_in_scope": [
+    {
+      "identifier": "51.161.130.70",
+      "type": "ip_address",
+      "notes": "Hosting IP of the approved website. Web ports used by www.thedownundernews.online may be exercised as part of website testing. No host-wide or extra-port assessment of this IP unless later approved."
+    }
+  ],
+  "explicitly_out_of_scope": [
+    "thedownundernews.online apex as a separate testing target",
+    "media.thedownundernews.online",
+    "51.161.131.195",
+    "thedownundernews.it.com",
+    "editorial@thedownundernews.it.com",
+    "advertising@thedownundernews.it.com",
+    "corrections@thedownundernews.it.com",
+    "OVH netblocks and co-hosted tenants",
+    "Spaceship DNS/mail",
+    "cdn.jsdelivr.net",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+    "it.com parent namespace",
+    "lookalike domains"
+  ]
+}

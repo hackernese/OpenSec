@@ -1,0 +1,7 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+imagesharer.xyz	FALSE	/	FALSE		PHPSESSID	ea8f26d1c5fb25e19d1fa9c30e235b95
+imagesharer.xyz	FALSE	/	TRUE	1793746954	last_login	%7B%22timestamp%22%3A1791154954%2C%22session_id%22%3A%22ea8f26d1c5fb25e19d1fa9c30e235b95%22%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%7D
+imagesharer.xyz	FALSE	/	TRUE	1793746954	page_views	%5B%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791154954%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791154954%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22profile%5C%2Fshow%22%2C%22timestamp%22%3A1791154954%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%2C%22referer%22%3A%22%22%7D%5D

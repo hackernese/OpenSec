@@ -1,0 +1,131 @@
+{
+  "target_identity": {
+    "canonical_name": "Imagur",
+    "aliases": ["Imager"],
+    "primary_website": "https://imagesharer.xyz/",
+    "root_domain": "imagesharer.xyz",
+    "address": "132 Morphett Rd, Glengowrie SA 5044",
+    "country": "Australia",
+    "owner_email": "dinh0087@flinders.edu.au"
+  },
+  "discovery_summary": {
+    "root_domains": 1,
+    "subdomains": 2,
+    "ips": 1,
+    "services": 2,
+    "cdn_distributions": 1,
+    "asns": 1,
+    "netblocks": 1,
+    "repos": 0,
+    "buckets": 0,
+    "mail_infrastructure": 0,
+    "third_party_dependencies": 3,
+    "rejected_candidates": 0
+  },
+  "assets": [
+    {
+      "name": "imagesharer.xyz",
+      "type": "domain",
+      "value": "imagesharer.xyz",
+      "confidence": "confirmed",
+      "confidence_score": 99,
+      "evidence_paths": [
+        "evidence/enum-001/whois-imagesharer.xyz.txt",
+        "evidence/enum-001/dns-imagesharer.xyz.txt",
+        "evidence/enum-001/tls-cert-imagesharer.xyz.txt",
+        "evidence/enum-001/index-imagesharer.xyz.html"
+      ],
+      "notes": "User-supplied root domain. Registered 2026-09-06 via Spaceship. DNSSEC signed. NS: launch1/launch2.spaceship.net. No MX/TXT/CAA/AAAA."
+    },
+    {
+      "name": "www.imagesharer.xyz",
+      "type": "subdomain",
+      "value": "www.imagesharer.xyz",
+      "confidence": "confirmed",
+      "confidence_score": 95,
+      "evidence_paths": ["evidence/enum-001/subdomain-bruteforce.txt"],
+      "notes": "A record 51.161.131.44 (same origin as apex)."
+    },
+    {
+      "name": "resources.imagesharer.xyz",
+      "type": "subdomain",
+      "value": "resources.imagesharer.xyz",
+      "confidence": "confirmed",
+      "confidence_score": 92,
+      "evidence_paths": ["evidence/enum-001/index-imagesharer.xyz.html", "evidence/enum-001/tls-cert-resources.txt"],
+      "notes": "CNAME to d273uevi0662l0.cloudfront.net (AWS CloudFront). Distribution is target-controlled; edge IPs are shared AWS infra (out of scope)."
+    },
+    {
+      "name": "origin-vps",
+      "type": "ip",
+      "value": "51.161.131.44",
+      "confidence": "confirmed",
+      "confidence_score": 98,
+      "evidence_paths": ["evidence/enum-001/whois-51.161.131.44.txt", "evidence/enum-001/shodan-51.161.131.44.txt"],
+      "notes": "OVH VPS Sydney; rDNS vps-ad2c3eab.vps.ovh.ca. Dedicated (not shared)."
+    },
+    {
+      "name": "nginx-http",
+      "type": "service",
+      "value": "51.161.131.44:80/tcp",
+      "confidence": "confirmed",
+      "confidence_score": 95,
+      "evidence_paths": ["evidence/enum-001/shodan-51.161.131.44.txt"],
+      "notes": "nginx; HEAD redirects 301 to https for app host."
+    },
+    {
+      "name": "nginx-https",
+      "type": "service",
+      "value": "51.161.131.44:443/tcp",
+      "confidence": "confirmed",
+      "confidence_score": 95,
+      "evidence_paths": ["evidence/enum-001/https-head-imagesharer.xyz.txt", "evidence/enum-001/tls-cert-imagesharer.xyz.txt"],
+      "notes": "TLS via Let's Encrypt (valid 2026-09-14 -> 2026-12-13). Upstream PHP 8.2.33. App named 'Imager' with /login, /register, /dashboard, /css/app.css, /js/awsvalid.js. Security headers set (XFO/XCTO/XXP/Referrer-Policy)."
+    },
+    {
+      "name": "cloudfront-distribution",
+      "type": "other",
+      "value": "d273uevi0662l0.cloudfront.net",
+      "confidence": "cloud/CDN",
+      "confidence_score": 88,
+      "evidence_paths": ["evidence/enum-001/tls-cert-resources.txt"],
+      "notes": "Target-controlled CloudFront distribution. Edge IPs are shared AWS infra and MUST NOT be actively scanned."
+    }
+  ],
+  "rejected_candidates": [
+    {"value": "encrypted-tbn0.gstatic.com", "reason": "Google static asset (fallback favicon), not owned by Imagur."},
+    {"value": "18.155.82.138/154/183/185", "reason": "CloudFront edge IPs; shared AWS infra."},
+    {"value": "flinders.edu.au", "reason": "Owner's employer domain; separate legal entity."}
+  ],
+  "critical_pre_assessment_flag": {
+    "artifact": "https://imagesharer.xyz/js/awsvalid.js",
+    "issue": "Publicly served JS file appears to contain a live AWS access key (AKIA...) + secret + region ap-southeast-2 in comment block, plus SigV4 GetCallerIdentity implementation.",
+    "handling": "Do NOT use or validate the credentials against AWS. Report as a Critical finding based on public exposure alone. Local copy saved at evidence/enum-001/awsvalid.js."
+  },
+  "warnings": [
+    "crt.sh has not yet ingested certs for this 12-day-old domain; passive subdomain discovery may be incomplete.",
+    "subfinder/assetfinder/Shodan hostname searches returned no additional subdomains.",
+    "amass active enum skipped (sudo required).",
+    "GitHub code search API required auth (401); leaked-credential presence not checked from this agent.",
+    "AXFR against launch1/launch2.spaceship.net refused (expected).",
+    "No MX/SPF/DMARC/DKIM records on imagesharer.xyz; no mail infrastructure attributable.",
+    "Shodan snapshot (2026-09-10) for origin is stale relative to current live PHP app."
+  ],
+  "coverage": {
+    "in_scope_confirmed": [
+      "imagesharer.xyz",
+      "www.imagesharer.xyz",
+      "resources.imagesharer.xyz (CNAME target under target control)",
+      "51.161.131.44 (OVH VPS origin)",
+      "51.161.131.44:80/tcp",
+      "51.161.131.44:443/tcp (nginx + PHP 8.2.33 'Imager')"
+    ],
+    "out_of_scope": [
+      "CloudFront edge IPs",
+      "51.161.130.0/23 sibling addresses",
+      "launch1/launch2.spaceship.net (registrar DNS)",
+      "flinders.edu.au",
+      "encrypted-tbn0.gstatic.com"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "allowlist": [
+    "imagesharer.xyz",
+    "https://imagesharer.xyz/",
+    "https://imagesharer.xyz/*",
+    "51.161.131.44"
+  ],
+  "denylist": [
+    "www.imagesharer.xyz",
+    "resources.imagesharer.xyz",
+    "imagur.xyz",
+    "fshare.xyz",
+    "imager.xyz",
+    "imagur.com",
+    "imagesharer.net",
+    "flinders.edu.au",
+    "AS16276 except 51.161.131.44",
+    "51.161.130.0/23 except 51.161.131.44",
+    "d273uevi0662l0.cloudfront.net",
+    "launch1.spaceship.net",
+    "launch2.spaceship.net",
+    "encrypted-tbn0.gstatic.com",
+    "any host not in allowlist"
+  ],
+  "third_party_exclusions": [
+    "OVH shared infrastructure and sibling VPS addresses",
+    "Amazon CloudFront",
+    "Spaceship registrar DNS",
+    "Google CDN/ghs",
+    "Flinders University"
+  ],
+  "method_permissions": {
+    "passive_osint": true,
+    "port_scan_in_scope_ip_only": true,
+    "web_application_testing": true,
+    "safe_injection_proofs": true,
+    "redos_testing": true,
+    "destructive": false,
+    "ddos": false,
+    "malware": false,
+    "social_engineering": false,
+    "phishing": false,
+    "credential_stuffing": false,
+    "password_spraying": false,
+    "brute_force": false,
+    "mfa_bypass": false,
+    "lateral_movement": false,
+    "stealth_evasion": false
+  },
+  "approved_by": "owner validation 2026-10-05",
+  "state": "ASSESSING"
+}

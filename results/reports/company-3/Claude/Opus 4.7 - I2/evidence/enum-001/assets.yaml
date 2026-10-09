@@ -1,0 +1,319 @@
+target:
+  canonical_name: Imagur
+  aliases:
+    - Imager   # page title/branding on the site
+  address: 132 Morphett Rd, Glengowrie SA 5044, Australia
+  country: AU
+  supplied_website: https://imagesharer.xyz/
+  owner: Vinh Dinh
+  owner_email: dinh0087@flinders.edu.au
+  normalized_root_domain: imagesharer.xyz
+
+run:
+  task_id: enum-001
+  mode: passive_first_with_light_active
+  evidence_dir: /home/research/Projects/Imagur/evidence/enum-001/
+  tools_used:
+    - dig
+    - whois (IANA/ARIN/Cymru)
+    - openssl s_client
+    - curl (HEAD/GET only)
+    - subfinder (0 passive hits)
+    - amass (not run — subfinder/CT/direct sources already exhausted the surface)
+    - shodan (host + search)
+    - nmap (-Pn -sS top-20, then -sV on 6 confirmed ports; apex IP only)
+    - crt.sh, HackerTarget hostsearch, Wayback CDX, DuckDuckGo, GitHub search
+  unavailable_sources:
+    - "crt.sh: 0 results (domain registered 2026-09-06, no logged certs beyond current LE cert)"
+    - "Wayback Machine CDX: no archived snapshots"
+    - "AlienVault OTX passive DNS: anonymous access denied"
+    - "bufferover.run: DNS no-resolve (service decommissioned)"
+    - "GitHub code search: requires auth; repositories/users search returned 0"
+    - "subfinder: 0 passive hits (new TLD .xyz, young domain)"
+  warnings:
+    - "Domain is only ~1 month old (created 2026-09-06); historical datasets are empty — low signal from passive OSINT by design."
+    - "No SPF/DMARC/DKIM/CAA/MX records present — the apex is not sending/receiving mail, DNS email hardening is absent."
+    - "www.imagesharer.xyz resolves to the apex IP but the server certificate lacks a www SAN; TLS to www fails verification. Likely an operator oversight, not a separate asset."
+    - "Port 5432/tcp (PostgreSQL) is reachable from the public internet on the apex host — flagged for the assessment phase (NOT exploited here)."
+    - "Port 53/tcp open on the apex host (bind-style responder answering NXDOMAIN to generic queries) — likely a local resolver inadvertently exposed."
+    - "Port 8080/tcp exposes a second HTTP stack (Apache 2.4.68 + PHP 8.2.34) separate from the nginx front; same host, same stack family."
+
+roots:
+  - domain: imagesharer.xyz
+    status: confirmed
+    confidence: 100
+    evidence:
+      - source: user_input
+        source_type: input
+        observed_value: https://imagesharer.xyz/
+        reason: Supplied as the official website by the owner.
+        target_contact: false
+      - source: whois (Spaceship / CentralNic registry)
+        source_type: rdap_whois
+        observed_value: "Registrar: Spaceship, Inc.; Created 2026-09-06; DNSSEC signedDelegation"
+        reason: Registered domain with intact DNSSEC; served the branded application at the supplied URL.
+        target_contact: false
+      - source: HTTP GET https://imagesharer.xyz/
+        source_type: active_http
+        observed_value: 'HTML <title>Log in — Imager</title>, branded "Imager" photo-sharing app'
+        reason: Live application returns the project's own branding.
+        target_contact: true
+
+subdomains:
+  - fqdn: www.imagesharer.xyz
+    status: confirmed
+    confidence: 95
+    classification: owner_operated_same_host
+    evidence:
+      - source: dig A
+        source_type: passive_dns
+        observed_value: "www.imagesharer.xyz -> 51.161.131.44"
+        reason: Resolves to the same OVH VPS as the apex.
+        target_contact: false
+      - source: openssl s_client :443
+        source_type: active_tls
+        observed_value: "Cert CN=imagesharer.xyz, SAN=imagesharer.xyz only (no www SAN)"
+        reason: Served by the same nginx instance but without a matching SAN; still clearly the owner's host.
+        target_contact: true
+
+  - fqdn: resources.imagesharer.xyz
+    status: confirmed
+    confidence: 95
+    classification: owner_controlled_dns_pointing_to_third_party_cdn
+    evidence:
+      - source: dig CNAME
+        source_type: passive_dns
+        observed_value: "resources.imagesharer.xyz -> d273uevi0662l0.cloudfront.net (CloudFront)"
+        reason: Owner-controlled subdomain CNAMEd to an AWS CloudFront distribution.
+        target_contact: false
+      - source: HTML source of https://imagesharer.xyz/
+        source_type: active_http
+        observed_value: '<link rel="icon" href="https://resources.imagesharer.xyz/icon.ico"> (commented out)'
+        reason: Explicitly referenced from the application as its resource/CDN origin.
+        target_contact: true
+      - source: CloudFront response headers (direct request)
+        source_type: active_http
+        observed_value: "server: CloudFront; x-amz-cf-pop: MEL61-P1; via: CloudFront"
+        reason: Confirms CloudFront fronting; underlying origin (likely S3) not disclosed by headers.
+        target_contact: true
+    notes: >
+      The DNS name and whatever origin the owner configured behind the distribution are in scope.
+      The CloudFront edge infrastructure (13.32.126.0/24 and other AWS ranges) is third-party and
+      must NOT be port-scanned or stress-tested.
+
+websites:
+  - url: https://imagesharer.xyz/
+    status: confirmed
+    confidence: 100
+    http_status: 200
+    title: "Log in — Imager"
+    server_header: nginx
+    tech_fingerprint:
+      - nginx (TLS termination / reverse proxy)
+      - PHP 8.2.34 (via X-Powered-By)
+      - Custom PHP application (routes /login, /register, /dashboard, /css/app.css)
+    security_headers_present:
+      - X-Content-Type-Options: nosniff
+      - X-Frame-Options: DENY
+      - X-XSS-Protection: 1; mode=block
+      - Referrer-Policy: strict-origin-when-cross-origin
+    security_headers_missing:
+      - Strict-Transport-Security (HSTS)
+      - Content-Security-Policy
+      - Permissions-Policy
+    cookies_observed:
+      - name: PHPSESSID
+        attributes: path=/
+      - name: page_views
+        attributes: "secure; HttpOnly; SameSite=Lax; Max-Age=2592000; URL-encoded JSON of visited pages + user-agent + referer"
+    evidence:
+      - source: curl -I https://imagesharer.xyz/
+        source_type: active_http
+        observed_value: "200 OK; Server: nginx; X-Powered-By: PHP/8.2.34"
+        reason: Direct HEAD/GET observation of the live application.
+        target_contact: true
+
+  - url: http://51.161.131.44:8080/
+    status: confirmed
+    confidence: 85
+    http_status: 404
+    server_header: "Apache/2.4.68 (Debian)"
+    tech_fingerprint:
+      - Apache httpd 2.4.68
+      - PHP 8.2.34
+    classification: secondary_http_service_same_host
+    evidence:
+      - source: nmap -sV + curl -I
+        source_type: active_http
+        observed_value: "Apache/2.4.68 Debian with PHP/8.2.34; same security headers as apex"
+        reason: Second HTTP stack listening on the apex IP; same PHP build suggests same operator.
+        target_contact: true
+    notes: Serves 404 at /; no virtual host disclosed. Likely a dev/admin surface or PHP-FPM upstream exposed by misconfiguration — to be probed in the assessment phase.
+
+ips:
+  - ip: 51.161.131.44
+    status: confirmed
+    confidence: 100
+    hostname_rdns: vps-ad2c3eab.vps.ovh.ca
+    classification: dedicated_vps_owned_by_target
+    open_ports:
+      - 22/tcp (OpenSSH 10.0p2 Debian 7+deb13u4)
+      - 53/tcp (DNS responder — bind-style, NXDOMAIN to generic queries)
+      - 80/tcp (nginx -> 301 to HTTPS)
+      - 443/tcp (nginx; Imager PHP application)
+      - 5432/tcp (PostgreSQL, protocol 3.0 — publicly reachable)
+      - 8080/tcp (Apache 2.4.68 + PHP 8.2.34)
+    evidence:
+      - source: dig A imagesharer.xyz
+        source_type: passive_dns
+        observed_value: "51.161.131.44"
+        reason: Direct resolution of the confirmed apex.
+        target_contact: false
+      - source: Shodan host 51.161.131.44
+        source_type: passive_osint
+        observed_value: "hostnames imagesharer.xyz, vps-ad2c3eab.vps.ovh.ca; Sydney; OVH Australia PTY LTD"
+        reason: Independent corroboration of hosting + geolocation.
+        target_contact: false
+      - source: nmap -sV (top20 + confirmed ports) + curl
+        source_type: active_light_probe
+        observed_value: "ports 22,53,80,443,5432,8080 open; service banners captured"
+        reason: Lightweight, authorized active probing of the confirmed owner-controlled host.
+        target_contact: true
+
+  - ip: 13.32.126.182
+    status: third_party_cdn
+    confidence: 100
+    classification: aws_cloudfront_edge
+    evidence:
+      - source: dig + Team Cymru whois
+        source_type: passive_dns
+        observed_value: "AS16509 AMAZON-02; 13.32.126.0/24; CloudFront edge for resources.imagesharer.xyz"
+        reason: Shared CloudFront edge IP, not owned by the target.
+        target_contact: false
+    notes: Also observed 13.32.126.59, 13.32.126.107, 13.32.126.132 in the A set — all CloudFront edges. Excluded from active testing.
+
+asns:
+  - asn: AS16276
+    name: OVH SAS
+    role: hosts the owner-operated VPS
+    classification: hosting_provider
+    confidence: 100
+    evidence:
+      - source: Team Cymru whois
+        source_type: passive_osint
+        observed_value: "AS16276 | 51.161.131.44 | 51.161.128.0/17 | OVH"
+        reason: Direct ASN mapping for the confirmed IP.
+        target_contact: false
+  - asn: AS16509
+    name: AMAZON-02 (Amazon.com, Inc.)
+    role: hosts CloudFront distribution used by resources.imagesharer.xyz
+    classification: third_party_cdn
+    confidence: 100
+    evidence:
+      - source: Team Cymru whois
+        source_type: passive_osint
+        observed_value: "AS16509 | 13.32.126.182 | 13.32.126.0/24 | AMAZON-02"
+        reason: CloudFront edge for the owner's subdomain.
+        target_contact: false
+
+netblocks:
+  - cidr: 51.161.130.0/23
+    allocation: VPS-SYD2
+    owner: OVH Australia PTY LTD
+    classification: shared_hosting_block_contains_target_ip
+    confidence: 100
+    note: Target IP sits inside this /23. Do NOT expand scope to neighbouring IPs; shared OVH VPS pool.
+  - cidr: 51.161.128.0/17
+    allocation: OVH Australia parent block
+    classification: shared_hosting_block
+    confidence: 100
+    note: Parent allocation; purely contextual.
+
+dns_infrastructure:
+  nameservers:
+    - host: launch1.spaceship.net
+      ip: 162.159.26.38
+      provider: Spaceship (DNS fronted by Cloudflare anycast — AS13335)
+      classification: third_party_managed_dns
+    - host: launch2.spaceship.net
+      ip: 162.159.27.32
+      provider: Spaceship (Cloudflare anycast)
+      classification: third_party_managed_dns
+  soa: "launch1.spaceship.net. support.spaceship.com."
+  dnssec: signedDelegation (confirmed by registry WHOIS)
+  caa: none
+  evidence:
+    - source: dig NS/SOA
+      source_type: passive_dns
+      observed_value: "NS launch1/launch2.spaceship.net; SOA by Spaceship; NS IPs in Cloudflare 162.159.0.0/16"
+      reason: Owner delegated DNS to Spaceship; Spaceship serves via Cloudflare anycast.
+      target_contact: false
+
+mail_infrastructure:
+  mx_records: []
+  spf: null
+  dmarc: null
+  dkim_default_selector: null
+  status: not_configured
+  classification: no_mail_sending_or_receiving_domain
+  evidence:
+    - source: dig MX / TXT / _dmarc / default._domainkey
+      source_type: passive_dns
+      observed_value: "no records returned for any mail-related RR"
+      reason: Domain is not configured to send or receive email; spoofability risk noted for the assessment phase.
+      target_contact: false
+
+repositories_and_buckets:
+  github:
+    searched: true
+    status: not_found_without_auth
+    note: "Unauthenticated code search is blocked; repository/user searches for 'imagur vinh dinh' / 'vinh dinh flinders' returned 0 results."
+  s3_or_other_buckets:
+    searched: passive_only
+    status: not_discovered
+    note: "CloudFront fronts resources.imagesharer.xyz; origin is not disclosed by edge headers. No publicly indexed bucket name was recoverable passively. Not brute-forced per scope."
+
+api_endpoints:
+  - url: https://imagesharer.xyz/login
+    method: POST
+    classification: application_auth_endpoint
+    confidence: confirmed
+  - url: https://imagesharer.xyz/register
+    method: GET/POST
+    classification: application_signup_endpoint
+    confidence: confirmed
+  - url: https://imagesharer.xyz/dashboard
+    method: GET
+    classification: application_authenticated_route (returns login page when unauthenticated)
+    confidence: confirmed
+  note: >
+    No separate /api/* host or path was advertised in the HTML. The site is a monolithic PHP app.
+    Deeper endpoint discovery is deferred to the assessment phase (per scope rules — no fuzzing here).
+
+third_party_or_shared_do_not_test:
+  - resources.imagesharer.xyz (CNAME target d273uevi0662l0.cloudfront.net and all 13.32.126.0/24 edge IPs — AWS CloudFront shared infrastructure)
+  - launch1.spaceship.net / launch2.spaceship.net (Spaceship/Cloudflare managed DNS, 162.159.0.0/16)
+  - encrypted-tbn0.gstatic.com (Google static-content host used as favicon source)
+  - All OVH neighbour IPs in 51.161.130.0/23 outside 51.161.131.44
+
+rejected_candidates:
+  - value: imagur.com
+    reason: Common misspelling of the user-provided brand "Imagur" but unrelated public image-hosting domain (Imgur Inc.). No evidence of ownership by Vinh Dinh.
+    status: rejected
+    confidence: 95
+  - value: imager.com / imager.app / imagesharer.com
+    reason: Not asserted by any evidence; no DNS/HTTP/registration linkage to the target. Not pursued without a seed.
+    status: rejected
+    confidence: 90
+
+summary_counts:
+  roots: 1
+  subdomains_confirmed: 2
+  websites_confirmed: 2
+  ips_owner_controlled: 1
+  ips_third_party_cdn_observed: 4   # 13.32.126.59/107/132/182
+  asns: 2
+  netblocks_contextual: 2
+  mail_assets: 0
+  rejected: 2
+  warnings: 6

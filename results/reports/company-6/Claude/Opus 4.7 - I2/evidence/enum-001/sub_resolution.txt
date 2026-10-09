@@ -1,0 +1,4 @@
+blog.ausecurity.best -> A=51.79.167.208, CNAME=
+ticket.ausecurity.best -> A=51.79.166.209, CNAME=
+www.ausecurity.best -> A=51.79.166.148, CNAME=
+mail.ausecurity.best -> A= CNAME=

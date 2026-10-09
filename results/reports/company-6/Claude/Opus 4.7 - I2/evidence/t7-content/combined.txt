@@ -1,0 +1,211 @@
+=============== https://ausecurity.best/ ===============
+
+ ___  ___  __   __     __      __         __   ___
+|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__
+|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___
+by Ben "epi" Risher 🤓                 ver: 2.13.1
+───────────────────────────┬──────────────────────
+ 🎯  Target Url            │ https://ausecurity.best/
+ 🚩  In-Scope Url          │ ausecurity.best
+ 🚀  Threads               │ 20
+ 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-small-files-lowercase.txt
+ 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403]
+ 💥  Timeout (secs)        │ 7
+ 🦡  User-Agent            │ Random
+ 💉  Config File           │ /etc/feroxbuster/ferox-config.toml
+ 🔎  Extract Links         │ true
+ 💾  Output File           │ /home/research/Projects/AuSecurity/evidence/t7-content/ausecurity.best.txt
+ 💲  Extensions            │ [php, html, txt, bak, zip, tar.gz, sql, env, git, old]
+ 🏁  HTTP methods          │ [GET]
+ 🔓  Insecure              │ true
+ 📍  Follow Redirects      │ true
+ 🔃  Recursion Depth       │ 4
+───────────────────────────┴──────────────────────
+ 🏁  Press [ENTER] to use the Scan Management Menu™
+──────────────────────────────────────────────────
+200      GET      286l      993w    14212c https://ausecurity.best/contact.html
+
+200      GET      277l      878w     9119c https://ausecurity.best/assets/js/main.js
+
+200      GET      584l     1868w    15923c https://ausecurity.best/assets/css/style.css
+
+200      GET      247l     1108w    13541c https://ausecurity.best/case-studies.html
+
+200      GET      257l     1211w    13638c https://ausecurity.best/index.html
+
+200      GET      256l     1058w    13359c https://ausecurity.best/about.html
+
+200      GET      314l     1543w    17455c https://ausecurity.best/services.html
+
+200      GET      257l     1211w    13638c https://ausecurity.best/
+
+403      GET        7l        9w      153c https://ausecurity.best/assets/js/
+
+403      GET        7l        9w      153c https://ausecurity.best/assets/css/
+
+403      GET       13l       81w      555c https://ausecurity.best/assets/
+
+200      GET      181l      386w     4842c https://ausecurity.best/login.html
+
+=============== https://blog.ausecurity.best/ ===============
+200      GET       11l       48w     5543c https://blog.ausecurity.best/wp-admin/images/w-logo-blue.png
+
+200      GET       84l      385w    14710c https://blog.ausecurity.best/wp-admin/images/wpspin_light-2x.gif
+
+200      GET       37l      367w    22754c https://blog.ausecurity.best/wp-admin/images/menu-vs-2x.png
+
+200      GET        1l      160w     3100c https://blog.ausecurity.best/wp-admin/images/about-header-default-rtl.svg
+
+200      GET        2l      378w    18515c https://blog.ausecurity.best/wp-admin/css/customize-nav-menus.min.css
+
+200      GET        2l      213w     6968c https://blog.ausecurity.best/wp-admin/css/login-rtl.min.css
+
+200      GET        3l        9w      225c https://blog.ausecurity.best/wp-admin/images/align-center-2x.png
+
+200      GET      634l     1170w    10720c https://blog.ausecurity.best/wp-admin/css/revisions.css
+
+200      GET       41l       72w      611c https://blog.ausecurity.best/wp-admin/css/farbtastic.css
+
+200      GET      587l     1323w    13557c https://blog.ausecurity.best/wp-admin/css/customize-widgets.css
+
+200      GET        2l       20w      538c https://blog.ausecurity.best/wp-admin/css/farbtastic-rtl.min.css
+
+200      GET      515l     1076w     8800c https://blog.ausecurity.best/wp-admin/css/login.css
+
+200      GET       11l       57w     4766c https://blog.ausecurity.best/wp-admin/images/post-formats-vs.png
+
+200      GET        2l      729w    23355c https://blog.ausecurity.best/wp-admin/css/dashboard.min.css
+
+200      GET      138l      510w     4579c https://blog.ausecurity.best/wp-admin/css/l10n-rtl.css
+
+200      GET      367l      699w     6462c https://blog.ausecurity.best/wp-admin/css/site-health.css
+
+200      GET        2l       46w     1439c https://blog.ausecurity.best/wp-admin/css/code-editor-rtl.min.css
+
+200      GET      588l     1329w    13594c https://blog.ausecurity.best/wp-admin/css/customize-widgets-rtl.css
+
+200      GET        2l      148w     5368c https://blog.ausecurity.best/wp-admin/css/install-rtl.min.css
+
+200      GET     2037l     3984w    39998c https://blog.ausecurity.best/wp-admin/css/forms-rtl.css
+
+200      GET       76l      150w     1579c https://blog.ausecurity.best/wp-admin/css/code-editor.css
+
+200      GET        2l      510w    15307c https://blog.ausecurity.best/wp-admin/css/admin-menu-rtl.min.css
+
+200      GET        2l      549w    22073c https://blog.ausecurity.best/wp-admin/css/about.min.css
+
+200      GET        2l       82w     3201c https://blog.ausecurity.best/wp-admin/css/color-picker-rtl.min.css
+
+200      GET     4407l     9313w    81782c https://blog.ausecurity.best/wp-admin/css/common.css
+
+200      GET      863l     1988w    18877c https://blog.ausecurity.best/wp-admin/css/admin-menu-rtl.css
+
+200      GET     2158l     4247w    40170c https://blog.ausecurity.best/wp-admin/css/edit.css
+
+200      GET        2l     1290w    38138c https://blog.ausecurity.best/wp-admin/css/list-tables-rtl.min.css
+
+200      GET       78l      194w     2625c https://blog.ausecurity.best/wp-admin/css/colors/_variables.scss
+
+200      GET      207l      842w     8431c https://blog.ausecurity.best/wp-admin/css/colors/_tokens.scss
+
+200      GET      793l     1819w    23385c https://blog.ausecurity.best/wp-admin/css/colors/_admin.scss
+
+200      GET      132l      299w     3219c https://blog.ausecurity.best/wp-admin/css/colors/_mixins.scss
+
+200      GET       43l       89w     1769c https://blog.ausecurity.best/index.php/2026/feed/
+
+200      GET      601l     1638w    11898c https://blog.ausecurity.best/wp-content/themes/hello-elementor/style.css
+
+200      GET       90l      353w     5977c https://blog.ausecurity.best/wp-login.php?registration=disabled
+
+200      GET       47l      202w     7924c https://blog.ausecurity.best/index.php/feed/wp-admin/lat_getlinking.aspx.bak/
+
+200      GET       47l      202w     7924c https://blog.ausecurity.best/index.php/2026/wp-admin/ask_a_question.php.bak/
+
+200      GET       47l      202w     7924c https://blog.ausecurity.best/index.php/feed/wp-admin/thumb.php.bak/
+
+403      GET        0l        0w        0c https://blog.ausecurity.best/index.php/feed/wp-app.php
+
+200      GET       47l      202w     7924c https://blog.ausecurity.best/index.php/feed/wp-admin/thumb.php.old/
+
+=============== https://ticket.ausecurity.best/ ===============
+ 🔓  Insecure              │ true
+ 📍  Follow Redirects      │ true
+ 🔃  Recursion Depth       │ 4
+───────────────────────────┴──────────────────────
+ 🏁  Press [ENTER] to use the Scan Management Menu™
+──────────────────────────────────────────────────
+403      GET        9l       29w      327c Auto-filtering found 404-like response and created new filter; toggle off with --dont-filter
+
+200      GET       81l      404w     4825c https://ticket.ausecurity.best/setup/install.php
+
+200      GET       29l       63w      739c https://ticket.ausecurity.best/setup/js/setup.js
+
+200      GET      210l      981w     8031c https://ticket.ausecurity.best/setup/css/wizard.css
+
+200      GET        2l       63w     5340c https://ticket.ausecurity.best/js/jstz.min.js
+
+200      GET       95l      206w     3409c https://ticket.ausecurity.best/setup/js/tips.js
+
+200      GET      253l      510w    53766c https://ticket.ausecurity.best/setup/images/logo.png
+
+200      GET        2l     1265w    87462c https://ticket.ausecurity.best/js/jquery-3.7.0.min.js
+
+200      GET        3l       43w     1617c https://ticket.ausecurity.best/setup/images/yes.png
+
+200      GET       91l      274w     3076c https://ticket.ausecurity.best/js/jquery-ui-sliderAccess.js
+
+200      GET       13l       74w     3523c https://ticket.ausecurity.best/setup/images/cog.png
+
+200      GET        6l       32w     1231c https://ticket.ausecurity.best/setup/images/system.png
+
+200      GET      364l      910w     9295c https://ticket.ausecurity.best/js/bootstrap-typeahead.js
+
+200      GET       10l       92w     4816c https://ticket.ausecurity.best/setup/images/grey_btn_bg.png
+
+200      GET        5l       16w     1010c https://ticket.ausecurity.best/setup/images/user.png
+
+200      GET        4l        9w     1209c https://ticket.ausecurity.best/setup/images/lightbulb.png
+
+200      GET        3l       14w     1063c https://ticket.ausecurity.best/setup/images/email.png
+
+200      GET       14l       78w     5482c https://ticket.ausecurity.best/setup/images/incomplete.png
+
+200      GET        6l       57w     1817c https://ticket.ausecurity.best/setup/images/no.png
+
+200      GET        4l       16w     1177c https://ticket.ausecurity.best/setup/images/database.png
+
+200      GET       36l      182w     5310c https://ticket.ausecurity.best/setup/images/ajax-loader.gif
+
+200      GET       10l       48w     1137c https://ticket.ausecurity.best/setup/images/tip_arrow.png
+
+200      GET      221l      602w     7484c https://ticket.ausecurity.best/js/osticket.js
+
+200      GET      816l     2136w    25106c https://ticket.ausecurity.best/js/filedrop.field.js
+
+200      GET       52l      561w    37193c https://ticket.ausecurity.best/setup/images/background.jpg
+
+200      GET      511l     1400w    19328c https://ticket.ausecurity.best/js/redactor-osticket.js
+
+200      GET      898l     3102w    25147c https://ticket.ausecurity.best/js/jquery.pjax.js
+
+200      GET     2297l     8539w    78558c https://ticket.ausecurity.best/js/jquery-ui-timepicker-addon.js
+
+200      GET     2258l     5985w    72469c https://ticket.ausecurity.best/js/redactor-plugins.js
+
+200      GET        2l      861w    70892c https://ticket.ausecurity.best/js/select2.min.js
+
+200      GET        6l     1656w   254904c https://ticket.ausecurity.best/js/jquery-ui-1.13.2.custom.min.js
+
+200      GET        1l     2710w   266647c https://ticket.ausecurity.best/js/redactor.min.js
+
+200      GET        1l     4193w   296956c https://ticket.ausecurity.best/js/fabric.min.js
+
+200      GET       81l      404w     4825c https://ticket.ausecurity.best/setup/index.php
+
+200      GET       81l      404w     4825c https://ticket.ausecurity.best/setup/
+
+200      GET       48l       99w     2197c https://ticket.ausecurity.best/web.config
+
+200      GET        6l       51w      424c https://ticket.ausecurity.best/manage.php
+

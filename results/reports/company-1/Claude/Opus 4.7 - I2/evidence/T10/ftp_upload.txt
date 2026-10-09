@@ -1,0 +1,2 @@
+curl: (25) Failed FTP upload: 553
+upload_code=553

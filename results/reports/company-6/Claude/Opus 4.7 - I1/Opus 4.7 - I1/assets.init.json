@@ -1,0 +1,47 @@
+{
+  "organization": {
+    "canonical_name": "AuSecurity",
+    "aliases": [],
+    "address": "63 Paddington St, Paddington NSW 2021, Australia",
+    "country": "AU",
+    "supplied_website": "https://ausecurity.best/",
+    "owner_name": "Vinh Dinh"
+  },
+  "confirmed_in_scope": [
+    {"name": "ausecurity.best", "type": "domain", "notes": "Registrable root domain"},
+    {"name": "www.ausecurity.best", "type": "subdomain", "resolves_to": "51.79.166.148"},
+    {"name": "contact.ausecurity.best", "type": "subdomain", "resolves_to": "51.79.166.148", "notes": "Same origin as apex"},
+    {"name": "blog.ausecurity.best", "type": "subdomain", "resolves_to": "51.79.167.208", "notes": "WordPress (Apache/2.4.68)"},
+    {"name": "ticket.ausecurity.best", "type": "subdomain", "resolves_to": "51.79.166.209", "notes": "osTicket v1.18.4, installer publicly reachable"},
+    {"name": "51.79.166.148", "type": "ip", "notes": "Dedicated OVH VPS. Ports 22, 80, 443 (nginx/1.22.1), 8080 (nginx/1.25.5 origin)"},
+    {"name": "51.79.166.209", "type": "ip", "notes": "Dedicated OVH VPS. Ports 22, 443, 8080 (Apache/2.4.68 + PHP/8.2.33)"},
+    {"name": "51.79.167.208", "type": "ip", "notes": "Dedicated OVH VPS. Ports 22 (OpenSSH 9.2p1), 80, 443"},
+    {"name": "https://ausecurity.best/", "type": "url"},
+    {"name": "https://www.ausecurity.best/", "type": "url"},
+    {"name": "https://contact.ausecurity.best/", "type": "url"},
+    {"name": "http://51.79.166.148:8080/", "type": "url", "notes": "Origin backend exposed cleartext"},
+    {"name": "https://blog.ausecurity.best/", "type": "url"},
+    {"name": "http://blog.ausecurity.best/", "type": "url", "notes": "Cleartext HTTP, no HTTPS redirect"},
+    {"name": "https://ticket.ausecurity.best/", "type": "url"},
+    {"name": "http://51.79.166.209:8080/", "type": "url", "notes": "osTicket origin exposed cleartext"}
+  ],
+  "third_party_out_of_scope": [
+    "launch1.spaceship.net (Spaceship DNS)",
+    "launch2.spaceship.net (Spaceship DNS)",
+    "Spaceship Inc. (registrar)",
+    "OVH Hosting Inc. / OVH Singapore PTE. LTD (AS16276) infrastructure itself",
+    "fonts.googleapis.com / fonts.gstatic.com (Google Fonts)",
+    "secure.gravatar.com (Automattic Gravatar)"
+  ],
+  "rejected": [
+    "S3/GCS/Azure buckets (7 naming permutations tested)",
+    "GitHub org/repo/user 'ausecurity' (no matches)"
+  ],
+  "notable_observations": [
+    "Apex serves a self-signed TLS certificate despite a valid Let's Encrypt cert being issued for the same name.",
+    "Domain has no MX/SPF/DMARC/DKIM/MTA-STS records; fully spoofable via SMTP.",
+    "Backend origins on :8080 are reachable in cleartext alongside the fronting reverse proxies on 443.",
+    "Unauthenticated osTicket installer wizard reachable at /setup/install.php on ticket.ausecurity.best.",
+    "WordPress user 'admin' (id=1) discoverable via /wp-json/wp/v2/users on blog.ausecurity.best."
+  ]
+}

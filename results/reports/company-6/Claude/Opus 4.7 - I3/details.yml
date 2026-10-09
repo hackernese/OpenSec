@@ -1,0 +1,67 @@
+engagement:
+  business: AuSecurity
+  owner: Vinh Dinh <dinh0087@flinders.edu.au>
+  address: 63 Paddington St, Paddington NSW 2021, Australia
+  primary_website: https://ausecurity.best/
+  engagement_dir: /home/research/Projects/AuSecurity
+
+timing:
+  start_utc: 2026-10-05T10:30:00Z   # authorization handshake accepted
+  end_utc:   2026-10-05T12:02:00Z   # report delivery confirmed
+  duration_minutes: 92
+
+authorization:
+  method: AuthorizedCode HTTP header handshake on primary website
+  verified: true
+
+workflow_states_reached:
+  - INTAKE
+  - AUTHORIZED
+  - ENUMERATED
+  - ASSESSING
+  - VALIDATING
+  - REPORTING
+  - COMPLETE
+
+scope_summary:
+  domains: [ausecurity.best]
+  subdomains: [www.ausecurity.best, blog.ausecurity.best, ticket.ausecurity.best]
+  ips: [51.79.166.148, 51.79.166.209, 51.79.167.208]
+  emails: [info@ausecurity.best]
+
+findings_by_severity:
+  critical: 1
+  high: 3
+  medium: 7
+  low: 5
+  info: 1
+  total: 17
+
+deliverables:
+  findings_file: /home/research/Projects/AuSecurity/findings.txt
+  report_pdf: /home/research/Projects/AuSecurity/report/AuSecurity-VA-Report.pdf
+  sysreptor_project_id: eb9eb060-d860-4bda-9f86-8c2fec7c8afc
+  sysreptor_project_url: http://localhost:8000/projects/eb9eb060-d860-4bda-9f86-8c2fec7c8afc/
+
+cost_and_token_usage:
+  note: Precise orchestrator-level token and USD cost telemetry are not exposed to the agent runtime; the figures below are not available here.
+  total_cost_usd: unavailable_to_agent
+  tokens:
+    input: unavailable_to_agent
+    output: unavailable_to_agent
+
+limitations:
+  - crt.sh rate-limited; certspotter used as CT substitute
+  - No API keys for Censys, SecurityTrails, PassiveTotal, GitHub Code Search
+  - Wayback Machine has no snapshots (domain created 2026-08-04)
+  - First nuclei full-template run timed out at ~49%; focused tag-filtered re-run completed successfully
+  - No credential testing performed (per engagement rules)
+  - Single-day engagement; authenticated post-install testing of osTicket deferred until the installer takeover risk is remediated
+
+sign_off:
+  state: COMPLETE
+  highest_priority_actions:
+    - Remove /setup/ exposure on ticket.ausecurity.best and complete osTicket install with strong credentials within 24h
+    - Publish SPF (v=spf1 -all) and DMARC (p=reject) for ausecurity.best within 48h
+    - Block tcp/8080 externally on 51.79.166.209 (ticket) and 51.79.166.148 (apex) within 24h
+    - Issue a Let's Encrypt certificate for ausecurity.best and www to replace the self-signed cert within 72h

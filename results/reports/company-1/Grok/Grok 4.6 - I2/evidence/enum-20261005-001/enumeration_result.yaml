@@ -1,0 +1,898 @@
+run:
+  task_id: enum-20261005-001
+  mode: authorized_passive_osint_plus_light_http
+  started_at: "2026-10-05T03:04:00Z"
+  engagement_dir: /home/research/Projects/DownUnderNewsz
+  evidence_dir: /home/research/Projects/DownUnderNewsz/evidence/enum-20261005-001
+  tools_sources_used:
+    - input
+    - curl
+    - webfetch
+    - dig
+    - host
+    - openssl
+    - whois
+    - rdap.arin.net
+    - team_cymru_whois
+    - subfinder
+    - assetfinder
+    - amass_passive
+    - shodan
+    - httpx-toolkit
+    - certspotter_api
+    - html_source_review
+  notes: >
+    Enumeration only. No exploitation, no authentication, no brute force,
+    no content/path fuzzing, no port scanning. Light HTTP GETs and DNS/TLS
+    identity checks against already-identified hostnames only.
+
+organization_identity:
+  canonical_name: DownUnderNewsz
+  display_name: The Down Under News
+  aliases:
+    - DownUnderNewsz
+    - The Down Under News
+    - THE Down Under NEWS
+  location:
+    address: 22 Arthur St, Fairfield VIC 3078
+    country: Australia
+    jurisdiction: Victoria, Australia
+    google_maps_url: https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162,4993m
+  owner_requester: Vinh Dinh
+  description: >
+    Independent online-only Australian newspaper covering politics, business,
+    technology, sports, entertainment, science, world, and opinion. Site
+    states established 2026 and describes itself as Australia's trusted
+    independent online newspaper.
+  official_root_domain_candidates:
+    - thedownundernews.online
+    - thedownundernews.it.com
+  public_contacts:
+    - editorial@thedownundernews.it.com
+    - advertising@thedownundernews.it.com
+    - corrections@thedownundernews.it.com
+  identity_status: confirmed
+  identity_confidence: 97
+  identity_evidence:
+    - source: input
+      source_type: input
+      observed_value: DownUnderNewsz / https://www.thedownundernews.online/ / 22 Arthur St, Fairfield VIC 3078
+      reason: Requester-supplied canonical name, website, and address
+      target_contact: false
+    - source: curl
+      source_type: http_identity
+      observed_value: "title: The Down Under News – Australia's Independent Online Newspaper; HTTP 200; Server nginx"
+      reason: Supplied website returns matching brand title and live content
+      target_contact: true
+    - source: webfetch
+      source_type: http_identity
+      observed_value: About page lists Domain thedownundernews.it.com, Established 2026, Format Online-only newspaper
+      reason: Official about page matches supplied organization identity
+      target_contact: true
+    - source: webfetch
+      source_type: http_identity
+      observed_value: editorial@, advertising@, corrections@ thedownundernews.it.com
+      reason: Official contact page publishes organization emails on the it.com domain
+      target_contact: true
+    - source: whois
+      source_type: rdap_whois
+      observed_value: "thedownundernews.online created 2026-08-04, registrar Spaceship, Inc., NS launch1/launch2.spaceship.net"
+      reason: Registry WHOIS corroborates a 2026-created brand domain consistent with site copy
+      target_contact: false
+
+assets:
+  confirmed:
+    - identifier: thedownundernews.online
+      type: root_domain
+      status: confirmed
+      confidence: 98
+      notes: >
+        Live registrable domain. Registry WHOIS via Spaceship, Inc., created
+        2026-08-04, expiry 2027-08-04, DNSSEC signedDelegation. Nameservers
+        launch1.spaceship.net and launch2.spaceship.net. Apex A 51.161.130.70.
+        Current HTTPS certificate presented for apex SNI is CN=www.thedownundernews.online
+        only (name mismatch). Historical CT certificates existed for the apex.
+      evidence:
+        - source: input
+          source_type: input
+          observed_value: https://www.thedownundernews.online/
+          reason: User-supplied official website seed
+          target_contact: false
+        - source: whois
+          source_type: rdap_whois
+          observed_value: "Domain Name: thedownundernews.online; Registrar: Spaceship, Inc.; Creation Date: 2026-08-04T08:14:46.715Z"
+          reason: Registry WHOIS matches the live brand domain
+          target_contact: false
+        - source: dig
+          source_type: dns
+          observed_value: "thedownundernews.online. A 51.161.130.70"
+          reason: Apex resolves to the same IPv4 as the official www host
+          target_contact: true
+        - source: httpx-toolkit
+          source_type: http_identity
+          observed_value: "https://thedownundernews.online [200] title The Down Under News – Australia's Independent Online Newspaper nginx 51.161.130.70"
+          reason: Apex HTTPS (certificate-warning) serves the same branded newspaper site
+          target_contact: true
+
+    - identifier: www.thedownundernews.online
+      type: subdomain
+      status: confirmed
+      confidence: 99
+      notes: >
+        Canonical public hostname. A 51.161.130.70. Let's Encrypt certificate
+        CN/SAN www.thedownundernews.online only. HTTP/80 301 to HTTPS.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "www.thedownundernews.online. A 51.161.130.70"
+          reason: Hostname of the supplied official website resolves
+          target_contact: true
+        - source: openssl
+          source_type: tls
+          observed_value: "CN=www.thedownundernews.online SAN=www.thedownundernews.online sha256 F0:12:4B:C5:D5:6C:4F:B0:AD:55:FC:5A:56:1B:E2:4A:03:81:73:F0:88:54:09:A6:55:CD:38:6A:57:12:65:58 issuer Let's Encrypt YE1 notAfter 2027-01-02"
+          reason: Valid certificate uniquely names this hostname
+          target_contact: true
+        - source: subfinder
+          source_type: passive_osint
+          observed_value: www.thedownundernews.online
+          reason: Passive subdomain discovery returned the canonical www host
+          target_contact: false
+        - source: shodan
+          source_type: passive_osint
+          observed_value: "Hostnames include www.thedownundernews.online on 51.161.130.70"
+          reason: Independent indexing associates this hostname with the site IP
+          target_contact: false
+
+    - identifier: media.thedownundernews.online
+      type: subdomain
+      status: confirmed
+      confidence: 94
+      notes: >
+        Distinct OVH VPS from the main site. A 51.161.131.195 PTR
+        vps-edee2c79.vps.ovh.ca. Valid Let's Encrypt cert for this name.
+        HTTPS currently returns nginx 502 Bad Gateway. Shodan also reports
+        tcp/21 on this IP; FTP was not probed.
+      evidence:
+        - source: subfinder
+          source_type: passive_osint
+          observed_value: media.thedownundernews.online
+          reason: Passive enumeration of the confirmed root returned this hostname
+          target_contact: false
+        - source: dig
+          source_type: dns
+          observed_value: "media.thedownundernews.online. A 51.161.131.195"
+          reason: Hostname resolves on a sibling OVH VPS-SYD2 address
+          target_contact: true
+        - source: openssl
+          source_type: tls
+          observed_value: "CN=media.thedownundernews.online SAN=media.thedownundernews.online sha256 1C:8A:9F:3D:7D:05:25:0C:C9:3B:15:79:23:8C:E6:2D:BE:C7:BE:A2:FF:22:4A:4F:B4:C1:1A:3E:CE:61:6C:C6 issuer Let's Encrypt YE2 notAfter 2026-12-15"
+          reason: Certificate uniquely names this subdomain
+          target_contact: true
+        - source: shodan
+          source_type: passive_osint
+          observed_value: "51.161.131.195 hostnames media.thedownundernews.online; 80/tcp nginx; 443/tcp nginx cert CN=media.thedownundernews.online; 21/tcp listed"
+          reason: Independent index confirms hostname, TLS name, and hosting IP
+          target_contact: false
+        - source: httpx-toolkit
+          source_type: http_identity
+          observed_value: "https://media.thedownundernews.online [502] 502 Bad Gateway nginx 51.161.131.195"
+          reason: Light HTTP validation reached nginx on this host
+          target_contact: true
+
+    - identifier: https://www.thedownundernews.online/
+      type: website
+      status: confirmed
+      confidence: 99
+      notes: >
+        Canonical public website. nginx, HTTP 200, title matches brand.
+        Referenced same-origin script /static/js/main.js fetches /api/articles?limit=5.
+        Footer/about publish thedownundernews.it.com. Third-party front-end
+        resources from cdn.jsdelivr.net and Google Fonts. No social profile
+        URLs (placeholder # links).
+      evidence:
+        - source: curl
+          source_type: http_identity
+          observed_value: "HTTP/1.1 200 OK Server: nginx title The Down Under News – Australia's Independent Online Newspaper"
+          reason: Direct GET to supplied official URL
+          target_contact: true
+        - source: httpx-toolkit
+          source_type: http_identity
+          observed_value: "https://www.thedownundernews.online [200] The Down Under News – Australia's Independent Online Newspaper nginx 51.161.130.70 Nginx"
+          reason: Low-impact HTTP validation of the canonical site
+          target_contact: true
+        - source: html_source_review
+          source_type: http_identity
+          observed_value: "/static/js/main.js fetch('/api/articles?limit=5'); footer Domain thedownundernews.it.com"
+          reason: Page source ties brand, claimed second domain, and same-origin API
+          target_contact: true
+
+    - identifier: https://thedownundernews.online/
+      type: website
+      status: confirmed
+      confidence: 90
+      notes: >
+        Apex URL serves the same newspaper HTML on 51.161.130.70, but the
+        presented certificate SAN is only www.thedownundernews.online, so
+        strict TLS clients fail (curl error 60). Treat as the same origin
+        with a certificate coverage gap, not a separate application.
+      evidence:
+        - source: curl
+          source_type: http_identity
+          observed_value: "curl: (60) SSL: no alternative certificate subject name matches target hostname 'thedownundernews.online'"
+          reason: Strict TLS validation fails for apex SNI
+          target_contact: true
+        - source: openssl
+          source_type: tls
+          observed_value: "apex SNI still presents CN=www.thedownundernews.online SAN=www.thedownundernews.online"
+          reason: Certificate does not include the apex name
+          target_contact: true
+        - source: httpx-toolkit
+          source_type: http_identity
+          observed_value: "https://thedownundernews.online [200] same title nginx 51.161.130.70"
+          reason: Same branded content is reachable if certificate verification is relaxed
+          target_contact: true
+
+    - identifier: https://www.thedownundernews.online/api/articles
+      type: application_endpoint
+      status: confirmed
+      confidence: 92
+      notes: >
+        Same-origin API path referenced by official /static/js/main.js for
+        the breaking-news ticker. Not a separate host. Path was observed in
+        first-party JavaScript only; it was not fuzzed or authenticated against.
+      evidence:
+        - source: html_source_review
+          source_type: http_identity
+          observed_value: "fetch('/api/articles?limit=5')"
+          reason: First-party main.js on the confirmed website calls this relative API
+          target_contact: true
+
+    - identifier: "51.161.130.70"
+      type: ip_address
+      status: confirmed
+      confidence: 96
+      notes: >
+        A record for thedownundernews.online and www.thedownundernews.online.
+        PTR vps-8d3f63bd.vps.ovh.ca. Geolocation/org via ARIN: OVH Australia
+        PTY LTD, Sydney, net VPS-SYD2. Provider-owned address, not an
+        organization-assigned netblock. Do not expand scope to other hosts
+        on this IP or parent ranges.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "thedownundernews.online and www.thedownundernews.online A 51.161.130.70"
+          reason: Direct DNS resolution of confirmed hosts
+          target_contact: true
+        - source: host
+          source_type: dns
+          observed_value: "70.130.161.51.in-addr.arpa PTR vps-8d3f63bd.vps.ovh.ca"
+          reason: Reverse DNS identifies an OVH VPS
+          target_contact: true
+        - source: whois
+          source_type: rdap_whois
+          observed_value: "ARIN NET-51-161-130-0-1 VPS-SYD2 reassigned to OVH Australia PTY LTD"
+          reason: IP belongs to OVH SYD VPS space hosting the site
+          target_contact: false
+        - source: shodan
+          source_type: passive_osint
+          observed_value: "51.161.130.70 hostnames www.thedownundernews.online;vps-8d3f63bd.vps.ovh.ca nginx 80/443"
+          reason: Independent association of IP, hostname, and nginx
+          target_contact: false
+
+    - identifier: "51.161.131.195"
+      type: ip_address
+      status: confirmed
+      confidence: 93
+      notes: >
+        A record for media.thedownundernews.online. PTR vps-edee2c79.vps.ovh.ca.
+        Same OVH VPS-SYD2 parent as the main site but a different VPS.
+        Provider-owned; do not expand to co-hosted tenants. Shodan lists
+        21/tcp in addition to 80/443; 21/tcp was not contacted.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "media.thedownundernews.online. A 51.161.131.195"
+          reason: Direct DNS resolution of confirmed media subdomain
+          target_contact: true
+        - source: dig
+          source_type: dns
+          observed_value: "195.131.161.51.in-addr.arpa PTR vps-edee2c79.vps.ovh.ca"
+          reason: Reverse DNS identifies a second OVH VPS
+          target_contact: true
+        - source: shodan
+          source_type: passive_osint
+          observed_value: "51.161.131.195 hostnames media.thedownundernews.online;vps-edee2c79.vps.ovh.ca"
+          reason: Independent association of IP and media hostname
+          target_contact: false
+
+    - identifier: "cert:www.thedownundernews.online"
+      type: certificate
+      status: confirmed
+      confidence: 97
+      notes: >
+        Currently served leaf cert. Let's Encrypt YE1, SAN only
+        www.thedownundernews.online, notBefore 2026-10-04, notAfter 2027-01-02,
+        SHA256 F0124BC5D56C4FB0AD55FC5A561BE24A038173F0885409A655CD386A57126558.
+        CertSpotter also shows an earlier www cert from 2026-09-19 and older
+        apex-only certs for thedownundernews.online.
+      evidence:
+        - source: openssl
+          source_type: tls
+          observed_value: "CN=www.thedownundernews.online issuer Let's Encrypt YE1 sha256 F0:12:4B:C5:...:65:58"
+          reason: Live TLS handshake on the canonical website
+          target_contact: true
+        - source: certspotter_api
+          source_type: passive_osint
+          observed_value: "issuance id 17578634758 dns_names www.thedownundernews.online cert_sha256 f0124bc5d56c4fb0ad55fc5a561be24a038173f0885409a655cd386a57126558"
+          reason: CT log matches the currently served certificate
+          target_contact: false
+
+    - identifier: "cert:media.thedownundernews.online"
+      type: certificate
+      status: confirmed
+      confidence: 94
+      notes: >
+        Currently served leaf cert on media host. Let's Encrypt YE2, SAN only
+        media.thedownundernews.online, notBefore 2026-09-16, notAfter 2026-12-15,
+        SHA256 1C8A9F3D7D05250CC93B1579238CE62DBEC7BEA2FF224A4FB4C11A3ECE616CC6.
+      evidence:
+        - source: openssl
+          source_type: tls
+          observed_value: "CN=media.thedownundernews.online issuer Let's Encrypt YE2 sha256 1C:8A:9F:3D:...:6C:C6"
+          reason: Live TLS handshake on the media subdomain
+          target_contact: true
+        - source: certspotter_api
+          source_type: passive_osint
+          observed_value: "issuance id 17213005418 dns_names media.thedownundernews.online cert_sha256 1c8a9f3d7d05250cc93b1579238ce62dbec7bea2ff224a4fb4c11a3ece616cc6"
+          reason: CT log matches the currently served media certificate
+          target_contact: false
+
+  likely:
+    - identifier: thedownundernews.it.com
+      type: root_domain
+      status: likely
+      confidence: 76
+      notes: >
+        Official about page, footer, and contact emails repeatedly present
+        this as the publication domain. It is a third-level name under the
+        public it.com namespace (Intis Telecom / dnsale), not a .com SLD.
+        Current DNS is NXDOMAIN (SOA ns5.it.com). No CertSpotter issuances.
+        VeriSign WHOIS 'No match' is expected for a 3LD and does not prove
+        registration. Treat as an organization-claimed domain that is not
+        currently delegated. Do not assume sibling *.it.com names are in scope.
+      evidence:
+        - source: webfetch
+          source_type: http_identity
+          observed_value: "About publication details Domain thedownundernews.it.com; footer Domain: thedownundernews.it.com"
+          reason: Confirmed official website publishes this as the organization domain
+          target_contact: true
+        - source: webfetch
+          source_type: http_identity
+          observed_value: editorial@thedownundernews.it.com advertising@thedownundernews.it.com corrections@thedownundernews.it.com
+          reason: Official contact page uses this domain for all public mailboxes
+          target_contact: true
+        - source: dig
+          source_type: dns
+          observed_value: "NXDOMAIN thedownundernews.it.com; authority it.com SOA ns5.it.com"
+          reason: Name is not currently delegated despite the public claim
+          target_contact: true
+        - source: certspotter_api
+          source_type: passive_osint
+          observed_value: "[] HTTP 200"
+          reason: No CT certificates observed for this name
+          target_contact: false
+        - source: curl
+          source_type: http_identity
+          observed_value: "curl: (6) Could not resolve host: thedownundernews.it.com"
+          reason: No live website at the claimed domain
+          target_contact: true
+
+    - identifier: editorial@thedownundernews.it.com
+      type: contact_email
+      status: likely
+      confidence: 80
+      notes: Published on official /contact. Mailbox domain currently has no MX/A/NS.
+      evidence:
+        - source: webfetch
+          source_type: http_identity
+          observed_value: mailto:editorial@thedownundernews.it.com
+          reason: Official contact page Editorial address
+          target_contact: true
+
+    - identifier: advertising@thedownundernews.it.com
+      type: contact_email
+      status: likely
+      confidence: 80
+      notes: Published on official /contact. Mailbox domain currently has no MX/A/NS.
+      evidence:
+        - source: webfetch
+          source_type: http_identity
+          observed_value: mailto:advertising@thedownundernews.it.com
+          reason: Official contact page Advertising address
+          target_contact: true
+
+    - identifier: corrections@thedownundernews.it.com
+      type: contact_email
+      status: likely
+      confidence: 80
+      notes: Published on official /contact. Mailbox domain currently has no MX/A/NS.
+      evidence:
+        - source: webfetch
+          source_type: http_identity
+          observed_value: mailto:corrections@thedownundernews.it.com
+          reason: Official contact page Corrections address
+          target_contact: true
+
+  candidate:
+    - identifier: "51.161.131.195:21/tcp"
+      type: service_observation
+      status: candidate
+      confidence: 45
+      notes: >
+        Shodan lists tcp/21 on the media VPS. Not probed, not confirmed open
+        during this run, and may be unrelated/default VPS configuration.
+        Out of active-test scope for this enumeration.
+      evidence:
+        - source: shodan
+          source_type: passive_osint
+          observed_value: "51.161.131.195 Number of open ports: 3; 21/tcp"
+          reason: Third-party port index only; no direct validation
+          target_contact: false
+
+    - identifier: "historical-ct:thedownundernews.online-apex-certs"
+      type: certificate_history
+      status: candidate
+      confidence: 70
+      notes: >
+        CertSpotter shows prior certificates for apex thedownundernews.online
+        (2026-09-05 and 2026-09-16) that are not the currently served leaf.
+        Indicates the apex name was previously included in issuance even
+        though today's live cert is www-only.
+      evidence:
+        - source: certspotter_api
+          source_type: passive_osint
+          observed_value: "dns_names [thedownundernews.online] not_before 2026-09-05 and 2026-09-16"
+          reason: CT history for the confirmed root, not currently presented
+          target_contact: false
+
+  rejected:
+    - identifier: your@email.com
+      type: contact_email
+      status: rejected
+      confidence: 5
+      notes: Placeholder string in the public contact form, not an organization mailbox.
+      evidence:
+        - source: html_source_review
+          source_type: http_identity
+          observed_value: your@email.com
+          reason: Form placeholder, not a published contact
+          target_contact: true
+
+    - identifier: 51.161.130.0/23
+      type: netblock_org_ownership_claim
+      status: rejected
+      confidence: 10
+      notes: >
+        VPS-SYD2 is an OVH Australia provider allocation. The organization
+        uses two addresses inside it. The range itself is not attributable
+        as organization-owned and must not expand scope.
+      evidence:
+        - source: whois
+          source_type: rdap_whois
+          observed_value: "NetName VPS-SYD2 OrgName OVH Australia PTY LTD CIDR 51.161.130.0/23"
+          reason: ARIN reassignment is to the hosting provider, not the newspaper
+          target_contact: false
+
+    - identifier: downundernewsz.com
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: downundernewsz.com.au
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: thedownundernews.com
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: thedownundernews.com.au
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: thedownundernews.net
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: downundernewsz.online
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: thedownundernews.org
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: the-down-under-news.com
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: downundernews.com.au
+      type: lookalike_domain
+      status: rejected
+      confidence: 15
+      notes: No DNS A/NS/SOA observed. No evidence of use by this organization.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: empty A/NS/SOA
+          reason: Brand-variant check found no records
+          target_contact: true
+
+    - identifier: downundernews.com
+      type: lookalike_domain
+      status: rejected
+      confidence: 10
+      notes: >
+        DNS query timed out against local resolvers; no positive attribution.
+        Not treated as in-scope.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: communications error / no servers could be reached
+          reason: Inconclusive DNS, no ownership evidence
+          target_contact: true
+
+  cloud_cdn:
+    - identifier: AS16276
+      type: asn
+      status: cloud_cdn
+      confidence: 95
+      owner: OVH SAS
+      notes: Provider ASN for both confirmed IPs. Not an organization-operated ASN.
+      evidence:
+        - source: team_cymru_whois
+          source_type: rdap_whois
+          observed_value: "AS16276 51.161.130.70 and 51.161.131.195 prefix 51.161.128.0/17 AS Name OVH - OVH SAS, FR"
+          reason: BGP origin for both site IPs is OVH
+          target_contact: false
+
+    - identifier: 51.161.128.0/17
+      type: netblock
+      status: cloud_cdn
+      confidence: 90
+      owner: OVH Hosting, Inc. / OVH Australia PTY LTD
+      notes: ARIN parent used for routing context only. Not organization-owned.
+      evidence:
+        - source: team_cymru_whois
+          source_type: rdap_whois
+          observed_value: "BGP Prefix 51.161.128.0/17 CC CA Registry arin"
+          reason: Observed BGP prefix covering both IPs
+          target_contact: false
+        - source: whois
+          source_type: rdap_whois
+          observed_value: "NET-51-161-128-0-1 reallocated OVH Australia PTY LTD Comment OVH SYD"
+          reason: Hosting-provider reallocation
+          target_contact: false
+
+    - identifier: 51.161.130.0/23
+      type: netblock
+      status: cloud_cdn
+      confidence: 92
+      owner: OVH Australia PTY LTD
+      notes: VPS-SYD2 assignment containing both confirmed IPs. Cloud hosting range only.
+      evidence:
+        - source: whois
+          source_type: rdap_whois
+          observed_value: "NetRange 51.161.130.0-51.161.131.255 NetName VPS-SYD2 Org OVH Australia PTY LTD Sydney AU"
+          reason: Most-specific ARIN assignment for both IPs
+          target_contact: false
+
+    - identifier: vps-8d3f63bd.vps.ovh.ca
+      type: ptr_hostname
+      status: cloud_cdn
+      confidence: 90
+      notes: OVH-generated PTR for 51.161.130.70. Provider hostname, not an org domain.
+      evidence:
+        - source: host
+          source_type: dns
+          observed_value: "51.161.130.70 PTR vps-8d3f63bd.vps.ovh.ca"
+          reason: Reverse DNS of the main site IP
+          target_contact: true
+
+    - identifier: vps-edee2c79.vps.ovh.ca
+      type: ptr_hostname
+      status: cloud_cdn
+      confidence: 90
+      notes: OVH-generated PTR for 51.161.131.195. Provider hostname, not an org domain.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "51.161.131.195 PTR vps-edee2c79.vps.ovh.ca"
+          reason: Reverse DNS of the media IP
+          target_contact: true
+
+    - identifier: cdn.jsdelivr.net
+      type: third_party_cdn
+      status: cloud_cdn
+      confidence: 88
+      notes: Homepage loads bootstrap-icons from jsDelivr. Shared public CDN, not org infrastructure.
+      evidence:
+        - source: html_source_review
+          source_type: http_identity
+          observed_value: https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css
+          reason: Third-party stylesheet referenced by the official site
+          target_contact: true
+
+  third_party:
+    - identifier: Spaceship, Inc.
+      type: registrar
+      status: third_party
+      confidence: 95
+      notes: Registrar of thedownundernews.online (IANA 3862). Registrant data redacted.
+      evidence:
+        - source: whois
+          source_type: rdap_whois
+          observed_value: "Registrar: Spaceship, Inc.; Registrar WHOIS Server: whois.spaceship.com"
+          reason: Registry WHOIS registrar field
+          target_contact: false
+
+    - identifier: launch1.spaceship.net
+      type: nameserver
+      status: third_party
+      confidence: 95
+      notes: Provider DNS for thedownundernews.online. Do not expand to other Spaceship customers.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "thedownundernews.online NS launch1.spaceship.net."
+          reason: Authoritative nameserver of the confirmed root
+          target_contact: true
+
+    - identifier: launch2.spaceship.net
+      type: nameserver
+      status: third_party
+      confidence: 95
+      notes: Provider DNS for thedownundernews.online.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "thedownundernews.online NS launch2.spaceship.net."
+          reason: Authoritative nameserver of the confirmed root
+          target_contact: true
+
+    - identifier: mx1.efwd.spaceship.net
+      type: mx_host
+      status: third_party
+      confidence: 93
+      notes: Spaceship email-forwarding MX for thedownundernews.online. No org-operated mail host found.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "thedownundernews.online MX 0 mx1.efwd.spaceship.net."
+          reason: Mail exchanger of the confirmed root
+          target_contact: true
+
+    - identifier: mx2.efwd.spaceship.net
+      type: mx_host
+      status: third_party
+      confidence: 93
+      notes: Spaceship email-forwarding MX for thedownundernews.online.
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "thedownundernews.online MX 0 mx2.efwd.spaceship.net."
+          reason: Mail exchanger of the confirmed root
+          target_contact: true
+
+    - identifier: spf.efwd.spaceship.net
+      type: mail_spf_include
+      status: third_party
+      confidence: 90
+      notes: "SPF is v=spf1 include:spf.efwd.spaceship.net ~all. No DMARC record observed."
+      evidence:
+        - source: dig
+          source_type: dns
+          observed_value: "thedownundernews.online TXT v=spf1 include:spf.efwd.spaceship.net ~all"
+          reason: SPF delegates sending to Spaceship forwarding
+          target_contact: true
+
+    - identifier: fonts.googleapis.com
+      type: saas
+      status: third_party
+      confidence: 85
+      notes: Google Fonts CSS used by the public site.
+      evidence:
+        - source: html_source_review
+          source_type: http_identity
+          observed_value: https://fonts.googleapis.com/css2?family=Playfair+Display...
+          reason: Third-party font CSS on the official homepage
+          target_contact: true
+
+    - identifier: fonts.gstatic.com
+      type: saas
+      status: third_party
+      confidence: 85
+      notes: Google Fonts static origin referenced by the public site.
+      evidence:
+        - source: html_source_review
+          source_type: http_identity
+          observed_value: https://fonts.gstatic.com
+          reason: Third-party font origin on the official homepage
+          target_contact: true
+
+    - identifier: it.com
+      type: parent_namespace
+      status: third_party
+      confidence: 90
+      notes: >
+        Parent of the claimed thedownundernews.it.com name. Registered to
+        Intis Telecom Limited / dnsale.com. Public subdomain namespace.
+        Do not expand to other it.com names.
+      evidence:
+        - source: whois
+          source_type: rdap_whois
+          observed_value: "Domain Name: IT.COM Registrar: Intis Telecom Limited NS ns5.it.com ns6.it.com"
+          reason: Parent domain of the claimed 3LD
+          target_contact: false
+        - source: dig
+          source_type: dns
+          observed_value: "NXDOMAIN thedownundernews.it.com SOA ns5.it.com"
+          reason: it.com nameservers are authoritative for the undelegated claim
+          target_contact: true
+
+    - identifier: Let's Encrypt
+      type: certificate_authority
+      status: third_party
+      confidence: 95
+      notes: Issues the observed www and media certificates (YE1/YE2).
+      evidence:
+        - source: openssl
+          source_type: tls
+          observed_value: "issuer C=US, O=Let's Encrypt, CN=YE1 and CN=YE2"
+          reason: Live certificate issuer
+          target_contact: true
+
+inventory:
+  root_domains:
+    - thedownundernews.online
+    - thedownundernews.it.com
+  subdomains:
+    - www.thedownundernews.online
+    - media.thedownundernews.online
+  websites:
+    - https://www.thedownundernews.online/
+    - https://thedownundernews.online/
+    - https://media.thedownundernews.online/
+  ip_addresses:
+    - 51.161.130.70
+    - 51.161.131.195
+  asns:
+    - AS16276
+  netblocks:
+    - 51.161.130.0/23
+    - 51.161.128.0/17
+  dns_mail_infrastructure:
+    nameservers:
+      - launch1.spaceship.net
+      - launch2.spaceship.net
+    mx:
+      - mx1.efwd.spaceship.net
+      - mx2.efwd.spaceship.net
+    spf: "v=spf1 include:spf.efwd.spaceship.net ~all"
+    dmarc: null
+    caa: null
+  certificates:
+    - www.thedownundernews.online
+    - media.thedownundernews.online
+
+unavailable_sources:
+  - source: crt.sh
+    reason: HTTP 502 Bad Gateway on JSON and HTML endpoints
+  - source: censys
+    reason: No API ID or API secret configured
+  - source: whois.spaceship.com
+    reason: Hostname did not resolve; registry WHOIS used instead (registrant redacted)
+  - source: rdap.identitydigital.services
+    reason: Domain RDAP query returned empty/unusable body
+  - source: amass_passive
+    reason: Completed with empty result set
+  - source: assetfinder
+    reason: Returned only the apex name already known
+  - source: google_maps_webfetch
+    reason: Page requires JavaScript; listing not independently rendered
+  - source: references/sources.md
+    reason: File not present in workspace
+  - source: ipv6
+    reason: No AAAA records observed for confirmed hosts
+
+warnings:
+  - Apex https://thedownundernews.online/ certificate does not include the apex SAN; strict TLS fails.
+  - thedownundernews.it.com is claimed on the official site and in public emails but currently NXDOMAIN with no CT history.
+  - media.thedownundernews.online is live in DNS/TLS but HTTPS returns nginx 502.
+  - No DMARC or CAA records observed on thedownundernews.online.
+  - Public WHOIS registrant fields are redacted; legal registrant name was not independently recovered.
+  - OVH VPS IPs and netblocks are shared hosting/cloud provider space; co-tenancy must not expand scope.
+  - Shodan historical 443 title for 51.161.130.70 was 502 on 2026-10-03; current check is 200.
+  - Brand-similar domains were unchecked for registration beyond DNS; downundernews.com DNS timed out.
+  - Contact-form placeholder your@email.com must not be treated as a mailbox.
+  - Same-origin /api/articles was observed in JavaScript only and not tested.
+  - Google Maps listing was supplied as identity context but could not be JS-rendered in this run.
+
+summary_counts:
+  confirmed: 10
+  likely: 4
+  candidate: 2
+  rejected: 12
+  cloud_cdn: 6
+  third_party: 10
+  confirmed_root_domains: 1
+  likely_root_domains: 1
+  confirmed_subdomains: 2
+  confirmed_websites: 2
+  confirmed_ips: 2
+  confirmed_certs: 2
+  provider_asns: 1
+  provider_netblocks: 2

@@ -1,0 +1,35 @@
+{
+  "approved_at": "2026-10-05T00:10:00+11:00",
+  "approved_by": "Owner (Vinh Dinh) via orchestrator confirmation UI",
+  "in_scope": {
+    "domains": ["thedownundernews.online"],
+    "hostnames": [
+      "thedownundernews.online",
+      "www.thedownundernews.online",
+      "media.thedownundernews.online"
+    ],
+    "websites": [
+      "https://thedownundernews.online/",
+      "https://www.thedownundernews.online/",
+      "https://media.thedownundernews.online/"
+    ],
+    "ips": [
+      {"ip": "51.161.130.70",  "ports": [80, 443],       "role": "main site origin (OVH SYD2)"},
+      {"ip": "51.161.131.195", "ports": [21, 80, 443],   "role": "media host (OVH SYD2); FTP service checks approved"}
+    ]
+  },
+  "flagged_but_not_in_scope_for_active_test": [
+    {"value": "thedownundernews.it.com", "reason": "Advertised brand domain is UNREGISTERED; defensive recommendation only."}
+  ],
+  "out_of_scope": [
+    "Any other IP inside the OVH 51.161.130.0/23 pool (shared tenancy)",
+    "cdn.jsdelivr.net, fonts.googleapis.com, fonts.gstatic.com (third-party CDN/fonts)",
+    "spaceship.com infrastructure (registrar / DNS / mail forwarding)",
+    "ovh.com control plane and other OVH tenants"
+  ],
+  "test_credentials": [
+    {"role": "admin",  "username": "admin",  "password": "Admin@1234"},
+    {"role": "writer", "username": "writer", "password": "Admin@1234"},
+    {"role": "editor", "username": "editor", "password": "Admin@1234"}
+  ]
+}

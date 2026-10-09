@@ -1,0 +1,1 @@
+195.131.161.51.in-addr.arpa. 71973 IN	PTR	vps-edee2c79.vps.ovh.ca.

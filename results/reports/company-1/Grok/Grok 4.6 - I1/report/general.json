@@ -1,0 +1,82 @@
+{
+  "id": "7b22152c-5844-42af-8d67-b375ab2a7f0e",
+  "name": "DownUnderNewsz",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "override_finding_order": false,
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "label": "Executive Summary",
+      "status": "finished",
+      "data": {
+        "executive_summary": "## Overview\n\nClawSec completed an authorized vulnerability assessment of **DownUnderNewsz** (shown on the site as **The Down Under News**), an online-only independent Australian news publication. All work took place on **18 September 2026**, after authorization on the main public website.\n\nThe review covered only the owner-approved website, media host, and two server addresses. Eight issues were confirmed: **1 critical, 1 high, 4 medium, and 2 low**. Nothing was added beyond what was verified.\n\n## What leadership should know\n\n**Fix the search box first.** Anyone on the internet can type a crafted search that the site runs as template code instead of plain text. Safe checks showed `{{8*8}}` becoming **64** and `{{7*'7'}}` becoming **7777777**. On typical Flask/Jinja sites this class of bug is used to read secrets and take over the server. Remote code execution was not attempted.\n\n**The media server is an open file store.** It accepts FTP login as “anonymous” with no password. A visitor can list and download stored files. HTTPS on this host currently fails (HTTP 502), so FTP is an open path to those files.\n\n**The website backend is reachable in the clear.** Gunicorn answers on port 5000 without TLS, so traffic can skip the nginx HTTPS front door.\n\n**Trust in HTTPS and staff privacy is weaker than it should be.** The `www` certificate does not match the hostname. Login cookies are missing `Secure` and `SameSite`. The public articles API returns staff emails, admin roles, account-active flags, and user ids with every article.\n\nLower-priority hardening: the homepage is missing standard browser security headers, and both servers offer SSH password login from the internet. No password guessing was performed.\n\n## Recommended order of work\n\n1. Stop rendering search input as a template; show the query as data only and add a test that `{{8*8}}` is displayed literally.\n2. Disable anonymous FTP; restore HTTPS so media is served only through the application.\n3. Bind the application server to localhost and block port 5000 at the firewall.\n4. Reissue the certificate for both hostnames (or redirect `www` before TLS); set `Secure`, `HttpOnly`, and `SameSite` on the session cookie; return only public byline fields from the articles API.\n5. Add HSTS and related HTTP headers; restrict SSH to keys and network allowlists.\n\n## Coverage and limits\n\nBoth in-scope hosts and IPs were scanned. Public site, search, APIs, admin panel, role separation, anonymous FTP, TLS, and session cookies were reviewed. Authenticated CMS tests used owner-provided dummy roles (admin, writer, editor).\n\nLimits: media HTTPS returned 502 on all tested paths, so media testing used FTP and port scans. SSH was not brute-forced. Stored XSS in an unpublished draft was not counted as a confirmed public finding. Amass and Censys were unavailable. `www` TLS could not be verified because of the certificate hostname mismatch."
+      }
+    },
+    {
+      "id": "scope",
+      "label": "Scope",
+      "status": "finished",
+      "data": {
+        "scope": "## In-scope assets (owner-approved)\n\n| System | Address | Notes |\n|:---|:---|:---|\n| thedownundernews.online | 51.161.130.70 | Main public website; authorization host |\n| www.thedownundernews.online | 51.161.130.70 | Same origin; TLS certificate hostname mismatch |\n| media.thedownundernews.online | 51.161.131.195 | Media host; HTTPS 502 on tested paths |\n| Web VPS | 51.161.130.70 | Open ports 22, 80, 443, 5000 |\n| Media VPS | 51.161.131.195 | Open ports 21, 22, 80, 443 |\n\nOnly these two IP addresses were in scope.\n\n## Explicitly out of scope\n\n- thedownundernews.it.com (candidate; owner did not include)\n- OVH netblocks\n- Spaceship / Cloudflare\n- Google Fonts\n- jsDelivr\n- Flinders University\n\n## Methodology\n\nAuthorized full-scope assessment after header-based authorization on `https://thedownundernews.online/`.\n\n- Asset enumeration, then owner validation of scope\n- Fast full-port discovery, then version scans on open ports\n- TLS and HTTP header review\n- Web and API mapping\n- Authenticated CMS testing with owner-provided dummy roles (admin, writer, editor)\n\nSafety limits: no DDoS, brute force, spraying, phishing, malware, destructive actions, or third-party testing. SSTI was proven with arithmetic template expressions only; no RCE payload was sent.\n\n## Coverage\n\nHosts and both IPs were scanned. Public site, search, APIs, admin panel, role separation, anonymous FTP, TLS, and session cookies were reviewed.\n\n## Limitations\n\n- media.thedownundernews.online HTTPS returned 502 on all tested paths; media testing used FTP and port scan.\n- No password guessing against SSH.\n- Stored XSS in an unpublished draft was not counted as a confirmed public finding.\n- Amass/Censys unavailable during enumeration.\n- www TLS could not be verified because of certificate hostname mismatch.",
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18",
+        "duration": "1 day",
+        "provided_users": "Owner-provided dummy CMS roles used for authenticated testing:\n\n* admin\n* writer\n* editor\n\nNo live production passwords are included in this report."
+      }
+    },
+    {
+      "id": "customer",
+      "label": "Customer",
+      "status": "finished",
+      "data": {
+        "customer_name": "DownUnderNewsz (The Down Under News)",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh (dinh0087@flinders.edu.au)"
+      }
+    },
+    {
+      "id": "other",
+      "label": "Other",
+      "status": "finished",
+      "data": {
+        "title": "DownUnderNewsz Vulnerability Assessment Report",
+        "report_date": "2026-09-18",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "version": "1.0",
+            "date": "2026-09-18",
+            "description": "Initial authorized vulnerability assessment report"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "label": "Appendix",
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Finding summary",
+            "content": "Eight confirmed findings. No findings were added or dropped.\n\n| Severity | Count |\n|:---|:---|\n| Critical | 1 |\n| High | 1 |\n| Medium | 4 |\n| Low | 2 |\n\n1. Unauthenticated Jinja-style server-side template injection in search (Critical)\n2. Anonymous FTP allows listing and download of media files (High)\n3. Python application server exposed on port 5000 without TLS (Medium)\n4. Session JWT cookie missing Secure and SameSite flags (Medium)\n5. www certificate name mismatch (Medium)\n6. Public articles API discloses account profile fields (Medium)\n7. Missing HTTP security headers (Low)\n8. Internet-facing SSH allows password authentication (Low)"
+          },
+          {
+            "title": "Methodology and safety limits",
+            "content": "Work followed the authorized engagement rules.\n\n**Included:** enumeration of owner-approved assets; fast full-port discovery then version scans; TLS and header review; web and API mapping; authenticated CMS testing with dummy admin, writer, and editor roles; anonymous FTP confirmation; session-cookie review.\n\n**Not performed:** DDoS; brute force; password spraying; phishing; malware; destructive actions; third-party testing; SSH password guessing; RCE payloads against the search SSTI (arithmetic proofs only).\n\n**Services observed on in-scope hosts (from this assessment):** web VPS 22/80/443/5000; media VPS 21/22/80/443. Application stack notes from evidence: nginx front end, Gunicorn on port 5000, vsftpd 3.0.5 on the media host, OpenSSH 10.0p2 on both IPs."
+          }
+        ]
+      }
+    }
+  ]
+}

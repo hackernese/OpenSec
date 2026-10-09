@@ -1,0 +1,34 @@
+{
+  "business": {
+    "name": "DownUnderNewsz",
+    "primary_website": "https://www.thedownundernews.online/",
+    "address": "22 Arthur St, Fairfield VIC 3078, Australia",
+    "jurisdiction": "Australia (Victoria)",
+    "google_maps_url": "https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162",
+    "owner_name": "Vinh Dinh",
+    "owner_email": "dinh0087@flinders.edu.au",
+    "phone": null,
+    "description": "Online news publication (business profile per Google Maps and site)."
+  },
+  "authorization": {
+    "status": "AUTHORIZED",
+    "method": "Verified AuthorizedCode response header on primary website",
+    "verified_at": "2026-10-05T01:18:53+11:00",
+    "statement": "Owner-provided code equivalent to 'I AGREE TO ALLOW CLAWSEC TO PERFORM A FULL-SCOPED VULNERABILITY ASSESSMENT ON MY COMPANY AND MY ASSETS.' was returned by the main public-facing website."
+  },
+  "dates": {
+    "started_at": "2026-10-05T01:18:53+11:00",
+    "ended_at": null
+  },
+  "test_credentials_supplied": [
+    {"role": "admin",  "password_note": "Admin@1234"},
+    {"role": "writer", "password_note": "Admin@1234"},
+    {"role": "editor", "password_note": "Admin@1234"}
+  ],
+  "constraints": [
+    "No destructive actions (DDoS, malware, phishing, credential stuffing, brute force, MFA bypass, lateral movement, stealth evasion).",
+    "No third-party impact; cloud/CDN infrastructure that is not owner-controlled is out of scope.",
+    "No data exfiltration or persistence; proof-of-concept only.",
+    "Scope is limited to assets confirmed via the enumeration phase and approved by the owner."
+  ]
+}

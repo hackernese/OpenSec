@@ -1,0 +1,68 @@
+{
+  "engagement": "AuSecurity",
+  "approved_at": "2026-10-05",
+  "approved_by": "Owner (Vinh Dinh) via orchestrator UI",
+  "in_scope": {
+    "domains": [
+      "ausecurity.best",
+      "www.ausecurity.best",
+      "blog.ausecurity.best",
+      "ticket.ausecurity.best"
+    ],
+    "urls": [
+      "https://ausecurity.best/",
+      "https://blog.ausecurity.best/",
+      "https://ticket.ausecurity.best/"
+    ],
+    "ipv4": [
+      "51.79.166.148",
+      "51.79.167.208",
+      "51.79.166.209"
+    ],
+    "email_domain_posture": [
+      "ausecurity.best"
+    ]
+  },
+  "out_of_scope": {
+    "sibling_domains_not_attributable": [
+      "ausecurity.com.au",
+      "ausecurity.au",
+      "ausecurity.io",
+      "ausecurity.net"
+    ],
+    "third_parties": [
+      "spaceship.com (registrar)",
+      "launch1.spaceship.net / launch2.spaceship.net (registrar DNS)",
+      "OVH SAS / OVH Singapore (hosting provider infra beyond our 3 VPS)",
+      "Let's Encrypt (CA)",
+      "fonts.googleapis.com / fonts.gstatic.com",
+      "flinders.edu.au",
+      "acmecorp.com (template placeholder)"
+    ]
+  },
+  "method_permissions": {
+    "allowed": [
+      "passive OSINT",
+      "DNS/WHOIS/CT lookups",
+      "TLS/HTTP banner inspection",
+      "non-destructive port and service scanning (nmap)",
+      "web application vulnerability testing (manual + nuclei/nikto/ffuf-style content discovery)",
+      "manual exploitation to MINIMUM PROOF only (e.g. harmless marker, no data exfiltration beyond identifying a column name)",
+      "SPF/DMARC/DKIM/MX posture review (no outbound email, no spoofing attempts)",
+      "ReDoS testing against isolated inputs when safe",
+      "osTicket installer exposure check (read-only)"
+    ],
+    "forbidden": [
+      "DoS/DDoS and any availability-impacting load",
+      "destructive payloads (file wipe, data destruction, ransomware)",
+      "social engineering / phishing / vishing",
+      "credential stuffing / password spraying / brute force on login forms",
+      "MFA bypass attempts",
+      "stealth/evasion techniques",
+      "lateral movement to internal / other-tenant hosts",
+      "any outbound email from or to the target domain",
+      "exfiltrating sensitive data or dumping full databases beyond a minimum-proof row/column name"
+    ]
+  },
+  "notes": "Owner requested 'feel free to do whatever you want as long as all vulnerabilities are discovered'; however orchestrator non-negotiable boundaries override that for destructive techniques."
+}

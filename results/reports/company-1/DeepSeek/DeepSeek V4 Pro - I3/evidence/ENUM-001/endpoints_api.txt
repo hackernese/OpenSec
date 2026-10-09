@@ -1,0 +1,26 @@
+# Discovered web endpoints & API (2026-09-19)
+## HTTP status codes for candidate paths
+api/articles -> 200
+api/articles/1 -> 000
+api/categories -> 200
+api/tags -> 404
+api/comments -> 404
+api/authors -> 000
+admin -> 200
+admin/login -> 405
+login -> 404
+register -> 404
+search?q=test -> 000
+about -> 200
+contact -> 200
+
+## /api/articles reveals admin identity
+
+## Contact page email addresses
+advertising@thedownundernews.it.com
+bootstrap-icons@1.11.3
+corrections@thedownundernews.it.com
+editorial@thedownundernews.it.com
+wght@0
+wght@300
+your@email.com

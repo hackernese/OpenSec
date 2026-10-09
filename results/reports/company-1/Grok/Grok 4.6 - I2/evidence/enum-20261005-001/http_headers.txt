@@ -1,0 +1,22 @@
+===== www.thedownundernews.online =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 04 Oct 2026 16:04:23 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 21524
+Connection: keep-alive
+
+
+===== thedownundernews.online =====
+curl: (60) SSL: no alternative certificate subject name matches target hostname 'thedownundernews.online'
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the webpage mentioned above.
+
+===== thedownundernews.it.com =====
+curl: (6) Could not resolve host: thedownundernews.it.com
+
+===== www.thedownundernews.it.com =====
+curl: (6) Could not resolve host: www.thedownundernews.it.com

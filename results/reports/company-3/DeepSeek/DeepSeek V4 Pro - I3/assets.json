@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-06",
+  "confirmed_by_owner": true,
+  "in_scope": [
+    {
+      "name": "imagesharer.xyz",
+      "type": "domain",
+      "value": "imagesharer.xyz",
+      "classification": "confirmed",
+      "confidence": 1.0,
+      "note": "Main business website"
+    },
+    {
+      "name": "Imager web app",
+      "type": "url",
+      "value": "https://imagesharer.xyz/",
+      "classification": "confirmed",
+      "confidence": 1.0,
+      "note": "nginx + PHP 8.2.34 image-sharing application; routes /login /register /dashboard"
+    },
+    {
+      "name": "www.imagesharer.xyz",
+      "type": "subdomain",
+      "value": "www.imagesharer.xyz",
+      "classification": "likely",
+      "confidence": 0.85,
+      "note": "Alias to same server; no TLS SAN"
+    },
+    {
+      "name": "Web server IPv4",
+      "type": "ip",
+      "value": "51.161.131.44",
+      "classification": "confirmed",
+      "confidence": 1.0,
+      "note": "OVH VPS (AS16276), nginx + PHP"
+    },
+    {
+      "name": "PostgreSQL service",
+      "type": "service",
+      "value": "51.161.131.44:5432",
+      "classification": "confirmed",
+      "confidence": 0.95,
+      "note": "Publicly exposed PostgreSQL port on business IP"
+    }
+  ],
+  "out_of_scope": [
+    {"name": "resources.imagesharer.xyz", "type": "subdomain", "value": "resources.imagesharer.xyz", "reason": "CloudFront/S3 static distribution (excluded by owner)"},
+    {"name": "Apex IPv6", "type": "ip", "value": "2405:dc00:0:3::33a1:832c", "reason": "Optus residential, likely stale (excluded by owner)"},
+    {"name": "CloudFront distribution", "type": "host", "value": "d273uevi0662l0.cloudfront.net", "reason": "Third-party CDN (excluded by owner)"}
+  ],
+  "third_party_exclusions": [
+    "AWS CloudFront", "OVH (AS16276)", "Spaceship (registrar/DNS)", "Optus (residential IPv6)"
+  ],
+  "method_permissions": {
+    "recon": true,
+    "port_scan": true,
+    "service_fingerprint": true,
+    "web_application_testing": true,
+    "injection_testing": true,
+    "redos_testing": true,
+    "non_destructive": true
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "allowlist": [
+    "ausecurity.best",
+    "www.ausecurity.best",
+    "blog.ausecurity.best",
+    "ticket.ausecurity.best",
+    "contact.ausecurity.best",
+    "51.79.166.148",
+    "51.79.167.208",
+    "51.79.166.209"
+  ],
+  "denylist": [
+    "ausecurity.net",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+    "secure.gravatar.com",
+    "launch1.spaceship.net",
+    "launch2.spaceship.net",
+    "OVHcloud control-plane / provider infrastructure"
+  ],
+  "method_permissions": {
+    "allowed": [
+      "Non-destructive network/service enumeration of in-scope IPs (port discovery + version/vuln detection on open ports)",
+      "Web application testing (SQLi, XSS, SSRF, IDOR, auth bypass, path traversal, LFI/RFI, command injection, ReDoS) against in-scope endpoints",
+      "Read-only API interaction (GET/POST/OPTIONS/HEAD) and safe parameter fuzzing",
+      "TLS/certificate inspection of in-scope hosts",
+      "Limited, non-destructive validation of discovered vulnerabilities (minimum proof only)"
+    ],
+    "prohibited": [
+      "DDoS / availability attacks",
+      "Malware spreading, social engineering, phishing",
+      "Credential stuffing, password spraying, brute force, MFA bypass",
+      "Lateral movement, stealth/evasion",
+      "Destructive commands or data modification/deletion",
+      "Attacking out-of-scope or third-party systems"
+    ]
+  },
+  "confirmed_by": "Business owner (Vinh Dinh)",
+  "approved_at": "2026-09-17T19:33:00Z"
+}

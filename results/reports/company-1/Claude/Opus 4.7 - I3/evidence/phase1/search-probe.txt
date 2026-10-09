@@ -1,0 +1,14 @@
+| Query                      | HTTP Status | Reflected | Angle Brackets Encoded | SSTI (49) | SQL Error / Traceback | Set-Cookie Differences |
+|----------------------------|-------------|-----------|-----------------------|-----------|-----------------------|------------------------|
+| test                       | 200         | Yes       | Yes                   | No        | No                    | None                   |
+| ClawSecProbe123           | 200         | Yes       | Yes                   | No        | No                    | None                   |
+| '                          | 200         | Yes       | Yes                   | No        | No                    | None                   |
+| "                         | 200         | Yes       | Yes                   | No        | No                    | None                   |
+| <test>                    | 200         | Yes       | No                    | No        | No                    | None                   |
+| ClawSec<i>probe</i>      | 200         | Yes       | No                    | No        | No                    | None                   |
+| ClawSec{{7*7}}           | 200         | Yes       | Yes                   | Yes       | No                    | None                   |
+| ClawSec$\7*7              | 200         | Yes       | Yes                   | No        | No                    | None                   |
+| ClawSec%27                | 200         | Yes       | Yes                   | No        | No                    | None                   |
+| OR+1=1--                  | 200         | Yes       | Yes                   | No        | No                    | None                   |
+| ClawSec||1                | 200         | Yes       | Yes                   | No        | No                    | None                   |
+| a%0A                      | 200         | Yes       | Yes                   | No        | No                    | None                   |

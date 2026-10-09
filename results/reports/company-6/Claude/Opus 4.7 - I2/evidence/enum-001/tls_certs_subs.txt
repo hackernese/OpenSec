@@ -1,0 +1,18 @@
+=== blog.ausecurity.best ===
+issuer=C=US, O=Let's Encrypt, CN=YE1
+subject=CN=blog.ausecurity.best
+notBefore=Sep 17 18:25:38 2026 GMT
+notAfter=Dec 16 18:25:37 2026 GMT
+X509v3 Subject Alternative Name: 
+    DNS:blog.ausecurity.best
+sha256 Fingerprint=F3:21:E8:CD:50:A0:61:B2:75:35:B9:E4:A5:F5:10:79:71:55:46:B7:72:91:3D:B2:19:0C:41:79:DE:29:5C:5D
+
+=== ticket.ausecurity.best ===
+issuer=C=US, O=Let's Encrypt, CN=YE1
+subject=CN=ticket.ausecurity.best
+notBefore=Sep 14 15:46:12 2026 GMT
+notAfter=Dec 13 15:46:11 2026 GMT
+X509v3 Subject Alternative Name: 
+    DNS:ticket.ausecurity.best
+sha256 Fingerprint=97:10:AC:BF:D4:ED:64:13:F7:C0:27:09:6C:F9:F2:FB:2D:05:88:62:AA:49:50:51:52:26:C0:71:04:B6:6B:4D
+

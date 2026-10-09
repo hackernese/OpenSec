@@ -1,0 +1,27 @@
+===== ASN 51.161.130.70 =====
+AS      | IP               | BGP Prefix          | CC | Registry | Allocated  | AS Name
+16276   | 51.161.130.70    | 51.161.128.0/17     | CA | arin     | 2019-09-03 | OVH - OVH SAS, FR
+
+===== ASN 51.161.131.195 =====
+AS      | IP               | BGP Prefix          | CC | Registry | Allocated  | AS Name
+16276   | 51.161.131.195   | 51.161.128.0/17     | CA | arin     | 2019-09-03 | OVH - OVH SAS, FR
+
+===== reverse 51.161.131.195 =====
+195.131.161.51.in-addr.arpa. 74595 IN	PTR	vps-edee2c79.vps.ovh.ca.
+
+===== DMARC/CAA/NS =====
+
+===== it.com NS query =====
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 23132
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; AUTHORITY SECTION:
+it.com.			699	IN	SOA	ns5.it.com. hostmaster.it.com. 2026100858 10800 3600 604800 3600
+
+
+===== SOA/NS it.com parent =====
+it.com.			68182	IN	NS	ns5.it.com.
+it.com.			68182	IN	NS	ns6.it.com.

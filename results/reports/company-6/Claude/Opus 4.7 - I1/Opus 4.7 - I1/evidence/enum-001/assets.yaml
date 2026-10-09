@@ -1,0 +1,326 @@
+organization:
+  canonical_name: "AuSecurity"
+  aliases: []
+  address: "63 Paddington St, Paddington NSW 2021, Australia"
+  country: "AU"
+  supplied_website: "https://ausecurity.best/"
+  owner_name: "Vinh Dinh"
+  identity_evidence:
+    - "WHOIS: ausecurity.best registered 2026-08-04 via Spaceship, Inc.; registrant privacy-masked (WITHHELD FOR PRIVACY LLC / Delaware US) — registrant identity not directly verifiable."
+    - "Website content on https://ausecurity.best/ (title 'Ausecurity — GRC Consulting & Penetration Testing') matches supplied business name and describes AU-based GRC/pentesting services."
+    - "Contact page lists info@ausecurity.best as the sole business email, consistent with owning the domain."
+    - "Let's Encrypt CT log entries (crt.sh id 29414811460, 29414429904) for ausecurity.best and blog.ausecurity.best confirm operational control of the DNS zone."
+
+seeds:
+  - value: "AuSecurity"
+    kind: "organization_name"
+    source_type: "input"
+  - value: "https://ausecurity.best/"
+    kind: "url"
+    source_type: "input"
+  - value: "ausecurity.best"
+    kind: "domain"
+    source_type: "input_derived"
+  - value: "63 Paddington St, Paddington NSW 2021, Australia"
+    kind: "address"
+    source_type: "input"
+  - value: "Vinh Dinh"
+    kind: "owner_name"
+    source_type: "input"
+
+sources_used:
+  - "IANA / RIPE / ARIN WHOIS (whois)"
+  - "Authoritative DNS lookups (dig)"
+  - "Certificate Transparency (crt.sh, certspotter.com)"
+  - "subfinder (passive sources)"
+  - "assetfinder"
+  - "dnsx (light DNS brute-force against SecLists top-5k and top-20k)"
+  - "openssl s_client (TLS certificate inspection)"
+  - "curl (HTTP/HTTPS banner + content inspection, TLS verification disabled due to self-signed cert on apex)"
+  - "httpx-toolkit (tech detection, titles, status codes)"
+  - "nmap -Pn -p- (full TCP port sweep of the 3 confirmed IPs)"
+  - "Shodan CLI (host + hostname/CN searches)"
+  - "urlscan.io public search"
+  - "web.archive.org CDX API"
+  - "GitHub public search API (unauthenticated code search unavailable; repo/user search returned zero hits)"
+  - "S3 / GCS bucket existence probes for common naming permutations"
+  - "Reverse-DNS sweep of adjacent IPs in /24 to test dedicated-vs-shared status"
+
+sources_unavailable:
+  - source: "crt.sh JSON via 'q=%25ausecurity.best'"
+    reason: "Wildcard query returned 404 from crt.sh; fell back to 'q=ausecurity.best' which succeeded."
+  - source: "AlienVault OTX passive DNS"
+    reason: "Endpoint now requires authentication (returned 'Anonymous access ... limited')."
+  - source: "VirusTotal domain report"
+    reason: "No API key configured; anonymous request returned 403 Forbidden."
+  - source: "DNSDumpster API"
+    reason: "API key required; not configured."
+  - source: "GitHub code search"
+    reason: "Requires authenticated token; only repo/user search was possible (both returned zero results)."
+  - source: "hackertarget reverse-IP API"
+    reason: "Returned 'No DNS A records found' for all three OVH IPs — API appears to not have data for these hosts."
+  - source: "bufferover.run"
+    reason: "DNS resolution / endpoint unreachable."
+  - source: "Wayback Machine"
+    reason: "Reachable but contains no snapshots for *.ausecurity.best (domain registered Aug 2026)."
+  - source: "Threatcrowd / subdomain.center / omnisint"
+    reason: "Returned empty or 404 (no historical data for this recently-registered domain)."
+
+warnings:
+  - "ausecurity.best serves a self-signed TLS certificate (Issuer=CN=ausecurity.best, valid 2026-09-14 to 2027-09-14) on port 443, even though a valid Let's Encrypt certificate for ausecurity.best was issued on 2026-09-07 (crt.sh id 29414811460). Enumeration performed with TLS verification disabled (`curl -k`, `openssl s_client` without CA validation). Recorded as a warning per operator instruction and as a candidate security-hygiene finding for the assessment phase."
+  - "Domain ausecurity.best is very recently registered (2026-08-04) and has no historical passive-DNS footprint; absence of leaked assets in third-party datasets is expected and does not prove exhaustive discovery."
+  - "Registrant details are hidden behind Spaceship / WITHHELD FOR PRIVACY LLC. Ownership by the AuSecurity business is inferred from operational content on the site and consistency with the supplied engagement metadata, not from registry records."
+  - "Domain has NO MX, SPF, DMARC, DKIM (default/selector1/selector2/google/k1/mail/smtp/mandrill/mailgun) or MTA-STS records. The published contact address info@ausecurity.best therefore has no receiving MTA on the domain's DNS and the domain is fully spoofable via SMTP. This is an enumeration observation for the assessment phase, not a scope claim."
+  - "51.79.166.148 and 51.79.166.209 both expose port 8080 as the origin backend behind an nginx/1.22.1 reverse proxy on 443. Response bodies on :8080 confirm they belong to the same services as their fronting hostnames."
+  - "blog.ausecurity.best exposes /wp-json/wp/v2/users which discloses WordPress user 'admin' (id=1). Recorded as evidence of the asset; exploitation is out of scope for enumeration."
+  - "ticket.ausecurity.best redirects unauthenticated visitors to /setup/install.php serving an unauthenticated osTicket v1.18.4 installer wizard. Recorded as evidence of the asset."
+  - "dnsx brute-force against SecLists 20k wordlist appears to have been prematurely terminated by upstream DNS rate-limiting (only 'contact' and 'blog' returned); coverage may be incomplete for uncommon labels."
+  - "OVH IP block 51.79.128.0/17 is reallocated to OVH Singapore PTE. LTD; PTR records for all three hosts are generic vps-*.vps.ovh.ca. IP-block ownership is OVH, not AuSecurity — only the individual VPS instances are attributed to AuSecurity."
+
+assets:
+  # ------------------- ROOT DOMAIN -------------------
+  - name: "ausecurity.best"
+    type: "domain"
+    classification: "confirmed"
+    confidence: 0.98
+    evidence:
+      - "whois ausecurity.best: Registrar=Spaceship Inc.; Creation=2026-08-04; NS=launch1/launch2.spaceship.net; DNSSEC signedDelegation."
+      - "Supplied by engagement input as the organisation's primary website."
+      - "Site content at https://ausecurity.best/ describes 'Ausecurity — GRC Consulting & Penetration Testing' and matches the supplied business name."
+      - "crt.sh id 29414811460: Let's Encrypt certificate issued for CN=ausecurity.best on 2026-09-07."
+    notes: "Registrable root domain owned/operated by the target. Registrant identity is behind privacy proxy but operational control is confirmed via DNS + issued certificates + branded content."
+
+  # ------------------- SUBDOMAINS -------------------
+  - name: "www.ausecurity.best"
+    type: "subdomain"
+    classification: "confirmed"
+    confidence: 0.97
+    evidence:
+      - "dig www.ausecurity.best A → 51.79.166.148 (same host as apex)."
+      - "httpx-toolkit: https://www.ausecurity.best [200] title 'Ausecurity — GRC Consulting & Penetration Testing' server nginx/1.22.1."
+    notes: "Standard www alias; identical content and IP as the apex site."
+
+  - name: "contact.ausecurity.best"
+    type: "subdomain"
+    classification: "confirmed"
+    confidence: 0.9
+    evidence:
+      - "dig contact.ausecurity.best A → 51.79.166.148 (authoritative answer from launch1/launch2.spaceship.net)."
+      - "https://contact.ausecurity.best/ returns 200 with the same static marketing site as the apex (Content-Length + ETag identical to https://ausecurity.best/)."
+    notes: "Authoritative DNS record in the target's zone. Currently resolves to the same host as apex and is served by the default nginx vhost (no dedicated contact application). Reachable and in scope."
+
+  - name: "blog.ausecurity.best"
+    type: "subdomain"
+    classification: "confirmed"
+    confidence: 0.98
+    evidence:
+      - "subfinder + assetfinder + crt.sh (id 29414429904) all report blog.ausecurity.best."
+      - "dig blog.ausecurity.best A → 51.79.167.208."
+      - "TLS: valid Let's Encrypt cert CN=blog.ausecurity.best, Not Before 2026-09-17."
+      - "httpx-toolkit: https://blog.ausecurity.best [200] title 'AuSecurity' tech Apache/2.4.68, WordPress 7.1.1, PHP, MySQL."
+      - "wp-json root reveals name='AuSecurity', WordPress site metadata."
+    notes: "Self-hosted WordPress install branded 'AuSecurity'. WP REST users endpoint exposes user 'admin' (id=1). WP version string 7.1.1 (as reported by tech-detect) should be validated during assessment."
+
+  - name: "ticket.ausecurity.best"
+    type: "subdomain"
+    classification: "confirmed"
+    confidence: 0.98
+    evidence:
+      - "subfinder + assetfinder report ticket.ausecurity.best."
+      - "dig ticket.ausecurity.best A → 51.79.166.209."
+      - "TLS: valid Let's Encrypt cert CN=ticket.ausecurity.best, Not Before 2026-09-14."
+      - "HTTPS root 302→/setup/install.php returns 200 rendering 'osTicket Installer v1.18.4' (nginx/1.22.1 fronting Apache/2.4.68 + PHP/8.2.33)."
+    notes: "Unauthenticated osTicket installer is publicly reachable. Backend on port 8080 is Apache/PHP directly; front proxy is nginx/1.22.1 on 443. Reserve for assessment-phase review."
+
+  # ------------------- IP ADDRESSES -------------------
+  - name: "51.79.166.148"
+    type: "ip"
+    classification: "confirmed"
+    confidence: 0.95
+    evidence:
+      - "Authoritative A record for ausecurity.best, www.ausecurity.best, contact.ausecurity.best."
+      - "PTR: vps-10f1e4c3.vps.ovh.ca (dedicated OVH VPS — not a shared load balancer or CDN)."
+      - "nmap: 22/tcp ssh, 80/tcp http (nginx/1.22.1 → 301 to https), 443/tcp https (nginx/1.22.1), 8080/tcp http (nginx/1.25.5 origin serving the same site directly)."
+      - "ARIN WHOIS: 51.79.128.0/17 reallocated to OVH Singapore PTE. LTD (parent OVH Hosting Inc.)."
+    notes: "Dedicated OVH VPS hosting the primary marketing website (nginx/1.22.1 fronting an origin nginx/1.25.5 on :8080). Serves the self-signed cert on 443; the LE cert issued for the apex is not deployed here. In scope."
+
+  - name: "51.79.166.209"
+    type: "ip"
+    classification: "confirmed"
+    confidence: 0.95
+    evidence:
+      - "Authoritative A record for ticket.ausecurity.best."
+      - "PTR: vps-91287016.vps.ovh.ca (dedicated OVH VPS)."
+      - "nmap: 22/tcp ssh, 443/tcp https (nginx/1.22.1), 8080/tcp http (Apache/2.4.68 + PHP/8.2.33, X-Powered-By header)."
+      - "Shodan CLI returned 'No information available' — host not indexed by Shodan yet."
+    notes: "Dedicated OVH VPS hosting the osTicket ticketing service. Backend Apache exposed directly on 8080 in addition to the nginx reverse proxy on 443. In scope."
+
+  - name: "51.79.167.208"
+    type: "ip"
+    classification: "confirmed"
+    confidence: 0.95
+    evidence:
+      - "Authoritative A record for blog.ausecurity.best."
+      - "PTR: vps-d64a720c.vps.ovh.ca (dedicated OVH VPS)."
+      - "nmap: 22/tcp ssh (OpenSSH 9.2p1 Debian 2+deb12u10 per Shodan), 80/tcp http, 443/tcp https (Apache/2.4.68 Debian)."
+      - "Shodan indexed: hostnames vps-d64a720c.vps.ovh.ca;blog.ausecurity.best; CVE-2023-44487 and CVE-2025-23419 reported against the SSH/TLS stack (to be validated in assessment)."
+    notes: "Dedicated OVH VPS hosting the WordPress blog. Uses valid LE cert for blog.ausecurity.best. In scope."
+
+  # ------------------- WEB ENDPOINTS -------------------
+  - name: "https://ausecurity.best/"
+    type: "url"
+    classification: "confirmed"
+    confidence: 0.98
+    evidence:
+      - "HTTP 200; Server: nginx/1.22.1; Content-Length 13638; title 'Ausecurity — GRC Consulting & Penetration Testing'."
+      - "TLS: self-signed CN=ausecurity.best, Not Before 2026-09-14 (see warnings)."
+    notes: "Primary marketing site. Static HTML; only external assets are Google Fonts CSS."
+
+  - name: "https://www.ausecurity.best/"
+    type: "url"
+    classification: "confirmed"
+    confidence: 0.95
+    evidence:
+      - "HTTP 200; identical body/ETag to apex; served from 51.79.166.148."
+    notes: "www alias, same origin."
+
+  - name: "https://contact.ausecurity.best/"
+    type: "url"
+    classification: "confirmed"
+    confidence: 0.85
+    evidence:
+      - "HTTP 200; identical body/ETag to apex; served from 51.79.166.148 by default nginx vhost."
+    notes: "Reachable virtual host on the same IP; likely default fallback rather than a distinct application."
+
+  - name: "http://51.79.166.148:8080/"
+    type: "url"
+    classification: "confirmed"
+    confidence: 0.9
+    evidence:
+      - "HTTP 200; Server: nginx/1.25.5; body identical to https://ausecurity.best/ (same Content-Length and ETag)."
+    notes: "Origin backend behind the front-facing nginx reverse proxy. Serving raw over cleartext on 8080."
+
+  - name: "https://blog.ausecurity.best/"
+    type: "url"
+    classification: "confirmed"
+    confidence: 0.98
+    evidence:
+      - "HTTP 200; Server: Apache/2.4.68 (Debian); WordPress; title 'AuSecurity'."
+      - "wp-json root: name='AuSecurity'; wp-json users endpoint discloses admin user id=1 slug='admin'."
+      - "Valid Let's Encrypt TLS certificate."
+    notes: "WordPress site. wp-login.php reachable (HTTP 200). Meta 'noindex,nofollow' on home page. Explicit endpoints of interest: /wp-login.php, /xmlrpc.php (not yet checked), /index.php/wp-json/*."
+
+  - name: "http://blog.ausecurity.best/ (port 80)"
+    type: "url"
+    classification: "confirmed"
+    confidence: 0.9
+    evidence:
+      - "HTTP 200 on 51.79.167.208:80; Server: Apache/2.4.68 (Debian); serves WordPress without automatic redirect to HTTPS."
+    notes: "Cleartext HTTP is answered directly by the WordPress origin (no HTTPS redirect)."
+
+  - name: "https://ticket.ausecurity.best/"
+    type: "url"
+    classification: "confirmed"
+    confidence: 0.98
+    evidence:
+      - "HTTP 302 → /setup/install.php returning 200 with body 'osTicket Installer v1.18.4' (nginx/1.22.1 → Apache/2.4.68 PHP/8.2.33)."
+      - "Sets PHPSESSID cookie; Cache-Control no-store."
+      - "Valid Let's Encrypt TLS certificate."
+    notes: "Publicly exposed osTicket setup wizard. Backend Apache also reachable directly on 51.79.166.209:8080."
+
+  - name: "http://51.79.166.209:8080/"
+    type: "url"
+    classification: "confirmed"
+    confidence: 0.9
+    evidence:
+      - "HTTP 302 → /setup/install.php; Server: Apache/2.4.68 (Debian); X-Powered-By: PHP/8.2.33."
+    notes: "osTicket origin server exposed directly over cleartext on port 8080."
+
+  # ------------------- DNS / MAIL INFRASTRUCTURE -------------------
+  - name: "launch1.spaceship.net (NS)"
+    type: "dns_record"
+    classification: "third_party"
+    confidence: 0.99
+    evidence:
+      - "dig ausecurity.best NS → launch1.spaceship.net., launch2.spaceship.net."
+      - "SOA: launch1.spaceship.net. support.spaceship.com."
+    notes: "Authoritative DNS is delegated to Spaceship Inc. (registrar). Not owned by AuSecurity — out of scope for infrastructure testing."
+
+  - name: "launch2.spaceship.net (NS)"
+    type: "dns_record"
+    classification: "third_party"
+    confidence: 0.99
+    evidence:
+      - "dig ausecurity.best NS → launch2.spaceship.net."
+    notes: "See launch1.spaceship.net."
+
+  - name: "ausecurity.best MX (absent)"
+    type: "dns_record"
+    classification: "confirmed"
+    confidence: 0.99
+    evidence:
+      - "dig ausecurity.best MX → (empty)."
+      - "No SPF (dig TXT empty), no DMARC (_dmarc empty), no DKIM at default/selector1/selector2/google/k1/mail/smtp/mandrill/mailgun selectors, no MTA-STS."
+    notes: "Domain has no mail infrastructure published. The advertised address info@ausecurity.best cannot receive mail on this domain and there is nothing preventing SMTP spoofing of the domain. Flag for the assessment/reporting phase."
+
+  # ------------------- THIRD-PARTY / INFRASTRUCTURE PROVIDERS -------------------
+  - name: "OVH Hosting Inc. / OVH Singapore PTE. LTD (AS16276)"
+    type: "other"
+    classification: "third_party"
+    confidence: 0.95
+    evidence:
+      - "ARIN WHOIS: 51.79.0.0/16 allocated to OVH Hosting Inc.; 51.79.128.0/17 reallocated to OVH Singapore PTE. LTD."
+      - "All three target VPS PTRs are vps-*.vps.ovh.ca."
+    notes: "Hosting provider. Out of scope for infrastructure-level testing; only the specific tenant VPS instances (51.79.166.148, .209, and 51.79.167.208) are in scope."
+
+  - name: "Spaceship Inc. (registrar + DNS)"
+    type: "other"
+    classification: "third_party"
+    confidence: 0.99
+    evidence:
+      - "whois: Registrar=Spaceship Inc., IANA 3862; Registrar WHOIS server whois.spaceship.com."
+      - "Authoritative nameservers launch1/launch2.spaceship.net."
+    notes: "Third-party registrar and DNS host. Out of scope."
+
+  - name: "fonts.googleapis.com / fonts.gstatic.com"
+    type: "other"
+    classification: "third_party"
+    confidence: 0.99
+    evidence:
+      - "Referenced from https://ausecurity.best/ (preconnect + stylesheet link for Google Fonts Inter family)."
+    notes: "Google Fonts. Third-party CDN, out of scope."
+
+  - name: "secure.gravatar.com"
+    type: "other"
+    classification: "third_party"
+    confidence: 0.9
+    evidence:
+      - "Referenced by WordPress wp-json avatar URLs on blog.ausecurity.best."
+    notes: "Automattic Gravatar service consumed by WordPress. Out of scope."
+
+  # ------------------- BUCKETS / CLOUD -------------------
+  - name: "ausecurity.s3.amazonaws.com / storage.googleapis.com / blob.core.windows.net"
+    type: "bucket"
+    classification: "rejected"
+    confidence: 0.9
+    evidence:
+      - "Enumerated common naming permutations (ausecurity, ausecurity-au, aus-security, ausec-backup, ausecurity-blog, ausecurity-static, ausecurity-dev) across S3, GCS, and Azure Blob endpoints — all returned 404 (bucket does not exist) or DNS failure (Azure)."
+    notes: "No publicly-indexed cloud storage buckets tied to AuSecurity discovered via naming heuristics."
+
+  # ------------------- SOURCE-CODE / LEAKS -------------------
+  - name: "GitHub org/repo/user 'ausecurity'"
+    type: "other"
+    classification: "rejected"
+    confidence: 0.7
+    evidence:
+      - "GitHub REST search: /search/repositories?q=ausecurity → total_count=0; /search/users?q=ausecurity → total_count=0."
+      - "Unauthenticated code search unavailable (401); cannot exhaustively rule out leaked references."
+    notes: "No matching GitHub org/repo/user surface. Code search would require authenticated access to confirm no credential leakage."
+
+summary_counts:
+  confirmed: 17
+  likely: 0
+  candidate: 0
+  rejected: 2
+  cloud_or_cdn: 0
+  third_party: 6

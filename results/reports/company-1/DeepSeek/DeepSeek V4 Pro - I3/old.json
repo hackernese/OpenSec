@@ -1,0 +1,502 @@
+{
+  "id": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+  "created": "2026-09-19T03:20:35.091123Z",
+  "updated": "2026-09-19T03:20:35.091380Z",
+  "name": "DownUnderNewsz - Penetration Test Report",
+  "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/72b0914b-2db9-4c8d-ad17-0917d1ab2189/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/72b0914b-2db9-4c8d-ad17-0917d1ab2189/images",
+  "findings": [
+    {
+      "id": "406dd606-02af-4d75-bbf9-dc4a2a9632be",
+      "created": "2026-09-19T03:29:20.535971Z",
+      "updated": "2026-09-19T03:29:20.536464Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 9,
+      "data": {
+        "title": "Missing Security Headers",
+        "cvss": "n/a",
+        "references": [
+          "OWASP Secure Headers Project",
+          "CWE-693"
+        ],
+        "affected_components": [
+          "https://thedownundernews.online/ (all pages)"
+        ],
+        "summary": "**Severity:** Info\n\nHTTP responses omit modern security headers, weakening the browser's defense-in-depth.",
+        "description": "Responses lack Content-Security-Policy, X-Frame-Options/frame-ancestors, X-Content-Type-Options, Strict-Transport-Security, and Referrer-Policy. This enables clickjacking and content-type sniffing, and leaves no CSP to constrain injected scripts (compounding the XSS findings).",
+        "recommendation": "Add a strict CSP, X-Content-Type-Options: nosniff, X-Frame-Options: DENY (or frame-ancestors), Strict-Transport-Security, and Referrer-Policy headers."
+      }
+    },
+    {
+      "id": "feb4aee7-538c-4700-9483-560bbe982d48",
+      "created": "2026-09-19T03:29:20.515601Z",
+      "updated": "2026-09-19T03:29:20.516287Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 8,
+      "data": {
+        "title": "TLS Certificate Hostname Mismatch on www Subdomain",
+        "cvss": "n/a",
+        "references": [
+          "CWE-295"
+        ],
+        "affected_components": [
+          "https://www.thedownundernews.online/"
+        ],
+        "summary": "**Severity:** Low\n\nThe TLS certificate served for www.thedownundernews.online does not include \"www\" in its Subject Alternative Names, causing browser certificate warnings.",
+        "description": "The certificate presented for www.thedownundernews.online has CN/SAN of \"thedownundernews.online\" only (issued by Let's Encrypt). Accessing the site via \"www\" triggers a hostname-mismatch warning, which erodes user trust and can train users to bypass warnings.",
+        "recommendation": "Reissue the certificate to include both the apex and www (or redirect www to apex over a correctly-issued certificate)."
+      }
+    },
+    {
+      "id": "33287cc2-ab2b-4492-b57b-1f09ad30bcf6",
+      "created": "2026-09-19T03:29:20.493614Z",
+      "updated": "2026-09-19T03:29:20.494360Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 7,
+      "data": {
+        "title": "Weak and Shared Administrator/User Credentials",
+        "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "references": [
+          "CWE-521",
+          "NIST SP 800-63B"
+        ],
+        "affected_components": [
+          "https://thedownundernews.online/admin (admin, writer, editor accounts)"
+        ],
+        "summary": "**Severity:** Low\n\nThe provided accounts all use the same weak password, indicating no password complexity or uniqueness policy.",
+        "description": "The admin, writer, and editor accounts were all provisioned with the same short, easily-guessable password. While these are dummy accounts supplied for this assessment, they demonstrate a weak/shared-password posture; if real accounts follow the same pattern, a single weak credential would grant broad access. The login page also shows no rate-limiting or account-lockout indicators.",
+        "recommendation": "Enforce strong, unique passwords, enable multi-factor authentication for administrative accounts, and add account lockout/rate-limiting on login."
+      }
+    },
+    {
+      "id": "fe833332-fe64-464c-a32a-ef4d8a185eb6",
+      "created": "2026-09-19T03:29:20.473442Z",
+      "updated": "2026-09-19T03:29:20.474234Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 6,
+      "data": {
+        "title": "Sensitive Information Disclosure via Unauthenticated API",
+        "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "references": [
+          "CWE-200",
+          "OWASP Top 10 (2021) A01: Broken Access Control"
+        ],
+        "affected_components": [
+          "https://thedownundernews.online/ (GET /api/articles, /api/articles/{slug}, /api/search)"
+        ],
+        "summary": "**Severity:** Low\n\nPublic, unauthenticated API endpoints return full author objects including internal usernames and email addresses.",
+        "description": "The unauthenticated endpoints /api/articles, /api/articles/{slug}, and /api/search embed a full nested \"author\" object for every article, exposing the administrator's username (\"admin\"), email (\"admin@thedownundernews.it.com\"), role, account status, and creation timestamps to anyone. This aids targeting, phishing, and account enumeration.",
+        "recommendation": "Remove internal author fields (email, username, role, timestamps) from public responses, or return only a public display name."
+      }
+    },
+    {
+      "id": "300d9477-544a-4970-a242-5ccd51d7521c",
+      "created": "2026-09-19T03:29:20.451787Z",
+      "updated": "2026-09-19T03:29:20.452348Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 5,
+      "data": {
+        "title": "Session Cookie Missing Secure and SameSite Flags",
+        "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
+        "references": [
+          "OWASP Secure Cookie guidance",
+          "CWE-614",
+          "CWE-1004"
+        ],
+        "affected_components": [
+          "https://thedownundernews.online/ (login)"
+        ],
+        "summary": "**Severity:** Low\n\nThe session cookie (access_token_cookie) is issued with HttpOnly but without the Secure and SameSite attributes.",
+        "description": "On successful login the server sets `access_token_cookie=<JWT>; HttpOnly; Path=/`. The cookie lacks the Secure flag (so it would be transmitted over any plaintext HTTP connection if the site were ever served over HTTP) and lacks SameSite. Combined with the absence of CSRF tokens, this weakens the session's protections.",
+        "recommendation": "Set the Secure flag (and HSTS) so cookies only travel over HTTPS, and set SameSite=Lax (or Strict) explicitly."
+      }
+    },
+    {
+      "id": "c15aa072-fa20-423a-8ce6-47abcf9d0eae",
+      "created": "2026-09-19T03:29:20.433420Z",
+      "updated": "2026-09-19T03:29:20.434032Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 4,
+      "data": {
+        "title": "Missing Cross-Site Request Forgery (CSRF) Protection",
+        "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+        "references": [
+          "OWASP Top 10 (2021) A01: Broken Access Control",
+          "CWE-352"
+        ],
+        "affected_components": [
+          "https://thedownundernews.online/ (admin login, article CRUD, user management, media upload/delete, comment form)"
+        ],
+        "summary": "**Severity:** Medium\n\nState-changing endpoints (login, article create/edit/delete, user create/update/delete/reset-password, media upload/delete, and public comment submission) are protected only by the session cookie, with no CSRF tokens, and the session cookie lacks a SameSite attribute.",
+        "description": "No CSRF token or Origin/Referer validation is present on any observed form or JSON endpoint. The session is carried in an \"access_token_cookie\" (JWT) cookie with no SameSite attribute. An attacker who lures an authenticated user (e.g., an admin) to a malicious page can issue forged state-changing requests (e.g., creating a new admin user, deleting content) using the victim's cookie. Modern browsers default to SameSite=Lax, which partially mitigates cross-site POSTs, but this reliance is fragile and does not cover all request types/browsers.",
+        "recommendation": "Implement CSRF tokens on all state-changing requests (or enforce SameSite=Strict/Lax explicitly plus Origin/Referer validation), and use the X-CSRF-Token pattern for the JSON API."
+      }
+    },
+    {
+      "id": "a1e27b01-654b-4216-8d7a-8f0855e35af1",
+      "created": "2026-09-19T03:29:20.412699Z",
+      "updated": "2026-09-19T03:29:20.413256Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 3,
+      "data": {
+        "title": "Anonymous FTP Read Access to Media Server",
+        "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "references": [
+          "CWE-276",
+          "CWE-284"
+        ],
+        "affected_components": [
+          "media.thedownundernews.online (51.161.131.195) \u2014 FTP/21"
+        ],
+        "summary": "**Severity:** Medium\n\nThe media server's FTP service (port 21) permits anonymous, unauthenticated directory listing and file download, exposing uploaded media assets.",
+        "description": "An anonymous FTP connection to media.thedownundernews.online successfully listed and downloaded media files (two PNG images, a PDF, and an HTML file) without credentials. An attempted anonymous upload returned FTP 553 (denied), indicating the anonymous account is read-only. Nonetheless, media assets intended to be managed through the authenticated application are exposed to anyone on the internet.",
+        "recommendation": "Disable anonymous FTP, require authentication with strong credentials, and restrict the FTP service (or replace it with SFTP/HTTPS upload with access controls)."
+      }
+    },
+    {
+      "id": "c5966b3d-a87d-433f-aeab-a4ecf07a7b4f",
+      "created": "2026-09-19T03:29:20.392858Z",
+      "updated": "2026-09-19T03:29:20.393408Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 2,
+      "data": {
+        "title": "Malicious File Upload \u2014 HTML Served as text/html (Stored XSS)",
+        "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+        "references": [
+          "OWASP Top 10 (2021) A03: Injection",
+          "CWE-434"
+        ],
+        "affected_components": [
+          "https://thedownundernews.online/ (POST /api/admin/media/upload)",
+          "https://media.thedownundernews.online/"
+        ],
+        "summary": "**Severity:** Medium\n\nThe media library accepts HTML file uploads and the media host serves them with Content-Type: text/html and no anti-sniffing or CSP protections, so uploaded files render as executable web pages.",
+        "description": "An uploaded file (dunhtml7731.html) stored at https://media.thedownundernews.online/images/37550846eae5457d93ddd8e1d2faeaca.html is served with Content-Type: text/html and contains `<script>alert(document.domain)</script>`. The response includes no X-Content-Type-Options: nosniff, no Content-Disposition, and no Content-Security-Policy. Any authenticated user with media-upload access (writer role included) can host arbitrary JavaScript/HTML on the media subdomain, enabling stored XSS, phishing, or content injection. The upload endpoint itself correctly requires authentication (401 when unauthenticated).",
+        "recommendation": "Restrict uploads to a safe allowlist of MIME types (images, PDF), reject or sanitize HTML, serve uploaded files with X-Content-Type-Options: nosniff and Content-Disposition: attachment, and serve media from a domain isolated from the application."
+      }
+    },
+    {
+      "id": "0a0806b8-643c-4b95-96c8-289f6d45a4a9",
+      "created": "2026-09-19T03:29:20.366235Z",
+      "updated": "2026-09-19T03:29:20.366928Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "template": null,
+      "assignee": {
+        "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+        "username": "reptor",
+        "name": "",
+        "color": "#e2652b",
+        "title_before": null,
+        "first_name": "",
+        "middle_name": null,
+        "last_name": "",
+        "title_after": null,
+        "is_active": true
+      },
+      "status": "finished",
+      "order": 1,
+      "data": {
+        "title": "Stored Cross-Site Scripting (XSS) via Article Content",
+        "cvss": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N",
+        "references": [
+          "OWASP Top 10 (2021) A03: Injection",
+          "CWE-79"
+        ],
+        "affected_components": [
+          "https://thedownundernews.online/ (article create/edit, POST/PUT /api/admin/articles)"
+        ],
+        "summary": "**Severity:** High\n\nThe article editor stores raw, unsanitized HTML and renders it directly on the public site. Any authenticated user with article-write privileges (writer, editor, or admin) can inject JavaScript that executes in the browser of every visitor who views the article.",
+        "description": "The article \"content\" field is accepted verbatim by `POST /api/admin/articles` and `PUT /api/admin/articles/{id}` with no HTML sanitization. During testing, a test article (id 17, slug \"clawsec-xss-9917\") was created with content `<p>test</p><script>alert(document.domain)</script>` and status \"published\". The server persisted the raw payload and the public page `https://thedownundernews.online/article/clawsec-xss-9917` rendered it unescaped inside `<div class=\"article-body prose\">`. The lowest-privileged role (writer) is able to create articles, so this is achievable with minimal privilege. Because the application also lacks CSRF protections (see the CSRF finding), the injected script can perform authenticated admin actions on behalf of a logged-in administrator who views the article, escalating to full CMS compromise. The test article was deleted after verification.",
+        "recommendation": "Sanitize article HTML server-side on input and/or output (e.g., Bleach or NH3 allowlist), disallow `<script>` and event-handler attributes, and consider rendering content with a strict Content-Security-Policy. Re-validate the writer/editor role's ability to publish before publication."
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-09-19T03:20:35.095741Z",
+      "updated": "2026-09-19T03:29:20.952498Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "executive_summary": "## Overview\n\nDownUnderNewsz \u2014 an independent Australian online news publication \u2014 engaged ClawSec to perform an authorized, single-day vulnerability assessment of its public-facing news platform (thedownundernews.online and media.thedownundernews.online). Testing was completed on 19 September 2026 using non-destructive techniques throughout.\n\nThe assessment identified **9 findings**: 1 high, 3 medium, 4 low, and 1 informational. No critical-severity issues were found.\n\n## What this means for the business\n\nThe most important issue is **stored cross-site scripting (XSS)**. The article editor does not filter out embedded scripts, so a low-privileged user (a \"writer\") could inject code that runs in the browser of every visitor \u2014 and, because the site also lacks CSRF protection, this could ultimately lead to a full administrative takeover. This should be treated as the top priority.\n\nSeveral supporting issues further weaken the platform: the media server allows anonymous FTP downloads of media assets, administrator identity is exposed through the public API, session cookies lack important security flags, weak/shared credentials are in use, the www certificate is misconfigured, and standard security headers are absent. On the positive side, role-based access control held up well \u2014 the writer role was correctly denied administrative functions.\n\n## Findings summary\n\n| Severity | Count |\n|:---|:---:|\n| Critical | 0 |\n| High | 1 |\n| Medium | 3 |\n| Low | 4 |\n| Informational | 1 |\n\n## Top recommendations\n\n1. Sanitize article content (and uploaded HTML) so scripts cannot run in visitors' browsers (immediate priority).\n2. Add CSRF protection and set Secure/SameSite flags on the session cookie.\n3. Disable anonymous FTP on the media server and restrict uploads to safe file types.\n4. Remove internal author details (email, username, role) from public API responses.\n5. Reissue the TLS certificate to cover www, and add standard security headers.\n\nA detailed technical description and remediation guidance for each finding is provided in the body of this report.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-09-19T03:20:35.095766Z",
+      "updated": "2026-09-19T03:29:21.041188Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "scope": "## In-scope assets\n\n| Asset | Type | Technology |\n|:---|:---|:---|\n| thedownundernews.online (apex + www) | Main news website / CMS | 51.161.130.70 (OVH VPS) \u2014 nginx + Python/Flask news CMS, JSON API, admin panel |\n| media.thedownundernews.online | Media storage | 51.161.131.195 (OVH VPS) \u2014 nginx, anonymous FTP |\n\n## Out of scope / excluded\n\nThe following were explicitly excluded: `thedownundernews.it.com` (no DNS resolution), and all third-party infrastructure (OVH hosting, Spaceship registrar/DNS/MX, jsdelivr/Google Fonts CDNs, Let's Encrypt).\n\n## Engagement type\n\nAuthorized, full-scope vulnerability assessment of public-facing web assets. Single-day engagement (19 September 2026).\n\n## Methodology\n\nPassive and light-active enumeration (DNS, WHOIS/RDAP, subdomain enumeration, certificate transparency, TLS inspection, HTTP header/content review), manual web-application security testing of the JSON API and admin panel, authenticated testing using business-owner-provided dummy accounts (admin/writer/editor), FTP service review, and TLS/security-header review. All testing was non-destructive throughout; no denial-of-service, no brute force/password spraying, and no social engineering were performed.\n",
+        "start_date": "2026-09-19",
+        "end_date": "2026-09-19",
+        "duration": "1 day",
+        "provided_users": "The business owner provided three dummy test accounts (admin, writer, editor) for authorized authenticated testing of the admin panel and API. Credential values are intentionally omitted from this report.\n"
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-09-19T03:20:35.095790Z",
+      "updated": "2026-09-19T03:29:21.062806Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "customer_name": "DownUnderNewsz",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-09-19T03:20:35.095710Z",
+      "updated": "2026-09-19T03:29:21.083193Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "title": "DownUnderNewsz - Penetration Test Report",
+        "report_date": "2026-09-19",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-09-19",
+            "description": "Initial report release",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-09-19T03:20:35.095645Z",
+      "updated": "2026-09-19T03:29:21.102940Z",
+      "project": "72b0914b-2db9-4c8d-ad17-0917d1ab2189",
+      "project_type": "f9df171f-67e8-4838-9f86-b2f2a1a22fd3",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "content": "The following limitations applied to this engagement:\n\n* The admin dashboard intermittently returned 504/slow responses under load.\n* A small number of API paths timed out during light probing and were not exhaustively tested.\n* No automated scanner was used (manual testing only).\n* The referenced email domain `thedownundernews.it.com` does not resolve and was not assessed.\n* Authenticated testing was limited to the three owner-provided dummy accounts (admin, writer, editor).\n\nAll testing was performed within the approved scope and without destructive impact.\n",
+            "title": "Limitations & Constraints"
+          },
+          {
+            "content": "The following surfaces were reviewed during the engagement:\n\n* 2 origin IP addresses (51.161.130.70 and 51.161.131.195).\n* 2 subdomains (apex/www and media).\n* Approximately 12 web/API endpoints.\n* The full admin panel (dashboard, articles, categories, media library, comments, users, profile).\n* The FTP service on the media host.\n",
+            "title": "Coverage Summary"
+          },
+          {
+            "content": "Findings are rated on the following scale:\n\n| Severity | Meaning |\n|:---|:---|\n| Critical | Immediate action required; can lead to full system compromise. |\n| High | Serious issue that can compromise significant functionality or data. |\n| Medium | Notable weakness requiring prompt remediation. |\n| Low | Minor weakness that reduces defense-in-depth. |\n| Informational | No direct exploitability; noted for awareness and hardening. |\n\nWhere an explicit CVSS v3.1 vector was provided in the source findings, it is recorded on the finding. Findings without a CVSS vector are shown as \"N/A\" in the CVSS-driven scoring, while their assessed severity is stated in each finding and in the executive summary.\n",
+            "title": "Severity Classification"
+          }
+        ]
+      }
+    }
+  ]
+}

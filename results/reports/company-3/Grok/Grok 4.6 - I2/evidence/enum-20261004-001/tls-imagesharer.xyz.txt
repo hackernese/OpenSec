@@ -1,0 +1,85 @@
+===== CERT =====
+subject=CN=imagesharer.xyz
+issuer=C=US, O=Let's Encrypt, CN=YE1
+notBefore=Oct  4 21:07:04 2026 GMT
+notAfter=Jan  2 21:07:03 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:imagesharer.xyz
+sha256 Fingerprint=1A:AC:34:A7:F3:A2:48:8A:35:D6:7A:99:2C:7D:BF:2A:B4:8E:86:82:25:B3:CF:A4:6A:2D:18:1C:E8:88:06:67
+===== CERT PEM SNIP =====
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            06:42:92:16:6d:72:79:39:b0:69:ce:0e:7e:a8:3f:01:9a:a5
+        Signature Algorithm: ecdsa-with-SHA384
+        Issuer: C=US, O=Let's Encrypt, CN=YE1
+        Validity
+            Not Before: Oct  4 21:07:04 2026 GMT
+            Not After : Jan  2 21:07:03 2027 GMT
+        Subject: CN=imagesharer.xyz
+        Subject Public Key Info:
+            Public Key Algorithm: id-ecPublicKey
+                Public-Key: (256 bit)
+                pub:
+                    04:05:08:69:a1:d0:c4:bd:18:fc:90:48:29:ea:98:
+                    6c:1a:a5:c1:7c:e4:93:14:82:b8:d0:91:23:40:ea:
+                    ab:11:db:df:29:01:89:7f:01:42:51:64:e8:ed:42:
+                    8c:86:3b:3e:31:35:c4:7d:c5:f6:f8:44:3d:c9:4e:
+                    c5:5e:aa:5b:8e
+                ASN1 OID: prime256v1
+                NIST CURVE: P-256
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                9F:47:8D:8D:CD:B1:8F:BD:9E:7B:AD:0B:7B:B3:AD:63:53:34:61:37
+            X509v3 Authority Key Identifier: 
+                BB:20:CA:47:0B:FE:D7:E5:9C:F9:8F:09:2A:A3:8C:37:45:B1:BC:D8
+            Authority Information Access: 
+                CA Issuers - URI:http://ye1.i.lencr.org/
+            X509v3 Subject Alternative Name: 
+                DNS:imagesharer.xyz
+            X509v3 Certificate Policies: 
+                Policy: 2.23.140.1.2.1
+            X509v3 CRL Distribution Points: 
+                Full Name:
+                  URI:http://ye1.c.lencr.org/38.crl
+
+            CT Precertificate SCTs: 
+                Signed Certificate Timestamp:
+                    Version   : v1 (0x0)
+                    Log ID    : 60:4C:9A:AF:7A:7F:77:5F:01:D4:06:FC:92:0D:C8:99:
+                                EB:0B:1C:7D:F8:C9:52:1B:FA:FA:17:77:3B:97:8B:C9
+                    Timestamp : Oct  4 22:05:34.549 2026 GMT
+                    Extensions: none
+                    Signature : ecdsa-with-SHA256
+                                30:44:02:20:09:10:98:1C:87:A8:4C:D7:B5:57:B0:D3:
+                                B9:5B:14:52:79:EC:1B:46:60:A3:30:75:21:3D:B5:68:
+                                E1:1F:BE:35:02:20:75:1F:38:AA:6C:56:81:FC:76:D2:
+                                B9:CA:99:F8:A9:CA:22:54:7D:A8:73:CA:2C:34:AC:33:
+                                87:EE:EA:1C:A1:14
+                Signed Certificate Timestamp:
+                    Version   : v1 (0x0)
+                    Log ID    : 44:E8:22:FC:2B:AB:0E:92:EE:D0:E9:FA:D6:96:64:60:
+                                27:76:D0:17:60:E0:89:05:09:C9:23:A1:B0:3F:C3:7F
+                    Timestamp : Oct  4 22:05:31.633 2026 GMT
+                    Extensions: 00:00:05:00:06:B2:07:55
+                    Signature : ecdsa-with-SHA256
+                                30:44:02:20:21:A4:B7:01:A9:DF:9E:72:70:43:91:02:
+                                87:92:E1:9B:9D:C1:53:2D:80:47:57:40:A6:1F:66:A7:
+                                10:7A:6A:68:02:20:6B:B2:19:3F:18:A6:5D:87:39:FD:
+                                5D:7B:F4:F9:0A:15:E0:86:E3:ED:90:92:B4:E9:49:61:
+                                81:42:3A:40:BB:13
+    Signature Algorithm: ecdsa-with-SHA384
+    Signature Value:
+        30:64:02:30:22:95:85:48:a9:51:d7:c9:39:d7:24:e8:45:87:
+        7d:3a:24:49:7b:cd:11:9b:71:e0:0a:c1:f9:99:6f:fd:ae:2d:
+        c5:77:c5:56:4e:e7:2e:9f:c6:5b:5c:a4:99:9d:ef:35:02:30:
+        7a:af:c2:e7:44:85:ac:b9:03:ba:0f:40:d3:6f:c0:07:3c:8e:
+        9f:d9:39:c9:d6:99:75:61:4b:14:92:cd:ec:20:8b:96:e8:06:
+        cd:1f:74:cd:3b:bd:52:98:f6:11:33:31

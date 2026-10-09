@@ -1,0 +1,136 @@
+===== 148:8080 / vs apex =====
+===== 148:8080 Host header confusion =====
+--- Host: ausecurity.best ---
+status=200 size=13638 type=text/html
+--- Host: blog.ausecurity.best ---
+status=200 size=13638 type=text/html
+--- Host: ticket.ausecurity.best ---
+status=200 size=13638 type=text/html
+--- Host: localhost ---
+status=200 size=13638 type=text/html
+--- Host: 127.0.0.1 ---
+status=200 size=13638 type=text/html
+--- Host: admin.ausecurity.best ---
+status=200 size=13638 type=text/html
+--- Host: internal.ausecurity.best ---
+status=200 size=13638 type=text/html
+--- Host: staging.ausecurity.best ---
+status=200 size=13638 type=text/html
+===== 148:8080 method probes =====
+--- OPTIONS ---
+HTTP/1.1 405 Not Allowed
+Server: nginx/1.25.5
+Date: Fri, 18 Sep 2026 03:45:21 GMT
+Content-Type: text/html
+Content-Length: 157
+Connection: keep-alive
+
+status=405 size=157
+--- TRACE ---
+HTTP/1.1 405 Not Allowed
+Server: nginx/1.25.5
+Date: Fri, 18 Sep 2026 03:45:22 GMT
+Content-Type: text/html
+Content-Length: 157
+Connection: close
+
+status=405 size=157
+--- PUT ---
+HTTP/1.1 405 Not Allowed
+Server: nginx/1.25.5
+Date: Fri, 18 Sep 2026 03:45:22 GMT
+Content-Type: text/html
+Content-Length: 157
+Connection: keep-alive
+
+status=405 size=157
+--- DELETE ---
+HTTP/1.1 405 Not Allowed
+Server: nginx/1.25.5
+Date: Fri, 18 Sep 2026 03:45:22 GMT
+Content-Type: text/html
+Content-Length: 157
+Connection: keep-alive
+
+status=405 size=157
+--- PATCH ---
+HTTP/1.1 405 Not Allowed
+Server: nginx/1.25.5
+Date: Fri, 18 Sep 2026 03:45:23 GMT
+Content-Type: text/html
+Content-Length: 157
+Connection: keep-alive
+
+status=405 size=157
+===== 148:8080 admin/backup probes =====
+--- /server-status ---
+  status=404 size=153
+--- /nginx_status ---
+  status=404 size=153
+--- /status ---
+  status=404 size=153
+--- /health ---
+  status=404 size=153
+--- /metrics ---
+  status=404 size=153
+--- /actuator ---
+  status=404 size=153
+--- /admin/ ---
+  status=404 size=153
+--- /api/ ---
+  status=404 size=22
+--- /config ---
+  status=404 size=153
+--- /backup.zip ---
+  status=404 size=153
+--- /.env ---
+  status=404 size=153
+--- /.git/HEAD ---
+  status=404 size=153
+--- /robots.txt ---
+  status=404 size=153
+===== 209:8080 / (osticket origin) =====
+HTTP/1.1 302 Found
+Date: Fri, 18 Sep 2026 03:45:29 GMT
+Server: Apache/2.4.68 (Debian)
+X-Powered-By: PHP/8.2.33
+Location: /setup/install.php
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+
+===== 209:8080 Host header confusion =====
+--- Host: ticket.ausecurity.best ---
+status=302 size=0
+--- Host: ausecurity.best ---
+status=302 size=0
+--- Host: localhost ---
+status=302 size=0
+--- Host: admin.ausecurity.best ---
+status=302 size=0
+===== 209:8080 backup probes =====
+--- /server-status ---
+  status=403 size=320 type=text/html; charset=iso-8859-1
+--- /server-info ---
+  status=404 size=317 type=text/html; charset=iso-8859-1
+--- /phpinfo.php ---
+  status=404 size=317 type=text/html; charset=iso-8859-1
+--- /info.php ---
+  status=404 size=317 type=text/html; charset=iso-8859-1
+--- /test.php ---
+  status=404 size=317 type=text/html; charset=iso-8859-1
+--- /.env ---
+  status=404 size=317 type=text/html; charset=iso-8859-1
+--- /.git/HEAD ---
+  status=404 size=317 type=text/html; charset=iso-8859-1
+--- /setup/install.php ---
+  status=200 size=4825 type=text/html; charset=UTF-8
+--- /scp/login.php ---
+  status=302 size=0 type=text/html; charset=UTF-8
+--- /api/http.php ---
+  status=302 size=0 type=text/html; charset=UTF-8
+--- /uploads/ ---
+  status=404 size=317 type=text/html; charset=iso-8859-1
+--- /backup.sql ---
+  status=404 size=317 type=text/html; charset=iso-8859-1
+--- /dump.sql ---
+  status=404 size=317 type=text/html; charset=iso-8859-1

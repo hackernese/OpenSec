@@ -1,0 +1,128 @@
+403 320 /uploads/
+301 360 /uploads
+404 434 /uploads/index.html
+403 320 /css/
+403 320 /js/
+404 434 /.env
+404 434 /.env.local
+404 434 /.env.example
+404 434 /.env.bak
+404 434 /composer.json
+404 434 /composer.lock
+404 434 /package.json
+404 434 /.git/HEAD
+404 434 /.git/config
+404 434 /.gitignore
+404 434 /.svn/entries
+404 434 /.DS_Store
+404 434 /vendor/
+404 434 /vendor/autoload.php
+404 434 /phpinfo.php
+404 434 /info.php
+404 434 /test.php
+404 434 /debug
+404 434 /debug.php
+404 434 /config.php
+404 434 /config.php.bak
+404 434 /config.php~
+404 434 /backup/
+404 434 /backup.zip
+404 434 /backup.tar.gz
+404 434 /db.sql
+404 434 /dump.sql
+404 434 /README.md
+404 434 /readme.html
+404 434 /CHANGELOG.md
+404 434 /LICENSE
+404 434 /robots.txt
+404 434 /sitemap.xml
+404 434 /humans.txt
+404 434 /crossdomain.xml
+404 434 /.well-known/security.txt
+404 434 /api
+404 434 /api/
+404 81 /api/v1/
+404 434 /graphql
+404 434 /graphiql
+404 434 /swagger
+404 434 /swagger.json
+404 434 /openapi.json
+404 434 /metrics
+404 434 /actuator
+404 434 /actuator/env
+404 434 /console
+404 434 /health
+404 434 /ping
+404 434 /status
+404 434 /admin
+404 434 /admin/
+404 434 /admin.php
+404 434 /administrator
+404 434 /phpmyadmin
+404 434 /pma
+404 434 /mysql
+404 434 /adminer.php
+404 434 /wp-admin
+404 434 /wp-login.php
+404 434 /user
+404 434 /users
+404 434 /login.php
+404 434 /logout
+404 434 /logout.php
+404 434 /forgot
+404 434 /forgot-password
+404 434 /reset
+404 434 /reset-password
+404 81 /api/users
+404 81 /api/user
+404 81 /api/login
+404 81 /api/auth
+404 81 /api/images
+404 81 /api/upload
+404 81 /api/me
+302 0 /uploads/../
+302 0 /uploads/..
+404 434 /image
+404 434 /images
+404 434 /img
+404 434 /files
+404 434 /download
+404 434 /share
+===== uploads directory GET with full body preview ====
+HTTP/1.1 403 Forbidden
+Server: nginx
+Date: Mon, 05 Oct 2026 03:27:09 GMT
+Content-Type: text/html; charset=iso-8859-1
+Content-Length: 320
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<title>403 Forbidden</title>
+</head><body>
+<h1>Forbidden</h1>
+<p>You don't have permission to access this resource.</p>
+<hr>
+<address>Apache/2.4.68 (Debian) Server at imagesharer.xyz Port 80</address>
+</body></html>
+
+===== robots.txt body ====
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== sitemap.xml body ====
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>

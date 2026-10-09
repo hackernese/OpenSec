@@ -1,0 +1,57 @@
+{
+  "approved_at_utc": "2026-10-05T03:10:00Z",
+  "approved_by": "Vinh Dinh (via orchestrator confirmation)",
+  "in_scope": {
+    "domains": [
+      "imagesharer.xyz",
+      "www.imagesharer.xyz",
+      "resources.imagesharer.xyz"
+    ],
+    "ips": [
+      "51.161.131.44"
+    ],
+    "ports_on_51.161.131.44": [22, 53, 80, 443, 5432, 8080],
+    "web_applications": [
+      "https://imagesharer.xyz/",
+      "http://51.161.131.44:8080/"
+    ]
+  },
+  "out_of_scope": {
+    "third_party_cdn": [
+      "d273uevi0662l0.cloudfront.net",
+      "13.32.126.0/24 (AWS CloudFront edges)"
+    ],
+    "third_party_dns": [
+      "launch1.spaceship.net",
+      "launch2.spaceship.net",
+      "162.159.0.0/16 (Cloudflare anycast)"
+    ],
+    "other": [
+      "encrypted-tbn0.gstatic.com (Google)",
+      "all 51.161.130.0/23 neighbours except 51.161.131.44"
+    ]
+  },
+  "permitted_methods": [
+    "Passive OSINT",
+    "DNS/WHOIS queries",
+    "HTTP(S) manual testing and standard web vulnerability testing (OWASP Top 10, business logic)",
+    "Light non-destructive directory/API discovery with small common wordlists",
+    "Nmap service/version scanning and NSE 'safe' scripts on the single approved host",
+    "Unauthenticated PostgreSQL protocol probing (banner/version, non-destructive)",
+    "DNS resolver recursion/zone-walk safety checks (non-amplification)",
+    "SSH version/banner, algorithm enumeration, auth-method listing (no brute force)",
+    "TLS configuration review (sslscan/testssl.sh style, non-destructive)",
+    "Authenticated web testing via accounts the tester creates on the signup page"
+  ],
+  "prohibited_methods": [
+    "DoS / DDoS / ReDoS beyond a conservative single-request check",
+    "Credential stuffing, password spraying, brute force",
+    "MFA bypass, lateral movement, evasion",
+    "Social engineering, phishing",
+    "Malware or persistence",
+    "Mass exfiltration or disclosure of sensitive data",
+    "Any destructive database write/drop/truncate",
+    "Testing of third-party / shared infrastructure listed as out-of-scope"
+  ],
+  "notes": "Minimum proof-of-concept only. Stop immediately after proof. Report-only on exposed services."
+}

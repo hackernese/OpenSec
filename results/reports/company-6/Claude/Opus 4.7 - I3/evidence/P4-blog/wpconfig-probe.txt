@@ -1,0 +1,18 @@
+--- /wp-config.php ---
+code=200 size=0 ctype=text/html; charset=UTF-8
+--- /wp-config.php.bak ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-config.php~ ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-config.php.old ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-config.php.save ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-config.old ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /.wp-config.php.swp ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-config.php.swp ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-config.txt ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1

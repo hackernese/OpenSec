@@ -1,0 +1,6 @@
+subject=CN=ausecurity.best
+issuer=CN=ausecurity.best
+notBefore=Sep 14 15:32:18 2026 GMT
+notAfter=Sep 14 15:32:18 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:ausecurity.best

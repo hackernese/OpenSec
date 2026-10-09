@@ -1,0 +1,148 @@
+{
+  "id": "4f6499ad-0c4a-46f4-968c-16840d48424e",
+  "created": "2026-09-17T19:53:05.056952Z",
+  "updated": "2026-09-17T19:53:05.057117Z",
+  "name": "AuSecurity",
+  "project_type": "a45ff960-2fbe-44c9-a178-410df625526c",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/4f6499ad-0c4a-46f4-968c-16840d48424e",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/4f6499ad-0c4a-46f4-968c-16840d48424e/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/4f6499ad-0c4a-46f4-968c-16840d48424e/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-09-17T19:53:05.061168Z",
+      "updated": "2026-09-17T19:53:05.061877Z",
+      "project": "4f6499ad-0c4a-46f4-968c-16840d48424e",
+      "project_type": "a45ff960-2fbe-44c9-a178-410df625526c",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "executive_summary": "# Executive Summary\n\nAuSecurity is an Australian GRC consulting and penetration-testing firm. On 17 September 2026, an authorized, full-scope security assessment was performed against its public-facing web estate. The goal was to identify weaknesses that an attacker could exploit and to provide practical, prioritized remediation guidance.\n\n## Overall Result\n\nThe assessment identified **12 findings** in total: **3 critical**, **2 high**, **6 medium**, and **1 informational**. The most serious issue allows a remote attacker to run arbitrary commands on the main web server without logging in. Combined with the other findings, this enables full compromise of the web server and exposure of confidential client information.\n\n## What This Means for the Business\n\n* **Server takeover risk.** A flaw in how the website handles login session data lets an attacker execute commands directly on the server. This is the single highest priority to fix.\n* **Weak admin protection.** The administrative portal still uses a well-known default password, allowing anyone who knows it to sign in.\n* **Confidential data exposure.** Once signed in, the admin dashboard displays client names, contact emails, and financial figures. Because access relies on that default password, this data is effectively public today.\n* **Unfinished helpdesk.** The customer support system (osTicket) is live but was never fully installed. Anyone could complete the setup wizard and become its administrator before the business does.\n* **Additional weaknesses.** Cross-site scripting, an exposed WordPress interface, a self-signed certificate, and several smaller information leaks further increase risk.\n\n## Priority Actions\n\n1. Replace the unsafe session handling with signed, tamper-proof sessions (fixes the critical remote-code-execution issue).\n2. Change all administrative passwords and enable multi-factor authentication.\n3. Complete and secure the osTicket installation, then remove its setup directory.\n4. Fix the cross-site scripting and open-redirect issues.\n5. Disable the WordPress XML-RPC interface and username disclosure.\n6. Replace the self-signed TLS certificate with a trusted certificate.\n7. Apply the remaining hardening steps (directory listings, cookie flags, version banners).\n\nRemediating the critical and high-severity items should be treated as urgent."
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-09-17T19:53:05.061192Z",
+      "updated": "2026-09-17T19:53:05.061879Z",
+      "project": "4f6499ad-0c4a-46f4-968c-16840d48424e",
+      "project_type": "a45ff960-2fbe-44c9-a178-410df625526c",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "scope": "# Scope\n\nThis engagement was a full-scope, authorized vulnerability assessment of AuSecurity's public-facing assets.\n\n## In-Scope Assets\n\n* ausecurity.best (main website, admin login, and API backend) — 51.79.166.148\n* www.ausecurity.best and contact.ausecurity.best — 51.79.166.148\n* blog.ausecurity.best (WordPress) — 51.79.167.208\n* ticket.ausecurity.best (osTicket helpdesk) — 51.79.166.209\n* Admin login and dashboard: /api/auth/login and /dashboard\n\nNetwork services discovered across the in-scope hosts: SSH (22), HTTP (80), HTTPS (443), and HTTP-alternate (8080).\n\n## Methodology\n\n* OWASP Web Security Testing Guide for web-application testing.\n* Network service enumeration and banner/version discovery.\n* Passive OSINT and enumeration, plus non-destructive active testing (port/version discovery and manual web-application testing of the FastAPI-style backend, WordPress, and osTicket).\n\nNo brute-force, denial-of-service, or destructive testing was performed.\n\n## Limitations\n\n* SSH (port 22) was open on all three hosts but was not brute-forced or exploited; only the version banner was recorded.\n* No destructive or denial-of-service testing was performed.\n* WordPress did not expose identifiable third-party plugins, so plugin-specific testing was not possible.\n* Filesystem-level source review of osTicket was not possible without host access.",
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17",
+        "duration": "1 person day",
+        "provided_users": "No test accounts or credentials were provided. All testing was performed unauthenticated from an external position."
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-09-17T19:53:05.061215Z",
+      "updated": "2026-09-17T19:53:05.061881Z",
+      "project": "4f6499ad-0c4a-46f4-968c-16840d48424e",
+      "project_type": "a45ff960-2fbe-44c9-a178-410df625526c",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "customer_name": "AuSecurity",
+        "customer_address": {
+          "city": "Paddington, NSW 2021",
+          "street": "63 Paddington St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-09-17T19:53:05.061141Z",
+      "updated": "2026-09-17T19:53:05.061875Z",
+      "project": "4f6499ad-0c4a-46f4-968c-16840d48424e",
+      "project_type": "a45ff960-2fbe-44c9-a178-410df625526c",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "title": "AuSecurity Penetration Test Report",
+        "report_date": "2026-09-17",
+        "report_version": "1.0",
+        "list_of_changes": [],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-09-17T19:53:05.061092Z",
+      "updated": "2026-09-17T19:53:05.061870Z",
+      "project": "4f6499ad-0c4a-46f4-968c-16840d48424e",
+      "project_type": "a45ff960-2fbe-44c9-a178-410df625526c",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "in-progress",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

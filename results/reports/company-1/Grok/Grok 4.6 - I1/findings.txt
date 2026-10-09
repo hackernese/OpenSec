@@ -1,0 +1,137 @@
+# Finding: Unauthenticated Jinja-style server-side template injection in search
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+Affected: https://thedownundernews.online/search, http://51.161.130.70:5000/search
+References: CWE-1336, CWE-94, OWASP A03:2021 Injection
+
+Summary:
+Anyone on the internet can send a crafted search query that the website executes as a template, not as plain text. This is the highest-priority issue. Safe checks showed the site computing values from the query; further takeover testing was not performed.
+
+Description:
+The public search parameter `q` is rendered through a server-side template engine (Jinja2-style) on the HTML search page.
+Verified, non-destructive proofs:
+- `GET /search?q={{8*8}}` returned title `Search: 64 – The Down Under News` (also reflected in the search input value).
+- `GET /search?q={{7*'7'}}` returned a title containing `7777777`, which is the Jinja2 evaluation of that expression.
+The same arithmetic evaluation occurred on the Gunicorn service on TCP 5000. `/api/search?q=` did not evaluate templates and is not this issue.
+No debugger/traceback was required for confirmation. Remote code execution was not attempted, in line with engagement safety limits. On typical Flask/Jinja deployments this class of bug is used to read secrets and take over the server.
+
+Recommendation:
+Stop rendering user input as a template. Pass the query into the HTML template as a data variable only, and keep auto-escaping on. Add regression tests that `{{8*8}}` is shown literally. Put a web application firewall rule in place as a temporary shield, then patch the application.
+
+---
+# Finding: Anonymous FTP allows listing and download of media files
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N
+Affected: 51.161.131.195:21 (media.thedownundernews.online)
+References: CWE-306, CWE-287, CWE-552
+
+Summary:
+The media server accepts FTP logins as “anonymous” with no password. A visitor can list and download files from the media store. HTTPS on this host currently fails (502), so FTP is an open back door to those files.
+
+Description:
+Port 21 runs vsftpd 3.0.5. Nmap reported anonymous FTP enabled. Confirmed:
+- Anonymous login succeeded (`230 Login successful.`).
+- Root listing showed hashed objects including `.html`, `.png`, and `.pdf` files.
+- Anonymous download of `37550846eae5457d93ddd8e1d2faeaca.html` completed (`226 Transfer complete.`). File contents were not retained.
+No upload, delete, or brute force was performed. These filenames match the style of the CMS media library. Combined with the broken HTTPS front end, this exposes stored media without going through the website’s login or access rules.
+
+Recommendation:
+Disable anonymous FTP. If file transfer is still required, use SFTP/FTPS with named accounts, chroot, and allowlists. Firewall port 21 from the internet. Restore the HTTPS media site so files are served only through the application.
+
+---
+# Finding: Python application server exposed on port 5000 without TLS
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N
+Affected: 51.161.130.70:5000 (thedownundernews.online)
+References: CWE-319, CWE-16
+
+Summary:
+The public website’s backend (Gunicorn) is reachable on port 5000 in cleartext. Attackers can talk to the app while skipping the nginx HTTPS front door.
+
+Description:
+A full-port probe of 51.161.130.70 found TCP 22, 80, 443, and 5000 open. Service detection identified Gunicorn. `GET http://51.161.130.70:5000/` returned HTTP 200, `Server: gunicorn`, and the same homepage as the public site (Content-Length 23012). The search SSTI also reproduced on this port. Traffic on 5000 is not TLS-protected and does not receive nginx HTTP security controls.
+
+Recommendation:
+Bind Gunicorn to localhost only (or a private network). Block 5000 at the firewall. Keep nginx as the only public HTTP(S) entry point.
+
+---
+# Finding: Session JWT cookie missing Secure and SameSite flags
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:L/A:N
+Affected: https://thedownundernews.online/admin/login
+References: CWE-614, CWE-1275, OWASP A05:2021 Security Misconfiguration
+
+Summary:
+After login, the site stores the session in a cookie that can be sent over unencrypted HTTP and is not restricted to same-site requests. That makes session theft and cross-site request abuse easier.
+
+Description:
+Successful login to `/admin/login` with an owner-provided dummy account set `access_token_cookie`. Observed flags: `HttpOnly` and `Path=/`. `Secure` was false. `SameSite` was absent. The cookie is a JWT (`alg: HS256`, `typ: JWT`) with claims including `sub`, `type=access`, `iat`, `exp`. No CSRF cookie or form token was observed on admin pages. Port 80 is open, and HSTS is not set, so an SSL-stripping or mixed-content path can leak the token. The JWT secret was not attacked.
+
+Recommendation:
+Set `Secure; HttpOnly; SameSite=Strict` (or Lax if a weaker trade-off is required) on the session cookie. Enable HSTS. Turn on CSRF protection for cookie-based JWT (for example flask-jwt-extended CSRF cookies) on state-changing requests.
+
+---
+# Finding: www certificate name mismatch
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N
+Affected: https://www.thedownundernews.online/ (51.161.130.70)
+References: CWE-297
+
+Summary:
+Browsers that verify HTTPS will warn or refuse `www.thedownundernews.online` because the certificate is only for the name without `www`. Visitors can be tricked more easily, and some clients cannot load the site securely.
+
+Description:
+DNS for `www.thedownundernews.online` points to 51.161.130.70, the same origin as the apex. The presented certificate CN/SAN is only `thedownundernews.online` (Let’s Encrypt, valid 2026-09-16 to 2026-12-15). OpenSSL verify code 62 (hostname mismatch). `http://www.thedownundernews.online/` 301-redirects to `https://www.thedownundernews.online/`, sending users into the broken HTTPS name. Apex HTTPS works.
+
+Recommendation:
+Reissue the certificate with both `thedownundernews.online` and `www.thedownundernews.online` (or redirect www to apex on HTTP before TLS). Prefer a single canonical hostname.
+
+---
+# Finding: Public articles API discloses account profile fields
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://thedownundernews.online/api/articles
+References: CWE-200, CWE-359
+
+Summary:
+The public news API returns staff usernames, roles, account-active flags, user ids, and email addresses with every article. That is more than a public byline needs and helps attackers target staff accounts.
+
+Description:
+Unauthenticated `GET /api/articles` returned JSON articles whose `author` objects included `id`, `username`, `email` (domain thedownundernews.it.com), `first_name`, `last_name`, `role` (including `admin`), `is_active`, and `created_at`. Article bodies were not required for this finding. CORS is locked to the apex origin, but the JSON is still readable by any direct client.
+
+Recommendation:
+Return only public byline fields (display name). Keep email, role, is_active, and internal ids off unauthenticated APIs.
+
+---
+# Finding: Missing HTTP security headers
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N
+Affected: https://thedownundernews.online/
+References: CWE-693, OWASP A05:2021 Security Misconfiguration
+
+Summary:
+The live homepage does not send standard browser-defense headers. This makes clickjacking, MIME sniffing, and protocol downgrade easier.
+
+Description:
+`GET https://thedownundernews.online/` returned 200 from nginx with no `Content-Security-Policy`, `Strict-Transport-Security`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, or `Permissions-Policy`. No session cookie is set on the public homepage; the header gap still applies site-wide, including admin after login.
+
+Recommendation:
+Add HSTS, CSP (start report-only if needed), `X-Frame-Options: DENY` or CSP `frame-ancestors`, `X-Content-Type-Options: nosniff`, and a strict Referrer-Policy on nginx.
+
+---
+# Finding: Internet-facing SSH allows password authentication
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N
+Affected: 51.161.130.70:22, 51.161.131.195:22
+References: CWE-308
+
+Summary:
+Both servers offer SSH login with a password from the internet. Password SSH is a common brute-force target. No password guessing was performed.
+
+Description:
+OpenSSH 10.0p2 Debian 7+deb13u4 on both in-scope IPs advertises authentication methods `publickey` and `password`. Algorithms observed were modern; no weak ciphers were flagged. This is a hardening issue, not proof of a compromised account.
+
+Recommendation:
+Disable password authentication, allow keys only, restrict SSH by firewall/VPN, and keep fail2ban or equivalent in place.
+
+---

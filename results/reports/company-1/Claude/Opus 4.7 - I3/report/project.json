@@ -1,0 +1,53 @@
+{
+  "name": "DownUnderNewsz",
+  "project_type": "28a1c4b1-2207-4d72-ac19-ec7143fe76ff",
+  "language": "en-US",
+  "tags": ["research"],
+  "override_finding_order": true,
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "data": {
+        "executive_summary": "ClawSec performed an authorized, full-scope vulnerability assessment of DownUnderNewsz across the organisation's public website, admin platform, and supporting media server between **05 October 2026** (start and end on the same business day, Australia/Melbourne). The engagement was authorised by the business owner through a signed HTTP header on the primary website.\n\nIn total, **14 findings** were confirmed across the environment: **2 Critical, 4 High, 4 Medium, 3 Low, and 1 Informational**. The results indicate that the DownUnderNewsz platform is a well-structured custom publishing site with sensible role separation at the user-interface level, but that several critical input-handling defences are missing from the application code. Two of the findings allow an outside attacker to take meaningful control of the website with a single HTTP request and should be treated as live risk until remediated.\n\n**What the two most urgent issues mean in plain language**\n\n1. **Full remote takeover through the public search bar (Critical).** The site's search page can be tricked into running attacker-supplied commands directly on the server that powers the news site. This is reachable by any internet visitor without logging in. It gives an attacker the ability to read the application's secrets, change articles, and impersonate the admin.\n2. **Hidden attack code inside a published article (Critical).** Any user with the lowest-level writing permission can hide invisible attack code inside an article. Once an editor publishes that article as part of a normal newsroom workflow, every reader who opens the page can have their browser session hijacked. In practice, this turns a routine editorial action into a site-wide attack on readers.\n\nBoth Critical findings require code-level fixes before any further hardening work is useful.\n\n**Other important issues**\n\n- The media server exposes an **anonymous File Transfer Protocol (FTP)** service and an **open directory listing**, so anyone on the internet can list and download every uploaded file. These are inexpensive, high-value fixes.\n- The website is missing standard **browser security headers**. These headers are the browser's built-in protections and would significantly reduce the damage of the Critical findings while they are being fixed.\n- The admin login uses a **session token that is not invalidated when the admin logs out**, and the cookie carrying that token is missing modern safety flags. If a token is ever captured, it keeps working until it naturally expires.\n- The brand's **email authentication is weak** (SPF soft-fail, no DMARC, no DKIM, no CAA). This makes it easier for criminals to send phishing emails that look as if they come from the newsroom.\n- The public contact domain **thedownundernews.it.com is not registered to anyone**. Reader correspondence sent to the published editorial, corrections and advertising mailboxes is being silently lost today, and the domain could be registered by a third party at any time and used to impersonate the brand.\n\n**Recommended next steps for leadership**\n\n1. Treat the two Critical findings as an immediate engineering priority (same-week fix window). Rotate all application secrets after the fix is deployed.\n2. Within two weeks, disable the FTP service, turn off the open directory listing, add the recommended browser security headers, and either register or stop advertising the `.it.com` contact domain.\n3. Within four weeks, address the session, email-authentication, TLS-certificate, and remaining medium/low items described in the Technical Findings section of this report.\n4. Rotate or remove the three temporary admin, writer, and editor test accounts (all share the same password used during this assessment) before the site returns to normal operation.\n\nThis report contains two sections: a short management summary suitable for a non-technical owner, and a detailed technical findings section intended for the engineering team. Each technical finding includes a clear description of the issue, evidence captured during the assessment, and a concrete remediation recommendation."
+      }
+    },
+    {
+      "id": "scope",
+      "data": {
+        "scope": "ClawSec performed an authorized, full-scope vulnerability assessment of all internet-facing assets belonging to DownUnderNewsz. Authorisation was granted by the business owner through a signed `AuthorizedCode` HTTP response header on the primary public website.\n\n**In-scope assets (confirmed and approved by the owner):**\n\n| Asset | Description |\n|:---|:---|\n| thedownundernews.online | Root domain |\n| www.thedownundernews.online | Primary public website and admin panel |\n| thedownundernews.online (apex) | Apex web host |\n| media.thedownundernews.online | Media/asset host (nginx + FTP) |\n| 51.161.130.70 | Web application VPS (OVH AU, Sydney SYD2) |\n| 51.161.131.195 | Media server VPS (OVH AU, Sydney SYD2) |\n\n**Testing intensity and safety constraints**\n\nTesting was conducted at standard safety-first intensity. The following techniques were explicitly prohibited and were not performed: brute force, denial of service, destructive writes, credential stuffing, social engineering, phishing, physical security testing, and lateral movement into other systems.\n\n**Explicitly out of scope**\n\n- The surrounding OVH netblock beyond the two listed IPs.\n- Spaceship DNS and mail-forwarding infrastructure.\n- The Flinders University email domain used by the primary contact.\n- The dangling `thedownundernews.it.com` domain (observed and reported as a finding; not probed as a live asset).\n\n**One benign test artefact was uploaded** to the media host during proof of the file-upload bypass (an SVG file whose name ends in `7b0b049b5c1c4393908b0a8acd6e3865.svg`, located under `media.thedownundernews.online/images/`). The engagement owner should delete this file as part of remediation.\n\n**Methodology summary**\n\n1. **Phase 1 - Enumeration**: Open-source intelligence, DNS and certificate-transparency review, Shodan lookup, HTTPX service fingerprinting, and a targeted nmap sweep.\n2. **Phase 2 - Unauthenticated surface**: Content discovery (gobuster), HTTP security-header audit, TLS review (sslyze), media host indexing, search endpoint reflection and server-side template-injection probes, and FTP service banner review.\n3. **Phase 3 - Authenticated testing** with each of the three supplied roles (admin, writer, editor): login flow, JWT session attributes, logout invalidation, admin dashboard mapping, vertical and horizontal authorization matrix across `/admin/users`, `/admin/articles`, `/admin/media`, `/admin/profile`, `/admin/categories`, `/admin/comments`, `/admin/articles/<id>/edit`; mass-assignment attempts on `/admin/profile`; article create/edit/publish/delete; file upload with eight filetype/MIME combinations; SQL-injection probes (including time-based) on `/admin/articles?category=`; and anonymous stored-XSS probes on the public comment endpoint.\n4. **Phase 4 - Media host**: Open directory listing, nginx configuration review, FTP banner inspection, and anonymous access validation.\n\n**Coverage summary**\n\n- Confirmed assets: 1 root domain, 3 hostnames, 2 IP addresses - 100% covered.\n- Admin area endpoints: all top-level routes exercised with each role.\n- Public endpoints: `/`, `/search`, `/about`, `/contact`, `/article/<slug>`, `/category/<slug>`, and the public comment endpoint were exercised unauthenticated.\n- Not tested: distributed denial-of-service resilience, password brute-force thresholds, physical security, social engineering, and the live state of the unregistered `thedownundernews.it.com` domain.",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 person day",
+        "provided_users": "Three dummy accounts were provided by the owner for authenticated testing and must be rotated or removed before production:\n\n* `admin` - full administrative access\n* `editor` - article publication rights\n* `writer` - article drafting rights\n"
+      }
+    },
+    {
+      "id": "customer",
+      "data": {
+        "customer_name": "DownUnderNewsz",
+        "customer_address": {
+          "city": "Fairfield VIC 3078, Australia",
+          "street": "22 Arthur St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "data": {
+        "title": "DownUnderNewsz - Vulnerability Assessment Report",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {"version": "1.0", "date": "2026-10-05", "description": "Initial report delivery."}
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "data": {"appendix_sections": []}
+    }
+  ]
+}

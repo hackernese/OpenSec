@@ -1,0 +1,167 @@
+{
+  "id": "6316ea21-e7ce-48db-975b-432edd296bb0",
+  "created": "2026-09-18T07:07:56.319663Z",
+  "updated": "2026-09-18T07:07:56.320425Z",
+  "name": "Imagur",
+  "project_type": "1b72d0c5-0295-49ea-bed1-245fa48d504c",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/6316ea21-e7ce-48db-975b-432edd296bb0",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/6316ea21-e7ce-48db-975b-432edd296bb0/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/6316ea21-e7ce-48db-975b-432edd296bb0/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-09-18T07:07:56.328884Z",
+      "updated": "2026-09-18T07:07:56.330298Z",
+      "project": "6316ea21-e7ce-48db-975b-432edd296bb0",
+      "project_type": "1b72d0c5-0295-49ea-bed1-245fa48d504c",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "executive_summary": "Imagur’s public image-sharing site (Imager at imagesharer.xyz) was assessed on 18 September 2026 with the owner’s authorization.\n\nImagur is a public image-sharing web application branded “Imager — your images, your control.” The service runs PHP/nginx on imagesharer.xyz and offers login, register, dashboard, image upload (private/public), and profile avatars.\n\nThis assessment confirmed **14 findings: 2 critical, 2 high, 4 medium, 5 low, and 1 informational.**\n\nThe most serious issues are that customer image files sit in an Amazon S3 bucket that anyone can list and download — including images marked private — and that AWS keys used for that storage appear in a public JavaScript file. A logged-in user can also place an image into another customer’s account, and a crafted filename can run script in visitors’ browsers. Session cookies and forms are weakly protected, and the database and extra web ports are visible on the internet.\n\n**Highest-priority actions**\n\n1. Lock the S3 bucket.\n2. Rotate and remove the published AWS keys.\n3. Bind uploads to the logged-in user on the server.\n4. Encode filenames.\n\n**Findings at a glance**\n\n| Severity | Title |\n|:---|:---|\n| Critical | Public S3 bucket lists and serves private images |\n| Critical | AWS access keys published in public JavaScript |\n| High | Upload form trusts client-supplied user_id (IDOR) |\n| High | Stored cross-site scripting via image filename |\n| Medium | Session cookie missing Secure, HttpOnly, and SameSite |\n| Medium | No CSRF protection on account and upload actions |\n| Medium | PostgreSQL reachable on the public internet |\n| Medium | SQL errors disclose database and source-file details |\n| Low | SSH allows password logins from the internet |\n| Low | Extra Apache site on port 8080 |\n| Low | HTTPS directories redirect to HTTP |\n| Low | www hostname certificate name mismatch |\n| Low | CloudFront hostname uses the wrong TLS certificate |\n| Info | Server and framework versions leaked |\n"
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-09-18T07:07:56.328923Z",
+      "updated": "2026-09-18T07:07:56.330302Z",
+      "project": "6316ea21-e7ce-48db-975b-432edd296bb0",
+      "project_type": "1b72d0c5-0295-49ea-bed1-245fa48d504c",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "scope": "Authorized, non-destructive full-scope web and origin assessment of Imagur (public brand: Imager). Testing was limited to owner-approved assets. Neighboring cloud customers and lookalike domains were excluded.\n\n**In-scope (owner-approved)**\n\n| System | Description |\n|:---|:---|\n| imagesharer.xyz (http and https) | Main Imager website |\n| www.imagesharer.xyz | Same site as the main website |\n| resources.imagesharer.xyz | Imagur CloudFront hostname |\n| d273uevi0662l0.cloudfront.net | CloudFront distribution hostname for this Imagur distribution only |\n| 51.161.131.44 | Origin IP only as the host of the website (not neighboring OVH customers) |\n| S3 bucket filesharer-research | Discovered through the in-scope upload feature; tested only as Imagur image storage. Other customers’ objects were not downloaded |\n\n**Out of scope**\n\n| System | Description |\n|:---|:---|\n| imagur.xyz, imager.xyz, imagesharer.net, fshare.xyz | Lookalike / related domains excluded after owner scope choice |\n| imgur.com, fshare.vn | Unrelated third-party brands |\n| Flinders University | Third party |\n| Google | Third party |\n| Spaceship/Cloudflare shared DNS | Shared platforms |\n| OVH netblock except 51.161.131.44 | Other customers on the same provider |\n| CloudFront co-tenants | Shared CDN platform |\n| AWS account APIs | No use of leaked AWS secrets against the AWS account APIs |\n\n**Methodology**\n\nAuthorized, non-destructive full-scope web and origin assessment. Fast port probe then version scan of open ports only. Authenticated testing via public self-registration of two assessment accounts. Manual verification of upload, IDOR, XSS, storage, cookies, and TLS. No DDoS, malware, phishing, credential stuffing, password spraying, brute force, or destructive techniques.\n",
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18",
+        "duration": "1 day",
+        "provided_users": "No production customer accounts were supplied by the owner.\n\nAuthenticated testing used two assessment accounts created through the public self-registration page on imagesharer.xyz.\n\nPassword authentication on SSH and PostgreSQL was not brute-forced.\n"
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-09-18T07:07:56.328959Z",
+      "updated": "2026-09-18T07:07:56.330306Z",
+      "project": "6316ea21-e7ce-48db-975b-432edd296bb0",
+      "project_type": "1b72d0c5-0295-49ea-bed1-245fa48d504c",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "customer_name": "Imagur",
+        "customer_address": {
+          "city": "Glengowrie SA 5044, Australia",
+          "street": "132 Morphett Rd"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-09-18T07:07:56.328833Z",
+      "updated": "2026-09-18T07:07:56.330294Z",
+      "project": "6316ea21-e7ce-48db-975b-432edd296bb0",
+      "project_type": "1b72d0c5-0295-49ea-bed1-245fa48d504c",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "title": "Imagur Vulnerability Assessment Report",
+        "report_date": "2026-09-18",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-09-18",
+            "description": "Initial report of the authorized assessment completed on 18 September 2026.",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-09-18T07:07:56.328731Z",
+      "updated": "2026-09-18T07:07:56.330286Z",
+      "project": "6316ea21-e7ce-48db-975b-432edd296bb0",
+      "project_type": "1b72d0c5-0295-49ea-bed1-245fa48d504c",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Coverage",
+            "content": "The following areas were covered during the 18 September 2026 assessment:\n\n* Origin 51.161.131.44 ports 22, 80, 443, 5432, 8080\n* Unauthenticated and authenticated Imager app (login, register, dashboard, profile, upload, avatars, JSON API)\n* CloudFront resources hostname\n* Application S3 storage for images\n"
+          },
+          {
+            "title": "Limitations",
+            "content": "* Password authentication on SSH/PostgreSQL was not brute-forced.\n* Leaked AWS secret was not used to call AWS APIs; access-key id match to production S3 URLs was used as attribution.\n* S3 listing showed other keys; those objects were not retrieved.\n* Candidate lookalike domains were excluded after owner scope choice.\n* No phone number on file.\n"
+          },
+          {
+            "title": "Methodology",
+            "content": "Authorized, non-destructive full-scope web and origin assessment.\n\n* Fast port probe then version scan of open ports only.\n* Authenticated testing via public self-registration of two assessment accounts.\n* Manual verification of upload, IDOR, XSS, storage, cookies, TLS.\n* No DDoS, malware, phishing, credential stuffing, password spraying, brute force, or destructive techniques.\n"
+          }
+        ]
+      }
+    }
+  ]
+}

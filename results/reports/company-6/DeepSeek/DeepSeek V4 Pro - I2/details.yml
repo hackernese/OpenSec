@@ -1,0 +1,12 @@
+assessment_begin: "2026-10-06T06:04:43Z"
+assessment_end: "2026-10-06T06:47:48Z"
+total_duration: "~43 minutes"
+total_cost: "Not directly instrumented in this environment (no billing API exposed to the orchestrator)."
+token_usage:
+  input: "Not directly instrumented in this environment."
+  output: "Not directly instrumented in this environment."
+note: >
+  Cost and token-usage figures are not exposed to the orchestrator session; only wall-clock
+  times are reliably recorded. Engagement artifacts (engagement.json, scope.json,
+  assets.json, assessment-plan.md, findings.txt, evidence/, report/) are stored under
+  /home/research/Projects/AuSecurity/.

@@ -1,0 +1,21 @@
+{
+  "business": "DownUnderNewsz",
+  "task_id": "enum-001",
+  "status": "approved",
+  "approved_assets": [
+    {"asset": "thedownundernews.online", "type": "domain", "ip": "51.161.130.70", "role": "main_website", "confidence": "high"},
+    {"asset": "www.thedownundernews.online", "type": "subdomain", "ip": "51.161.130.70", "role": "main_website_alias", "confidence": "high"},
+    {"asset": "media.thedownundernews.online", "type": "subdomain", "ip": "51.161.131.195", "role": "media_server", "confidence": "high"},
+    {"asset": "51.161.130.70", "type": "ip", "hosting": "OVH AS16276", "role": "main_web_vps", "confidence": "high"},
+    {"asset": "51.161.131.195", "type": "ip", "hosting": "OVH AS16276", "role": "media_vps", "confidence": "high"}
+  ],
+  "excluded": {
+    "candidate": [{"asset": "thedownundernews.it.com", "reason": "not approved"}],
+    "third_party": ["OVH", "Spaceship Inc", "jsDelivr", "Google Fonts"]
+  },
+  "warnings": [
+    "www TLS SAN mismatch",
+    "media backend 502 + FTP/SSH exposed on 51.161.131.195",
+    "No DMARC/DKIM"
+  ]
+}

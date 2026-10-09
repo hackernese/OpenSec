@@ -1,0 +1,38 @@
+{
+  "business": "AuSecurity",
+  "approved_at_utc": "2026-10-05T10:40:00Z",
+  "approval_note": "Owner-authorized full scope; user approved all discovered assets.",
+  "in_scope_assets": [
+    {"asset": "ausecurity.best", "type": "domain"},
+    {"asset": "www.ausecurity.best", "type": "subdomain", "ip": "51.79.166.148", "service": "nginx/1.22.1 static site, self-signed TLS"},
+    {"asset": "blog.ausecurity.best", "type": "subdomain", "ip": "51.79.167.208", "service": "WordPress 7.1.2 on Apache/2.4.68 (Debian)"},
+    {"asset": "ticket.ausecurity.best", "type": "subdomain", "ip": "51.79.166.209", "service": "osTicket 1.18.4 installer on nginx/1.22.1, PHP 8.2.33"},
+    {"asset": "51.79.166.148", "type": "ip", "hoster": "OVH SG"},
+    {"asset": "51.79.166.209", "type": "ip", "hoster": "OVH SG"},
+    {"asset": "51.79.167.208", "type": "ip", "hoster": "OVH SG"},
+    {"asset": "info@ausecurity.best", "type": "email", "note": "Published contact; email/DNS posture (SPF/DMARC/DKIM/MX) in scope"}
+  ],
+  "out_of_scope": [
+    "flinders.edu.au",
+    "spaceship.com and launch1/launch2.spaceship.net",
+    "fonts.googleapis.com, fonts.gstatic.com",
+    "secure.gravatar.com",
+    "acmecorp.com",
+    "51.79.0.0/16 (OVH shared netblock, except the 3 specific VPS IPs listed)",
+    "any other AS16276 tenants"
+  ],
+  "method_permissions": {
+    "network_scanning_in_scope_ips": true,
+    "web_app_testing": true,
+    "service_version_probes": true,
+    "non_destructive_vuln_probes": true,
+    "redos_testing": true,
+    "credential_bruteforce": false,
+    "credential_spraying": false,
+    "dos_or_ddos": false,
+    "destructive_payloads": false,
+    "social_engineering_or_phishing": false,
+    "data_exfiltration": false,
+    "lateral_movement": false
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "categories": [
+    {
+      "article_count": 2,
+      "description": "National and international political news",
+      "display_order": 1,
+      "id": 1,
+      "name": "Politics",
+      "slug": "politics"
+    },
+    {
+      "article_count": 2,
+      "description": "Finance, economy, and business updates",
+      "display_order": 2,
+      "id": 2,
+      "name": "Business",
+      "slug": "business"
+    },
+    {
+      "article_count": 2,
+      "description": "Tech industry news and innovations",
+      "display_order": 3,
+      "id": 3,
+      "name": "Technology",
+      "slug": "technology"
+    },
+    {
+      "article_count": 1,
+      "description": "Australian and international sports coverage",
+      "display_order": 4,
+      "id": 4,
+      "name": "Sports",
+      "slug": "sports"
+    },
+    {
+      "article_count": 1,
+      "description": "Movies, music, culture, and lifestyle",
+      "display_order": 5,
+      "id": 5,
+      "name": "Entertainment",
+      "slug": "entertainment"
+    },
+    {
+      "article_count": 2,
+      "description": "Science, environment, and discovery",
+      "display_order": 6,
+      "id": 6,
+      "name": "Science",
+      "slug": "science"
+    },
+    {
+      "article_count": 1,
+      "description": "International news and global affairs",
+      "display_order": 7,
+      "id": 7,
+      "name": "World",
+      "slug": "world"
+    },
+    {
+      "article_count": 1,
+      "description": "Editorials and opinion pieces",
+      "display_order": 8,
+      "id": 8,
+      "name": "Opinion",
+      "slug": "opinion"
+    }
+  ]
+}

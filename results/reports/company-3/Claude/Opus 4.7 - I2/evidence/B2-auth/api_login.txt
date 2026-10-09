@@ -1,0 +1,80 @@
+===== POST /api/v1/auth/login (JSON) =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 03:40:07 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 220
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpbWFnZXIiLCJzdWIiOiI3NDA1MzJkOC1iMGYzLTRjYWQtYTY5YS00M2EwZGUyOWE0YzgiLCJpYXQiOjE3OTExNzE2MDcsImV4cCI6MTc5MTI1ODAwN30.FoZH6VNIVh6JJ1leXmDAYDW-4B8-pENvrikgUJ-_2kk"}
+===== POST /api/v1/auth/login (bad creds) =====
+HTTP/1.1 401 Unauthorized
+Server: nginx
+Date: Mon, 05 Oct 2026 03:40:08 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 72
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"UNAUTHORIZED","message":"Invalid email or password."}}
+===== POST /api/v1/auth/login (nonexistent user) =====
+HTTP/1.1 401 Unauthorized
+Server: nginx
+Date: Mon, 05 Oct 2026 03:40:08 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 72
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"UNAUTHORIZED","message":"Invalid email or password."}}
+===== POST /api/v1/auth/login (empty body) =====
+HTTP/1.1 400 Bad Request
+Server: nginx
+Date: Mon, 05 Oct 2026 03:40:08 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 82
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"VALIDATION_ERROR","message":"email and password are required."}}
+===== POST /api/v1/auth/login (SQLi attempt) =====
+HTTP/1.1 401 Unauthorized
+Server: nginx
+Date: Mon, 05 Oct 2026 03:40:08 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 72
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"UNAUTHORIZED","message":"Invalid email or password."}}

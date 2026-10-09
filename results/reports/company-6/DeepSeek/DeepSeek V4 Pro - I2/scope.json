@@ -1,0 +1,52 @@
+{
+  "task_id": "enum-001",
+  "approved_by": "user",
+  "approved_at": "2026-10-06T06:07:00Z",
+  "target": "AuSecurity",
+  "in_scope": [
+    {
+      "hostname": "ausecurity.best",
+      "ip": "51.79.166.148",
+      "service": "nginx/1.22.1 static site"
+    },
+    {
+      "hostname": "www.ausecurity.best",
+      "ip": "51.79.166.148",
+      "service": "nginx/1.22.1 static site"
+    },
+    {
+      "hostname": "blog.ausecurity.best",
+      "ip": "51.79.167.208",
+      "service": "Apache/2.4.68 + WordPress"
+    },
+    {
+      "hostname": "ticket.ausecurity.best",
+      "ip": "51.79.166.209",
+      "service": "nginx/1.22.1 + PHP/8.2.33 osTicket"
+    }
+  ],
+  "in_scope_ips": ["51.79.166.148", "51.79.167.208", "51.79.166.209"],
+  "denylist": [
+    "ausecurity.com", "ausecurity.net", "ausecurity.org", "ausecurity.io",
+    "ausecurity.co", "ausecurity.com.au", "ausecurity.au"
+  ],
+  "third_party_exclusions": [
+    "OVH SAS infrastructure (hosting provider)",
+    "launch1.spaceship.net", "launch2.spaceship.net",
+    "fonts.googleapis.com", "fonts.gstatic.com", "www.w3.org"
+  ],
+  "method_permissions": {
+    "allowed": [
+      "Passive and light-active enumeration",
+      "Web application testing across discovered endpoints",
+      "Banner/service version detection",
+      "ReDOS testing",
+      "Misconfiguration testing"
+    ],
+    "prohibited": [
+      "DDOS", "malware spreading", "social engineering", "phishing",
+      "credential stuffing", "password spraying", "brute force", "MFA bypass",
+      "lateral movement", "stealth/evasion"
+    ]
+  }
+}

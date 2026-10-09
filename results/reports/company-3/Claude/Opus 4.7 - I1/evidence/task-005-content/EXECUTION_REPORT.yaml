@@ -1,0 +1,220 @@
+---
+task_id: task-005-content
+company: Imagur
+execution_date: 2026-09-18T14:06:42+09:30
+assessment_type: Content Discovery & Info-Disclosure Probing
+
+targets:
+  - hostname: imagesharer.xyz
+    port: 443
+    protocol: HTTPS
+    server: nginx
+    php_version: 8.2.33
+    status: responsive
+    
+  - hostname: 51.161.131.44
+    port: 8080
+    protocol: HTTP
+    server: Apache/2.4.68 (Debian)
+    php_version: 8.2.33
+    status: responsive
+
+methodology:
+  sensitive_file_probes: 60+
+  directory_brute_force: ffuf with dirb/common.txt (~4000 entries, rate-limited to 40 req/sec)
+  header_analysis: Full HTTP headers captured
+  html_page_capture: Login, register, dashboard pages
+  
+execution_summary:
+  total_paths_tested: 60+
+  total_requests: ~140
+  execution_time: ~240 seconds (ffuf max timeout)
+  rate_limit: 40 requests/second
+  http_200_found: 3
+  http_301_redirects: 4
+  http_302_redirects: 3
+  http_403_forbidden: 5
+  http_404_not_found: ~90+
+
+critical_findings:
+  - finding_id: 1
+    title: "CRITICAL: Exposed AWS Credentials in JavaScript Source Code"
+    severity: CRITICAL
+    cvss_vector: null
+    affected_assets:
+      - https://imagesharer.xyz/js/awsvalid.js
+      - http://51.161.131.44:8080/js/awsvalid.js
+    http_status: 200
+    file_size: 5298 bytes
+    exposure_type: "Hardcoded credentials in JavaScript comments"
+    compromised_credentials:
+      aws_access_key: "AKIAQHQ6PGM62T2FFPGU"
+      aws_secret_key: "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"
+      aws_region: "ap-southeast-2"
+    description: |
+      JavaScript file containing AWS API credential validation function includes 
+      hardcoded access key ID, secret access key, and region in inline comments. 
+      File is publicly accessible via both HTTPS and HTTP channels without authentication.
+      Credentials allow potential AWS API access, lateral movement, and data exfiltration.
+    remediation: |
+      1. IMMEDIATE: Revoke AWS IAM credentials via AWS Console
+      2. Remove hardcoded secrets from source code
+      3. Implement environment-based credential management (env vars, SSM, Secrets Manager)
+      4. Add static secret scanning to CI/CD pipeline
+      5. Review AWS CloudTrail for unauthorized access patterns
+      6. Re-deploy application with fresh credentials
+    evidence_file: "443-awsvalid.txt"
+
+framework_identification:
+  application_name: "Imager"
+  stack:
+    backend: PHP 8.2.33
+    frontend_server_443: nginx
+    frontend_server_8080: Apache 2.4.68 (Debian)
+    description: "Custom-built image sharing application"
+  identified_via:
+    - HTML page titles ("Log in — Imager", "Create account — Imager")
+    - X-Powered-By header reveals PHP 8.2.33
+    - Form structure and authentication pattern
+    - Referenced JavaScript files in HTML comments
+
+security_headers_present:
+  - "X-Content-Type-Options: nosniff" ✓
+  - "X-Frame-Options: DENY" ✓
+  - "X-XSS-Protection: 1; mode=block" ✓
+  - "Referrer-Policy: strict-origin-when-cross-origin" ✓
+
+security_headers_missing:
+  - "Strict-Transport-Security" ⚠️
+  - "Content-Security-Policy" ⚠️
+  - "Permissions-Policy" ⚠️
+
+authentication_endpoints_discovered:
+  - path: /login
+    method: POST
+    status: 200 (GET)
+    fields: ["email", "password"]
+    csrf_tokens: not_found
+    content_length: 2140 bytes
+    
+  - path: /register
+    method: POST
+    status: 200 (GET)
+    fields: ["email", "password", "confirm"]
+    password_min_length: 8
+    csrf_tokens: not_found
+    content_length: 2595 bytes
+
+protected_endpoints:
+  - path: /dashboard
+    status: 302
+    redirect_target: /login
+    requires_auth: true
+    
+  - path: /profile
+    status: 302
+    redirect_target: /login
+    requires_auth: true
+
+discovered_directories:
+  accessible:
+    - path: /css
+      type: 301 redirect to /css/
+      listing_enabled: false (403)
+      
+    - path: /js
+      type: 301 redirect to /js/
+      listing_enabled: false (403)
+      note: "Contains sensitive awsvalid.js file"
+      
+    - path: /uploads
+      type: 301 redirect to /uploads/
+      listing_enabled: false (403)
+  
+  blocked:
+    - path: /server-status
+      status: 403
+      reason: "Access forbidden"
+      
+  not_found:
+    - /admin/
+    - /administrator/
+    - /api/
+    - /api/v1/
+    - /phpmyadmin/
+    - /pgadmin/
+
+sensitive_files_probe_results:
+  successfully_blocked: 
+    description: "All environment, config, git, and backup files properly blocked"
+    paths_tested:
+      - .env*
+      - .git/*
+      - composer.json/lock
+      - package.json
+      - phpinfo.php
+      - server-info
+      - admin panels
+      - database backups
+    status: "404 Not Found"
+    assessment: "GOOD - Proper security posture for sensitive file access"
+
+port_comparison:
+  https_443:
+    server: nginx
+    security_headers: present
+    aws_credentials_exposed: true ✗
+    http_status_codes: identical to 8080
+    
+  http_8080:
+    server: Apache 2.4.68
+    security_headers: present
+    aws_credentials_exposed: true ✗
+    http_status_codes: identical to 443
+  
+  conclusion: "Both targets appear to be load-balanced instances of same application"
+
+absence_of_protections:
+  csrf_tokens: "Not found in login/register form HTML"
+  https_enforcement: "HTTP (8080) accepts unencrypted connections"
+  api_documentation: "No discoverable swagger.json or openapi.json"
+  version_control: ".git/ properly blocked (good)"
+
+artifact_statistics:
+  total_files_created: 140+
+  443_port_files: 70
+  8080_port_files: 70
+  shared_files:
+    - FINDINGS_SUMMARY.md (comprehensive markdown report)
+    - EXECUTION_REPORT.yaml (this file)
+    - ffuf-443.json (directory brute force results)
+  evidence_directory: /home/research/Projects/Imagur/evidence/task-005-content/
+
+recommendations_by_priority:
+  critical:
+    - "REVOKE AWS CREDENTIALS IMMEDIATELY - AKIAQHQ6PGM62T2FFPGU"
+    - "Remove hardcoded secrets from source code"
+    - "Implement environment-based credential injection"
+    - "Review AWS CloudTrail for unauthorized access"
+    - "Re-deploy with fresh AWS credentials"
+    
+  high:
+    - "Add CSRF tokens to login/register forms"
+    - "Implement Strict-Transport-Security header"
+    - "Add Content-Security-Policy header"
+    - "Review and harden CORS policy if APIs are exposed"
+    
+  medium:
+    - "Remove commented-out script references in HTML"
+    - "Add Permissions-Policy header"
+    - "Implement rate limiting on auth endpoints"
+    - "Consider adding API authentication/versioning"
+
+execution_notes:
+  - "All commands executed within rate limits and safety boundaries"
+  - "No destructive operations performed"
+  - "No credential brute force attempted"
+  - "ffuf limited to 40 req/sec with 240-second max timeout"
+  - "Both targets returned consistent, synchronized responses"
+  - "AWS credentials discovered via code review, not exploitation"
+

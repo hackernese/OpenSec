@@ -1,0 +1,49 @@
+{
+  "name": "AuSecurity Full-Scope Vulnerability Assessment 2026-10-05",
+  "project_type": "74b4193e-bfcc-402f-8527-fbaf591d8bd3",
+  "language": "en-US",
+  "tags": ["research"],
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "data": {
+        "executive_summary": "AuSecurity is a boutique Sydney-based governance, risk and compliance (GRC) consultancy that also delivers penetration testing services to a small portfolio of Australian clients. Between 2026-10-05 and 2026-10-05, an authorised, full-scope and non-destructive vulnerability assessment was carried out against the company's public web presence (ausecurity.best), its WordPress marketing blog (blog.ausecurity.best) and its customer-support ticketing portal (ticket.ausecurity.best), all three of which run on OVH virtual machines hosted in Singapore.\n\nIn plain terms, the engagement confirmed that the company's own public systems do not currently reflect the standard of security that AuSecurity sells to its clients. Nineteen distinct issues were verified: four Critical, five High, four Medium, five Low, and one Informational.\n\nThe four Critical issues are of immediate concern because they map directly onto a single, highly plausible attack: brand impersonation of AuSecurity against its own clients.\n\n1. An internal \"admin dashboard\" HTML page is served to anyone on the Internet with no login required. The file lists five identified client organisations by name, their individual point-of-contact names and work email addresses, the services AuSecurity delivered to them (for example penetration tests and ISO 27001 audits), and year-to-date revenue figures. This is a direct breach of client confidentiality and almost certainly in conflict with signed non-disclosure agreements and with the Australian Privacy Act 1988.\n\n2. The customer-support ticketing system (ticket.ausecurity.best) still has its initial \"first-time installation\" wizard open to the public Internet. Any unauthenticated attacker can walk through this wizard and emerge as the administrator of the ticketing system, which routes real customer messages and attachments.\n\n3. The ausecurity.best email domain publishes none of the three modern anti-spoofing standards (SPF, DKIM, DMARC) and has no mail server configured. This means an attacker anywhere in the world can send a convincing email that appears to come from any address at ausecurity.best, and most receiving mail systems will deliver it. The advertised info@ausecurity.best mailbox also cannot actually receive mail.\n\n4. The company's \"consultation success\" page contains a client-side cross-site scripting vulnerability. A single crafted link, hosted under the real ausecurity.best domain, is enough to execute arbitrary code in a visiting client's browser and to steal an authenticated administrator's session.\n\nTaken together, these four Critical issues enable the following end-to-end scenario in realistic conditions: an attacker reads the already-leaked client list from the public dashboard, sends a believable phishing email to those exact clients from a forged ausecurity.best address, and lands the victims on a trusted ausecurity.best URL that silently delivers malicious code or seizes credentials.\n\nFive High-severity issues extend the attack surface meaningfully: a client-side open redirect on the login flow (ideal lure for the phishing scenario above), a self-signed TLS certificate at the apex website (trains users to click through browser warnings), WordPress administrator-username enumeration on the blog, XML-RPC exposure on the same blog (standard precursors to credential attacks), and a plaintext HTTP mirror on port 8080 that serves the same sensitive content as the HTTPS site.\n\nThe four Medium and five Low findings are hygiene gaps typical of a site that has not yet been through a baseline hardening pass (missing cookie flags, missing HTTP security headers, directory listing on the blog uploads folder, contact-form rate-limit and length-validation gaps, exposed health and web.config files, verbose server-version banners, and missing DNS hygiene records). The single Informational finding notes that the company advertises a Sydney postal address but hosts production data in Singapore, which should be disclosed in the privacy policy per APP 8.\n\nRecommended priorities for the business:\n\n- Same day: remove the hardcoded client data from the dashboard HTML and put a server-side login requirement in front of it; delete the osTicket /setup/ directory; publish SPF, DKIM and DMARC on ausecurity.best; patch the one-line XSS on the consultation success page.\n- Same week: replace the self-signed apex certificate with a trusted (Let's Encrypt) certificate, implement the same-origin check in the login redirect, lock down the WordPress blog (REST users endpoint, XML-RPC, author enumeration), and turn off the plaintext HTTP mirror on port 8080.\n- Within the next hardening cycle: apply the Medium / Low recommendations (cookie flags, security headers, rate limiting, header suppression, CAA / security.txt).\n\nNo in-scope asset was skipped. No destructive techniques, brute-force attacks, phishing, data exfiltration, or lateral movement were performed; two benign marker submissions were sent to /api/contact for behavioural analysis and are tagged for the client to remove from the back-office queue."
+      }
+    },
+    {
+      "id": "scope",
+      "data": {
+        "scope": "Three authorised in-scope hostnames and three in-scope OVH Singapore IP addresses, all operated by AuSecurity:\n\n- Web / primary site: ausecurity.best, www.ausecurity.best (51.79.166.148)\n- WordPress blog: blog.ausecurity.best (51.79.167.208)\n- osTicket customer-support portal: ticket.ausecurity.best (51.79.166.209)\n- Email posture of the ausecurity.best domain (DNS review only).\n\nMethodology summary: authorised, full-scope, non-destructive vulnerability assessment. Phases: passive OSINT and enumeration (DNS, WHOIS, Certificate Transparency logs via certspotter, TLS metadata, passive Shodan review); light-active network discovery (nmap port and service scans with the standard safe NSE scripts, including ssl-cert, ssl-enum-ciphers, ssl-dh-params, ssl-heartbleed, ssl-poodle, ssl-ccs-injection, http-security-headers, http-cookie-flags, http-title); web application testing (manual probing, nuclei with cve/exposure/misconfig/takeover/default-login/rce/xss/lfi/sqli/ssrf tag selection, wpscan, feroxbuster content discovery, nikto, and targeted manual API testing). Every material finding was independently verified with a second, narrowly-scoped request where feasible.\n\nOut of scope: ausecurity.com.au, ausecurity.au, ausecurity.io, ausecurity.net (not confirmed attributable to the client); third-party infrastructure (OVH platform beyond the three VPS instances, Spaceship registrar, Let's Encrypt, Google Fonts, flinders.edu.au).\n\nExplicit limitations:\n- Brute-force, credential stuffing and password spraying were NOT performed (out of allowed methods for this engagement).\n- No form submissions that could have caused business disruption. Two benign marker submissions were sent to /api/contact for behaviour analysis and are tagged \"[CLAWSEC AUTHORIZED PENTEST]\" / \"AUSEC-TEST-20261005\"; please delete them from the back-office queue.\n- testssl.sh was not installed on the testing host; TLS posture was instead assessed via nmap NSE and manual openssl / curl probing.\n- WPScan was executed without an API token; public CVE enrichment for installed WordPress plugins and themes was therefore unavailable, and manual probing was used in its place.\n- Shodan API access was unavailable (no key); passive data was limited to open sources.\n- crt.sh was unavailable during enumeration; certspotter was used as substitute.\n- A heap / memory / source-code audit of the custom /api backend was NOT performed; findings on that service relate to its exposed HTTP surface only.\n\nCoverage summary: all four in-scope hostnames and all three in-scope IPs were covered across TCP port discovery, service enumeration, TLS posture, HTTP security headers, email DNS posture, WordPress-specific assessment, osTicket-specific assessment, content discovery, nuclei CVE / exposure signatures, nikto, and manual API testing. No in-scope asset was skipped.",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-05",
+        "duration": "1 day",
+        "provided_users": "No credentials, VPN access, or test accounts were provisioned by the customer. All testing was performed from an external, unauthenticated perspective against the publicly reachable attack surface."
+      }
+    },
+    {
+      "id": "customer",
+      "data": {
+        "customer_name": "AuSecurity",
+        "customer_address": {"city": "Paddington NSW 2021, Australia", "street": "63 Paddington St"},
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "data": {
+        "title": "AuSecurity - Full-Scope Vulnerability Assessment Report",
+        "report_date": "2026-10-05",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {"description": "Initial report", "date": "2026-10-05", "version": "1.0"}
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "data": {"appendix_sections": []}
+    }
+  ]
+}

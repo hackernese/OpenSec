@@ -1,0 +1,31 @@
+{
+  "task_id": "ENUM-001",
+  "date": "2026-09-19",
+  "mode": "passive / light-active enumeration",
+  "tools_used": ["dig", "whois", "rdap", "subfinder", "amass (passive)", "crt.sh", "openssl s_client", "curl", "shodan", "ftp (anonymous listing)"],
+  "unavailable_sources": ["amass passive sources (no API keys)", "bgpview.io API (rate-limited)"],
+  "root_domains": [
+    { "name": "thedownundernews.online", "classification": "confirmed", "confidence": 1.0, "notes": "Primary domain, registered 2026-08-04 via Spaceship, Inc." }
+  ],
+  "subdomains": [
+    { "name": "www.thedownundernews.online", "ip": "51.161.130.70", "classification": "confirmed", "confidence": 0.95, "notes": "Serves identical content to apex; TLS cert does not include 'www' (SAN mismatch)." },
+    { "name": "media.thedownundernews.online", "ip": "51.161.131.195", "classification": "confirmed", "confidence": 0.95, "notes": "Media storage VPS; nginx 502 on 443; anonymous FTP on 21." }
+  ],
+  "ip_addresses": [
+    { "name": "51.161.130.70", "classification": "confirmed", "confidence": 0.95, "notes": "Origin for apex+www; OVH VPS Sydney; open 22/SSH, 443/nginx." },
+    { "name": "51.161.131.195", "classification": "confirmed", "confidence": 0.95, "notes": "Media server; OVH VPS Sydney; open 21/FTP(anon), 22/SSH, 80, 443/nginx." }
+  ],
+  "third_party": ["OVH AS16276", "Spaceship, Inc. (registrar/DNS/MX)", "cdn.jsdelivr.net", "fonts.googleapis.com/gstatic.com", "Let's Encrypt"],
+  "candidate_domains": [
+    { "name": "thedownundernews.it.com", "classification": "candidate", "confidence": 0.35, "notes": "Referenced email/footer domain; no DNS resolution; excluded from scope." }
+  ],
+  "rejected": [],
+  "warnings": [
+    "thedownundernews.it.com does not resolve — verify registration.",
+    "www TLS cert SAN mismatch.",
+    "media subdomain 502 + anonymous FTP exposing article media.",
+    "/api/articles leaks author emails + admin username unauthenticated.",
+    "amass passive empty; bgpview rate-limited.",
+    "/api/search, /api/authors, /login timed out during light probing."
+  ]
+}

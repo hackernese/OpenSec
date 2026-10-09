@@ -1,0 +1,27 @@
+Enumeration Summary — DownUnderNewsz (enum-001)
+
+Anchor:  thedownundernews.online  (Spaceship registrar, DNSSEC, created 2026-08-04)
+Primary IP: 51.161.130.70  (apex + www)       — OVH Australia VPS-SYD2 (Sydney)
+Media IP:  51.161.131.195 (media subdomain)   — OVH Australia VPS-SYD2 (Sydney)
+Netblock:  51.161.130.0/23 (VPS-SYD2, shared OVH tenancy)
+Nameservers: launch1.spaceship.net, launch2.spaceship.net  (Spaceship, third-party DNS)
+Mail:      MX -> mx1/mx2.efwd.spaceship.net  (Spaceship email forwarding, third-party)
+SPF:       v=spf1 include:spf.efwd.spaceship.net ~all
+DMARC:     NOT CONFIGURED (empty)
+CAA:       NOT CONFIGURED (empty)
+DNSSEC:    signedDelegation
+TLS cert:  Let's Encrypt (YE2)
+Open ports (Shodan):
+  51.161.130.70  -> 80, 443  (nginx)
+  51.161.131.195 -> 21 (ftp), 80, 443 (nginx; 443 returns 502)
+Discovered subdomains (confirmed): www, media
+External CDNs referenced: cdn.jsdelivr.net, fonts.googleapis.com, fonts.gstatic.com
+Branding/alt domain in footer+contact emails: thedownundernews.it.com -> NXDOMAIN (NOT registered)
+Owner (from input only): Vinh Dinh <dinh0087@flinders.edu.au>
+
+Notes & anomalies:
+- Contact page lists editorial@thedownundernews.it.com and advertising@thedownundernews.it.com
+  but the domain is unregistered → inbound mail silently fails.
+- Media subdomain's web stack returns 502 → likely dev/staging or broken upstream.
+- Open FTP (21/tcp) on media VPS → candidate for later assessment.
+- Lookalike "downundernews.com" exists but on sectoor.de nameservers; no evidence of common ownership → REJECTED.

@@ -1,0 +1,19 @@
+===== DIG ANY/NS/MX/TXT/A/AAAA/CNAME/SOA thedownundernews.online =====
+thedownundernews.online. 1792	IN	A	51.161.130.70
+thedownundernews.online. 1200	IN	MX	0 mx1.efwd.spaceship.net.
+thedownundernews.online. 1200	IN	MX	0 mx2.efwd.spaceship.net.
+thedownundernews.online. 75584	IN	NS	launch2.spaceship.net.
+thedownundernews.online. 75584	IN	NS	launch1.spaceship.net.
+thedownundernews.online. 1200	IN	TXT	"v=spf1 include:spf.efwd.spaceship.net ~all"
+thedownundernews.online. 1799	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+
+===== DIG ANY/NS/MX/TXT/A/AAAA/CNAME/SOA www.thedownundernews.online =====
+www.thedownundernews.online. 1703 IN	A	51.161.130.70
+
+===== DIG ANY/NS/MX/TXT/A/AAAA/CNAME/SOA thedownundernews.it.com =====
+
+===== DIG ANY/NS/MX/TXT/A/AAAA/CNAME/SOA www.thedownundernews.it.com =====
+
+===== NS for roots =====
+thedownundernews.online. 75582	IN	NS	launch1.spaceship.net.
+thedownundernews.online. 75582	IN	NS	launch2.spaceship.net.

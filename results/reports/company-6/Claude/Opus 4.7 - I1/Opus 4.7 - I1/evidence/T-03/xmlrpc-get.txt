@@ -1,0 +1,7 @@
+HTTP/1.1 405 Method Not Allowed
+Date: Fri, 18 Sep 2026 03:46:37 GMT
+Server: Apache/2.4.68 (Debian)
+Allow: POST
+Content-Length: 42
+Content-Type: text/plain;charset=UTF-8
+

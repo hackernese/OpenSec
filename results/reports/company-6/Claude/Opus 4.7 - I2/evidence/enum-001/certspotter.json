@@ -1,0 +1,104 @@
+[
+	{
+		"id": "17032440372",
+		"tbs_sha256": "be3d4c7027d8d3354ec68645192112f54cb7373bdfcf7e659d51cdfa228d01e0",
+		"cert_sha256": "6f2a9e0533daf9b54a4dbd4e418d6504bc6c0fb3df70039eaef4592db760e504",
+		"dns_names": [
+			"blog.ausecurity.best"
+		],
+		"pubkey_sha256": "6c2e8195c2fe7592b2836e6cc3c2f07b8e48768086517002fbfc1a34e027b03a",
+		"issuer": {
+			"friendly_name": "Let's Encrypt",
+			"pubkey_sha256": "b3fb5d00e994cddf2cc9a4eea9f806bc5727e83cc0e4299bf956f2d524fe5376",
+			"name": "C=US, O=Let's Encrypt, CN=YE2"
+		},
+		"not_before": "2026-09-07T03:17:14Z",
+		"not_after": "2026-12-06T03:17:13Z",
+		"revoked": false
+	},
+	{
+		"id": "17032712091",
+		"tbs_sha256": "fcbce0c8c1bd571a8e0f113c0a3ab660f574a2d59531902e9cfefcfbb3edc5f5",
+		"cert_sha256": "d63601899e3e4dd90ac4c4016b18d2050da04fbf4cee1ca53c0a8132e4a0acb7",
+		"dns_names": [
+			"ausecurity.best"
+		],
+		"pubkey_sha256": "9acaa149b9166a76083137a0e4bf2c4f1dae359a85b90b4b3c60ae8dbb467d4a",
+		"issuer": {
+			"friendly_name": "Let's Encrypt",
+			"pubkey_sha256": "6ebcefb4210b088654a38b03fea3d7d1c711b4fb1ddc363a45f9b1a4e53da01e",
+			"name": "C=US, O=Let's Encrypt, CN=YE1"
+		},
+		"not_before": "2026-09-07T03:39:03Z",
+		"not_after": "2026-12-06T03:39:02Z",
+		"revoked": false
+	},
+	{
+		"id": "17176311861",
+		"tbs_sha256": "445eaf5a3004357907a2007c998d6796a82862e760d9a2820278c05410d5f1bd",
+		"cert_sha256": "9710acbfd4ed6413f7c027096cf9f2fb2d058862aa4950515226c07104b66b4d",
+		"dns_names": [
+			"ticket.ausecurity.best"
+		],
+		"pubkey_sha256": "49d7f2a1039b72f1f36a15cc61df89caafcc456d16aaac1dd8b75eff553646da",
+		"issuer": {
+			"friendly_name": "Let's Encrypt",
+			"pubkey_sha256": "6ebcefb4210b088654a38b03fea3d7d1c711b4fb1ddc363a45f9b1a4e53da01e",
+			"name": "C=US, O=Let's Encrypt, CN=YE1"
+		},
+		"not_before": "2026-09-14T15:46:12Z",
+		"not_after": "2026-12-13T15:46:11Z",
+		"revoked": false
+	},
+	{
+		"id": "17238035534",
+		"tbs_sha256": "44f62bb7ae4711678784ea4f7180c54224d50c4d75e82d0874a5dfdcef280b16",
+		"cert_sha256": "bbe9ae168d60394d0c6182cae03673f3bf00d96f5614b0bdaf3d09877aa3f59f",
+		"dns_names": [
+			"ausecurity.best"
+		],
+		"pubkey_sha256": "1b3b7fbb09b57bf07d4ff1731fb4b182179d68e603d8f0ac618712850b88b203",
+		"issuer": {
+			"friendly_name": "Let's Encrypt",
+			"pubkey_sha256": "b3fb5d00e994cddf2cc9a4eea9f806bc5727e83cc0e4299bf956f2d524fe5376",
+			"name": "C=US, O=Let's Encrypt, CN=YE2"
+		},
+		"not_before": "2026-09-17T16:48:50Z",
+		"not_after": "2026-12-16T16:48:49Z",
+		"revoked": false
+	},
+	{
+		"id": "17238167660",
+		"tbs_sha256": "ad62bf41b5a0e94136b74a0f5b38be6edee2ee18cd58778593413e5903d70b95",
+		"cert_sha256": "5cab9835e59fee3309e2a80c7fb0da362b439953a543899daab2b3dc105f5d28",
+		"dns_names": [
+			"ausecurity.best"
+		],
+		"pubkey_sha256": "1a86c1f61d26dd7223325719d1dc2c01b8eff5d8004696d754f19665eb28ab59",
+		"issuer": {
+			"friendly_name": "Let's Encrypt",
+			"pubkey_sha256": "6ebcefb4210b088654a38b03fea3d7d1c711b4fb1ddc363a45f9b1a4e53da01e",
+			"name": "C=US, O=Let's Encrypt, CN=YE1"
+		},
+		"not_before": "2026-09-17T16:57:39Z",
+		"not_after": "2026-12-16T16:57:38Z",
+		"revoked": false
+	},
+	{
+		"id": "17239579751",
+		"tbs_sha256": "3ae0f756d005d4d1169fc87cbdb8237bc523178514175ebac4a042d3cd8927bc",
+		"cert_sha256": "f321e8cd50a061b27535b9e4a5f51079715546b772913db2190c4179de295c5d",
+		"dns_names": [
+			"blog.ausecurity.best"
+		],
+		"pubkey_sha256": "554e321c11a7b8a2d8c588090cc3fa6b2e76f83b4021abe1b391eb608419cfb1",
+		"issuer": {
+			"friendly_name": "Let's Encrypt",
+			"pubkey_sha256": "6ebcefb4210b088654a38b03fea3d7d1c711b4fb1ddc363a45f9b1a4e53da01e",
+			"name": "C=US, O=Let's Encrypt, CN=YE1"
+		},
+		"not_before": "2026-09-17T18:25:38Z",
+		"not_after": "2026-12-16T18:25:37Z",
+		"revoked": false
+	}
+]

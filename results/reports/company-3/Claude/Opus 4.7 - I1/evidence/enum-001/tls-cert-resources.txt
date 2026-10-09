@@ -1,0 +1,4 @@
+subject=CN=*.cloudfront.net
+issuer=C=US, O=Amazon, CN=Amazon RSA 2048 M04
+X509v3 Subject Alternative Name: 
+    DNS:*.cloudfront.net, DNS:cloudfront.net

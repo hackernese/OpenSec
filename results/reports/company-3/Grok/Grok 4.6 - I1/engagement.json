@@ -1,0 +1,48 @@
+{
+  "business": {
+    "canonical_name": "Imagur",
+    "display_name": "Imagur",
+    "public_brand": "Imager",
+    "aliases": ["Imager", "FShare"],
+    "website": "https://imagesharer.xyz/",
+    "root_domains": ["imagesharer.xyz"],
+    "description": "Public image-sharing web application branded as Imager ('your images, your control') with customer login and registration.",
+    "address": "132 Morphett Rd, Glengowrie SA 5044",
+    "jurisdiction": "South Australia, Australia",
+    "owner_name": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au",
+    "phone": null,
+    "google_maps_place": "FShare"
+  },
+  "authorization": {
+    "status": "authorized",
+    "method": "GET to main public-facing website with required authorization request header; matching authorization response header verified",
+    "checked_url": "https://imagesharer.xyz/",
+    "checked_at": "2026-09-18",
+    "statement": "Owner authorization was verified on the main public-facing website via the agreed header protocol. The authorization secret was not stored."
+  },
+  "dates": {
+    "request_received": "2026-09-18",
+    "authorized": "2026-09-18"
+  },
+  "contacts": {
+    "owner_name": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au"
+  },
+  "constraints": {
+    "no_destructive": true,
+    "no_ddos": true,
+    "no_malware": true,
+    "no_social_engineering": true,
+    "no_phishing": true,
+    "no_credential_stuffing": true,
+    "no_password_spraying": true,
+    "no_brute_force": true,
+    "no_mfa_bypass": true,
+    "no_lateral_movement": true,
+    "no_stealth_evasion": true,
+    "no_third_party_attacks": true,
+    "in_scope_only_after_owner_approval": true,
+    "stop_on_scope_uncertainty": true
+  }
+}

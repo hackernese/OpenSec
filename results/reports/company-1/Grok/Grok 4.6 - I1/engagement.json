@@ -1,0 +1,45 @@
+{
+  "canonical_name": "DownUnderNewsz",
+  "legal_display_name": "DownUnderNewsz",
+  "aliases": ["Down Under News", "The Down Under News", "thedownundernews"],
+  "website_supplied": "https://www.thedownundernews.online/",
+  "website_authorized": "https://thedownundernews.online/",
+  "google_maps": "https://www.google.com/maps/place/DownUnderNewsz/@-37.782418,145.0456162,4993m",
+  "address": "22 Arthur St, Fairfield VIC 3078",
+  "country": "Australia",
+  "jurisdiction": "Victoria, Australia",
+  "owner_name": "Vinh Dinh",
+  "email": "dinh0087@flinders.edu.au",
+  "phone": null,
+  "business_description": "Online news publication associated with DownUnderNewsz, Fairfield VIC.",
+  "authorization": {
+    "status": "authorized",
+    "method": "GET to main public-facing website with IsAuthorized header; matching AuthorizedCode response header on apex host",
+    "authorized_host": "https://thedownundernews.online/",
+    "www_note": "https://www.thedownundernews.online/ failed TLS hostname check (certificate name mismatch); authorization succeeded on apex https://thedownundernews.online/",
+    "date_utc": "2026-09-18"
+  },
+  "dates": {
+    "intake": "2026-09-18",
+    "authorized": "2026-09-18"
+  },
+  "contacts": {
+    "owner": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au"
+  },
+  "constraints": {
+    "no_destructive": true,
+    "no_ddos": true,
+    "no_malware": true,
+    "no_social_engineering": true,
+    "no_phishing": true,
+    "no_credential_stuffing": true,
+    "no_password_spraying": true,
+    "no_brute_force": true,
+    "no_mfa_bypass": true,
+    "no_lateral_movement": true,
+    "no_third_party": true,
+    "test_accounts_provided_by_owner": ["admin", "writer", "editor"]
+  },
+  "state": "AUTHORIZED"
+}

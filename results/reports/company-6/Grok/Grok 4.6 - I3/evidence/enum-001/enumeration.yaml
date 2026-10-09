@@ -1,0 +1,766 @@
+run:
+  task_id: enum-001
+  mode: enumeration_only
+  started_at: "2026-10-05T02:08:00Z"
+  working_tree: /home/research/Projects/AuSecurity
+  evidence_directory: /home/research/Projects/AuSecurity/evidence/enum-001/
+  authorization_assumed: true
+  notes: Low-impact DNS, WHOIS/RDAP, CT, passive OSINT, and httpx-toolkit HTTP validation only. No port scan, fuzzing, brute force, login, or exploitation.
+
+identity:
+  canonical_organization_name: AuSecurity
+  aliases:
+    - Ausecurity
+  brands:
+    - Ausecurity
+  location: 63 Paddington St, Paddington NSW 2021, Australia
+  jurisdiction: New South Wales, Australia
+  official_root_domain: ausecurity.best
+  official_website: https://ausecurity.best/
+  public_business_description: "Ausecurity delivers expert GRC consulting and penetration testing services to businesses across Australia. Know your risk. Secure your future."
+  public_phone_published: "+61 2 9000 1234"
+  public_email_published: info@ausecurity.best
+  public_abn_published: "00 000 000 000"
+  owner_name_not_an_asset: Vinh Dinh
+  owner_email_not_an_asset: dinh0087@flinders.edu.au
+  identity_evidence:
+    - source: input
+      source_type: input
+      observed_value: "AuSecurity / https://ausecurity.best/ / 63 Paddington St, Paddington NSW 2021"
+      reason: User-supplied official seed for this engagement
+      target_contact: false
+    - source: homepage
+      source_type: http_validation
+      observed_value: "Ausecurity — GRC Consulting & Penetration Testing"
+      reason: Official site title and meta description match the supplied organization name and Australian GRC/pentest positioning
+      target_contact: true
+    - source: contact.html
+      source_type: http_validation
+      observed_value: "Sydney, NSW, Australia; info@ausecurity.best; +61 2 9000 1234"
+      reason: Contact page corroborates Australian presence and published contact details
+      target_contact: true
+  identity_caveats:
+    - Domain ausecurity.best was created 2026-08-04 via Spaceship with privacy-proxy registrant, while the site claims founding in 2009 and 200+ clients.
+    - Published ABN 00 000 000 000 is invalid on ABR.
+    - Published phone +61 2 9000 1234 looks like a placeholder; not independently corroborated from Google Maps HTML.
+    - Contact page lists Sydney, NSW rather than the supplied Paddington street address.
+    - Distinct lookalike organizations exist (see rejected_candidates).
+
+tools_and_sources_used:
+  - input
+  - dig
+  - dnsx
+  - whois
+  - rdap.org
+  - ipinfo.io
+  - openssl
+  - curl
+  - httpx-toolkit
+  - subfinder
+  - certspotter
+  - crt.sh
+  - shodan
+  - urlscan.io
+  - hackertarget
+  - amass (passive)
+  - theHarvester
+  - assetfinder
+
+unavailable_sources:
+  - source: crt.sh wildcard JSON
+    reason: HTTP 502 for %.ausecurity.best queries; exact-name JSON succeeded for some names
+  - source: censys
+    reason: No API ID/secret configured
+  - source: Wayback Machine CDX
+    reason: Temporarily offline
+  - source: dns.bufferover.run
+    reason: Hostname did not resolve
+  - source: theHarvester dnsdumpster
+    reason: Missing API key
+  - source: Google Maps structured listing
+    reason: Page requires JavaScript; phone/website not extractable from static HTML
+  - source: whois.spaceship.com
+    reason: Hostname did not resolve; registry WHOIS via CentralNic succeeded
+  - source: references/sources.md
+    reason: File not present
+  - source: Shodan host 51.79.166.148
+    reason: No information available for that IP
+
+root_domains:
+  - asset: ausecurity.best
+    status: confirmed
+    confidence: 98
+    classification: company_owned
+    registrable_domain: ausecurity.best
+    registrar: Spaceship, Inc.
+    created: "2026-08-04T08:14:48Z"
+    expires: "2027-08-04T23:59:59Z"
+    nameservers:
+      - launch1.spaceship.net
+      - launch2.spaceship.net
+    dnssec: signedDelegation
+    registrant: Privacy service provided by WITHHELD FOR PRIVACY LLC (US/Delaware)
+    resolved_ips:
+      - 51.79.166.148
+    evidence:
+      - source: input
+        source_type: input
+        observed_value: https://ausecurity.best/
+        reason: User-supplied official website/root domain
+        target_contact: false
+      - source: dig
+        source_type: dns
+        observed_value: "ausecurity.best A 51.79.166.148"
+        reason: Authoritative-looking public DNS A record
+        target_contact: true
+      - source: whois
+        source_type: rdap_whois
+        observed_value: "Domain Name: AUSECURITY.BEST / Registrar: Spaceship, Inc."
+        reason: Registry WHOIS confirms the domain exists and is delegated to Spaceship nameservers
+        target_contact: false
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "https://ausecurity.best 200 nginx/1.22.1 title=Ausecurity — GRC Consulting & Penetration Testing"
+        reason: Live HTTPS site matches the supplied organization identity
+        target_contact: true
+
+subdomains:
+  - asset: www.ausecurity.best
+    status: confirmed
+    confidence: 95
+    classification: company_owned
+    parent: ausecurity.best
+    resolved_ips:
+      - 51.79.166.148
+    notes: Serves the same homepage as the apex on the same IP. TLS certificate CN=ausecurity.best is host-mismatched for www.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "www.ausecurity.best A 51.79.166.148"
+        reason: Public DNS A record under the confirmed root
+        target_contact: true
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "https://www.ausecurity.best 200 nginx/1.22.1 same title/body as apex"
+        reason: Live site is the official marketing site
+        target_contact: true
+  - asset: contact.ausecurity.best
+    status: confirmed
+    confidence: 92
+    classification: company_owned
+    parent: ausecurity.best
+    resolved_ips:
+      - 51.79.166.148
+    notes: DNS A record plus official JS field h=contact.ausecurity.best. Currently serves the same apex homepage (ETag 6a9e3d1f-3546). TLS certificate is host-mismatched (CN=ausecurity.best only).
+    evidence:
+      - source: official_js
+        source_type: http_validation
+        observed_value: 'h: "contact.ausecurity.best"'
+        reason: Hostname hardcoded in official https://ausecurity.best/assets/js/main.js contact form payload
+        target_contact: true
+      - source: dig
+        source_type: dns
+        observed_value: "contact.ausecurity.best A 51.79.166.148"
+        reason: Public DNS A record under the confirmed root
+        target_contact: true
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "https://contact.ausecurity.best 200 nginx/1.22.1 title=Ausecurity — GRC Consulting & Penetration Testing"
+        reason: Live HTTPS response on the confirmed root's IP
+        target_contact: true
+  - asset: blog.ausecurity.best
+    status: confirmed
+    confidence: 93
+    classification: company_owned
+    parent: ausecurity.best
+    resolved_ips:
+      - 51.79.167.208
+    notes: Separate OVH VPS from the apex. WordPress site titled AuSecurity. Default "Hello world!" post present.
+    evidence:
+      - source: subfinder
+        source_type: passive_osint
+        observed_value: blog.ausecurity.best
+        reason: Passive subdomain of the confirmed root
+        target_contact: false
+      - source: certspotter
+        source_type: passive_osint
+        observed_value: "CT issuance dns_names=['blog.ausecurity.best'] not_before=2026-09-07T03:17:14Z"
+        reason: Certificate Transparency name on the confirmed root
+        target_contact: false
+      - source: dig
+        source_type: dns
+        observed_value: "blog.ausecurity.best A 51.79.167.208"
+        reason: Public DNS A record
+        target_contact: true
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "https://blog.ausecurity.best 200 Apache/2.4.68 (Debian) title=AuSecurity WordPress"
+        reason: Live site branding matches the organization
+        target_contact: true
+      - source: shodan
+        source_type: passive_osint
+        observed_value: "51.79.167.208 hostname blog.ausecurity.best cert CN=blog.ausecurity.best"
+        reason: Independent passive observation of the same hostname/IP
+        target_contact: false
+  - asset: ticket.ausecurity.best
+    status: confirmed
+    confidence: 92
+    classification: company_owned
+    parent: ausecurity.best
+    resolved_ips:
+      - 51.79.166.209
+    notes: Separate OVH VPS. HTTPS 302 to /setup/install.php (osTicket v1.18.4 installer). Let's Encrypt certificate CN=ticket.ausecurity.best.
+    evidence:
+      - source: subfinder
+        source_type: passive_osint
+        observed_value: ticket.ausecurity.best
+        reason: Passive subdomain of the confirmed root
+        target_contact: false
+      - source: certspotter
+        source_type: passive_osint
+        observed_value: "CT issuance dns_names=['ticket.ausecurity.best'] not_before=2026-09-14T15:46:12Z"
+        reason: Certificate Transparency name on the confirmed root
+        target_contact: false
+      - source: dig
+        source_type: dns
+        observed_value: "ticket.ausecurity.best A 51.79.166.209"
+        reason: Public DNS A record
+        target_contact: true
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "https://ticket.ausecurity.best 302 Location=/setup/install.php nginx/1.22.1 PHP/8.2.33"
+        reason: Live HTTPS service on a distinct IP under the confirmed root
+        target_contact: true
+      - source: urlscan.io
+        source_type: passive_osint
+        observed_value: "https://ticket.ausecurity.best/setup/install.php 51.79.166.209 title=osTicket Installer"
+        reason: Independent public crawl corroborates the hostname and IP
+        target_contact: false
+
+websites:
+  - asset: https://ausecurity.best/
+    status: confirmed
+    confidence: 98
+    classification: company_owned
+    host: ausecurity.best
+    ip: 51.79.166.148
+    http_status: 200
+    title: "Ausecurity — GRC Consulting & Penetration Testing"
+    server: nginx/1.22.1
+    tls:
+      issuer: CN=ausecurity.best
+      subject: CN=ausecurity.best
+      san:
+        - ausecurity.best
+      self_signed: true
+      not_before: "2026-09-14T15:32:18Z"
+      not_after: "2027-09-14T15:32:18Z"
+      sha256: b53010e032e74210e4b1f068a0c5b2a20bf644c1f33292874d1c6407148d14e2
+    technologies:
+      - nginx/1.22.1
+    observed_same_origin_paths_from_official_js:
+      - /login
+      - /login.html
+      - /dashboard
+      - /dashboard.html
+      - /api/auth/me
+      - /api/auth/login
+      - /api/auth/logout
+      - /api/contact
+    notes: Paths listed were referenced in official JS only; they were not crawled, fuzzed, or authenticated against.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "200 nginx/1.22.1 title=Ausecurity — GRC Consulting & Penetration Testing content_length=13638"
+        reason: Live official website
+        target_contact: true
+  - asset: https://www.ausecurity.best/
+    status: confirmed
+    confidence: 95
+    classification: company_owned
+    host: www.ausecurity.best
+    ip: 51.79.166.148
+    http_status: 200
+    title: "Ausecurity — GRC Consulting & Penetration Testing"
+    server: nginx/1.22.1
+    tls_host_mismatch: true
+    evidence:
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "200 same title/body as apex"
+        reason: Live www alias of the official site
+        target_contact: true
+  - asset: https://contact.ausecurity.best/
+    status: confirmed
+    confidence: 92
+    classification: company_owned
+    host: contact.ausecurity.best
+    ip: 51.79.166.148
+    http_status: 200
+    title: "Ausecurity — GRC Consulting & Penetration Testing"
+    server: nginx/1.22.1
+    tls_host_mismatch: true
+    notes: Currently appears to be a name-based alias of the apex homepage rather than a distinct app.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "200 nginx/1.22.1 ETag=6a9e3d1f-3546 content_length=13638"
+        reason: Live HTTPS site on confirmed subdomain
+        target_contact: true
+  - asset: https://blog.ausecurity.best/
+    status: confirmed
+    confidence: 93
+    classification: company_owned
+    host: blog.ausecurity.best
+    ip: 51.79.167.208
+    http_status: 200
+    title: AuSecurity
+    server: Apache/2.4.68 (Debian)
+    tls:
+      issuer: "CN=YE1, O=Let's Encrypt, C=US"
+      subject: CN=blog.ausecurity.best
+      san:
+        - blog.ausecurity.best
+      self_signed: false
+    technologies_detected_by_httpx:
+      - Apache HTTP Server:2.4.68
+      - Debian
+      - PHP
+      - MySQL
+      - WordPress:7.1.2
+      - theme hello-elementor
+    shodan_passive_http_80:
+      server: Apache/2.4.68 (Debian)
+      title: AuSecurity
+      link: 'http://blog.ausecurity.best/index.php/wp-json/'
+    notes: Default WordPress hello-world content. Shodan previously also saw nginx/1.22.1 on 443 with a default nginx page; current HTTPS is Apache WordPress.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "200 Apache/2.4.68 title=AuSecurity"
+        reason: Live WordPress site branded AuSecurity
+        target_contact: true
+      - source: shodan
+        source_type: passive_osint
+        observed_value: "port 80 Apache title AuSecurity; port 443 cert CN=blog.ausecurity.best"
+        reason: Passive observation of the blog host
+        target_contact: false
+  - asset: https://ticket.ausecurity.best/
+    status: confirmed
+    confidence: 92
+    classification: company_owned
+    host: ticket.ausecurity.best
+    ip: 51.79.166.209
+    http_status: 302
+    redirect: /setup/install.php
+    title_at_redirect_target: osTicket Installer
+    server: nginx/1.22.1
+    x_powered_by: PHP/8.2.33
+    tls:
+      issuer: "CN=YE1, O=Let's Encrypt, C=US"
+      subject: CN=ticket.ausecurity.best
+      san:
+        - ticket.ausecurity.best
+      self_signed: false
+      not_before: "2026-09-14T15:46:12Z"
+      not_after: "2026-12-13T15:46:11Z"
+    notes: Public osTicket v1.18.4 installer is reachable. Installer was not submitted; no credentials attempted.
+    evidence:
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "302 Location=/setup/install.php nginx/1.22.1 PHP/8.2.33"
+        reason: Live ticket hostname
+        target_contact: true
+      - source: curl
+        source_type: http_validation
+        observed_value: "GET /setup/install.php 200 title=osTicket Installer Installing osTicket v1.18.4"
+        reason: Redirect target is a public installer page
+        target_contact: true
+
+ip_addresses:
+  - asset: 51.79.166.148
+    status: confirmed
+    confidence: 96
+    classification: company_controlled_on_third_party_cloud
+    hosting: OVH VPS (Singapore)
+    ptr: vps-10f1e4c3.vps.ovh.ca
+    hosts:
+      - ausecurity.best
+      - www.ausecurity.best
+      - contact.ausecurity.best
+    passively_or_directly_observed_tcp_ports:
+      - 80
+      - 443
+    notes: Do not treat other names on this VPS provider network as in-scope. PTR is OVH infrastructure, not a company domain.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "ausecurity.best/www/contact A 51.79.166.148"
+        reason: Confirmed hostnames resolve here
+        target_contact: true
+      - source: ipinfo.io
+        source_type: passive_osint
+        observed_value: "org=AS16276 OVH SAS hostname=vps-10f1e4c3.vps.ovh.ca country=SG"
+        reason: Hosting/ASN attribution
+        target_contact: false
+      - source: httpx-toolkit
+        source_type: http_validation
+        observed_value: "host_ip=51.79.166.148 for official site"
+        reason: HTTP validation reached this IP
+        target_contact: true
+  - asset: 51.79.166.209
+    status: confirmed
+    confidence: 92
+    classification: company_controlled_on_third_party_cloud
+    hosting: OVH VPS (Singapore)
+    ptr: vps-91287016.vps.ovh.ca
+    hosts:
+      - ticket.ausecurity.best
+    passively_or_directly_observed_tcp_ports:
+      - 22
+      - 80
+      - 443
+    port_evidence:
+      - port: 22
+        source: shodan
+        product: OpenSSH 9.2p1 Debian 2+deb12u10
+        target_contact: false
+      - port: 443
+        source: httpx-toolkit
+        product: nginx/1.22.1
+        target_contact: true
+      - port: 80
+        source: httpx-toolkit
+        note: HTTP input followed to HTTPS
+        target_contact: true
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "ticket.ausecurity.best A 51.79.166.209"
+        reason: Confirmed subdomain resolves here
+        target_contact: true
+      - source: shodan
+        source_type: passive_osint
+        observed_value: "51.79.166.209 OpenSSH 9.2p1 org=OVH Singapore PTE. LTD"
+        reason: Passive host record for the ticket VPS
+        target_contact: false
+      - source: ipinfo.io
+        source_type: passive_osint
+        observed_value: "org=AS16276 OVH SAS hostname=vps-91287016.vps.ovh.ca country=SG"
+        reason: Hosting/ASN attribution
+        target_contact: false
+  - asset: 51.79.167.208
+    status: confirmed
+    confidence: 93
+    classification: company_controlled_on_third_party_cloud
+    hosting: OVH VPS (Singapore)
+    ptr: vps-d64a720c.vps.ovh.ca
+    hosts:
+      - blog.ausecurity.best
+    passively_or_directly_observed_tcp_ports:
+      - 22
+      - 80
+      - 443
+    port_evidence:
+      - port: 22
+        source: shodan
+        product: OpenSSH 9.2p1 Debian 2+deb12u10
+        target_contact: false
+      - port: 80
+        source: shodan
+        product: Apache httpd 2.4.68 title=AuSecurity
+        target_contact: false
+      - port: 443
+        source: httpx-toolkit
+        product: Apache/2.4.68 (Debian)
+        target_contact: true
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "blog.ausecurity.best A 51.79.167.208"
+        reason: Confirmed subdomain resolves here
+        target_contact: true
+      - source: shodan
+        source_type: passive_osint
+        observed_value: "hostnames=vps-d64a720c.vps.ovh.ca;blog.ausecurity.best"
+        reason: Passive host record binds this IP to the blog hostname
+        target_contact: false
+
+asns:
+  - asset: AS16276
+    status: confirmed
+    confidence: 90
+    classification: third_party_cloud
+    as_name: OVH
+    org: OVH SAS / OVH Singapore PTE. LTD
+    role: Hosting provider for the three confirmed VPS addresses
+    not_company_owned: true
+    evidence:
+      - source: ipinfo.io
+        source_type: passive_osint
+        observed_value: "org=AS16276 OVH SAS"
+        reason: All three confirmed IPs are announced/hosted in AS16276
+        target_contact: false
+      - source: whois
+        source_type: rdap_whois
+        observed_value: "aut-num AS16276 as-name OVH org ORG-OS3-RIPE"
+        reason: RIPE ASN record
+        target_contact: false
+
+netblocks:
+  - asset: 51.79.164.0/22
+    status: confirmed
+    confidence: 88
+    classification: third_party_cloud_containing_block
+    name: VPS-SGP2
+    handle: NET-51-79-164-0-1
+    registrant: OVH Singapore PTE. LTD
+    start: 51.79.164.0
+    end: 51.79.167.255
+    contains_confirmed_ips:
+      - 51.79.166.148
+      - 51.79.166.209
+      - 51.79.167.208
+    not_company_owned: true
+    do_not_expand: true
+    notes: Provider assignment covering many unrelated OVH VPS customers. Only the three resolved IPs above are attributed to AuSecurity.
+    evidence:
+      - source: rdap.org
+        source_type: rdap_whois
+        observed_value: "NET-51-79-164-0-1 VPS-SGP2 51.79.164.0/22 OVH Singapore PTE. LTD"
+        reason: ARIN RDAP assignment covering the confirmed IPs
+        target_contact: false
+
+dns_mail_infrastructure:
+  - asset: launch1.spaceship.net
+    status: confirmed
+    confidence: 90
+    classification: third_party
+    role: nameserver
+    resolved_ip_observed: 162.159.26.38
+    notes: Registrar/Spaceship DNS (Cloudflare anycast IP). Not a company-owned attack target.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "ausecurity.best NS launch1.spaceship.net."
+        reason: Published NS for the confirmed root
+        target_contact: true
+  - asset: launch2.spaceship.net
+    status: confirmed
+    confidence: 90
+    classification: third_party
+    role: nameserver
+    resolved_ip_observed: 162.159.27.32
+    notes: Registrar/Spaceship DNS (Cloudflare anycast IP). Not a company-owned attack target.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "ausecurity.best NS launch2.spaceship.net."
+        reason: Published NS for the confirmed root
+        target_contact: true
+  - asset: soa_mbox
+    status: confirmed
+    confidence: 80
+    classification: third_party
+    role: soa_contact
+    observed_value: support.spaceship.com
+    notes: SOA mailbox is the registrar, not company mail.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "SOA launch1.spaceship.net. support.spaceship.com."
+        reason: SOA record on the confirmed root
+        target_contact: true
+  mail:
+    mx_records: []
+    txt_records: []
+    spf: absent
+    dmarc: absent
+    published_email: info@ausecurity.best
+    notes: Contact pages advertise info@ausecurity.best but the domain has no MX, SPF, or DMARC records. No company mail infrastructure was identified.
+
+cloud_cdn_third_party:
+  - asset: OVH VPS Singapore
+    classification: third_party_cloud
+    role: compute/hosting
+    related_ips:
+      - 51.79.166.148
+      - 51.79.166.209
+      - 51.79.167.208
+    evidence:
+      - source: ptr_and_rdap
+        source_type: rdap_whois
+        observed_value: vps-*.vps.ovh.ca / VPS-SGP2
+        reason: PTR and RDAP identify OVH VPS product
+        target_contact: false
+  - asset: fonts.googleapis.com / fonts.gstatic.com
+    classification: third_party
+    role: frontend_cdn
+    notes: Loaded by the official homepage. Not company-owned.
+    evidence:
+      - source: homepage
+        source_type: http_validation
+        observed_value: https://fonts.googleapis.com/css2?family=Inter
+        reason: Third-party font URLs in official HTML
+        target_contact: true
+  - asset: Let's Encrypt
+    classification: third_party
+    role: certificate_authority
+    notes: Issues certificates for blog.ausecurity.best and ticket.ausecurity.best. Not an attack target.
+  - asset: Google Maps listing
+    classification: third_party
+    role: business_directory
+    url: https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m
+    notes: Supplied listing URL. Not company-owned infrastructure.
+    evidence:
+      - source: input
+        source_type: input
+        observed_value: https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m
+        reason: Engagement-supplied Google Maps URL
+        target_contact: false
+
+rejected_candidates:
+  - asset: ausecurity.com.au
+    status: rejected
+    confidence: 10
+    classification: lookalike_third_party
+    reason: Different organization "AU Security and Communications" (Moreton Bay), registrant Russell Morgan / Morgan Family Trust ABN 52 647 032 384, physical CCTV/alarms business. Do not include.
+    evidence:
+      - source: whois
+        source_type: rdap_whois
+        observed_value: "Registrant: RUSSELL MORGAN THE TRUSTEE FOR MORGAN FAMILY TRUST / Eligibility ID ABN 52647032384"
+        reason: auDA WHOIS shows unrelated registrant
+        target_contact: false
+      - source: curl
+        source_type: http_validation
+        observed_value: "title=AU Security and Communications; Moreton Bay; 0413 960 979"
+        reason: Live site is a distinct physical-security company
+        target_contact: true
+  - asset: ausecurity.com
+    status: rejected
+    confidence: 15
+    classification: lookalike_unrelated
+    reason: Older .com (created 2003), Netregistry/Webcentral, registrant state VIC. HTTPS currently 404. No evidence tying it to this AuSecurity / ausecurity.best.
+    evidence:
+      - source: whois
+        source_type: rdap_whois
+        observed_value: "Created 2003-06-27 registrar Webcentral/Netregistry registrant VIC"
+        reason: Long-standing unrelated registration
+        target_contact: false
+      - source: curl
+        source_type: http_validation
+        observed_value: "https://ausecurity.com/ 404 page not found"
+        reason: No organization content to attribute
+        target_contact: true
+  - asset: ausecurity.net
+    status: rejected
+    confidence: 10
+    classification: lookalike_third_party
+    reason: Live site is "Access Unlimited & Security, Inc." with contact@ausecurity.net and US phone 509.241.0563.
+    evidence:
+      - source: curl
+        source_type: http_validation
+        observed_value: "title=Access Unlimited & Security, Inc. | Technology at its best"
+        reason: Distinct US company
+        target_contact: true
+  - asset: vps-10f1e4c3.vps.ovh.ca
+    status: rejected
+    confidence: 20
+    classification: third_party
+    reason: OVH-assigned PTR for 51.79.166.148. Provider hostname, not a company domain. Do not expand to other vps.ovh.ca hosts.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "148.166.79.51.in-addr.arpa PTR vps-10f1e4c3.vps.ovh.ca."
+        reason: Provider reverse DNS
+        target_contact: true
+  - asset: vps-91287016.vps.ovh.ca
+    status: rejected
+    confidence: 20
+    classification: third_party
+    reason: OVH PTR for 51.79.166.209 only.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "209.166.79.51.in-addr.arpa PTR vps-91287016.vps.ovh.ca."
+        reason: Provider reverse DNS
+        target_contact: true
+  - asset: vps-d64a720c.vps.ovh.ca
+    status: rejected
+    confidence: 20
+    classification: third_party
+    reason: OVH PTR for 51.79.167.208 only.
+    evidence:
+      - source: dig
+        source_type: dns
+        observed_value: "208.167.79.51.in-addr.arpa PTR vps-d64a720c.vps.ovh.ca."
+        reason: Provider reverse DNS
+        target_contact: true
+  - asset: flinders.edu.au / dinh0087@flinders.edu.au
+    status: rejected
+    confidence: 5
+    classification: out_of_scope_third_party
+    reason: Owner contact mailbox at Flinders University is not a company asset.
+    evidence:
+      - source: input
+        source_type: input
+        observed_value: dinh0087@flinders.edu.au
+        reason: Explicitly excluded by engagement rules
+        target_contact: false
+  - asset: jane@acmecorp.com
+    status: rejected
+    confidence: 5
+    classification: placeholder
+    reason: Appears as sample form text on contact.html, not a company mailbox.
+    evidence:
+      - source: contact.html
+        source_type: http_validation
+        observed_value: jane@acmecorp.com
+        reason: Placeholder/example email in page source
+        target_contact: true
+  - asset: 51.79.164.0/22 remainder
+    status: rejected
+    confidence: 5
+    classification: third_party_shared_hosting
+    reason: Shared OVH VPS assignment. Co-tenancy on the /22 is not ownership evidence.
+    evidence:
+      - source: scope_rule
+        source_type: input
+        observed_value: "Do not expand scope from a shared hosting IP, CDN address, or netblock alone"
+        reason: Operating rule
+        target_contact: false
+
+warnings:
+  - Ambiguous longevity: newly registered 2026 domain versus website claims of 2009 founding; treat technical assets of ausecurity.best as in-scope, not the lookalike AU Security companies.
+  - Published ABN 00 000 000 000 is invalid; cannot corroborate a legal entity via ABR.
+  - Published phone +61 2 9000 1234 is likely a placeholder.
+  - No MX/SPF/DMARC; advertised info@ausecurity.best has no visible mail path.
+  - Apex/www/contact present a self-signed certificate (CN=ausecurity.best only).
+  - ticket.ausecurity.best exposes an osTicket installer; recorded as an asset/surface only, not a validated finding.
+  - Do not expand from OVH PTR names, Spaceship/Cloudflare nameserver IPs, Google Fonts, or the VPS-SGP2 /22.
+  - Reverse DNS lookups on the three IPs did not reveal additional customer hostnames.
+  - Common-name probes (mail, api, login, dashboard, ftp, etc.) returned no extra live DNS names besides those listed.
+  - Google Maps listing could not be fully parsed without JavaScript.
+  - Shodan CVE list for 51.79.167.208 was not promoted; it is scanner noise, not verified findings.
+
+summary_counts:
+  root_domains_confirmed: 1
+  subdomains_confirmed: 4
+  websites_confirmed: 5
+  ip_addresses_confirmed: 3
+  asns_recorded: 1
+  netblocks_recorded: 1
+  dns_mail_third_party: 3
+  rejected_candidates: 9
+  likely: 0
+  candidate: 0
+  company_owned_hosts:
+    - ausecurity.best
+    - www.ausecurity.best
+    - contact.ausecurity.best
+    - blog.ausecurity.best
+    - ticket.ausecurity.best
+  company_controlled_ips:
+    - 51.79.166.148
+    - 51.79.166.209
+    - 51.79.167.208

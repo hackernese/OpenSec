@@ -1,0 +1,12 @@
+{
+  "user": {
+    "created_at": "2026-10-04T12:51:11.197606+00:00",
+    "email": "admin@thedownundernews.it.com",
+    "first_name": "Site",
+    "id": 1,
+    "is_active": true,
+    "last_name": "Administrator",
+    "role": "admin",
+    "username": "admin"
+  }
+}

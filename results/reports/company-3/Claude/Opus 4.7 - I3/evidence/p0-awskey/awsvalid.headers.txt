@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 04:19:59 GMT
+Content-Type: text/javascript
+Content-Length: 5298
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Last-Modified: Mon, 14 Sep 2026 14:47:51 GMT
+ETag: "14b2-65b7284b333c0"
+Accept-Ranges: bytes
+Vary: Accept-Encoding
+

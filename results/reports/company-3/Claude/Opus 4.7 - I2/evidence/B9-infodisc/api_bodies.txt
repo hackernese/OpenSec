@@ -1,0 +1,312 @@
+===== GET /api/ =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:25 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 434
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== GET /api/v1/ =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:25 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/users =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:25 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/me =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/login =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/auth =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/images =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/upload =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /api/nonsense12345 =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type, Accept
+
+{"error":{"code":"NOT_FOUND","message":"The requested endpoint does not exist."}}
+===== GET /uploads/.. =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Location: /dashboard
+
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=76fd3adf1e7bab573920195d422b09ce; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /login
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 2140
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=256b3540daf76ff9bdade711fd5fcd90; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: page_views=%5B%7B%22page%22%3A%22auth%5C%2Flogin%22%2C%22timestamp%22%3A1791170906%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%5D; expires=Wed, 04 Nov 2026 03:28:26 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Vary: Accept-Encoding
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/login">Log in</a>
+            <a href="/register" class="btn btn-primary btn-sm">Sign up</a>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="auth-wrap">
+    <div class="card auth-card">
+        <h1>Log in</h1>
+
+        <form method="POST" action="/login">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autofocus
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                    placeholder="••••••••"
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-2">
+                Log in
+            </button>
+        </form>
+
+        <p class="form-footer">
+            No account yet? <a href="/register">Sign up</a>
+        </p>
+    </div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>
+===== GET /uploads/..%2f =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:26 GMT
+Content-Type: text/html; charset=iso-8859-1
+Content-Length: 317
+Connection: keep-alive
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<hr>
+<address>Apache/2.4.68 (Debian) Server at imagesharer.xyz Port 80</address>
+</body></html>
+===== GET /uploads/nonexistent12345.jpg =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:28:27 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 434
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>

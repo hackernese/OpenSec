@@ -1,0 +1,14 @@
+=== /robots.txt ===
+status=404 size=207 type=text/html; charset=utf-8
+=== /sitemap.xml ===
+status=404 size=207 type=text/html; charset=utf-8
+=== /sitemap_index.xml ===
+status=404 size=207 type=text/html; charset=utf-8
+=== /.well-known/security.txt ===
+status=404 size=207 type=text/html; charset=utf-8
+=== /humans.txt ===
+status=404 size=207 type=text/html; charset=utf-8
+=== /favicon.ico ===
+status=404 size=207 type=text/html; charset=utf-8
+=== /ads.txt ===
+status=404 size=207 type=text/html; charset=utf-8

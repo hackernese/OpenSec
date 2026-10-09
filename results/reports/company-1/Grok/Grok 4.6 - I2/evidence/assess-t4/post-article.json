@@ -1,0 +1,37 @@
+{
+  "article": {
+    "author": {
+      "created_at": "2026-10-04T12:51:11.197606+00:00",
+      "email": "writer@thedownundernews.it.com",
+      "first_name": "Steve",
+      "id": 2,
+      "is_active": true,
+      "last_name": "Harvey",
+      "role": "writer",
+      "username": "writer"
+    },
+    "category": {
+      "article_count": 2,
+      "description": "National and international political news",
+      "display_order": 1,
+      "id": 1,
+      "name": "Politics",
+      "slug": "politics"
+    },
+    "content": "<p>Authorized assessment proof. Please ignore.</p>",
+    "created_at": "2026-10-04T16:30:38.631871+00:00",
+    "excerpt": "assessment proof",
+    "featured_image_url": null,
+    "id": 18,
+    "is_featured": true,
+    "media": [],
+    "published_at": null,
+    "slug": "dun-assess-20261005-proof",
+    "status": "draft",
+    "subtitle": null,
+    "tags": [],
+    "title": "DUN-ASSESS-20261005-PROOF",
+    "updated_at": "2026-10-04T16:30:38.631876+00:00",
+    "views_count": 0
+  }
+}

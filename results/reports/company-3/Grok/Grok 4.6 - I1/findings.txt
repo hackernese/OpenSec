@@ -1,0 +1,237 @@
+# Finding: Public S3 bucket lists and serves private images
+Severity: critical
+CVSS:
+Affected: filesharer-research.s3.ap-southeast-2.amazonaws.com; https://imagesharer.xyz/ (image storage)
+References: https://owasp.org/www-community/vulnerabilities/Insecure_Storage; https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
+
+Summary:
+Anyone on the internet can list files in Imagur's image bucket and download them, including images marked Private.
+
+Description:
+Uploaded images are stored in Amazon S3 bucket filesharer-research in region ap-southeast-2, under predictable keys users/<user-uuid>/<image-uuid>.png. An unauthenticated GET of the bucket root returned ListBucket XML (HTTP 200), including objects belonging to more than one user. An unauthenticated GET of our own test object returned HTTP 200 and the PNG bytes, with no signature required. The same unsigned GET succeeded for an image uploaded with is_public=false. The website correctly sent unauthenticated browsers away from the private image page, but the file is still readable on S3. Business impact: customer photos that users believe are private can be discovered and downloaded by anyone who knows or lists the bucket.
+
+Recommendation:
+Turn on S3 Block Public Access. Make the bucket private. Serve files only through short-lived presigned URLs or a backend proxy. Disable listing. Review existing objects for exposure and rotate any affected links.
+
+---
+
+# Finding: AWS access keys published in public JavaScript
+Severity: critical
+CVSS:
+Affected: https://imagesharer.xyz/js/awsvalid.js
+References: https://owasp.org/www-community/vulnerabilities/Use_of_hard-coded_cryptographic_key
+
+Summary:
+A publicly downloadable script on the website contains live-looking AWS access-key material that matches the key id used to sign customer image URLs.
+
+Description:
+https://imagesharer.xyz/js/awsvalid.js is reachable without login (HTTP 200, text/javascript). It implements AWS Signature Version 4 and STS GetCallerIdentity. Comments in that file include access key id AKIAQHQ6PGM62T2FFPGU and a secret access key. The same access key id appears in X-Amz-Credential on production S3 URLs issued by the application for uploaded images. The secret itself is not repeated here. Anyone who fetches the script can impersonate this AWS principal until the key is rotated. Business impact: attackers may read or change cloud data, run up billing, or use the account for further abuse.
+
+Recommendation:
+Disable and rotate the exposed access key immediately in IAM. Remove awsvalid.js from the public site. Store credentials only in server-side secrets, not in browser code. Search the account for other long-lived keys and enable CloudTrail alerts on root/IAM key use.
+
+---
+
+# Finding: Upload form trusts client-supplied user_id (IDOR)
+Severity: high
+CVSS:
+Affected: https://imagesharer.xyz/images/upload
+References: https://owasp.org/www-community/attacks/Unvalidated_Redirects_and_Forwards; https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html
+
+Summary:
+A logged-in user can attach an upload to someone else's account by changing a hidden user id.
+
+Description:
+The authenticated upload form includes a hidden field user_id set to the current user's UUID. That value is accepted by POST /images/upload. Using assessment account A, we uploaded a benign 1x1 PNG with user_id set to assessment account B (25e88807-77e6-4363-a5c0-9790d7eeaa3f). The server returned 302 to a new image id. The image then appeared on B's dashboard and not on A's. No CSRF token is required. Business impact: an attacker can plant content in another customer's library, or clutter/abuse another account.
+
+Recommendation:
+Ignore client-supplied user_id. Bind ownership only from the server session. Add authorization checks on create/update/delete. Add CSRF protection.
+
+---
+
+# Finding: Stored cross-site scripting via image filename
+Severity: high
+CVSS:
+Affected: https://imagesharer.xyz/images/upload; https://imagesharer.xyz/dashboard; public image pages under /images/<id>
+References: https://owasp.org/www-community/attacks/xss/
+
+Summary:
+A crafted image filename is stored and later shown as HTML, which can run script in other people's browsers.
+
+Description:
+Uploading a PNG whose filename contained "><svg onload=alert(1)>.png succeeded. The unencoded SVG markup was present in subsequent HTML for the uploader dashboard and for the public image page (title/body). Anyone who opens that public image page can execute script in the Imager origin. Combined with PHPSESSID missing HttpOnly, this can steal sessions. Business impact: account takeover, fake pages, or actions as the victim.
+
+Recommendation:
+Treat filenames as untrusted text. HTML-encode on output. Restrict filename characters. Prefer displaying a server-generated name. Set HttpOnly on the session cookie. Consider a strict Content-Security-Policy.
+
+---
+
+# Finding: Session cookie missing Secure, HttpOnly, and SameSite
+Severity: medium
+CVSS:
+Affected: https://imagesharer.xyz/ (PHPSESSID)
+References: https://owasp.org/www-community/controls/SecureCookieAttribute; https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
+
+Summary:
+The login session cookie can be sent over HTTP and read by script, and it is not restricted to same-site requests.
+
+Description:
+Set-Cookie for PHPSESSID used Path=/ only. Flags Secure, HttpOnly, and SameSite were absent. A second cookie, page_views / last_login, did set Secure, HttpOnly, and SameSite=Lax. The site also issues HTTP 301 from https://imagesharer.xyz/css to http://imagesharer.xyz/css/, which is a path where a non-Secure session cookie would be transmitted in clear text. Business impact: session theft via XSS or network sniffing, and easier CSRF.
+
+Recommendation:
+Set PHPSESSID with Secure; HttpOnly; SameSite=Lax (or Strict). Use HTTPS only. Do not redirect HTTPS requests to HTTP.
+
+---
+
+# Finding: No CSRF protection on account and upload actions
+Severity: medium
+CVSS:
+Affected: https://imagesharer.xyz/register; https://imagesharer.xyz/login; https://imagesharer.xyz/images/upload; https://imagesharer.xyz/profile/avatar; https://imagesharer.xyz/logout
+References: https://owasp.org/www-community/attacks/csrf
+
+Summary:
+Important forms have no anti-CSRF token, and the session cookie lacks SameSite, so other websites can try to submit those forms as a logged-in user.
+
+Description:
+Login, register, image upload, avatar upload, and logout forms had no hidden CSRF token. Registration succeeded with a simple POST of email and password. Upload and avatar accept multipart POST with only the visible fields. PHPSESSID has no SameSite flag. Business impact: a malicious page could change a signed-in customer's avatar, upload files, or log them out.
+
+Recommendation:
+Add per-session CSRF tokens and verify them server-side. Set SameSite on the session cookie. Require re-authentication for sensitive changes.
+
+---
+
+# Finding: PostgreSQL reachable on the public internet
+Severity: medium
+CVSS:
+Affected: 51.161.131.44:5432
+References: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+
+Summary:
+The database port on the website server accepts connections from the internet.
+
+Description:
+Port scan of the approved origin 51.161.131.44 showed 5432/tcp open. The service speaks PostgreSQL protocol 3. A single unauthenticated client attempt was rejected with "fe_sendauth: no password supplied" — password authentication is required. No passwords were guessed. The port still should not be public. Verbose application SQL errors (see related finding) confirm PostgreSQL is used by Imager. Business impact: attackers can keep trying to log in to the database from anywhere if a password is weak or later leaked.
+
+Recommendation:
+Bind PostgreSQL to localhost or a private network. Restrict with firewall/security group to 51.161.131.44:5432 from nowhere on the internet. Require strong credentials and TLS.
+
+---
+
+# Finding: SQL errors disclose database and source-file details
+Severity: medium
+CVSS:
+Affected: https://imagesharer.xyz/images/upload
+References: https://owasp.org/www-community/Improper_Error_Handling
+
+Summary:
+Invalid input returns a raw PostgreSQL error and an internal PHP file path.
+
+Description:
+POST /images/upload with user_id equal to a valid UUID plus a single quote returned HTTP 500. The body included SQLSTATE[22P02] (invalid UUID syntax) and CONTEXT pointing at ImagesService.php:71. This is error disclosure, not a demonstrated SQL injection. Business impact: helps attackers map internals and tune further attacks.
+
+Recommendation:
+Show a generic error to users. Log details server-side only. Disable debug in production.
+
+---
+
+# Finding: SSH allows password logins from the internet
+Severity: low
+CVSS:
+Affected: 51.161.131.44:22
+References:
+
+Summary:
+The server's remote-admin service accepts password authentication from the internet.
+
+Description:
+OpenSSH 10.0p2 is on 51.161.131.44:22. ssh-auth-methods reported publickey and password. Algorithms observed were modern. No login attempts were made. Combined with a public IP, password SSH increases lockout/brute-force risk (not tested). Business impact: if an admin password is weak, the whole server can be taken over.
+
+Recommendation:
+Disable PasswordAuthentication. Use keys only. Restrict SSH by firewall to admin IPs. Keep fail2ban or equivalent.
+
+---
+
+# Finding: Extra Apache site on port 8080
+Severity: low
+CVSS:
+Affected: 51.161.131.44:8080; http://imagesharer.xyz:8080/
+References:
+
+Summary:
+The same PHP app is also exposed on an extra Apache port, increasing the attack surface.
+
+Description:
+Port 8080 serves Apache/2.4.68 (Debian) with PHP/8.2.33 and redirects to /dashboard, same Imager app as nginx on 80/443. HTTPS is not offered on 8080. Business impact: a second, less-polished entry point if nginx rules and Apache rules differ.
+
+Recommendation:
+Close 8080 on the firewall unless required. If needed internally, bind to localhost.
+
+---
+
+# Finding: HTTPS directories redirect to HTTP
+Severity: low
+CVSS:
+Affected: https://imagesharer.xyz/css; https://imagesharer.xyz/js; https://imagesharer.xyz/uploads
+References:
+
+Summary:
+Some HTTPS URLs send the browser to HTTP before sending them back to HTTPS.
+
+Description:
+GET https://imagesharer.xyz/css returned 301 Location: http://imagesharer.xyz/css/. The HTTP URL then 301s back to HTTPS. Directory URLs /js and /uploads behaved the same. This mixed redirect can expose non-Secure cookies on the HTTP hop. Business impact: session or request data may be visible on the network.
+
+Recommendation:
+Redirect only to HTTPS. Enable HSTS. Fix trailing-slash redirects to stay on HTTPS.
+
+---
+
+# Finding: www hostname certificate name mismatch
+Severity: low
+CVSS:
+Affected: https://www.imagesharer.xyz/
+References:
+
+Summary:
+Browsers reject HTTPS for www because the certificate only names imagesharer.xyz.
+
+Description:
+curl to https://www.imagesharer.xyz/login failed with subjectAltName not matching www.imagesharer.xyz. The Let's Encrypt certificate SAN is only imagesharer.xyz. DNS for www points at the same origin. Business impact: customers who type www see a certificate warning or cannot connect.
+
+Recommendation:
+Reissue the certificate with both imagesharer.xyz and www.imagesharer.xyz, or redirect www on HTTP only after a valid cert exists.
+
+---
+
+# Finding: CloudFront hostname uses the wrong TLS certificate
+Severity: low
+CVSS:
+Affected: https://resources.imagesharer.xyz/
+References:
+
+Summary:
+The resources hostname does not present a certificate for resources.imagesharer.xyz.
+
+Description:
+Strict TLS to https://resources.imagesharer.xyz/ fails (certificate subject mismatch; CloudFront default *.cloudfront.net). The distribution d273uevi0662l0.cloudfront.net is the CNAME target. With verification skipped, requests returned CloudFront 403; icon.ico was not readable. Business impact: browsers will not trust this hostname; leftover references cannot load securely.
+
+Recommendation:
+Attach a matching certificate (ACM) for resources.imagesharer.xyz, or stop using that hostname. Do not leave commented production asset hosts misconfigured.
+
+---
+
+# Finding: Server and framework versions leaked
+Severity: info
+CVSS:
+Affected: https://imagesharer.xyz/; http://51.161.131.44:8080/
+References:
+
+Summary:
+Responses tell the internet the exact web-server and PHP versions.
+
+Description:
+nginx responses include X-Powered-By: PHP/8.2.33. Apache 403 pages include "Apache/2.4.68 (Debian) Server at imagesharer.xyz Port 80" even when the front door is nginx. Business impact: easier targeting of known bugs; no exploit of those versions was demonstrated here.
+
+Recommendation:
+Hide X-Powered-By. Set Apache ServerTokens Prod and ServerSignature Off. Custom 403 pages.
+
+---

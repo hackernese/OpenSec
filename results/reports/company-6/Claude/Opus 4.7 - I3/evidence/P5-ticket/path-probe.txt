@@ -1,0 +1,39 @@
+=== GET /setup/install.php ===
+code=200 size=4825 loc= ctype=text/html; charset=UTF-8
+=== GET /setup/ ===
+code=200 size=4825 loc= ctype=text/html; charset=UTF-8
+=== GET /scp/login.php ===
+code=302 size=0 loc=https://ticket.ausecurity.best/setup/install.php ctype=text/html; charset=UTF-8
+=== GET /scp/ ===
+code=302 size=0 loc=https://ticket.ausecurity.best/setup/install.php ctype=text/html; charset=UTF-8
+=== GET /api/ ===
+code=302 size=0 loc=https://ticket.ausecurity.best/ ctype=text/html; charset=UTF-8
+=== GET /ajax.php ===
+code=302 size=0 loc=https://ticket.ausecurity.best/setup/install.php ctype=text/html; charset=UTF-8
+=== GET /file.php ===
+code=302 size=0 loc=https://ticket.ausecurity.best/setup/install.php ctype=text/html; charset=UTF-8
+=== GET /tickets.php ===
+code=302 size=0 loc=https://ticket.ausecurity.best/setup/install.php ctype=text/html; charset=UTF-8
+=== GET /login.php ===
+code=302 size=0 loc=https://ticket.ausecurity.best/setup/install.php ctype=text/html; charset=UTF-8
+=== GET /pwreset.php ===
+code=302 size=0 loc=https://ticket.ausecurity.best/setup/install.php ctype=text/html; charset=UTF-8
+=== GET /kb/ ===
+code=302 size=0 loc=https://ticket.ausecurity.best/setup/install.php ctype=text/html; charset=UTF-8
+=== GET /include/ ===
+code=403 size=327 loc= ctype=text/html; charset=iso-8859-1
+=== GET /include/class.config.php ===
+code=403 size=327 loc= ctype=text/html; charset=iso-8859-1
+=== GET /include/ost-config.php ===
+code=403 size=327 loc= ctype=text/html; charset=iso-8859-1
+=== GET /setup/inc/class.installer.php ===
+code=200 size=247 loc= ctype=text/html; charset=UTF-8
+=== GET /README.md ===
+code=404 size=324 loc= ctype=text/html; charset=iso-8859-1
+=== GET /CHANGELOG.md ===
+code=404 size=324 loc= ctype=text/html; charset=iso-8859-1
+=== GET /robots.txt ===
+code=404 size=324 loc= ctype=text/html; charset=iso-8859-1
+=== GET /sitemap.xml ===
+code=404 size=324 loc= ctype=text/html; charset=iso-8859-1
+=== GET /.git/HEAD ===

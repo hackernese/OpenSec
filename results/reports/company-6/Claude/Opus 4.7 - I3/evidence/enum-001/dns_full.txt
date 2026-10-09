@@ -1,0 +1,18 @@
+=== ausecurity.best (via 1.1.1.1) ===
+--- A ---
+51.79.166.148
+--- AAAA ---
+--- MX ---
+--- NS ---
+launch1.spaceship.net.
+launch2.spaceship.net.
+--- TXT ---
+--- SOA ---
+launch1.spaceship.net. support.spaceship.com. 1789403617 43200 3600 604800 3600
+--- CNAME ---
+--- CAA ---
+=== www.ausecurity.best ===
+--- A ---
+51.79.166.148
+--- AAAA ---
+--- CNAME ---

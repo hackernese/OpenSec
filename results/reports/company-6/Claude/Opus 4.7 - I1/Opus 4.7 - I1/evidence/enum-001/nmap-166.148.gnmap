@@ -1,0 +1,4 @@
+# Nmap 7.99 scan initiated Fri Sep 18 12:21:06 2026 as: /usr/lib/nmap/nmap --privileged -Pn -p- --min-rate 2000 -T4 -oG nmap-166.148.gnmap 51.79.166.148
+Host: 51.79.166.148 (vps-10f1e4c3.vps.ovh.ca)	Status: Up
+Host: 51.79.166.148 (vps-10f1e4c3.vps.ovh.ca)	Ports: 22/open/tcp//ssh///, 80/open/tcp//http///, 443/open/tcp//https///, 8080/open/tcp//http-proxy///	Ignored State: filtered (65531)
+# Nmap done at Fri Sep 18 12:22:12 2026 -- 1 IP address (1 host up) scanned in 65.92 seconds

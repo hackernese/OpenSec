@@ -1,0 +1,18 @@
+===== Profile for A =====
+clawsec.a.1791171194@mailinator.com
+
+===== Upload form for A =====
+name="user_id" value="740532d8-b0f3-4cad-a69a-43a0de29a4c8"
+
+===== Profile for B =====
+clawsec.b.1791171194@mailinator.com
+
+===== Upload form for B =====
+name="user_id" value="0d542b4a-75de-4dc5-ac0b-35fed0279387"
+
+===== Profile for P =====
+clawsec.p.1791171194+tag@mailinator.com
+
+===== Upload form for P =====
+name="user_id" value="af2aaf5b-a196-49e6-bad2-a15f7851199c"
+

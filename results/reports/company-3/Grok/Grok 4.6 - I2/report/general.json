@@ -1,0 +1,82 @@
+{
+  "id": "24ee89d5-afda-473e-958e-faeed2c4e625",
+  "name": "Imagur",
+  "project_type": "dcb34ecf-3b6c-4537-82db-dcff557d83f1",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "override_finding_order": false,
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "status": "finished",
+      "data": {
+        "executive_summary": "# Executive Summary\n\n**Imagur** operates **Imager**, a public image-sharing website at https://imagesharer.xyz/. People can register, sign in, and upload private or public images. The site is hosted as PHP 8.2.34 on nginx.\n\nThis report covers an authorized security assessment of the main website only. Permission was confirmed on that site before work began. Testing ran on 4 October 2026.\n\n## Overall result\n\nThe assessment confirmed **11 findings**. The verified findings file rated them as **3 high**, **3 medium**, **3 low**, and **2 informational**. CVSS v3.1 vectors were copied unchanged from that file. In this report those vectors score as **1 critical**, **2 high**, **5 medium**, and **3 informational**: the public-script cloud-key vector scores 10.0; missing HSTS and the image-existence oracle score as medium; missing Content-Security-Policy has no vector and is shown as informational.\n\nThe most urgent issues are:\n\n1. **Cloud login keys in a public script.** Anyone can download a JavaScript file from the website that contains cloud access-key material. That file should be removed at once, and every key that has ever been in it should be replaced. The keys were not used against the cloud during this assessment, so live access was not confirmed.\n2. **Image filenames that can run script in the browser.** A signed-in user can upload an image whose filename includes HTML. When that image is opened, the browser can run the attacker’s script and steal the user’s login, because the session cookie is readable by script.\n3. **Uploads into another user’s private library.** The upload form trusts a hidden user ID from the browser. A signed-in user who knows another user’s ID can place files into that user’s private library.\n\nAlso fix the session cookie flags, stop HTTPS pages from redirecting to HTTP, and stop showing raw database errors to users.\n\n## What this means for the business\n\n* Cloud keys in a public file are a high-priority incident-response item even if they later prove unused. Treat them as exposed until they are rotated.\n* A visitor who is signed in can be tricked into running attacker script on the image page, which can take over that session.\n* One customer can modify another customer’s private library without consent.\n* Weak cookie flags and HTTPS-to-HTTP redirects increase the chance that a login cookie is sent in the clear.\n\n## Recommended priority order\n\n1. Remove `/js/awsvalid.js` from the website and rotate every AWS access key that has ever been in that file.\n2. Encode image filenames before showing them, and set the session cookie to HttpOnly (and Secure / SameSite).\n3. Ignore client-supplied `user_id` on upload and bind files to the signed-in account on the server.\n4. Return generic errors instead of raw database messages; keep HTTPS redirects on HTTPS; enable HSTS.\n5. Address the remaining low and informational items in the next maintenance cycle (image-ID oracle, Content-Security-Policy, PHP version header, and the unused email-verification hint).\n\nWe did not test extra server ports or the file-storage cloud account, because those were left out of scope by the owner.\n"
+      }
+    },
+    {
+      "id": "scope",
+      "status": "finished",
+      "data": {
+        "scope": "This assessment covered only the owner-approved main website. Authorization was confirmed on that site on 4 October 2026 before testing. Active testing ran from 22:40 UTC to 23:05 UTC the same day.\n\n**In scope (owner approved)**\n\n| System | Description |\n|:---|:---|\n| https://imagesharer.xyz/ | Main Imager website (apex host and application paths only) |\n| imagesharer.xyz | Apex domain of the approved website |\n\n**Enumerated but owner-excluded (inventory only; not tested)**\n\n* www.imagesharer.xyz\n* resources.imagesharer.xyz\n* CloudFront d273uevi0662l0.cloudfront.net and likely S3 origin\n* Origin IP 51.161.131.44 extra ports, including TCP 5432\n* cataierc.com (shared IP; owner said not theirs)\n* OVH netblock remainder, Spaceship DNS, Flinders University email infrastructure\n* Lookalike domains (including imager.xyz, imagur.xyz, fshare.xyz, and others)\n* FShare Google Maps listing\n\n**Enumerated related assets (not in the approved test set)**\n\n* confirmed org inventory: imagesharer.xyz, www.imagesharer.xyz, resources.imagesharer.xyz, 51.161.131.44\n* cloud inventory: CloudFront distribution for resources, likely S3 origin, public JavaScript indicating AWS IAM\n* rejected: cataierc.com, imager.xyz, imagur.xyz, fshare.xyz, other lookalikes\n\n**Allowed methods**\n\nUnauthenticated and single test-account web testing, directory discovery, non-destructive injection, and ReDoS.\n\n**Forbidden methods**\n\nBrute force, credential stuffing, password spraying, DDoS, malware, phishing, MFA bypass, lateral movement, destructive actions, and using leaked cloud keys against AWS.\n",
+        "start_date": "2026-10-04",
+        "end_date": "2026-10-04",
+        "duration": "Less than 1 person-day",
+        "provided_users": "No owner-supplied staff accounts were used. Authenticated tests used two tester-created accounts only. Account passwords are not included in this report.\n"
+      }
+    },
+    {
+      "id": "customer",
+      "status": "finished",
+      "data": {
+        "customer_name": "Imagur",
+        "customer_address": {
+          "city": "Glengowrie SA 5044, Australia",
+          "street": "132 Morphett Rd"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "status": "finished",
+      "data": {
+        "title": "Imagur Vulnerability Assessment Report",
+        "report_date": "2026-10-04",
+        "report_version": "1.0",
+        "list_of_changes": [
+          {
+            "date": "2026-10-04",
+            "description": "Final report",
+            "version": "1.0"
+          }
+        ],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "status": "finished",
+      "data": {
+        "appendix_sections": [
+          {
+            "title": "Methodology",
+            "content": "The assessment followed a phased, non-destructive methodology:\n\n1. Authorization check on the main public-facing website before any testing.\n2. OSINT and HTTP enumeration of company-related assets.\n3. Owner confirmation of in-scope versus excluded assets.\n4. Mapping of login, register, dashboard, profile, upload, image detail, and logout on https://imagesharer.xyz/.\n5. Review of JSON API endpoints `/api/v1/health` and `/api/v1/images`.\n6. Authenticated testing with two tester-created accounts only.\n7. Targeted, non-destructive checks (directory discovery, injection, ReDoS).\n\nNo brute force, credential stuffing, password spraying, denial-of-service, malware, phishing, MFA bypass, lateral movement, or destructive changes were used. Leaked cloud keys were not invoked against AWS.\n"
+          },
+          {
+            "title": "Limitations",
+            "content": "The following limitations apply to this assessment:\n\n* Certificate Transparency was unavailable, so extra subdomains may exist.\n* Direct testing of S3/CloudFront and the database port was out of scope.\n* AWS keys found in public JavaScript were not invoked.\n* No brute-force of logins was performed.\n* Testing was performed from a single vantage point on 4 October 2026 (22:40–23:05 UTC).\n* Third-party infrastructure (OVH remainder, Spaceship DNS, Flinders University email, lookalike domains, FShare Google Maps listing) was excluded.\n"
+          },
+          {
+            "title": "Coverage",
+            "content": "Coverage on the approved website included:\n\n* Login, register, dashboard, profile, upload, image detail, and logout\n* JSON API `/api/v1/health` and `/api/v1/images`\n* Confirmed findings recorded in findings.txt: 11 total (3 high, 3 medium, 3 low, 2 informational)\n\nThe following were mapped as inventory only and were not actively tested, by owner exclusion: www.imagesharer.xyz, resources.imagesharer.xyz, CloudFront, origin extra ports including TCP 5432, cataierc.com, OVH netblock remainder, Spaceship DNS, Flinders University email infrastructure, lookalike domains, and the FShare Google Maps listing.\n"
+          }
+        ]
+      }
+    }
+  ]
+}

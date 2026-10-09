@@ -1,0 +1,17 @@
+# Nmap 7.99 scan initiated Mon Oct  5 00:47:56 2026 as: /usr/lib/nmap/nmap --privileged -sS -sV -sC -Pn -p 80,443 --script "default and not brute and not dos and not intrusive" --script-args "http.useragent=Mozilla/5.0 ClawSec-Assessment" --max-rate 100 -oN /home/research/Projects/DownUnderNewsz/evidence/T11/nmap_51.161.130.70.txt 51.161.130.70
+Nmap scan report for vps-8d3f63bd.vps.ovh.ca (51.161.130.70)
+Host is up (0.026s latency).
+
+PORT    STATE SERVICE  VERSION
+80/tcp  open  http     nginx
+|_http-title: Did not follow redirect to https://vps-8d3f63bd.vps.ovh.ca/
+443/tcp open  ssl/http nginx
+|_ssl-date: TLS randomness does not represent time
+|_http-title: The Down Under News \xE2\x80\x93 Australia's Independent Online Newspaper
+| ssl-cert: Subject: commonName=www.thedownundernews.online
+| Subject Alternative Name: DNS:www.thedownundernews.online
+| Not valid before: 2026-10-04T11:51:02
+|_Not valid after:  2027-01-02T11:51:01
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Oct  5 00:48:16 2026 -- 1 IP address (1 host up) scanned in 19.17 seconds

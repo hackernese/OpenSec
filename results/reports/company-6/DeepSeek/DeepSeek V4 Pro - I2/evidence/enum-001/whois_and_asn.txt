@@ -1,0 +1,34 @@
+WHOIS / ASN observations (2026-10-06)
+
+Domain ausecurity.best:
+  Registrar: Spaceship, Inc. (IANA 3862)
+  Creation Date: 2026-08-04
+  Registry Expiry: 2027-08-04
+  Status: clientTransferProhibited
+  DNSSEC: signedDelegation
+  Registrant: Privacy service (WITHHELD FOR PRIVACY LLC), Delaware, US
+  Nameservers: launch1/launch2.spaceship.net
+
+IP infrastructure (all OVH, AS16276 OVH SAS, region Singapore):
+  51.79.166.148 -> vps-10f1e4c3.vps.ovh.ca  (main + www)
+  51.79.167.208 -> vps-d64a720c.vps.ovh.ca  (blog)
+  51.79.166.209 -> vps-91287016.vps.ovh.ca  (ticket)
+
+  org: AS16276 OVH SAS
+  city/country: Singapore / SG
+  Netblock: 51.79.0.0/16 (routes 51.79.0.0/17 + 51.79.128.0/17 advertised by AS16276)
+
+Sibling domain checks (NOT owned by AuSecurity - parked/squatted/unrelated):
+  ausecurity.com    -> 139.99.130.38       (HTTP/2 404, text/plain)
+  ausecurity.net    -> 108.167.140.175     (Apache parked page)
+  ausecurity.org    -> 76.223.54.146, 13.248.169.48 (parked)
+  ausecurity.io     -> 52.60.87.163        (no response)
+  ausecurity.co     -> 52.60.87.163        (no response)
+  ausecurity.com.au -> no A record
+  ausecurity.au     -> no A record
+
+Subdomain discovery results:
+  subfinder: blog.ausecurity.best, ticket.ausecurity.best
+  dnsx (dnsmap wordlist): no additional hosts
+  amass passive: no additional hosts
+  crt.sh: no CT entries (self-signed cert)

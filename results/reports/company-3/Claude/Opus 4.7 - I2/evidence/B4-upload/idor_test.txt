@@ -1,0 +1,376 @@
+===== A dashboard full HTML =====
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Images — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>My Images</h1>
+    <a href="/images/upload" class="btn btn-primary">+ Upload image</a>
+</div>
+
+    <p class="text-muted mb-2">1 image</p>
+
+    <div class="image-grid mt-2">
+                    <div class="image-card">
+                <a href="/images/26985279-5c79-43d6-9e1c-37ebc4ae9571">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/26985279-5c79-43d6-9e1c-37ebc4ae9571.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033557Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=93973a59f6f922c610356a73b47f741a265193ace05bf3d66f6a2d7d9485ac54"
+                        alt="clawsec_A_normal.jpg"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">clawsec_A_normal.jpg</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+            </div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>
+
+===== B dashboard full HTML =====
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Images — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>My Images</h1>
+    <a href="/images/upload" class="btn btn-primary">+ Upload image</a>
+</div>
+
+    <p class="text-muted mb-2">1 image</p>
+
+    <div class="image-grid mt-2">
+                    <div class="image-card">
+                <a href="/images/fb7b20b2-3743-4824-b119-461501096203">
+                    <img
+                        class="image-thumb"
+                        src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/0d542b4a-75de-4dc5-ac0b-35fed0279387/fb7b20b2-3743-4824-b119-461501096203.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033557Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=b5d3495ddd428f2ae61b47bd1ca76c5b9b42b24bedbe68dc98d1e2ee3b2f5343"
+                        alt="clawsec_bola_test.jpg"
+                        loading="lazy"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="image-thumb-placeholder" style="display:none">🖼️</div>
+                </a>
+                <div class="image-meta">
+                    <span class="filename">clawsec_bola_test.jpg</span>
+                    <span class="badge badge-private">
+                        🔒 Private                    </span>
+                </div>
+            </div>
+            </div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>
+
+===== A views /images/$IMG_A (own image, private) =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 03:35:57 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 5619
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: page_views=%5B%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171196%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171196%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22profile%5C%2Fshow%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22images%5C%2Fupload%22%2C%22timestamp%22%3A1791171249%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22profile%5C%2Fshow%22%2C%22timestamp%22%3A1791171281%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22images%5C%2Fupload%22%2C%22timestamp%22%3A1791171281%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171318%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171357%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22images%5C%2Fshow%22%2C%22timestamp%22%3A1791171357%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%5D; expires=Wed, 04 Nov 2026 03:35:57 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Vary: Accept-Encoding
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clawsec_A_normal.jpg — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>clawsec_A_normal.jpg</h1>
+            <a href="/dashboard" class="btn btn-ghost btn-sm">← My images</a>
+    </div>
+
+<div class="detail-grid">
+
+    <!-- ── Image preview ──────────────────────────────────────────────────── -->
+    <div>
+        <img
+            class="detail-image"
+            src="https://filesharer-research.s3.ap-southeast-2.amazonaws.com/users/740532d8-b0f3-4cad-a69a-43a0de29a4c8/26985279-5c79-43d6-9e1c-37ebc4ae9571.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAQHQ6PGM62T2FFPGU%2F20261005%2Fap-southeast-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20261005T033557Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=900&amp;X-Amz-Signature=93973a59f6f922c610356a73b47f741a265193ace05bf3d66f6a2d7d9485ac54"
+            alt="clawsec_A_normal.jpg"
+            onerror="this.style.background='#e5e7eb';this.alt='Image unavailable';"
+        >
+    </div>
+
+    <!-- ── Metadata + actions ─────────────────────────────────────────────── -->
+    <div class="detail-panel">
+
+        <!-- Metadata -->
+        <div class="card" style="padding:1.25rem">
+            <h2>Details</h2>
+            <div class="meta-row">
+                <span>Filename</span>
+                <span>clawsec_A_normal.jpg</span>
+            </div>
+            <div class="meta-row">
+                <span>Type</span>
+                <span>image/jpeg</span>
+            </div>
+            <div class="meta-row">
+                <span>Size</span>
+
+===== B views /images/$IMG_A (A private image, cross-user IDOR) =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:35:57 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /dashboard
+
+
+===== Unauth views /images/$IMG_A =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:35:58 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=09cd5ba105f2210cbc4619cc01fe42d5; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /dashboard
+
+
+===== A views /images/$IMG_BOLA (image A uploaded with B uid) =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:35:58 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /dashboard
+
+
+===== B views /images/$IMG_BOLA =====
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 05 Oct 2026 03:35:58 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 5710
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: page_views=%5B%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171197%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171197%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22profile%5C%2Fshow%22%2C%22timestamp%22%3A1791171282%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22images%5C%2Fupload%22%2C%22timestamp%22%3A1791171282%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171318%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791171357%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22images%5C%2Fshow%22%2C%22timestamp%22%3A1791171358%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%2C%22referer%22%3A%22%22%7D%5D; expires=Wed, 04 Nov 2026 03:35:58 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Vary: Accept-Encoding
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clawsec_bola_test.jpg — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+
+===== Try DELETE /images/$IMG_A as B (unauth owner) =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:35:58 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 434
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== Try PATCH /images/$IMG_A as B =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:35:58 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 434
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>
+===== Try POST /images/$IMG_A/delete as B =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:35:58 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/26985279-5c79-43d6-9e1c-37ebc4ae9571
+

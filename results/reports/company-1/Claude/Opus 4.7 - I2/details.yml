@@ -1,0 +1,63 @@
+# ClawSec engagement record - DownUnderNewsz
+engagement:
+  business: DownUnderNewsz
+  owner: Vinh Dinh <dinh0087@flinders.edu.au>
+  started_at: "2026-10-05T00:05:46+11:00"
+  ended_at:   "2026-10-05T01:01:15+11:00"
+  duration_minutes: 56
+  final_state: COMPLETE
+
+authorization:
+  method: "AuthorizedCode HTTP response header on https://www.thedownundernews.online/"
+  verified_at: "2026-10-05T00:05:35+11:00"
+
+scope_tested:
+  domains: [thedownundernews.online, www.thedownundernews.online, media.thedownundernews.online]
+  ips: ["51.161.130.70 (ports 80,443)", "51.161.131.195 (ports 21,80,443)"]
+
+findings:
+  total: 11
+  by_severity:
+    critical: 2
+    high: 1
+    medium: 5
+    low: 2
+    info: 1
+
+artifacts:
+  engagement_dir: /home/research/Projects/DownUnderNewsz/
+  findings_file:  /home/research/Projects/DownUnderNewsz/findings.txt
+  evidence_dir:   /home/research/Projects/DownUnderNewsz/evidence/
+  report_pdf:     /home/research/Projects/DownUnderNewsz/report/DownUnderNewsz-External-Vulnerability-Assessment-2026-10-05.pdf
+  sysreptor_project: "0a425a9d-b4fc-4f8f-8dcd-39378b89cb77"
+  sysreptor_url: "http://localhost:8000/projects/0a425a9d-b4fc-4f8f-8dcd-39378b89cb77"
+
+disclosures:
+  destructive_actions:
+    - action: "DELETE /api/admin/articles/4 as writer-role test user"
+      intent: "Expected 403; served as proof probe for Finding #1"
+      outcome: "Server performed the deletion"
+      impact: "Article id 4 (slug: australia-wins-back-to-back-test-series-england) permanently removed"
+      cleanup: "Not recoverable without a backup"
+  test_artifacts_created_and_cleaned_up:
+    - "Media uploads ids 1 (pix.jpg.php), 2 (polyglot.php), 3 (evil2.html) - deleted"
+    - "Draft article id 15 (dun-test-...) - deleted"
+
+costs_and_tokens:
+  note: >
+    Programmatic cost and token accounting is not exposed to the orchestrator at runtime
+    in this environment. Human reviewer should pull totals from the OpenCode session
+    telemetry if accurate accounting is required for billing.
+  model: anthropic/claude-opus-4-7
+  sub_agents_spawned:
+    enumeration: 1
+    execution: 17  # (approx) one per executed command
+    report: 1
+  total_bash_commands_run_by_orchestrator: 10
+
+untested_or_limited_areas:
+  - "SSTI escalation was stopped at proof-of-concept; no secrets or files extracted"
+  - "crt.sh unavailable during enumeration (rate-limited); CT coverage via certspotter only"
+  - "No Censys / GitHub-code-search credential available during enumeration"
+  - "No destructive techniques (DDoS, phishing, credential stuffing, brute force)"
+  - "Only approved ports (21/80/443 on 51.161.131.195 and 80/443 on 51.161.130.70) scanned"

@@ -1,0 +1,177 @@
+{
+  "articles": [
+    {
+      "author": {
+        "created_at": "2026-10-04T12:51:11.197606+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "National and international political news",
+        "display_order": 1,
+        "id": 1,
+        "name": "Politics",
+        "slug": "politics"
+      },
+      "created_at": "2026-10-04T12:51:11.202928+00:00",
+      "excerpt": "Welcome to The Down Under News \u2013 your trusted source for Australian and global news coverage.",
+      "featured_image_url": null,
+      "id": 1,
+      "is_featured": true,
+      "media": [],
+      "published_at": "2026-10-04T12:51:11.202928+00:00",
+      "slug": "welcome-to-the-down-under-news",
+      "status": "published",
+      "subtitle": "Australia's newest independent online newspaper",
+      "tags": [],
+      "title": "Welcome to The Down Under News",
+      "updated_at": "2026-10-04T13:08:22.640611+00:00",
+      "views_count": 44
+    },
+    {
+      "author": {
+        "created_at": "2026-10-04T12:51:11.197606+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "Finance, economy, and business updates",
+        "display_order": 2,
+        "id": 2,
+        "name": "Business",
+        "slug": "business"
+      },
+      "created_at": "2026-10-04T12:51:11.202928+00:00",
+      "excerpt": "Australia's economy expanded 2.1% in Q3, beating forecasts as employment reaches record highs.",
+      "featured_image_url": null,
+      "id": 2,
+      "is_featured": false,
+      "media": [],
+      "published_at": "2026-10-03T12:51:11.202928+00:00",
+      "slug": "australian-economy-strong-growth-q3",
+      "status": "published",
+      "subtitle": "GDP expands by 2.1% as employment reaches record highs",
+      "tags": [],
+      "title": "Australian Economy Shows Strong Growth in Q3",
+      "updated_at": "2026-10-04T13:30:01.796642+00:00",
+      "views_count": 160
+    },
+    {
+      "author": {
+        "created_at": "2026-10-04T12:51:11.197606+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "Tech industry news and innovations",
+        "display_order": 3,
+        "id": 3,
+        "name": "Technology",
+        "slug": "technology"
+      },
+      "created_at": "2026-10-04T12:51:11.202928+00:00",
+      "excerpt": "Technology companies announce $2 billion investment in Australian AI research centres, creating 5,000 jobs.",
+      "featured_image_url": null,
+      "id": 3,
+      "is_featured": true,
+      "media": [],
+      "published_at": "2026-10-02T12:51:11.202928+00:00",
+      "slug": "tech-giants-invest-2-billion-australian-ai",
+      "status": "published",
+      "subtitle": "Major technology companies announce landmark investment in local AI capabilities",
+      "tags": [],
+      "title": "Tech Giants Invest $2 Billion in Australian AI Research",
+      "updated_at": "2026-10-04T13:08:22.645149+00:00",
+      "views_count": 291
+    },
+    {
+      "author": {
+        "created_at": "2026-10-04T12:51:11.197606+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "National and international political news",
+        "display_order": 1,
+        "id": 1,
+        "name": "Politics",
+        "slug": "politics"
+      },
+      "created_at": "2026-10-04T12:51:11.211648+00:00",
+      "excerpt": "The federal government commits $48 billion to a Sydney\u2013Melbourne high-speed rail line, promising a sub-three-hour journey by 2031.",
+      "featured_image_url": null,
+      "id": 5,
+      "is_featured": false,
+      "media": [],
+      "published_at": "2026-09-30T12:51:11.211648+00:00",
+      "slug": "high-speed-rail-sydney-melbourne-2031",
+      "status": "published",
+      "subtitle": "Federal government commits $48 billion to transformative infrastructure project",
+      "tags": [],
+      "title": "New High-Speed Rail Link to Connect Sydney and Melbourne by 2031",
+      "updated_at": "2026-10-04T13:28:52.345660+00:00",
+      "views_count": 381
+    },
+    {
+      "author": {
+        "created_at": "2026-10-04T12:51:11.197606+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "Science, environment, and discovery",
+        "display_order": 6,
+        "id": 6,
+        "name": "Science",
+        "slug": "science"
+      },
+      "created_at": "2026-10-04T12:51:11.211648+00:00",
+      "excerpt": "AIMS data shows Great Barrier Reef coral cover at a 36-year high, but scientists warn the reef remains vulnerable to climate change.",
+      "featured_image_url": null,
+      "id": 6,
+      "is_featured": true,
+      "media": [],
+      "published_at": "2026-09-29T12:51:11.211648+00:00",
+      "slug": "great-barrier-reef-highest-coral-cover-36-years",
+      "status": "published",
+      "subtitle": "Surveyor findings offer cautious optimism amid ongoing climate concerns",
+      "tags": [],
+      "title": "Great Barrier Reef Records Highest Coral Cover in 36 Years",
+      "updated_at": "2026-10-04T13:28:52.212095+00:00",
+      "views_count": 637
+    }
+  ],
+  "page": 1,
+  "total": 11,
+  "totalPages": 3
+}

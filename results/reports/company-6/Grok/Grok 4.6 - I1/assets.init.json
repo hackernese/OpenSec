@@ -1,0 +1,309 @@
+{
+  "task_id": "enum-20260918-ausecurity",
+  "observed_at": "2026-09-18T07:47:00Z",
+  "company": {
+    "canonical_name": "AuSecurity",
+    "aliases": ["Au Security", "Ausecurity"],
+    "official_website": "https://ausecurity.best/",
+    "root_domains": ["ausecurity.best"],
+    "address": "63 Paddington St, Paddington NSW 2021, Australia",
+    "country": "Australia",
+    "published_contacts": {
+      "email": "info@ausecurity.best",
+      "phone_published": "+61 2 9000 1234",
+      "location_published": "Sydney, NSW, Australia",
+      "phone_note": "Published phone may be placeholder."
+    }
+  },
+  "warnings": [
+    "Apex TLS is self-signed (CN/SAN ausecurity.best only).",
+    "Historical CT shows Let's Encrypt for ausecurity.best and blog.ausecurity.best; live apex currently presents self-signed.",
+    "No MX, SPF, or DMARC records.",
+    "Entire OVH netblocks are provider-owned. Do not expand scope to neighbouring IPs.",
+    "Spaceship nameservers resolve to Cloudflare IPs; registrar/DNS/CDN are third-party.",
+    "Lookalike domains ausecurity.com, ausecurity.com.au, and ausecurity.net belong to other organisations.",
+    "Ticket apex HTTP 302 Location /setup/install.php observed on root GET; path was not followed.",
+    "Same-origin paths /login, /dashboard, /api/auth/*, /api/contact observed in main.js; not probed.",
+    "Shodan indexed blog IP with unrelated CVE banners; those are not enumeration assets or confirmed findings."
+  ],
+  "unavailable_sources": [
+    {"source": "amass", "reason": "Wrapper required sudo/password; passive enum did not run."},
+    {"source": "bgpview", "reason": "api.bgpview.io DNS resolution failed."},
+    {"source": "securitytrails", "reason": "API credential not present in environment."},
+    {"source": "virustotal", "reason": "API credential not present in environment."},
+    {"source": "censys", "reason": "API credential not present in environment."}
+  ],
+  "assets": [
+    {
+      "id": "dom-001",
+      "type": "root_domain",
+      "value": "ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 98,
+      "notes": "Official registrable domain from intake, live site, DNS, RDAP, and CT.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "sub-001",
+      "type": "subdomain",
+      "value": "www.ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 96,
+      "notes": "Direct A record to the same apex IP; serves the same homepage.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "sub-002",
+      "type": "subdomain",
+      "value": "blog.ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 94,
+      "notes": "Separate OVH VPS. WordPress on Apache/2.4.68.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "sub-003",
+      "type": "subdomain",
+      "value": "ticket.ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 93,
+      "notes": "Separate OVH VPS. nginx/1.22.1 + PHP/8.2.33. Root GET 302 to /setup/install.php (not followed).",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "sub-004",
+      "type": "subdomain",
+      "value": "contact.ausecurity.best",
+      "classification": "confirmed",
+      "confidence": 90,
+      "notes": "A record to apex IP; serves the same homepage. Cert SAN does not include this name.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "web-001",
+      "type": "website",
+      "value": "https://ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 98,
+      "notes": "Canonical site. HTTP/80 301 to HTTPS. nginx/1.22.1. Self-signed TLS.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "web-002",
+      "type": "website",
+      "value": "https://www.ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 96,
+      "notes": "Same content as apex. Certificate name mismatch.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "web-003",
+      "type": "website",
+      "value": "https://blog.ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 94,
+      "notes": "WordPress blog. Not crawled beyond homepage GET.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "web-004",
+      "type": "website",
+      "value": "https://ticket.ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 93,
+      "notes": "Live ticketing host. Root redirects to /setup/install.php; installer was not opened.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "web-005",
+      "type": "website",
+      "value": "https://contact.ausecurity.best/",
+      "classification": "confirmed",
+      "confidence": 90,
+      "notes": "Duplicate vhost of the apex homepage on the same IP.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "ip-001",
+      "type": "ip_address",
+      "value": "51.79.166.148",
+      "classification": "confirmed",
+      "confidence": 97,
+      "notes": "Hosts ausecurity.best, www, and contact. OVH Singapore VPS. Test this IP only, not neighbours.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "ip-002",
+      "type": "ip_address",
+      "value": "51.79.167.208",
+      "classification": "confirmed",
+      "confidence": 94,
+      "notes": "Dedicated blog VPS. Test this IP only, not neighbours.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "ip-003",
+      "type": "ip_address",
+      "value": "51.79.166.209",
+      "classification": "confirmed",
+      "confidence": 93,
+      "notes": "Dedicated ticket VPS. Test this IP only, not neighbours.",
+      "proposed_scope": "in"
+    },
+    {
+      "id": "asn-001",
+      "type": "asn",
+      "value": "AS16276",
+      "classification": "cloud_cdn",
+      "confidence": 95,
+      "notes": "OVH SAS provider ASN. Do not treat other AS16276 space as in-scope.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "net-001",
+      "type": "netblock",
+      "value": "51.79.164.0/22",
+      "classification": "cloud_cdn",
+      "confidence": 92,
+      "notes": "OVH Singapore VPS block. Whole block is NOT org-owned.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "net-002",
+      "type": "netblock",
+      "value": "51.79.128.0/17",
+      "classification": "cloud_cdn",
+      "confidence": 90,
+      "notes": "Parent OVH allocation. Exclude from testing.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "dns-001",
+      "type": "nameserver",
+      "value": "launch1.spaceship.net",
+      "classification": "third_party",
+      "confidence": 96,
+      "notes": "Spaceship registrar DNS / Cloudflare. Not org-controlled.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "dns-002",
+      "type": "nameserver",
+      "value": "launch2.spaceship.net",
+      "classification": "third_party",
+      "confidence": 96,
+      "notes": "Spaceship registrar DNS / Cloudflare. Not org-controlled.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "dns-003",
+      "type": "soa",
+      "value": "launch1.spaceship.net. support.spaceship.com.",
+      "classification": "third_party",
+      "confidence": 95,
+      "notes": "SOA mailbox is Spaceship support, not AuSecurity.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "tp-001",
+      "type": "hostname",
+      "value": "vps-10f1e4c3.vps.ovh.ca",
+      "classification": "third_party",
+      "confidence": 90,
+      "notes": "OVH generic PTR. Do not treat vps.ovh.ca as org domain.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "tp-002",
+      "type": "hostname",
+      "value": "vps-d64a720c.vps.ovh.ca",
+      "classification": "third_party",
+      "confidence": 90,
+      "notes": "OVH generic PTR for blog IP.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "tp-003",
+      "type": "hostname",
+      "value": "vps-91287016.vps.ovh.ca",
+      "classification": "third_party",
+      "confidence": 90,
+      "notes": "OVH generic PTR for ticket IP.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "tp-004",
+      "type": "website",
+      "value": "https://fonts.googleapis.com",
+      "classification": "third_party",
+      "confidence": 88,
+      "notes": "Google Fonts loaded by official pages.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "rej-001",
+      "type": "root_domain",
+      "value": "ausecurity.com.au",
+      "classification": "rejected",
+      "confidence": 15,
+      "notes": "Different Australian business AU Security and Communications.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "rej-002",
+      "type": "root_domain",
+      "value": "ausecurity.net",
+      "classification": "rejected",
+      "confidence": 12,
+      "notes": "Access Unlimited & Security, Inc. Unrelated lookalike.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "rej-003",
+      "type": "root_domain",
+      "value": "ausecurity.com",
+      "classification": "rejected",
+      "confidence": 18,
+      "notes": "Created 2003; no evidence tying it to this AuSecurity.",
+      "proposed_scope": "out"
+    },
+    {
+      "id": "rej-004",
+      "type": "domain",
+      "value": "flinders.edu.au",
+      "classification": "rejected",
+      "confidence": 5,
+      "notes": "Owner contact mailbox domain only. University infrastructure is out of scope.",
+      "proposed_scope": "out"
+    }
+  ],
+  "proposed_allowlist": [
+    "ausecurity.best",
+    "www.ausecurity.best",
+    "blog.ausecurity.best",
+    "ticket.ausecurity.best",
+    "contact.ausecurity.best",
+    "https://ausecurity.best/",
+    "https://www.ausecurity.best/",
+    "https://blog.ausecurity.best/",
+    "https://ticket.ausecurity.best/",
+    "https://contact.ausecurity.best/",
+    "51.79.166.148",
+    "51.79.167.208",
+    "51.79.166.209"
+  ],
+  "proposed_denylist": [
+    "AS16276 except the three confirmed IPs",
+    "51.79.164.0/22 except the three confirmed IPs",
+    "51.79.128.0/17 except the three confirmed IPs",
+    "launch1.spaceship.net",
+    "launch2.spaceship.net",
+    "vps.ovh.ca provider hostnames",
+    "fonts.googleapis.com",
+    "ausecurity.com.au",
+    "ausecurity.net",
+    "ausecurity.com",
+    "flinders.edu.au"
+  ]
+}

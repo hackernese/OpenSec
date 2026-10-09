@@ -1,0 +1,208 @@
+# Finding: Server-side template injection in search
+Severity: critical
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
+Affected: https://www.thedownundernews.online/search
+References: CWE-1336, CWE-94, OWASP A03:2021
+
+Summary:
+Anyone on the internet can type special search text that the website treats as programming instructions. This exposed internal application settings, including the site’s secret signing key, and could let an attacker take over the server.
+
+Description:
+The public search page interpolates the `q` parameter into a Jinja2 template context that is executed server-side rather than treated as plain text.
+Verified, non-destructive proofs:
+- `/search?q={{7*7}}` rendered the page title and results heading as `49` (saved evidence: evidence/assess-t9/search-ssti.html).
+- `/search?q={{7*'7'}}` rendered `7777777`.
+- `/search?q={{config.items()}}` rendered Flask configuration, including `DEBUG` set to `True` and the live `SECRET_KEY` value.
+The header search box still showed the raw query in one location, while the search results template evaluated it. Testing stopped after this minimum proof; no remote code execution payload was used. With a leaked secret key and template execution, an attacker could forge admin sessions and likely run operating-system commands.
+
+Recommendation:
+Stop rendering user input as a template. Pass the search query into the template as a data variable only, or use a precompiled template. Rotate the Flask SECRET_KEY and all sessions immediately. Disable DEBUG in production. Add a regression test that `{{7*7}}` is shown literally, not calculated.
+
+---
+
+# Finding: Flask debug mode enabled in production
+Severity: high
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N
+Affected: https://www.thedownundernews.online/
+References: CWE-489, CWE-215
+
+Summary:
+The live website is running in developer debug mode. That setting is meant for local testing and can leak internal errors and secrets.
+
+Description:
+The Flask `DEBUG` configuration value was observed as `True` through the search template-injection proof (`{{config.items()}}`). Debug mode can return detailed tracebacks, local variables, and interactive debugger access on errors. Combined with the template injection, this increases the chance of full application compromise. The secret key itself is not repeated in this report.
+
+Recommendation:
+Set `DEBUG=False` for the production deployment, ensure the secret key is loaded from a secured environment variable, and restart the application after rotating secrets.
+
+---
+
+# Finding: Session cookie missing Secure and SameSite flags
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:N
+Affected: https://www.thedownundernews.online/admin/login
+References: CWE-614, CWE-1275, OWASP A05:2021
+
+Summary:
+After login, the website stores the signed-in session in a cookie that is allowed to travel over unencrypted HTTP and has no SameSite restriction set by the server.
+
+Description:
+A successful login with an owner-provided dummy account issued `access_token_cookie`, a JWT (`alg: HS256`, `typ: JWT`, `type: access`) with `HttpOnly` and `Path=/` only. The `Secure` and `SameSite` attributes were absent. No CSRF cookie was issued. Port 80 is open and redirects to HTTPS, so a network attacker who can see HTTP requests could capture the session cookie. HttpOnly was present, which reduces simple JavaScript theft.
+
+Recommendation:
+Set the session cookie with `Secure`, `HttpOnly`, and `SameSite=Strict` (or `Lax` at minimum). Serve HTTPS only and enable HSTS. Recreate sessions after the secret key rotation.
+
+---
+
+# Finding: Missing CSRF protection on login and admin APIs
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N
+Affected: https://www.thedownundernews.online/admin/login, /api/admin/users, /api/admin/articles, /api/admin/media/upload, /api/admin/comments
+References: CWE-352, OWASP A01:2021
+
+Summary:
+Admin actions (save articles, create users, reset passwords, upload files, delete comments) can be triggered with the browser session cookie and no extra one-time form token.
+
+Description:
+The admin login form posts username and password to `/admin/login` with no CSRF token. Authenticated JavaScript uses `fetch(..., credentials: 'same-origin')` to `PUT`/`POST`/`DELETE` JSON admin APIs with only `Content-Type: application/json` and no CSRF header. Flask-JWT-Extended CSRF cookies were not present. Public article comments also POST with no token and are published immediately. Modern browsers may default unspecified SameSite to Lax, which reduces classic cross-site POST CSRF, but the application itself does not implement CSRF defenses.
+
+Recommendation:
+Issue per-session CSRF tokens and require them on all state-changing requests. For cookie-based JWT, enable Flask-JWT-Extended CSRF protection. Add SameSite on cookies. Require moderation for comments.
+
+---
+
+# Finding: Public articles API exposes staff account details
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+Affected: https://www.thedownundernews.online/api/articles
+References: CWE-200, CWE-359, OWASP A01:2021
+
+Summary:
+The public news API returns more staff information than a reader needs, including account email, username, role, and whether the account is active.
+
+Description:
+Unauthenticated GET `/api/articles` returns JSON with article objects whose `author` field includes `id`, `username`, `email`, `first_name`, `last_name`, `role`, `is_active`, and `created_at`. A live response included the admin username and an email on the `thedownundernews.it.com` domain. Passwords were not present. Related public endpoints `/api/categories` and `/api/search` are also reachable without authentication. This helps an attacker target staff accounts.
+
+Recommendation:
+Return only public author display names on unauthenticated APIs. Keep emails, account status, roles, and internal IDs for authenticated admin endpoints. Review all `/api/*` serializers.
+
+---
+
+# Finding: Application server exposed on port 5000
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N
+Affected: 51.161.130.70:5000
+References: CWE-16, CWE-668
+
+Summary:
+The Python application (Gunicorn) is reachable directly on port 5000, not only through the public nginx website on 80/443.
+
+Description:
+Nmap service detection identified Gunicorn on TCP 5000. `http://51.161.130.70:5000/` returned HTTP 200 with `Server: gunicorn` and the same news site. `/admin` and `/api/articles` were available on this port. This bypasses any future nginx-only controls (TLS, headers, IP allowlists) and expands the attack surface. Werkzeug interactive debugger was not observed on a missing path.
+
+Recommendation:
+Bind Gunicorn to localhost only and allow nginx to proxy it. Block port 5000 at the host firewall and security group. Confirm no other unexpected listeners remain.
+
+---
+
+# Finding: Missing HTTP security headers
+Severity: medium
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N
+Affected: https://www.thedownundernews.online/
+References: CWE-693, CWE-1021, OWASP A05:2021
+
+Summary:
+The website does not send standard browser security headers that help stop clickjacking, mixed content, and some cross-site script attacks.
+
+Description:
+HTTPS responses from nginx included no `Strict-Transport-Security`, `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, or `Permissions-Policy`. The site can be framed by another origin (clickjacking), browsers will not enforce HTTPS on later visits (no HSTS), and there is no CSP fallback even though template injection and script gadgets are a concern.
+
+Recommendation:
+Add HSTS (includeSubDomains), a strict CSP, `X-Frame-Options: DENY` or CSP `frame-ancestors 'none'`, `X-Content-Type-Options: nosniff`, and a conservative Referrer-Policy. Verify with securityheaders.com or equivalent after deployment.
+
+---
+
+# Finding: Unauthenticated comments publish immediately
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+Affected: https://www.thedownundernews.online/article/welcome-to-the-down-under-news
+References: CWE-799, CWE-352
+
+Summary:
+Anyone can post a comment on an article without signing in, and the site says it will show immediately.
+
+Description:
+The article page states “Your comment will appear immediately.” The form posts to `/article/<slug>/comment` with `author_name`, `author_email`, and `content` and no CSRF token. A previously posted comment was visible to the public. HTML in that comment was encoded in the page (so this is not stored XSS), but the feature still allows spam or defacement of the live newspaper without authentication or moderation. Admin comments showed no pending queue.
+
+Recommendation:
+Require login or a CAPTCHA, hold comments for moderation, add CSRF tokens and rate limiting, and avoid publishing visitor email addresses in admin views more widely than needed.
+
+---
+
+# Finding: TLS certificate does not cover the apex hostname
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N
+Affected: https://thedownundernews.online/
+References: CWE-295
+
+Summary:
+The encrypted certificate is only valid for www. Visitors who type the address without “www” get a certificate warning.
+
+Description:
+The live certificate CN/SAN is only `www.thedownundernews.online` (Let’s Encrypt, valid 2026-10-04 to 2027-01-02). `thedownundernews.online` resolves to the same IP and serves the site, but OpenSSL/curl report a name mismatch. Users may ignore the warning or fail to connect, and some clients will refuse the connection.
+
+Recommendation:
+Issue a certificate with both `thedownundernews.online` and `www.thedownundernews.online`, or redirect apex HTTP/HTTPS to www before TLS on the wrong name (for example with a separate matching cert or DNS-only redirect).
+
+---
+
+# Finding: No DMARC policy for the corporate domain
+Severity: low
+CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+Affected: thedownundernews.online
+References: CWE-284
+
+Summary:
+The domain has SPF via the registrar’s mail forwarding, but no DMARC record. Others can more easily send email that looks like it comes from this domain.
+
+Description:
+DNS for `thedownundernews.online` has `v=spf1 include:spf.efwd.spaceship.net ~all`. `_dmarc.thedownundernews.online` is NXDOMAIN. Mail hosts are registrar forwarding, not a company mail server. Missing DMARC weakens protection against spoofed mail to customers and partners.
+
+Recommendation:
+Publish a DMARC record starting with `p=none` and a rua mailbox, then move to `quarantine`/`reject` after reviewing reports. Keep SPF aligned.
+
+---
+
+# Finding: SSH reachable on the public web server
+Severity: info
+CVSS:
+Affected: 51.161.130.70:22
+References: CWE-668
+
+Summary:
+Remote administration (SSH) is open on the same public server that hosts the website.
+
+Description:
+Nmap showed OpenSSH 10.0p2 Debian 13 on TCP 22. No login guessing was performed. A current OpenSSH version reduces likely remote-code bugs, but a public SSH port is still a brute-force and exploit target if credentials or keys are weak.
+
+Recommendation:
+Restrict SSH to trusted IPs or a VPN/bastion, use key-only authentication, disable password logins, and keep the package updated.
+
+---
+
+# Finding: Contact form does not send messages
+Severity: info
+CVSS:
+Affected: https://www.thedownundernews.online/contact
+References:
+
+Summary:
+The contact page looks like it sends a message, but it only shows a thank-you note in the browser and never talks to the server.
+
+Description:
+The contact form handler calls `preventDefault()`, displays a success message, and resets the form. There is no POST to an API. Customers may believe a tip or correction was received when it was not. This is a reliability issue more than a classic exploit.
+
+Recommendation:
+Wire the form to a server endpoint with CSRF protection, validation, and spam controls, or remove the fake success message.
+
+---

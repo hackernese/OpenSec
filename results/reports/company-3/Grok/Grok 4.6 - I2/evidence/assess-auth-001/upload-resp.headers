@@ -1,0 +1,33 @@
+HTTP/1.1 302 Found
+Server: nginx
+Date: Sun, 04 Oct 2026 22:57:23 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /images/05949bdd-21a3-4860-8aba-857deeab7b50
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 04 Oct 2026 22:57:23 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 5650
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: page_views=%5B%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791154531%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22images%5C%2Fupload%22%2C%22timestamp%22%3A1791154585%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%2C%22referer%22%3A%22%22%7D%2C%7B%22page%22%3A%22images%5C%2Fshow%22%2C%22timestamp%22%3A1791154643%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%2C%22referer%22%3A%22%22%7D%5D; expires=Tue, 03 Nov 2026 22:57:23 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Vary: Accept-Encoding
+

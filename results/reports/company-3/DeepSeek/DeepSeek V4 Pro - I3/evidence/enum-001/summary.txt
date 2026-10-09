@@ -1,0 +1,56 @@
+Imagur (FShare / Image Sharer) — Enumeration evidence summary
+Task: enum-001 | Date: 2026-10-06 | Target: imagesharer.xyz
+
+=== DNS (dig) ===
+A       imagesharer.xyz        51.161.131.44
+AAAA    imagesharer.xyz        2405:dc00:0:3::33a1:832c
+NS      launch1.spaceship.net / launch2.spaceship.net (Spaceship, Inc.)
+SOA     launch1.spaceship.net support.spaceship.com
+MX      (none)
+TXT     (none)
+DNSSEC  signedDelegation (DS 61483 alg 13)
+CNAME   www  -> (none, direct A 51.161.131.44)
+CNAME   resources -> d273uevi0662l0.cloudfront.net (CloudFront)
+PTR     51.161.131.44 -> vps-ad2c3eab.vps.ovh.ca
+PTR     2405:dc00:... -> (none)
+Wildcard test: non-resolving (no wildcard)
+
+=== WHOIS domain ===
+imagesharer.xyz: created 2026-09-06, expires 2027-09-06
+Registrar: Spaceship, Inc. (IANA 3862), status: transferProhibited
+Registrant: privacy-protected (CentralNic)
+
+=== IP / ASN ===
+51.161.131.44 -> OVH Hosting Inc / OVH Australia PTY LTD
+  ASN AS16276 (OVH SAS, FR), netblock 51.161.128.0/17 (route), 51.161.0.0/16 (alloc)
+  RPKI: valid
+2405:dc00:0:3::33a1:832c -> Optus Internet Australia (2405:dc00::/32, OPTUSINTERNET-AU)
+
+=== TLS / CT ===
+Current cert: CN=imagesharer.xyz, Let's Encrypt YE1, SAN=[imagesharer.xyz], valid 2026-10-04..2027-01-02
+CertSpotter: 2 certs, both SAN=[imagesharer.xyz] only (no subdomains/wildcard)
+
+=== Shodan (passive) ===
+Host 51.161.131.44: 3 open ports (80, 443, 5432)
+  city Sydney AU, org OVH Australia PTY LTD, AS16276
+  80/tcp  nginx -> 301 redirect
+  443/tcp nginx -> "Log in — Imager" (PHP/8.2.x), PHPSESSID cookie
+  5432/tcp PostgreSQL 9.6.0+ -> "fe_sendauth: no password supplied"
+Hostnames on IP: imagesharer.xyz, vps-ad2c3eab.vps.ovh.ca
+
+=== HTTP validation (httpx-toolkit, low impact) ===
+https://imagesharer.xyz/     302 -> /dashboard -> /login (nginx, PHP 8.2.34)
+https://www.imagesharer.xyz/ 302 (nginx, cert mismatch: no SAN for www)
+https://resources.imagesharer.xyz/ 403 CloudFront "request could not be satisfied"
+  -> CNAME d273uevi0662l0.cloudfront.net, IP 13.32.126.107
+
+=== App fingerprint (from Shodan HTML) ===
+App: "Imager" (image sharing), routes: /login /register /dashboard, /css/app.css
+Referenced (commented out): https://resources.imagesharer.xyz/icon.ico, /js/awsvalid.js
+Favicon: Google gstatic (third-party)
+
+=== Tools ===
+subfinder: 0 subdomains (passive)
+amass passive: 0 (timed out / no sources)
+dnsx brute (top5000): resources.imagesharer.xyz, www.imagesharer.xyz
+crt.sh: 502 (unavailable); used CertSpotter instead

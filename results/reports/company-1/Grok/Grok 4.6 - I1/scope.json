@@ -1,0 +1,19 @@
+{
+  "allowlist_initial": [
+    "thedownundernews.online",
+    "www.thedownundernews.online"
+  ],
+  "allowlist_confirmed": [],
+  "denylist": [],
+  "third_party_exclusions": [],
+  "method_permissions": {
+    "passive_osint": true,
+    "active_recon": true,
+    "authenticated_web_testing": true,
+    "destructive": false,
+    "brute_force": false,
+    "phishing": false,
+    "social_engineering": false
+  },
+  "notes": "Full-scope assessment of assets attributable to DownUnderNewsz after owner validation of enumerated assets. Authorization recorded on apex public website only; other in-scope assets need not present the authorization header."
+}

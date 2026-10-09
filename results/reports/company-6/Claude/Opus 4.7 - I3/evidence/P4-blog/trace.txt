@@ -1,0 +1,7 @@
+HTTP/1.1 405 Method Not Allowed
+Date: Mon, 05 Oct 2026 11:00:07 GMT
+Server: Apache/2.4.68 (Debian)
+Allow: 
+Content-Length: 349
+Content-Type: text/html; charset=iso-8859-1
+

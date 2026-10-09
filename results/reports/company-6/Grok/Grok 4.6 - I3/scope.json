@@ -1,0 +1,43 @@
+{
+  "allowlist": [
+    "ausecurity.best",
+    "https://ausecurity.best/",
+    "http://ausecurity.best/"
+  ],
+  "denylist": [
+    "www.ausecurity.best",
+    "contact.ausecurity.best",
+    "blog.ausecurity.best",
+    "ticket.ausecurity.best",
+    "51.79.166.209",
+    "51.79.167.208",
+    "*.ovh.ca",
+    "flinders.edu.au",
+    "ausecurity.com.au",
+    "ausecurity.com",
+    "ausecurity.net"
+  ],
+  "third_party_exclusions": [
+    "OVH ASN AS16276 and shared netblock 51.79.164.0/22",
+    "Spaceship nameservers",
+    "Google Fonts",
+    "Let's Encrypt",
+    "Google Maps"
+  ],
+  "method_permissions": {
+    "web_application_testing": true,
+    "tls_review": true,
+    "directory_and_endpoint_discovery": true,
+    "authenticated_testing": true,
+    "credential_stuffing": false,
+    "password_spraying": false,
+    "brute_force": false,
+    "ddos": false,
+    "social_engineering": false,
+    "phishing": false,
+    "malware": false,
+    "lateral_movement": false,
+    "destructive": false
+  },
+  "notes": "Owner approved only the main public website. Same-origin endpoints on ausecurity.best are in scope."
+}

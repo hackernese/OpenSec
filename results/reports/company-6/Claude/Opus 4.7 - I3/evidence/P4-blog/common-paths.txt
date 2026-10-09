@@ -1,0 +1,46 @@
+--- /.git/HEAD ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /.env ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /backup/ ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /backups/ ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-content/uploads/ ---
+code=200 size=0 ctype=text/html;charset=UTF-8
+--- /wp-admin/install.php ---
+code=200 size=0 ctype=text/html; charset=utf-8
+--- /wp-admin/upgrade.php ---
+code=200 size=0 ctype=text/html; charset=UTF-8
+--- /wp-admin/admin-ajax.php ---
+code=400 size=0 ctype=text/html; charset=UTF-8
+--- /wp-admin/ ---
+code=302 size=0 ctype=text/html; charset=UTF-8
+--- /phpinfo.php ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /server-status ---
+code=403 size=0 ctype=text/html; charset=iso-8859-1
+--- /server-info ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-cron.php ---
+code=200 size=0 ctype=text/html; charset=UTF-8
+--- /sitemap.xml ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /sitemap_index.xml ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /robots.txt ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /feed ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /feed/ ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /comments/feed ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1
+--- /wp-content/plugins/ ---
+code=200 size=0 ctype=text/html; charset=UTF-8
+--- /wp-content/themes/ ---
+code=200 size=0 ctype=text/html; charset=UTF-8
+--- /wp-includes/ ---
+code=200 size=0 ctype=text/html;charset=UTF-8
+--- /wp-sitemap.xml ---
+code=404 size=0 ctype=text/html; charset=iso-8859-1

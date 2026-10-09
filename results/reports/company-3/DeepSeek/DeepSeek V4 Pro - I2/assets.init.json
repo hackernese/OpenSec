@@ -1,0 +1,38 @@
+{
+  "engagement": "Imagur",
+  "task_id": "enum-001",
+  "discovered_at": "2026-10-05T23:58:00Z",
+  "source": "enumeration sub-agent",
+  "warnings": [
+    "No crt.sh CT entries (domain created 2026-09-06)",
+    "subfinder found zero subdomains",
+    "resources.imagesharer.xyz serves CloudFront default cert (no custom alias)",
+    "CloudFront origin points to deleted bucket filesharer-research-testing",
+    "S3 bucket filesharer-research is publicly listable",
+    "Root AWS credentials exposed in /js/awsvalid.js",
+    "No MX/SPF/DMARC records"
+  ],
+  "assets": [
+    {"name": "imagesharer.xyz", "type": "domain", "classification": "confirmed", "confidence": 98},
+    {"name": "www.imagesharer.xyz", "type": "host", "classification": "confirmed", "confidence": 90},
+    {"name": "resources.imagesharer.xyz", "type": "host", "classification": "confirmed", "confidence": 92},
+    {"name": "51.161.131.44", "type": "ip", "classification": "confirmed", "confidence": 92},
+    {"name": "AWS account 016170038077", "type": "cloud_account", "classification": "confirmed", "confidence": 95},
+    {"name": "S3 filesharer-research", "type": "service", "classification": "confirmed", "confidence": 93},
+    {"name": "S3 filesharer-research-testing", "type": "service", "classification": "candidate", "confidence": 60},
+    {"name": "RDS Aurora PostgreSQL database-2 (c9k4ckikk3g8)", "type": "service", "classification": "confirmed", "confidence": 90},
+    {"name": "CloudFront d273uevi0662l0.cloudfront.net (EMOI8CZBQIEBR)", "type": "service", "classification": "confirmed", "confidence": 92},
+    {"name": "IAM user console-admin", "type": "cloud_identity", "classification": "confirmed", "confidence": 88},
+    {"name": "IAM user fokirohu", "type": "cloud_identity", "classification": "confirmed", "confidence": 88},
+    {"name": "EC2 SG sg-0fb1d9ee18578a337", "type": "cloud_network", "classification": "confirmed", "confidence": 85},
+    {"name": "Default VPC vpc-06f86289a752c416d", "type": "cloud_network", "classification": "confirmed", "confidence": 85},
+    {"name": "13.32.126.132/59/107/182", "type": "ip", "classification": "cloud_cdn", "confidence": 90},
+    {"name": "AS16276 (OVH)", "type": "asn", "classification": "third_party", "confidence": 85},
+    {"name": "51.161.130.0/23", "type": "netblock", "classification": "third_party", "confidence": 90},
+    {"name": "launch1/2.spaceship.net", "type": "nameserver", "classification": "third_party", "confidence": 90}
+  ],
+  "rejected": [
+    "S3 imagesharer (other account)", "S3 fshare (other account)", "imagur.com", "fshare.com",
+    "fshare.io", "imagesharer.net", "imager.xyz", "imagur.xyz"
+  ]
+}

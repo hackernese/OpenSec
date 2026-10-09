@@ -1,0 +1,252 @@
+===== Full /profile page as A =====
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile — Imager</title>
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- <link rel="icon" href="https://resources.imagesharer.xyz/icon.ico" type="image/png"> -->
+
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlZ85k3kCmkla3sPyrD94VIVRwnfCN0BzZjLw5BGf6HQ&s=10" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="/dashboard" class="logo">📷 Imager</a>
+    <nav>
+                    <a href="/dashboard">My Images</a>
+            <a href="/images/upload">Upload</a>
+            <a href="/profile">Profile</a>
+            <form method="POST" action="/logout" class="inline-form">
+                <button type="submit" class="btn-link">Log out</button>
+            </form>
+            </nav>
+</header>
+
+<main class="container">
+
+    
+    
+    <div class="page-header">
+    <h1>My Profile</h1>
+</div>
+
+<div class="profile-grid">
+
+    <!-- ── Avatar card ────────────────────────────────────────────────────── -->
+    <div class="card profile-avatar-card">
+
+        <div class="avatar-wrap">
+                            <div class="avatar-placeholder">
+                    C                </div>
+                    </div>
+
+        <h2 class="profile-email">clawsec.a.1791171194@mailinator.com</h2>
+        <p class="text-muted profile-since">
+            Member since October 2026        </p>
+
+        <div class="profile-stats">
+            <div class="stat">
+                <span class="stat-value">3</span>
+                <span class="stat-label">Images</span>
+            </div>
+        </div>
+
+        <!-- Upload / change avatar -->
+        <form
+            method="POST"
+            action="/profile/avatar"
+            enctype="multipart/form-data"
+            class="avatar-form"
+        >
+            <label class="btn btn-ghost btn-sm btn-block" for="avatar" style="cursor:pointer;justify-content:center;">
+                📷 Upload profile picture            </label>
+            <input
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                style="display:none"
+                onchange="this.form.submit()"
+            >
+        </form>
+
+        
+    </div>
+
+    <!-- ── Info card ──────────────────────────────────────────────────────── -->
+    <div>
+        <div class="card" style="padding:1.5rem">
+            <h2 style="font-size:.75rem;font-weight:600;color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem">
+                Account details
+            </h2>
+
+            <div class="meta-row">
+                <span>Email</span>
+                <span>clawsec.a.1791171194@mailinator.com</span>
+            </div>
+            <div class="meta-row">
+                <span>User ID</span>
+                <span style="font-family:monospace;font-size:.8rem">740532d8-b0f3-4cad-a69a-43a0de29a4c8</span>
+            </div>
+            <div class="meta-row">
+                <span>Joined</span>
+                <span>05 Oct 2026</span>
+            </div>
+            <div class="meta-row">
+                <span>Images uploaded</span>
+                <span>3</span>
+            </div>
+        </div>
+
+        <div class="card mt-2" style="padding:1.5rem">
+            <h2 style="font-size:.75rem;font-weight:600;color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem">
+                Quick links
+            </h2>
+            <div style="display:flex;flex-direction:column;gap:.5rem">
+                <a href="/dashboard" class="btn btn-ghost btn-sm">🖼️ My images</a>
+                <a href="/images/upload" class="btn btn-ghost btn-sm">⬆️ Upload image</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Imager &mdash; your images, your control.</p>
+</footer>
+
+    <!-- <script src="/js/awsvalid.js"></script> -->
+
+
+</body>
+</html>
+
+===== 7-day pre-signed URL verification: upload with is_public=true and check /images/<id> =====
+Uploaded public image id: 1c140bac-30a2-4509-ab39-1519ea0fb7ea
+X-Amz-Expires=604800
+X-Amz-Expires=604800
+
+----- Upload private image id -----
+Priv img id: 92fc5f1f-8c06-43a1-b9a7-4dd141308395
+X-Amz-Expires=900
+X-Amz-Expires=900
+
+===== User enumeration via /register with existing email =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:42:18 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=a31c574b0a1d1234dd7f3251ecbe2418; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /register
+
+
+===== User enumeration via /register with new email =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:42:19 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=f2c74675e3282d02381a962a53ac6cc2; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: PHPSESSID=217ef2e38824aba7e3dedff2ed57a39d; path=/
+Set-Cookie: last_login=%7B%22timestamp%22%3A1791171739%2C%22session_id%22%3A%22217ef2e38824aba7e3dedff2ed57a39d%22%2C%22user_agent%22%3A%22curl%5C%2F8.21.0%22%7D; expires=Wed, 04 Nov 2026 03:42:19 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Location: /dashboard
+
+
+===== User enumeration via /login with existing email, bad pwd =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:42:19 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=2ec38f4e4cf1627164d6b7ac02252a12; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /login
+
+
+===== User enumeration via /login with nonexistent email =====
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:42:19 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=bf4fe642db72a670c2b7586070bea9f6; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: /login
+
+
+===== Password change / email change endpoints =====
+-- GET /password --
+404
+-- GET /password-change --
+404
+-- GET /change-password --
+404
+-- GET /profile/password --
+404
+-- GET /account/password --
+404
+-- GET /profile/email --
+404
+-- GET /change-email --
+404
+
+===== Profile POST with mass-assignment attempt =====
+HTTP/1.1 404 Not Found
+Server: nginx
+Date: Mon, 05 Oct 2026 03:42:20 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 434
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+
+<!DOCTYPE html><html><head><title>404 — Imager</title>
+    <link rel="stylesheet" href="/css/app.css"></head><body>
+    <header class="site-header"><a href="/" class="logo">📷 Imager</a></header>
+    <main class="container"><div class="empty-state" style="padding-top:5rem">
+    <div class="icon">🔍</div><p>Page not found.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to dashboard</a>
+    </div></main></body></html>

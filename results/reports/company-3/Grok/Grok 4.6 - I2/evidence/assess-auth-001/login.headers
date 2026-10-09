@@ -1,0 +1,36 @@
+HTTP/1.1 302 Found
+Server: nginx
+Date: Sun, 04 Oct 2026 22:55:30 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Set-Cookie: PHPSESSID=012984d9565f54a284d14fb5c130c5e6; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: PHPSESSID=e7a7fb9438f58c0210414fa23c564ed3; path=/
+Set-Cookie: last_login=%7B%22timestamp%22%3A1791154530%2C%22session_id%22%3A%22e7a7fb9438f58c0210414fa23c564ed3%22%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%7D; expires=Tue, 03 Nov 2026 22:55:30 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Location: /dashboard
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 04 Oct 2026 22:55:31 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1488
+Connection: keep-alive
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+X-Powered-By: PHP/8.2.34
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: page_views=%5B%7B%22page%22%3A%22dashboard%5C%2Findex%22%2C%22timestamp%22%3A1791154531%2C%22user_agent%22%3A%22ClawSec-Imagur-Assessment%22%2C%22referer%22%3A%22%22%7D%5D; expires=Tue, 03 Nov 2026 22:55:31 GMT; Max-Age=2592000; path=/; secure; HttpOnly; SameSite=Lax
+Vary: Accept-Encoding
+

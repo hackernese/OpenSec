@@ -1,0 +1,177 @@
+{
+  "articles": [
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "National and international political news",
+        "display_order": 1,
+        "id": 1,
+        "name": "Politics",
+        "slug": "politics"
+      },
+      "created_at": "2026-09-13T13:16:02.011191+00:00",
+      "excerpt": "Welcome to The Down Under News \u2013 your trusted source for Australian and global news coverage.",
+      "featured_image_url": null,
+      "id": 1,
+      "is_featured": true,
+      "media": [],
+      "published_at": "2026-09-13T13:16:02.011191+00:00",
+      "slug": "welcome-to-the-down-under-news",
+      "status": "published",
+      "subtitle": "Australia's newest independent online newspaper",
+      "tags": [],
+      "title": "Welcome to The Down Under News",
+      "updated_at": "2026-09-18T02:06:20.919935+00:00",
+      "views_count": 105
+    },
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "Finance, economy, and business updates",
+        "display_order": 2,
+        "id": 2,
+        "name": "Business",
+        "slug": "business"
+      },
+      "created_at": "2026-09-13T13:16:02.011191+00:00",
+      "excerpt": "Australia's economy expanded 2.1% in Q3, beating forecasts as employment reaches record highs.",
+      "featured_image_url": null,
+      "id": 2,
+      "is_featured": false,
+      "media": [],
+      "published_at": "2026-09-12T13:16:02.011191+00:00",
+      "slug": "australian-economy-strong-growth-q3",
+      "status": "published",
+      "subtitle": "GDP expands by 2.1% as employment reaches record highs",
+      "tags": [],
+      "title": "Australian Economy Shows Strong Growth in Q3",
+      "updated_at": "2026-09-18T01:50:35.860095+00:00",
+      "views_count": 202
+    },
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "Tech industry news and innovations",
+        "display_order": 3,
+        "id": 3,
+        "name": "Technology",
+        "slug": "technology"
+      },
+      "created_at": "2026-09-13T13:16:02.011191+00:00",
+      "excerpt": "Technology companies announce $2 billion investment in Australian AI research centres, creating 5,000 jobs.",
+      "featured_image_url": null,
+      "id": 3,
+      "is_featured": true,
+      "media": [],
+      "published_at": "2026-09-11T13:16:02.011191+00:00",
+      "slug": "tech-giants-invest-2-billion-australian-ai",
+      "status": "published",
+      "subtitle": "Major technology companies announce landmark investment in local AI capabilities",
+      "tags": [],
+      "title": "Tech Giants Invest $2 Billion in Australian AI Research",
+      "updated_at": "2026-09-18T01:50:34.572585+00:00",
+      "views_count": 339
+    },
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 1,
+        "description": "Australian and international sports coverage",
+        "display_order": 4,
+        "id": 4,
+        "name": "Sports",
+        "slug": "sports"
+      },
+      "created_at": "2026-09-13T13:16:02.023056+00:00",
+      "excerpt": "Australia retains the Ashes 3-1 with a dominant Test series win, as Cummins claims five wickets in the decider.",
+      "featured_image_url": null,
+      "id": 4,
+      "is_featured": true,
+      "media": [],
+      "published_at": "2026-09-10T13:16:02.023056+00:00",
+      "slug": "australia-wins-back-to-back-test-series-england",
+      "status": "published",
+      "subtitle": "Dominant bowling display seals a stunning 3-1 victory at the MCG",
+      "tags": [],
+      "title": "Australia Wins Back-to-Back Test Series Against England",
+      "updated_at": "2026-09-18T01:50:30.093890+00:00",
+      "views_count": 570
+    },
+    {
+      "author": {
+        "created_at": "2026-09-13T13:16:02.003617+00:00",
+        "email": "admin@thedownundernews.it.com",
+        "first_name": "Site",
+        "id": 1,
+        "is_active": true,
+        "last_name": "Administrator",
+        "role": "admin",
+        "username": "admin"
+      },
+      "category": {
+        "article_count": 2,
+        "description": "National and international political news",
+        "display_order": 1,
+        "id": 1,
+        "name": "Politics",
+        "slug": "politics"
+      },
+      "created_at": "2026-09-13T13:16:02.023056+00:00",
+      "excerpt": "The federal government commits $48 billion to a Sydney\u2013Melbourne high-speed rail line, promising a sub-three-hour journey by 2031.",
+      "featured_image_url": null,
+      "id": 5,
+      "is_featured": false,
+      "media": [],
+      "published_at": "2026-09-09T13:16:02.023056+00:00",
+      "slug": "high-speed-rail-sydney-melbourne-2031",
+      "status": "published",
+      "subtitle": "Federal government commits $48 billion to transformative infrastructure project",
+      "tags": [],
+      "title": "New High-Speed Rail Link to Connect Sydney and Melbourne by 2031",
+      "updated_at": "2026-09-18T01:50:38.107665+00:00",
+      "views_count": 440
+    }
+  ],
+  "page": 1,
+  "total": 12,
+  "totalPages": 3
+}

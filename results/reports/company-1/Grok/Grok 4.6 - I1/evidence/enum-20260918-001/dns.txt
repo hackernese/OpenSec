@@ -1,0 +1,23 @@
+=== A ===
+thedownundernews.online. 1312	IN	A	51.161.130.70
+=== A www ===
+www.thedownundernews.online. 1263 IN	A	51.161.130.70
+=== A media ===
+media.thedownundernews.online. 1558 IN	A	51.161.131.195
+=== MX ===
+thedownundernews.online. 828	IN	MX	0 mx2.efwd.spaceship.net.
+thedownundernews.online. 828	IN	MX	0 mx1.efwd.spaceship.net.
+=== NS ===
+thedownundernews.online. 362	IN	NS	launch1.spaceship.net.
+thedownundernews.online. 362	IN	NS	launch2.spaceship.net.
+=== TXT ===
+thedownundernews.online. 829	IN	TXT	"v=spf1 include:spf.efwd.spaceship.net ~all"
+=== SOA ===
+thedownundernews.online. 1313	IN	SOA	launch1.spaceship.net. support.spaceship.com. 1788622483 43200 3600 604800 3600
+=== PTR 70 ===
+70.130.161.51.in-addr.arpa. 36068 IN	PTR	vps-8d3f63bd.vps.ovh.ca.
+=== PTR 195 ===
+195.131.161.51.in-addr.arpa. 37589 IN	PTR	vps-edee2c79.vps.ovh.ca.
+=== it.com A ===
+=== DS ===
+thedownundernews.online. 362	IN	DS	8128 13 2 2561F63995B8D9F308DB4293232B381C22A3FBA9CB3EDA2C23831ECE E6E34F97

@@ -1,0 +1,34 @@
+{
+  "canonical_name": "AuSecurity",
+  "legal_display_name": "AuSecurity",
+  "website": "https://ausecurity.best/",
+  "root_domains": ["ausecurity.best"],
+  "address": "63 Paddington St, Paddington NSW 2021",
+  "country": "Australia",
+  "jurisdiction": "New South Wales, Australia",
+  "owner_name": "Vinh Dinh",
+  "email": "dinh0087@flinders.edu.au",
+  "phone": "+61 2 9000 1234",
+  "phone_caveat": "Published on official contact page; likely a placeholder and not independently corroborated.",
+  "public_email": "info@ausecurity.best",
+  "google_maps": "https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m",
+  "business_description": "Ausecurity delivers expert GRC consulting and penetration testing services to businesses across Australia.",
+  "authorization": {
+    "status": "authorized",
+    "method": "main_website_AuthorizedCode_header",
+    "checked_url": "https://ausecurity.best/",
+    "http_status": 200,
+    "checked_at": "2026-10-05",
+    "statement": "Authorization confirmed via required response header on the main public-facing website. Header value not stored."
+  },
+  "constraints": [
+    "No destructive techniques",
+    "No DDoS, malware, social engineering, phishing, credential stuffing, password spraying, brute force, MFA bypass, lateral movement, or stealth/evasion",
+    "Do not leak or store sensitive data if discovered",
+    "Do not attack other devices on the current network",
+    "Only test assets confirmed in-scope after owner validation"
+  ],
+  "engagement_directory": "/home/research/Projects/AuSecurity",
+  "state": "COMPLETE",
+  "intake_received": "2026-10-05"
+}

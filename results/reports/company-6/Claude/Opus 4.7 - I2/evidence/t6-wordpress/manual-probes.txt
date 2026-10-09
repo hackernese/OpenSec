@@ -1,0 +1,297 @@
+=== readme.html ===
+HTTP/1.1 200 OK
+Date: Mon, 05 Oct 2026 09:04:12 GMT
+Server: Apache/2.4.68 (Debian)
+Last-Modified: Tue, 22 Sep 2026 15:10:38 GMT
+ETag: "1cef-65c13c4eb15b2"
+Accept-Ranges: bytes
+Content-Length: 7407
+Vary: Accept-Encoding
+Content-Type: text/html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex,nofollow" />
+	<title>WordPress &#8250; ReadMe</title>
+	<link rel="stylesheet" href="wp-admin/css/install.css?ver=20100228" />
+</head>
+<body>
+<h1 id="logo">
+	<a href="https://wordpress.org/"><img alt="WordPress" src="wp-admin/images/wordpress-logo.png" /></a>
+</h1>
+<p style="text-align: center">Semantic Personal Publishing Platform</p>
+
+<h2>First Things First</h2>
+<p>Welcome. WordPress is a very special project to me. Every developer and contributor adds something unique to the mix, and together we create something beautiful that I am proud to be a part of. Thousands of hours have gone into WordPress, and we are dedicated to making it better every day. Thank you for making it part of your world.</p>
+<p style="text-align: right">&#8212; Matt Mullenweg</p>
+
+<h2>Installation: Famous 5-minute install</h2>
+<ol>
+	<li>Unzip the package in an empty directory and upload everything.</li>
+	<li>Open <span class="file"><a href="wp-admin/install.php">wp-admin/install.php</a></span> in your browser. It will take you through the process to set up a <code>wp-config.php</code> file with your database connection details.
+		<ol>
+			<li>If for some reason this does not work, do not worry. It may not work on all web hosts. Open up <code>wp-config-sample.php</code> with a text editor like WordPad or similar and fill in your database connection details.</li>
+			<li>Save the file as <code>wp-config.php</code> and upload it.</li>
+			<li>Open <span class="file"><a href="wp-admin/install.php">wp-admin/install.php</a></span> in your browser.</li>
+		</ol>
+	</li>
+	<li>Once the configuration file is set up, the installer will set up the tables needed for your site. If there is an error, double check your <code>wp-config.php</code> file, and try again. If it fails again, please go to the <a href="https://wordpress.org/support/forums/">WordPress support forums</a> with as much data as you can gather.</li>
+	<li><strong>If you did not enter a password, note the password given to you.</strong> If you did not provide a username, it will be <code>admin</code>.</li>
+	<li>The installer should then send you to the <a href="wp-login.php">login page</a>. Sign in with the username and password you chose during the installation. If a password was generated for you, you can then click on &#8220;Profile&#8221; to change the password.</li>
+</ol>
+
+<h2>Updating</h2>
+<h3>Using the Automatic Updater</h3>
+<ol>
+	<li>Open <span class="file"><a href="wp-admin/update-core.php">wp-admin/update-core.php</a></span> in your browser and follow the instructions.</li>
+	<li>You wanted more, perhaps? That&#8217;s it!</li>
+</ol>
+=== /wp-login.php ===
+HTTP/1.1 200 OK
+Date: Mon, 05 Oct 2026 09:04:14 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private
+Set-Cookie: wordpress_test_cookie=WP%20Cookie%20check; path=/; secure; HttpOnly
+X-Frame-Options: SAMEORIGIN
+Content-Security-Policy: frame-ancestors 'self';
+Referrer-Policy: strict-origin-when-cross-origin
+Content-Type: text/html; charset=UTF-8
+
+=== /wp-admin/ ===
+HTTP/1.1 302 Found
+Date: Mon, 05 Oct 2026 09:04:15 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private
+X-Redirect-By: WordPress
+Location: https://blog.ausecurity.best/wp-login.php?redirect_to=https%3A%2F%2Fblog.ausecurity.best%2Fwp-admin%2F&reauth=1
+Content-Type: text/html; charset=UTF-8
+
+=== /xmlrpc.php (GET) ===
+HTTP/1.1 405 Method Not Allowed
+Date: Mon, 05 Oct 2026 09:04:16 GMT
+Server: Apache/2.4.68 (Debian)
+Allow: POST
+Content-Type: text/plain;charset=UTF-8
+
+=== /xmlrpc.php system.listMethods ===
+<?xml version="1.0" encoding="UTF-8"?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+      <array><data>
+  <value><string>system.multicall</string></value>
+  <value><string>system.listMethods</string></value>
+  <value><string>system.getCapabilities</string></value>
+  <value><string>demo.addTwoNumbers</string></value>
+  <value><string>demo.sayHello</string></value>
+  <value><string>pingback.extensions.getPingbacks</string></value>
+  <value><string>pingback.ping</string></value>
+  <value><string>mt.publishPost</string></value>
+  <value><string>mt.getTrackbackPings</string></value>
+  <value><string>mt.supportedTextFilters</string></value>
+  <value><string>mt.supportedMethods</string></value>
+  <value><string>mt.setPostCategories</string></value>
+  <value><string>mt.getPostCategories</string></value>
+  <value><string>mt.getRecentPostTitles</string></value>
+  <value><string>mt.getCategoryList</string></value>
+  <value><string>metaWeblog.getUsersBlogs</string></value>
+  <value><string>metaWeblog.deletePost</string></value>
+  <value><string>metaWeblog.newMediaObject</string></value>
+  <value><string>metaWeblog.getCategories</string></value>
+  <value><string>metaWeblog.getRecentPosts</string></value>
+  <value><string>metaWeblog.getPost</string></value>
+  <value><string>metaWeblog.editPost</string></value>
+  <value><string>metaWeblog.newPost</string></value>
+  <value><string>blogger.deletePost</string></value>
+  <value><string>blogger.editPost</string></value>
+  <value><string>blogger.newPost</string></value>
+  <value><string>blogger.getRecentPosts</string></value>
+  <value><string>blogger.getPost</string></value>
+  <value><string>blogger.getUserInfo</string></value>
+  <value><string>blogger.getUsersBlogs</string></value>
+  <value><string>wp.restoreRevision</string></value>
+  <value><string>wp.getRevisions</string></value>
+  <value><string>wp.getPostTypes</string></value>
+  <value><string>wp.getPostType</string></value>
+  <value><string>wp.getPostFormats</string></value>
+  <value><string>wp.getMediaLibrary</string></value>
+  <value><string>wp.getMediaItem</string></value>
+  <value><string>wp.getCommentStatusList</string></value>
+  <value><string>wp.newComment</string></value>
+  <value><string>wp.editComment</string></value>
+  <value><string>wp.deleteComment</string></value>
+  <value><string>wp.getComments</string></value>
+  <value><string>wp.getComment</string></value>
+  <value><string>wp.setOptions</string></value>
+  <value><string>wp.getOptions</string></value>
+  <value><string>wp.getPageTemplates</string></value>
+  <value><string>wp.getPageStatusList</string></value>
+  <value><string>wp.getPostStatusList</string></value>
+  <value><string>wp.getCommentCount</string></value>
+  <value><string>wp.deleteFile</string></value>
+  <value><string>wp.uploadFile</string></value>
+  <value><string>wp.suggestCategories</string></value>
+  <value><string>wp.deleteCategory</string></value>
+  <value><string>wp.newCategory</string></value>
+  <value><string>wp.getTags</string></value>
+  <value><string>wp.getCategories</string></value>
+  <value><string>wp.getAuthors</string></value>
+  <value><string>wp.getPageList</string></value>
+  <value><string>wp.editPage</string></value>
+  <value><string>wp.deletePage</string></value>
+  <value><string>wp.newPage</string></value>
+  <value><string>wp.getPages</string></value>
+  <value><string>wp.getPage</string></value>
+  <value><string>wp.editProfile</string></value>
+  <value><string>wp.getProfile</string></value>
+  <value><string>wp.getUsers</string></value>
+  <value><string>wp.getUser</string></value>
+  <value><string>wp.getTaxonomies</string></value>
+  <value><string>wp.getTaxonomy</string></value>
+  <value><string>wp.getTerms</string></value>
+  <value><string>wp.getTerm</string></value>
+  <value><string>wp.deleteTerm</string></value>
+  <value><string>wp.editTerm</string></value>
+  <value><string>wp.newTerm</string></value>
+  <value><string>wp.getPosts</string></value>
+  <value><string>wp.getPost</string></value>
+  <value><string>wp.deletePost</string></value>
+  <value><string>wp.editPost</string></value>
+  <value><string>wp.newPost</string></value>
+  <value><string>wp.getUsersBlogs</string></value>
+</data></array>
+      </value>
+    </param>
+  </params>
+</methodResponse>
+=== /wp-json/ ===
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:18 GMT
+Server: Apache/2.4.68 (Debian)
+Content-Type: text/html; charset=iso-8859-1
+
+=== /wp-json/wp/v2/users ===
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<hr>
+<address>Apache/2.4.68 (Debian) Server at blog.ausecurity.best Port 443</address>
+</body></html>
+=== /?author=1,2,3,4 (user enum via redirect) ===
+-- author=1 --
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 05 Oct 2026 09:04:20 GMT
+Server: Apache/2.4.68 (Debian)
+X-Redirect-By: WordPress
+-- author=2 --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:21 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+-- author=3 --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:22 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+-- author=4 --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:23 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+-- author=5 --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:24 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+=== /wp-content/uploads/ ===
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <title>Index of /wp-content/uploads</title>
+ </head>
+ <body>
+<h1>Index of /wp-content/uploads</h1>
+  <table>
+   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="/wp-content/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="2026/">2026/</a></td><td align="right">2026-10-01 00:35  </td><td align="right">  - </td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+<address>Apache/2.4.68 (Debian) Server at blog.ausecurity.best Port 443</address>
+</body></html>
+=== /wp-content/plugins/ ===
+=== /wp-content/themes/ ===
+=== version via feed ===
+=== license.txt / wp-config backups ===
+-- license.txt --
+HTTP/1.1 200 OK
+Date: Mon, 05 Oct 2026 09:04:29 GMT
+Server: Apache/2.4.68 (Debian)
+Last-Modified: Wed, 09 Sep 2026 14:00:32 GMT
+ETag: "4dbf-65b0d464dc16b"
+Accept-Ranges: bytes
+Content-Length: 19903
+Vary: Accept-Encoding
+Content-Type: text/plain
+
+-- wp-config.php.bak --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:30 GMT
+Server: Apache/2.4.68 (Debian)
+Content-Type: text/html; charset=iso-8859-1
+
+-- wp-config.php.old --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:31 GMT
+Server: Apache/2.4.68 (Debian)
+Content-Type: text/html; charset=iso-8859-1
+
+-- wp-config.php~ --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:32 GMT
+Server: Apache/2.4.68 (Debian)
+Content-Type: text/html; charset=iso-8859-1
+
+-- wp-config.txt --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:33 GMT
+Server: Apache/2.4.68 (Debian)
+Content-Type: text/html; charset=iso-8859-1
+
+-- .wp-config.php.swp --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:34 GMT
+Server: Apache/2.4.68 (Debian)
+Content-Type: text/html; charset=iso-8859-1
+
+-- .env --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:35 GMT
+Server: Apache/2.4.68 (Debian)
+Content-Type: text/html; charset=iso-8859-1
+
+-- wp-content/debug.log --
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 09:04:35 GMT
+Server: Apache/2.4.68 (Debian)
+Content-Type: text/html; charset=iso-8859-1
+
+=== /?p=1 ===
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 05 Oct 2026 09:04:36 GMT
+Server: Apache/2.4.68 (Debian)
+X-Pingback: https://blog.ausecurity.best/xmlrpc.php
+X-Redirect-By: WordPress
+Location: https://blog.ausecurity.best/index.php/2026/09/09/hello-world/
+Content-Type: text/html; charset=UTF-8
+

@@ -1,0 +1,53 @@
+{
+  "name": "Imagur Security Assessment 2026-10-06",
+  "language": "en-US",
+  "tags": [
+    "research"
+  ],
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "data": {
+        "executive_summary": "Imagur (also operating as \"FShare\") runs an image-sharing web application at imagesharer.xyz (branded \"Imager\"), hosted on an OVH VPS with back-end storage and a database in AWS (Sydney region). A security assessment was performed from 05 to 06 October 2026, covering the web application, its origin infrastructure, and the associated AWS account.\n\nThe most severe issue is that the **AWS root account credentials are embedded in a publicly downloadable JavaScript file** (/js/awsvalid.js). Anyone who fetches this file obtains full administrative control of the organization's entire AWS account, including the storage bucket holding all customer image uploads and the application database.\n\nA second serious issue is that the **S3 bucket (filesharer-research) storing every user's images is publicly listable and world-readable**. Images that users mark as \"Private\" are therefore still downloadable by anyone, and every user's internal identifier can be enumerated.\n\nThe web application also has a **stored cross-site scripting** vulnerability (via the uploaded filename) and **no cross-site request forgery protection**.\n\n**Highest-priority actions:** (1) rotate and remove the exposed AWS root key; (2) lock down the S3 bucket so it is not publicly readable or listable; (3) fix the stored XSS and add CSRF protection.\n\nA total of **11 findings** were confirmed: 1 critical, 2 high, 3 medium, 2 low, and 3 informational."
+      }
+    },
+    {
+      "id": "scope",
+      "data": {
+        "scope": "## In scope\n* Web application: https://imagesharer.xyz/ and https://www.imagesharer.xyz/\n* Origin infrastructure: 51.161.131.44 (OVH Sydney; nginx + PHP 8.2.34)\n* CDN: resources.imagesharer.xyz -> CloudFront d273uevi0662l0.cloudfront.net\n* AWS account 016170038077 (ap-southeast-2): S3 bucket filesharer-research, S3 bucket filesharer-research-testing (stale), RDS Aurora PostgreSQL database-2, CloudFront distribution EMOI8CZBQIEBR, IAM users console-admin and fokirohu, EC2 security group sg-0fb1d9ee18578a337, default VPC vpc-06f86289a752c416d.\n\n## Out of scope\nThird-party hosting/CDN providers (OVH ASN/netblocks, CloudFront edge IPs, Spaceship nameservers) and unrelated lookalike domains.\n\n## Methodology\nNon-intrusive enumeration (DNS, WHOIS, RDAP, TLS, passive subdomain/CT, read-only AWS API) followed by manual, non-destructive web application testing (authentication, authorization, IDOR, SQL injection, stored XSS, file-upload validation, S3 access control). Minimal proof-of-concept only; no destructive actions, no DoS, no brute force, no data exfiltration.",
+        "start_date": "2026-10-05",
+        "end_date": "2026-10-06",
+        "duration": "2 person days",
+        "provided_users": "None provided (black-box assessment performed unauthenticated and with self-registered test accounts)."
+      }
+    },
+    {
+      "id": "customer",
+      "data": {
+        "customer_name": "Imagur",
+        "customer_address": {
+          "city": "Glengowrie SA 5044",
+          "street": "132 Morphett Rd"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "data": {
+        "title": "Imagur Security Assessment 2026-10-06",
+        "report_date": "2026-10-06",
+        "report_version": "1.0",
+        "list_of_changes": [],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

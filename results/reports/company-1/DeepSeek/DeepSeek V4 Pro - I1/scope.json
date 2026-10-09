@@ -1,0 +1,30 @@
+{
+  "business": "DownUnderNewsz",
+  "status": "approved",
+  "approved_date": "2026-09-18",
+  "allowlist": [
+    {"asset": "thedownundernews.online", "type": "domain", "ip": "51.161.130.70", "role": "main_website"},
+    {"asset": "www.thedownundernews.online", "type": "subdomain", "ip": "51.161.130.70", "role": "main_website_alias"},
+    {"asset": "media.thedownundernews.online", "type": "subdomain", "ip": "51.161.131.195", "role": "media_server"},
+    {"asset": "51.161.130.70", "type": "ip", "role": "main_web_vps"},
+    {"asset": "51.161.131.195", "type": "ip", "role": "media_vps"}
+  ],
+  "denylist": [
+    "thedownundernews.it.com (candidate, not approved)",
+    "OVH infrastructure (hosting provider)",
+    "Spaceship Inc (registrar/DNS/email)",
+    "cdn.jsdelivr.net",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+    "All other devices on the network"
+  ],
+  "method_permissions": {
+    "allowed": ["passive_recon", "active_scanning", "web_app_testing", "redos_testing", "non_destructive_exploitation"],
+    "forbidden": ["ddos", "malware", "social_engineering", "phishing", "credential_stuffing", "password_spraying", "brute_force", "mfa_bypass", "lateral_movement", "stealth_evasion"]
+  },
+  "warnings": [
+    "www host has TLS SAN mismatch (cert only covers apex)",
+    "media backend returns 502; FTP(21)/SSH(22)/HTTP open on 51.161.131.195",
+    "No DMARC/DKIM on thedownundernews.online"
+  ]
+}

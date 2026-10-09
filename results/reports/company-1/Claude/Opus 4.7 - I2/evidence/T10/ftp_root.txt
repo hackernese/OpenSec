@@ -1,0 +1,32 @@
+* Uses proxy env variable no_proxy == '127.0.0.1,localhost,::1'
+*   Trying 51.161.131.195:21...
+* Established connection to 51.161.131.195 (51.161.131.195 port 21) from 10.14.4.73 port 42020 
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0< 220 (vsFTPd 3.0.5)
+> USER anonymous
+< 230 Login successful.
+> PWD
+< 257 "/" is the current directory
+* Entry path is '/'
+* Request has same path as previous transfer
+> EPSV
+* Connect data stream passively
+  0      0   0      0   0      0      0      0                              0< 229 Entering Extended Passive Mode (|||40000|)
+* Connecting to 51.161.131.195 port 40000
+*   Trying 51.161.131.195:40000...
+* Established 2nd connection to 51.161.131.195 (51.161.131.195 port 40000) from 10.14.4.73 port 57954 
+> TYPE A
+< 200 Switching to ASCII mode.
+> NLST
+< 150 Here comes the directory listing.
+* Maxdownload = -1
+{ [153 bytes data]
+100    153   0    153   0      0    700      0                              0100    153   0    153   0      0    700      0                              0* Remembering we are in directory ""
+< 226 Directory send OK.
+100    153   0    153   0      0    633      0                              0
+* Connection #0 to host 51.161.131.195:21 left intact
+37550846eae5457d93ddd8e1d2faeaca.html
+58e75939c3d24841806d3a069e919576.png
+66ea642847be4ef0a800fb8cb8432d79.png
+d2273a1a2576489fb419cc1049c4c62f.pdf

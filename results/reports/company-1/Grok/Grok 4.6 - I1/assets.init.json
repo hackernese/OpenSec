@@ -1,0 +1,95 @@
+{
+  "task_id": "enum-20260918-001",
+  "generated_at_utc": "2026-09-18T05:52:00Z",
+  "canonical_organization_name": "DownUnderNewsz",
+  "brand_on_website": "The Down Under News",
+  "business_description": "Online-only independent Australian news publication.",
+  "confirmed": {
+    "domains": [
+      {
+        "value": "thedownundernews.online",
+        "confidence": 98,
+        "notes": "Authorized public root. Registrar Spaceship. A 51.161.130.70"
+      }
+    ],
+    "hosts": [
+      {
+        "value": "thedownundernews.online",
+        "ip": "51.161.130.70",
+        "confidence": 98
+      },
+      {
+        "value": "www.thedownundernews.online",
+        "ip": "51.161.130.70",
+        "confidence": 93,
+        "notes": "TLS certificate does not include www (hostname mismatch)."
+      },
+      {
+        "value": "media.thedownundernews.online",
+        "ip": "51.161.131.195",
+        "confidence": 96,
+        "notes": "HTTPS currently 502 Bad Gateway. Dedicated Let's Encrypt cert."
+      }
+    ],
+    "ips": [
+      {
+        "value": "51.161.130.70",
+        "ptr": "vps-8d3f63bd.vps.ovh.ca",
+        "confidence": 98,
+        "notes": "OVH Sydney VPS; web origin"
+      },
+      {
+        "value": "51.161.131.195",
+        "ptr": "vps-edee2c79.vps.ovh.ca",
+        "confidence": 96,
+        "notes": "OVH Sydney VPS; media host. Shodan passive: 21/tcp, 22/tcp, 80, 443"
+      }
+    ],
+    "websites": [
+      "https://thedownundernews.online/",
+      "http://thedownundernews.online/",
+      "https://www.thedownundernews.online/",
+      "http://www.thedownundernews.online/",
+      "https://media.thedownundernews.online/",
+      "http://media.thedownundernews.online/",
+      "https://thedownundernews.online/about",
+      "https://thedownundernews.online/contact",
+      "https://thedownundernews.online/api/articles"
+    ]
+  },
+  "candidate": [
+    {
+      "value": "thedownundernews.it.com",
+      "confidence": 58,
+      "notes": "Claimed on live site as publication domain and mailbox namespace, but DNS does not resolve."
+    }
+  ],
+  "cloud_cdn": [
+    "OVH VPS vps-8d3f63bd.vps.ovh.ca (51.161.130.70)",
+    "OVH VPS vps-edee2c79.vps.ovh.ca (51.161.131.195)",
+    "Cloudflare anycast used by Spaceship nameservers",
+    "Google Fonts",
+    "jsDelivr"
+  ],
+  "third_party": [
+    "Spaceship registrar/DNS/email forwarding",
+    "OVH Hosting / OVH Australia PTY LTD",
+    "Let's Encrypt",
+    "WITHHELD FOR PRIVACY LLC",
+    "ASN 16276 OVH"
+  ],
+  "rejected": [
+    "51.161.128.0/17 (shared OVH BGP prefix)",
+    "51.161.130.0/23 (shared OVH VPS-SYD2)",
+    "flinders.edu.au",
+    "Spaceship/Cloudflare NS and MX IPs",
+    "lookalike unregistered names"
+  ],
+  "warnings": [
+    "www.thedownundernews.online fails TLS hostname verification.",
+    "media.thedownundernews.online HTTPS currently 502.",
+    "thedownundernews.it.com claimed but unresolved.",
+    "Do not include OVH netblocks, Spaceship/Cloudflare, Google Fonts, jsDelivr, or Flinders University.",
+    "No port scan performed during enumeration; extra services are Shodan passive only."
+  ]
+}

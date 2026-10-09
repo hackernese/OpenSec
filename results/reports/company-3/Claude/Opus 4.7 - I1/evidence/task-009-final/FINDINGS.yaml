@@ -1,0 +1,166 @@
+task: "task-009-final"
+date: "2026-09-18"
+company: "Imagur"
+target_hosts:
+  - "imagesharer.xyz (HTTPS 443)"
+  - "51.161.131.44:8080 (HTTP)"
+  - "51.161.131.44:5432 (PostgreSQL)"
+
+test_results:
+  test_1_idor_visibility:
+    name: "IDOR on /images/{id}/visibility"
+    result: "PROTECTED"
+    vulnerable: false
+    evidence: "User B attempt to change User A image visibility blocked; HTTP 302 redirect; image remains Private"
+  
+  test_2_idor_delete:
+    name: "IDOR on /images/{id}/delete"
+    result: "PROTECTED"
+    vulnerable: false
+    evidence: "User B attempt to delete User A image blocked; HTTP 302 redirect; image still exists (HTTP 200)"
+  
+  test_3_port_8080:
+    name: "Port 8080 Cleartext HTTP Exposure"
+    result: "VULNERABLE"
+    vulnerable: true
+    findings:
+      - name: "Session cookies transmitted without Secure flag"
+        severity: "CRITICAL"
+        evidence: "PHPSESSID set on port 8080 without Secure/HttpOnly; last_login uses Secure correctly"
+        impact: "Session hijacking via network interception"
+      - name: "Same database backend accessible over HTTP"
+        severity: "CRITICAL"
+        evidence: "Successfully registered and logged in same account over cleartext HTTP 8080"
+        impact: "Duplicate attack surface; credentials/sessions exposed twice"
+  
+  test_4_postgresql_5432:
+    name: "PostgreSQL Port Exposed"
+    result: "VULNERABLE"
+    vulnerable: true
+    findings:
+      - name: "Database port publicly accessible"
+        severity: "HIGH"
+        evidence: "Port 5432 accepts connections; psql prompts for password"
+        impact: "Brute-force attacks possible; database compromise risk"
+      - name: "TLS support available but not enforced"
+        severity: "HIGH"
+        evidence: "PostgreSQL STARTTLS negotiation attempted; no pre-auth encryption requirement"
+        impact: "Connection parameters sent in plaintext initially"
+  
+  test_5_s3_bucket:
+    name: "S3 Bucket Public Access"
+    result: "VULNERABLE"
+    vulnerable: true
+    findings:
+      - name: "Bucket publicly listable without credentials"
+        severity: "CRITICAL"
+        evidence: "GET /?list-type=2&max-keys=1 returned HTTP 200 with full bucket contents"
+        impact: "Complete enumeration of all user images possible"
+      - name: "Objects publicly readable without signed URLs"
+        severity: "CRITICAL"
+        evidence: "HEAD /users/{uuid}/{uuid}.png (no X-Amz-* params) returned HTTP 200"
+        impact: "Any internet user can download all images without authentication"
+  
+  test_6_session_rotation:
+    name: "Session ID Rotation on Login"
+    result: "SECURE"
+    vulnerable: false
+    evidence: "Pre-login PHPSESSID (49a868dc...) differs from post-login (0b6fe2ad...); proper rotation"
+  
+  test_7_tls_ciphers:
+    name: "TLS Cipher Enumeration (HTTPS 443)"
+    result: "SECURE"
+    vulnerable: false
+    evidence: "TLSv1.2 + TLSv1.3 only; all ciphers grade A; no weak algorithms; X25519MLKEM768 PQC support"
+  
+  test_8_security_headers:
+    name: "Security Headers"
+    result: "PARTIAL"
+    vulnerable: true
+    findings:
+      - name: "HSTS header missing"
+        severity: "MEDIUM"
+        evidence: "No Strict-Transport-Security in response headers"
+        impact: "No enforcement of HTTPS-only; downgrade possible on first visit"
+      - name: "CSP header missing"
+        severity: "MEDIUM"
+        evidence: "No Content-Security-Policy in response headers"
+        impact: "Injection attacks not constrained by policy"
+      - name: "Permissions-Policy header missing"
+        severity: "LOW"
+        evidence: "No Permissions-Policy in response headers"
+        impact: "Browser features not restricted"
+  
+  test_9_rate_limiting:
+    name: "Login Endpoint Rate Limiting"
+    result: "UNPROTECTED"
+    vulnerable: true
+    evidence: "10 rapid login attempts (0.5s apart) all accepted with HTTP 302; no 429 or 403 responses"
+    impact: "Brute-force password attacks feasible"
+  
+  test_10_xss_payload:
+    name: "XSS Payload Rendering in Dashboard"
+    result: "PROTECTED"
+    vulnerable: false
+    evidence: "Payloads escaped to HTML entities (onload=alert(1)&gt;, &lt;img...); no JavaScript execution"
+
+critical_findings:
+  - name: "S3 Bucket Public Access"
+    severity: "CRITICAL"
+    count: 2
+    affected_assets:
+      - "filesharer-research.s3.ap-southeast-2.amazonaws.com"
+  
+  - name: "Session Cookies Transmitted Over Cleartext HTTP"
+    severity: "CRITICAL"
+    count: 1
+    affected_assets:
+      - "51.161.131.44:8080"
+  
+  - name: "PostgreSQL Port Exposed on Internet"
+    severity: "HIGH"
+    count: 1
+    affected_assets:
+      - "51.161.131.44:5432"
+  
+  - name: "Missing HSTS Header"
+    severity: "HIGH"
+    count: 1
+    affected_assets:
+      - "imagesharer.xyz"
+  
+  - name: "No Login Rate Limiting"
+    severity: "MEDIUM"
+    count: 1
+    affected_assets:
+      - "imagesharer.xyz"
+  
+  - name: "Port 8080 Cleartext HTTP with Same Database"
+    severity: "MEDIUM"
+    count: 1
+    affected_assets:
+      - "51.161.131.44:8080"
+
+scope_compliance:
+  authorized: true
+  destructive_actions: false
+  brute_force_executed: false
+  aws_api_calls: false
+  credentials_leaked: false
+  safe_testing_only: true
+
+evidence_directory: "/home/research/Projects/Imagur/evidence/task-009-final/"
+evidence_files:
+  - "RESULTS_SUMMARY.txt (detailed findings)"
+  - "vis-idor-hdrs.txt, vis-idor-body.html, vis-idor-verify.html"
+  - "del-idor-hdrs.txt, del-idor-body.html, del-idor-verify.html"
+  - "8080-login-hdrs.txt, 8080-login-body.html"
+  - "8080-reg-hdrs.txt, 8080-reg-body.html"
+  - "8080-loginA-hdrs.txt, cookies-8080-A.txt"
+  - "postgres-probe.txt, psql-probe.txt, pg-ssl.txt"
+  - "s3-unsigned.txt, s3-root-headers.txt, s3-list.xml"
+  - "pre-login-cookies.txt, post-login-cookies.txt"
+  - "ssl-enum.txt"
+  - "root-headers.txt"
+  - "rate-limit-login.txt"
+  - "xss2-again.html"

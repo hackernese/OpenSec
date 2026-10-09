@@ -1,0 +1,2 @@
+ausecurity.best.	144	IN	DNSKEY	256 3 13 DBuQ7Ej+v6xGbD3SeCk3ViWD0zygHhDvFXDtk6/CWpa4/nPLCqpnC4KQ 1hKAglvTOmRe0oGurl8yZBx8Og7v8w==
+ausecurity.best.	144	IN	DNSKEY	257 3 13 RKwH5QjIiVaRPZ3/+ary+yXBL55gB8xDt8gWOV3U9mf8M8ZkO80ZQf5y Gdjdtv41mKe14kMsTA3wb3QZF7inOw==

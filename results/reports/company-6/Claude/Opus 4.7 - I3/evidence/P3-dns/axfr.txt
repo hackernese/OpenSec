@@ -1,0 +1,12 @@
+--- AXFR @ launch1.spaceship.net. ---
+
+; <<>> DiG 9.20.27-1-Debian <<>> AXFR ausecurity.best @launch1.spaceship.net. +time=3 +tries=1
+; (2 servers found)
+;; global options: +cmd
+; Transfer failed.
+--- AXFR @ launch2.spaceship.net. ---
+
+; <<>> DiG 9.20.27-1-Debian <<>> AXFR ausecurity.best @launch2.spaceship.net. +time=3 +tries=1
+; (2 servers found)
+;; global options: +cmd
+; Transfer failed.

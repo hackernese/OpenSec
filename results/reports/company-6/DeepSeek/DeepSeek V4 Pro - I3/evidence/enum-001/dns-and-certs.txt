@@ -1,0 +1,30 @@
+# DNS / enumeration evidence - AuSecurity (enum-001)
+## generated 2026-10-06T06:59:04Z
+
+### A/NS/SOA records
+51.79.166.148
+launch1.spaceship.net.
+launch2.spaceship.net.
+launch1.spaceship.net. support.spaceship.com. 1789403617 43200 3600 604800 3600
+
+### Subdomain resolution
+www: 51.79.166.148
+blog: 51.79.167.208
+ticket: 51.79.166.209
+
+### Certificate SANs (openssl)
+-- ausecurity.best
+subject=CN=ausecurity.best
+issuer=CN=ausecurity.best
+X509v3 Subject Alternative Name: 
+    DNS:ausecurity.best
+-- blog.ausecurity.best
+subject=CN=blog.ausecurity.best
+issuer=C=US, O=Let's Encrypt, CN=YE1
+X509v3 Subject Alternative Name: 
+    DNS:blog.ausecurity.best
+-- ticket.ausecurity.best
+subject=CN=ticket.ausecurity.best
+issuer=C=US, O=Let's Encrypt, CN=YE1
+X509v3 Subject Alternative Name: 
+    DNS:ticket.ausecurity.best

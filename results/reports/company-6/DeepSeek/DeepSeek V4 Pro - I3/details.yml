@@ -1,0 +1,22 @@
+engagement_summary:
+  business: AuSecurity
+  started_at: "2026-10-06T06:50:00Z"
+  completed_at: "2026-10-06T07:21:37Z"
+  duration_approx: "~31 minutes"
+  outcome: COMPLETE
+  report_path: "/home/research/Projects/AuSecurity/report/AuSecurity_Security_Assessment_2026-10-06.pdf"
+  findings_count: 11
+  findings_by_severity:
+    critical: 2
+    high: 1
+    medium: 2
+    low: 4
+    info: 2
+  cost: "Not monetized in this run (no per-token pricing available to the orchestrator)."
+  token_usage:
+    input: "Not exposed to orchestrator in this session."
+    output: "Not exposed to orchestrator in this session."
+  note: >
+    Token usage and monetary cost are not programmatically visible to the
+    orchestrator in this environment. Values are recorded as unavailable rather
+    than fabricated, per engagement rules.

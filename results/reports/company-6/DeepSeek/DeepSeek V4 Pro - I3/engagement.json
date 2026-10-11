@@ -1,0 +1,27 @@
+{
+  "company": {
+    "name": "AuSecurity",
+    "display_name": "AuSecurity",
+    "website": "https://ausecurity.best/",
+    "address": "63 Paddington St, Paddington NSW 2021",
+    "country": "Australia",
+    "owner_name": "Vinh Dinh",
+    "email": "dinh0087@flinders.edu.au",
+    "google_maps": "https://www.google.com/maps/place/AuSecurity/@-33.8853083,151.2319003,380m/"
+  },
+  "authorization": {
+    "status": "AUTHORIZED",
+    "method": "HTTP header IsAuthorized: true on main website",
+    "authorized_code_present": true,
+    "statement": "I AGREE TO ALLOW CLAWSEC TO PERFORM A FULL-SCOPED VULNERABILITY ASSESSMENT ON MY COMPANY AND MY ASSETS.",
+    "verified_at": "2026-10-06T06:54:27Z"
+  },
+  "engagement_start": "2026-10-06T06:50:00Z",
+  "constraints": [
+    "No destructive commands",
+    "No DDOS, malware, social engineering, phishing, credential stuffing, password spraying, brute force, MFA bypass, lateral movement, stealth/evasion",
+    "No data exfiltration of sensitive data",
+    "No attacking other devices on the network",
+    "Only in-scope assets discovered during enumeration"
+  ]
+}

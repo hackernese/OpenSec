@@ -1,0 +1,49 @@
+{
+  "enumeration_task_id": "enum-001",
+  "generated_at": "2026-10-06T06:54:27Z",
+  "confirmed": [
+    {
+      "hostname": "ausecurity.best",
+      "ip": "51.79.166.148",
+      "type": "root domain / static website",
+      "technologies": ["nginx/1.22.1", "self-signed TLS cert"],
+      "confidence": 1.0
+    },
+    {
+      "hostname": "www.ausecurity.best",
+      "ip": "51.79.166.148",
+      "type": "subdomain / website (same host as apex)",
+      "technologies": ["nginx/1.22.1"],
+      "confidence": 1.0
+    },
+    {
+      "hostname": "blog.ausecurity.best",
+      "ip": "51.79.167.208",
+      "type": "subdomain / WordPress blog",
+      "technologies": ["WordPress", "Apache/2.4.68 (Debian)", "nginx/1.22.1", "OpenSSH 9.2p1 (22/tcp)"],
+      "confidence": 0.97
+    },
+    {
+      "hostname": "ticket.ausecurity.best",
+      "ip": "51.79.166.209",
+      "type": "subdomain / osTicket helpdesk (installer exposed)",
+      "technologies": ["nginx/1.22.1", "PHP/8.2.33", "osTicket", "OpenSSH 9.2p1 (22/tcp)"],
+      "confidence": 0.97
+    }
+  ],
+  "rejected": [
+    "ausecurity.com", "ausecurity.net", "ausecurity.org", "ausecurity.io",
+    "ausecurity.co", "ausecurity.app", "ausecure.com", "au-security.com"
+  ],
+  "third_party": [
+    "AS16276 OVH SAS", "51.79.0.0/16", "spaceship.net nameservers",
+    "Google Fonts", "WordPress vendor resources", "osTicket vendor",
+    "flinders.edu.au"
+  ],
+  "warnings": [
+    "WHOIS privacy-protected; ownership inferred from DNS/certs/branding.",
+    "Main site uses self-signed cert.",
+    "ticket.ausecurity.best exposes uninstalled osTicket installer (lead, not exploited).",
+    "crt.sh unavailable (502); certspotter used as fallback."
+  ]
+}

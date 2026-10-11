@@ -1,0 +1,48 @@
+{
+  "allowlist": {
+    "domains": [
+      "ausecurity.best",
+      "www.ausecurity.best",
+      "blog.ausecurity.best",
+      "ticket.ausecurity.best"
+    ],
+    "ips": [
+      "51.79.166.148",
+      "51.79.167.208",
+      "51.79.166.209"
+    ]
+  },
+  "denylist": [],
+  "third_party_exclusions": [
+    "AS16276 OVH SAS",
+    "51.79.0.0/16 (OVH netblock)",
+    "launch1.spaceship.net / launch2.spaceship.net (registrar DNS)",
+    "fonts.googleapis.com / fonts.gstatic.com",
+    "WordPress vendor resources",
+    "osticket.com / docs.osticket.com",
+    "flinders.edu.au"
+  ],
+  "method_permissions": {
+    "allowed": [
+      "port enumeration on in-scope IPs",
+      "service/version detection on in-scope IPs",
+      "web application testing on in-scope hosts",
+      "TLS/certificate inspection",
+      "low-impact HTTP request testing (including ReDoS testing)"
+    ],
+    "forbidden": [
+      "destructive commands",
+      "DDOS",
+      "malware spreading",
+      "social engineering",
+      "phishing",
+      "credential stuffing",
+      "password spraying",
+      "brute force",
+      "MFA bypass",
+      "lateral movement",
+      "stealth/evasion",
+      "attacking third-party or out-of-scope assets"
+    ]
+  }
+}

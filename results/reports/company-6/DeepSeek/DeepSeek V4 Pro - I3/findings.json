@@ -1,0 +1,193 @@
+[
+  {
+    "status": "finished",
+    "data": {
+      "title": "Unauthenticated Admin Dashboard with Client PII Exposure",
+      "severity": "critical",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
+      "summary": "The administrative dashboard is served to any unauthenticated visitor. The full\npage - including client records and internal business metrics - is present in the\nstatic HTML and can be retrieved without logging in.",
+      "description": "Requests to /dashboard and /dashboard.html return HTTP 200 with no authentication\nchallenge, no redirect to login, and no server-side access control. The HTML body\nhard-codes five third-party client records (company name, contact name, and\nbusiness email address) and internal metrics (47 total enquiries, 12 active\nclients, 19 assessments YTD, 5 open proposals, revenue YTD $1.2M) plus an activity\ntimeline. The client-side JavaScript contains an auth guard, but it runs only in\nthe browser after the page (including all sensitive data) has already been\ndelivered. Direct HTTP requests (curl, or a browser with JS disabled) bypass it\nentirely. This discloses regulated personal information (PII) of AuSecurity's\nclients to anyone on the internet and demonstrates broken access control on the\nadministrative interface.",
+      "recommendation": "Enforce authentication and authorization on the server side for all admin content.\nDo not embed sensitive data in static HTML. Move dashboard data behind an\nauthenticated API (e.g., /api/dashboard) that requires a valid session, and return\n401/403 for unauthenticated requests. Remove the client-side-only guard or keep it\nonly as a UX convenience, never as the sole control.",
+      "affected_components": [
+        "https://ausecurity.best/dashboard",
+        "https://ausecurity.best/dashboard.html (51.79.166.148)"
+      ],
+      "references": [
+        "https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Exposed osTicket Installer Allows Remote Takeover",
+      "severity": "critical",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+      "summary": "The osTicket helpdesk is not yet installed, and its web installer is publicly\nreachable. Any unauthenticated user can complete the installation wizard and\ncreate the administrator account, taking full control of the helpdesk.",
+      "description": "https://ticket.ausecurity.best/ returns a 302 redirect to /setup/install.php.\nThe installer (osTicket v1.18.4) is fully reachable and unauthenticated. Posting\ns=prereq&submit=Continue advances the wizard to step 2 (\"Basic Installation\"),\nwhich exposes the forms to configure the system, create the admin user, and set\nthe database connection - with no authentication, CSRF token, or existing-\nconfiguration guard. An attacker who reaches the installer before the business\ncompletes setup can install the application against their own database or a\ndatabase they control, register themselves as administrator, and take over the\nhelpdesk instance (including any future support tickets containing customer data).\nNote: the prerequisite step was advanced once purely to confirm exploitability;\nno installation or configuration was performed.",
+      "recommendation": "Complete or remove the installer immediately. osTicket's setup directory\n(/setup/) must be deleted or made inaccessible after installation, and access\nshould be restricted (IP allowlist or authentication) until the application is\nprovisioned. Ensure the instance is installed against a database controlled by\nAuSecurity before it is exposed to the internet.",
+      "affected_components": [
+        "https://ticket.ausecurity.best/ (51.79.166.209)"
+      ],
+      "references": [
+        "https://docs.osticket.com/en/latest/Getting%20Started/Installation.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "DOM-Based Cross-Site Scripting via 'name' Parameter",
+      "severity": "high",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+      "summary": "The consultation success page reads the 'name' query parameter and injects it\ninto the page using innerHTML without any sanitization, allowing DOM-based\ncross-site scripting.",
+      "description": "The inline script on /consultation-success.html parses window.location.search and\nexecutes document.getElementById('user-name').innerHTML = userName using the raw\n'name' parameter with no encoding or sanitization. A crafted URL such as\n/consultation-success.html?name=<img src=x onerror=alert(document.cookie)> will\nexecute attacker-controlled JavaScript in the victim's browser in the origin of\nausecurity.best. The contact form's /api/contact response also reflects the\nsubmitted full_name into the redirect_url that navigates to this page, creating a\npractical delivery path. Because the login session cookie is scoped to this same\norigin, exploitation can lead to session hijacking of authenticated admin users.",
+      "recommendation": "Use textContent instead of innerHTML for the 'name' value (as is already done for\n'company'), or HTML-encode the value before insertion. Validate/sanitize all\nvalues read from URL query parameters before they reach DOM sinks.",
+      "affected_components": [
+        "https://ausecurity.best/consultation-success.html (51.79.166.148)"
+      ],
+      "references": [
+        "https://owasp.org/www-community/attacks/DOM_Based_XSS"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Open Redirect on Login 'redirect' Parameter",
+      "severity": "medium",
+      "cvss": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+      "summary": "The login page uses the 'redirect' query parameter as a redirect target after\nauthentication without performing the intended same-origin validation, enabling\nan open redirect.",
+      "description": "In assets/js/main.js, after a successful login the code reads the 'redirect'\nparameter and assigns it directly to window.location.href. The source contains a\ncomment claiming \"only allow same-origin redirects\", but no such check exists in\nthe code (no origin comparison, allowlist, or URL parsing). An attacker can craft\n/login?redirect=https://evil.example.com and, after the victim authenticates, the\nvictim is redirected to the attacker-controlled site. This is commonly abused for\ncredential phishing. The same unsafe pattern also exists in the already-\nauthenticated branch of the login page.",
+      "recommendation": "Implement actual same-origin validation (e.g., require the redirect target to\nstart with '/' or match the site origin) before navigating. Prefer a fixed\nallowlist of permitted post-login destinations.",
+      "affected_components": [
+        "https://ausecurity.best/login (51.79.166.148)"
+      ],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Self-Signed TLS Certificate on Primary Website",
+      "severity": "medium",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+      "summary": "The main website presents a self-signed TLS certificate, causing browser trust\nwarnings and providing no third-party identity assurance.",
+      "description": "The certificate served on ausecurity.best:443 has issuer CN=ausecurity.best and\nsubject CN=ausecurity.best (self-signed), valid 2026-09-14 to 2027-09-14. It is\nnot chained to a public CA, so visitors receive security warnings and traffic\nauthentication relies on trust in the self-signed key rather than a trusted CA.\nThe subdomains blog.ausecurity.best and ticket.ausecurity.best use valid\nLet's Encrypt certificates, so only the apex site is affected. Notably, the\nweb-application still functions over HTTPS and, combined with the missing HSTS\nheader, this weakens transport-security guarantees for the primary domain.",
+      "recommendation": "Replace the self-signed certificate with a valid certificate from a public CA\n(e.g., Let's Encrypt), consistent with the subdomains. Automate renewal and\ndeployment.",
+      "affected_components": [
+        "https://ausecurity.best/ (51.79.166.148)"
+      ],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Missing Security Headers",
+      "severity": "low",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The main website and the WordPress blog omit standard HTTP security headers,\nreducing the sites' protection against common browser-side attacks.",
+      "description": "Responses from https://ausecurity.best/ do not include Content-Security-Policy,\nX-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Referrer-Policy,\nor Permissions-Policy. The blog (blog.ausecurity.best) likewise omits these headers\non its main responses (its wp-login.php does set X-Frame-Options and a CSP\nframe-ancestors directive). The absence of HSTS is particularly notable on the\nmain site, which is also served with a self-signed certificate. Missing\nX-Frame-Options/CSP frame-ancestors enables clickjacking on the main marketing\npages.",
+      "recommendation": "Configure the web server to emit a consistent set of security headers on all\nresponses: Strict-Transport-Security, X-Content-Type-Options: nosniff,\nX-Frame-Options: DENY (or CSP frame-ancestors 'self'), Referrer-Policy, a\nContent-Security-Policy, and Permissions-Policy.",
+      "affected_components": [
+        "https://ausecurity.best/",
+        "https://blog.ausecurity.best/"
+      ],
+      "references": [
+        "https://owasp.org/www-project-secure-headers/"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Server Software Version Disclosure",
+      "severity": "info",
+      "cvss": "",
+      "summary": "Web servers disclose their exact software versions, aiding attackers in targeting\nknown-vulnerable versions.",
+      "description": "The Server header and service banners disclose exact versions: nginx/1.22.1\n(ausecurity.best 80/443, ticket.ausecurity.best), nginx/1.25.5 (ausecurity.best\n:8080), Apache/2.4.68 (blog.ausecurity.best), PHP/8.2.33 (ticket.ausecurity.best\nvia X-Powered-By), and WordPress 7.1.2 (blog generator meta). OpenSSH 9.2p1 is\nalso exposed on port 22 across hosts.",
+      "recommendation": "Set 'server_tokens off;' in nginx, 'ServerTokens Prod' / 'ServerSignature Off' in\nApache, and remove the X-Powered-By header (expose_php = Off). Remove or suppress\nthe WordPress generator meta tag.",
+      "affected_components": [
+        "51.79.166.148",
+        "51.79.167.208",
+        "51.79.166.209"
+      ],
+      "references": [
+        "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/03-Review_Webserver_Metafiles_for_Information_Leakage"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress Username Enumeration",
+      "severity": "low",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "The WordPress blog discloses that the username 'admin' exists, both via the REST\nAPI and via a distinguishable login error message.",
+      "description": "The REST endpoint /wp-json/wp/v2/users is publicly accessible and returns\n[{\"id\":1,\"name\":\"admin\",\"slug\":\"admin\",...}], exposing the administrator username.\nAdditionally, submitting log=admin with a wrong password to wp-login.php returns\n\"The password you entered for the username admin is incorrect.\", confirming the\naccount exists (as opposed to an \"invalid username\" message). This assists\ntargeted attacks against the admin account.",
+      "recommendation": "Restrict the WordPress REST users endpoint (disable user enumeration) and use\ngeneric login error messages (\"Invalid username or password\") rather than\ndifferentiating between invalid username and incorrect password.",
+      "affected_components": [
+        "https://blog.ausecurity.best/ (51.79.167.208)"
+      ],
+      "references": [
+        "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress XML-RPC Enabled with Dangerous Methods",
+      "severity": "low",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "WordPress XML-RPC is enabled and exposes 78 methods including pingback.ping and\nsystem.multicall, which can be abused for amplification and SSRF.",
+      "description": "POSTing system.listMethods to /xmlrpc.php returns 200 with a full method listing,\nincluding pingback.ping (SSRF / DDoS reflection vector) and system.multicall\n(brute-force amplification). The pingback functionality allows an attacker to make\nthe blog issue requests to arbitrary hosts, which can be abused for internal\nnetwork probing or distributed reflection.",
+      "recommendation": "Disable XML-RPC if not required (e.g., block /xmlrpc.php at the server level or\nuse a plugin to disable it). If it must remain, restrict pingback.ping and\nsystem.multicall.",
+      "affected_components": [
+        "https://blog.ausecurity.best/xmlrpc.php (51.79.167.208)"
+      ],
+      "references": [
+        "https://blog.sucuri.net/2015/10/brute-force-amplification-attacks-against-wordpress-xmlrpc.html"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "Directory Listing Enabled on WordPress Uploads",
+      "severity": "low",
+      "cvss": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+      "summary": "Apache directory indexing is enabled on the WordPress uploads directory, exposing\nthe structure of uploaded content.",
+      "description": "GET /wp-content/uploads/ returns an Apache autoindex page (\"Index of\n/wp-content/uploads\") listing the 2026/ subdirectory, and\n/wp-content/uploads/2026/ lists the 09/ and 10/ month directories. This exposes\nthe existence and layout of uploaded files, which can aid further reconnaissance\nor reveal files not intended to be discoverable.",
+      "recommendation": "Disable directory listing (Options -Indexes) for the WordPress directories, and\nconsider placing an empty index file or blocking direct access to wp-content\nlisting.",
+      "affected_components": [
+        "https://blog.ausecurity.best/wp-content/uploads/ (51.79.167.208)"
+      ],
+      "references": [
+        "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/03-Review_Webserver_Metafiles_for_Information_Leakage"
+      ]
+    }
+  },
+  {
+    "status": "finished",
+    "data": {
+      "title": "WordPress Version Disclosure",
+      "severity": "info",
+      "cvss": "",
+      "summary": "The blog's HTML discloses the exact WordPress core version via the generator meta\ntag.",
+      "description": "The blog homepage includes <meta name=\"generator\" content=\"WordPress 7.1.2\" /> and\nthe wp-emoji release script references ver=7.1.2, disclosing the exact core\nversion. Combined with the readme.html and license.txt files being publicly\naccessible, this simplifies identification of applicable vulnerabilities.",
+      "recommendation": "Remove or suppress the WordPress generator meta tag and consider restricting\naccess to readme.html and license.txt.",
+      "affected_components": [
+        "https://blog.ausecurity.best/ (51.79.167.208)"
+      ],
+      "references": [
+        "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/03-Review_Webserver_Metafiles_for_Information_Leakage"
+      ]
+    }
+  }
+]

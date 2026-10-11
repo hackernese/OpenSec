@@ -1,0 +1,148 @@
+{
+  "id": "e2823f18-e4bb-4aa2-aba1-9c3f9355e292",
+  "created": "2026-10-06T07:08:51.251270Z",
+  "updated": "2026-10-06T07:08:51.251872Z",
+  "name": "AuSecurity Security Assessment 2026-10-06",
+  "project_type": "6fcb631f-d3f2-4a39-95e4-3e373bcc4c96",
+  "language": "en-US",
+  "tags": [
+    "reptor",
+    "research"
+  ],
+  "readonly": false,
+  "source": "created",
+  "copy_of": null,
+  "override_finding_order": false,
+  "members": [
+    {
+      "id": "e10401be-0e85-4cbe-8ef7-87f457345d50",
+      "username": "reptor",
+      "name": "",
+      "color": "#e2652b",
+      "title_before": null,
+      "first_name": "",
+      "middle_name": null,
+      "last_name": "",
+      "title_after": null,
+      "is_active": true,
+      "roles": [
+        "pentester"
+      ]
+    }
+  ],
+  "imported_members": [],
+  "details": "http://localhost:8000/api/v1/pentestprojects/e2823f18-e4bb-4aa2-aba1-9c3f9355e292",
+  "notes": "http://localhost:8000/api/v1/pentestprojects/e2823f18-e4bb-4aa2-aba1-9c3f9355e292/notes",
+  "images": "http://localhost:8000/api/v1/pentestprojects/e2823f18-e4bb-4aa2-aba1-9c3f9355e292/images",
+  "findings": [],
+  "sections": [
+    {
+      "id": "executive_summary",
+      "created": "2026-10-06T07:08:51.258990Z",
+      "updated": "2026-10-06T07:08:51.260357Z",
+      "project": "e2823f18-e4bb-4aa2-aba1-9c3f9355e292",
+      "project_type": "6fcb631f-d3f2-4a39-95e4-3e373bcc4c96",
+      "language": "en-US",
+      "label": "Executive Summary",
+      "fields": [
+        "executive_summary"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "executive_summary": "## Executive Summary\n\nAuSecurity engaged ClawSec to carry out an authorized, full-scope security assessment of its public-facing infrastructure. Testing covered four in-scope assets - the main marketing website, the WordPress blog, and the osTicket helpdesk - hosted across three OVH Singapore servers, over a single day on 6 October 2026.\n\nThe assessment identified **11 findings**: **2 critical, 1 high, 2 medium, 4 low, and 2 informational**.\n\nTwo critical issues require immediate attention:\n\n1. **Client data is publicly exposed.** The administrative dashboard can be opened by anyone on the internet without logging in. It contains third-party client records (company names, contact names, and business email addresses) as well as internal business metrics. The only protection is a script that runs in the visitor's browser *after* the sensitive data has already been delivered, so it can be bypassed with trivial effort.\n\n2. **The helpdesk can be taken over before it goes live.** The osTicket helpdesk has not yet been installed, and its setup wizard is publicly reachable. Anyone who reaches it first can complete the installation, register themselves as the administrator, and gain full control of the system.\n\nAdditional findings include a cross-site scripting vulnerability on the consultation confirmation page, an open redirect on the login page, a self-signed TLS certificate on the main website, missing security headers, and several information-disclosure issues on the WordPress blog.\n\nThe highest-priority actions are to (1) lock down the admin dashboard behind server-side authentication and remove client data from the static pages, and (2) remove or complete the osTicket installer immediately. Full technical detail and remediation guidance for every finding is provided in the body of this report."
+      }
+    },
+    {
+      "id": "scope",
+      "created": "2026-10-06T07:08:51.259182Z",
+      "updated": "2026-10-06T07:08:51.260396Z",
+      "project": "e2823f18-e4bb-4aa2-aba1-9c3f9355e292",
+      "project_type": "6fcb631f-d3f2-4a39-95e4-3e373bcc4c96",
+      "language": "en-US",
+      "label": "Scope",
+      "fields": [
+        "scope",
+        "start_date",
+        "end_date",
+        "duration",
+        "provided_users"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "scope": "## Scope\n\nThis engagement was a full-scope, black-box security assessment of AuSecurity's public-facing infrastructure, performed from an external (internet) perspective without any provided credentials.\n\nThe following in-scope assets were assessed:\n\n* **https://ausecurity.best/** - 51.79.166.148 (static marketing site, nginx/1.22.1, self-signed certificate)\n* **https://www.ausecurity.best/** - 51.79.166.148 (same host as the apex domain)\n* **https://blog.ausecurity.best/** - 51.79.167.208 (WordPress 7.1.2 blog, Apache 2.4.68 + nginx)\n* **https://ticket.ausecurity.best/** - 51.79.166.209 (osTicket v1.18.4 helpdesk, PHP 8.2.33, installer exposed)\n\n### Methodology\n\nAuthorized full-scope black-box assessment consisting of reconnaissance (DNS, WHOIS, and certificate-transparency review), port and service enumeration, TLS review, and web application testing (broken access control, SQL-injection probing, cross-site scripting, open redirect, and information disclosure) across all four in-scope assets.\n\n### Limitations\n\nWHOIS records are privacy-protected, so ownership was inferred from DNS, certificates, and branding. No credentials were provided, so authenticated testing was not performed. A single credential probe was used only for username enumeration (no brute force, in line with the rules of engagement). The osTicket installer was advanced one step solely to confirm exploitability; no installation or configuration was performed.",
+        "start_date": "2026-10-06",
+        "end_date": "2026-10-06",
+        "duration": "1 person day",
+        "provided_users": "No user accounts were provided for this engagement."
+      }
+    },
+    {
+      "id": "customer",
+      "created": "2026-10-06T07:08:51.259123Z",
+      "updated": "2026-10-06T07:08:51.260365Z",
+      "project": "e2823f18-e4bb-4aa2-aba1-9c3f9355e292",
+      "project_type": "6fcb631f-d3f2-4a39-95e4-3e373bcc4c96",
+      "language": "en-US",
+      "label": "Customer",
+      "fields": [
+        "customer_name",
+        "customer_address",
+        "receiver_name"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "customer_name": "AuSecurity",
+        "customer_address": {
+          "city": "Paddington NSW 2021",
+          "street": "63 Paddington St"
+        },
+        "receiver_name": "Vinh Dinh"
+      }
+    },
+    {
+      "id": "other",
+      "created": "2026-10-06T07:08:51.259275Z",
+      "updated": "2026-10-06T07:08:51.260406Z",
+      "project": "e2823f18-e4bb-4aa2-aba1-9c3f9355e292",
+      "project_type": "6fcb631f-d3f2-4a39-95e4-3e373bcc4c96",
+      "language": "en-US",
+      "label": "Other",
+      "fields": [
+        "title",
+        "report_date",
+        "report_version",
+        "list_of_changes",
+        "draft"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "title": "AuSecurity Security Assessment 2026-10-06",
+        "report_date": "2026-10-06",
+        "report_version": "1.0",
+        "list_of_changes": [],
+        "draft": false
+      }
+    },
+    {
+      "id": "appendix",
+      "created": "2026-10-06T07:08:51.259229Z",
+      "updated": "2026-10-06T07:08:51.260401Z",
+      "project": "e2823f18-e4bb-4aa2-aba1-9c3f9355e292",
+      "project_type": "6fcb631f-d3f2-4a39-95e4-3e373bcc4c96",
+      "language": "en-US",
+      "label": "Appendix",
+      "fields": [
+        "appendix_sections"
+      ],
+      "assignee": null,
+      "status": "finished",
+      "data": {
+        "appendix_sections": []
+      }
+    }
+  ]
+}

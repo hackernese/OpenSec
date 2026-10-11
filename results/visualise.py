@@ -27,8 +27,8 @@ def stacked_bar_groups_percent(years, regions, data, title="Chart Title"):
         bars_per_year
     )
 
-    colors = ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000"]
-    text_colors = ["white", "white", "black", "black"]
+    colors = ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#A246DB"]
+    text_colors = ["white", "white", "black", "black", "white"]
 
     # Original counts: one row per category/colour
     values = np.array(list(data.values()), dtype=float)
@@ -102,14 +102,19 @@ def stacked_bar_groups_percent(years, regions, data, title="Chart Title"):
 
     ax.grid(axis="y", alpha=0.4)
     ax.set_axisbelow(True)
-    ax.legend()
+    ax.legend(
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.18),
+        ncol=len(data),
+        frameon=False
+    )
 
     plt.subplots_adjust(bottom=0.18)
     plt.show()
 
     return fig, ax
 
-def plot_times_with_average(data):
+def plot_dot_with_average(data, title, subtitle):
     """
     data example:
     {
@@ -156,8 +161,8 @@ def plot_times_with_average(data):
         # Average label
         ax.text(i + 0.32, average, f"{average:.1f} min", va="center")
 
-    ax.set_title("Time taken across repeated runs", fontweight="bold")
-    ax.set_ylabel("Time taken (minutes)")
+    ax.set_title(title, fontweight="bold")
+    ax.set_ylabel(subtitle)
     ax.set_xticks(range(len(data)))
     ax.set_xticklabels(data.keys())
 

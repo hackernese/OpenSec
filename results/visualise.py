@@ -4,10 +4,158 @@ import matplotlib.pyplot as plt
 from matplotlib.transforms import blended_transform_factory
 from matplotlib.ticker import PercentFormatter
 from matplotlib.colors import ListedColormap, BoundaryNorm
+from matplotlib.lines import Line2D
 
-def grouped_bar_chart(groups, data, title="Chart Title"):
+
+def group_barchart_with_average(data, title="Bugs found across companies"):
+    """
+    data = {
+        "Company 1": {
+            "Model A": [8, 9, 10],
+            "Model B": [11, 12, 13],
+            "Model C": [7, 8, 9],
+        },
+        ...
+    }
+
+    Each list must contain the bug counts from three iterations.
+    """
+    companies = list(data)
+
+    if not companies:
+        raise ValueError("Provide at least one company.")
+
+    models = list(data[companies[0]])
+
+    if not models:
+        raise ValueError("Provide at least one model.")
+
+    # Validate that every company has the same models and three runs.
+    for company, results in data.items():
+        if set(results) != set(models):
+            raise ValueError(f"{company} must contain the same models.")
+
+        for model, runs in results.items():
+            values = np.asarray(runs, dtype=float)
+
+            if values.shape != (3,):
+                raise ValueError(
+                    f"{company} / {model} must have exactly three values."
+                )
+
+            if not np.all(np.isfinite(values)) or np.any(values < 0):
+                raise ValueError("Bug counts must be finite and non-negative.")
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    x = np.arange(len(companies))
+    width = 0.8 / len(models)
+    colors = ["#4472C4", "#ED7D31", "#A246DB"]
+
+    for i, model in enumerate(models):
+        color = colors[i % len(colors)]
+
+        # Centre the model bars within each company group.
+        positions = x + (i - (len(models) - 1) / 2) * width
+
+        runs = np.array(
+            [data[company][model] for company in companies],
+            dtype=float,
+        )
+        means = runs.mean(axis=1)
+
+        ax.bar(
+            positions,
+            means,
+            width=width * 0.85,
+            color=color,
+            alpha=0.75,
+            label=model,
+            zorder=2,
+        )
+
+        # Slight horizontal offsets keep the three dots visible.
+        offsets = np.linspace(-width * 0.2, width * 0.2, 3)
+
+        for iteration, offset in enumerate(offsets):
+            ax.scatter(
+                positions + offset,
+                runs[:, iteration],
+                color=color,
+                edgecolors="white",
+                linewidths=1,
+                s=55,
+                zorder=3,
+            )
+            for xpos, value in zip(positions + offset, runs[:, iteration]):
+                ax.annotate(
+                    f"{value:g}",
+                    xy=(xpos, value),
+                    xytext=(0, 8),
+                    textcoords="offset points",
+                    ha="center",
+                    va="bottom",
+                    fontsize=9,
+                    color="black",
+                    zorder=4,
+                )
+
+    ax.set_title(title, pad=25)
+    ax.text(
+        0, 1.02,
+        "Bars = average of 3 iterations · Dots = individual iterations",
+        transform=ax.transAxes,
+        fontsize=10,
+        color="dimgray",
+    )
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(companies)
+    ax.set_ylabel("Bugs found per iteration")
+    ax.set_ylim(bottom=0)
+
+    ax.set_axisbelow(True)
+    ax.grid(axis="y", alpha=0.25)
+    ax.spines[["top", "right"]].set_visible(False)
+
+    # Place the legend beneath the chart.
+    handles, labels = ax.get_legend_handles_labels()
+    handles.append(
+        Line2D(
+            [], [],
+            marker="o",
+            linestyle="None",
+            color="dimgray",
+            markeredgecolor="white",
+            markersize=7,
+        )
+    )
+    labels.append("Individual iteration")
+
+    ax.legend(
+        handles,
+        labels,
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.12),
+        ncol=len(models) + 1,
+        frameon=False,
+    )
+
+    fig.tight_layout()
+    return fig, ax
+    
+def grouped_bar_chart(groups, data, totals, title="Chart Title"):
     group_count = len(groups)
     category_count = len(data)
+
+    # One total per group
+    if len(totals) != group_count:
+        raise ValueError(
+            f"'totals' needs {group_count} values "
+            f"(one for each group)."
+        )
+    if any(t <= 0 for t in totals):
+        raise ValueError("Every total must be greater than 0.")
 
     # Every category needs one value per group
     for name, values in data.items():
@@ -17,6 +165,7 @@ def grouped_bar_chart(groups, data, title="Chart Title"):
                 f"(one for each group)."
             )
 
+    totals = np.array(totals, dtype=float)
     x = np.arange(group_count)
 
     colors = ["#4472C4", "#A5A5A5", "#ED7D31", "#FFC000", "#A246DB"]
@@ -24,7 +173,7 @@ def grouped_bar_chart(groups, data, title="Chart Title"):
     group_width = 0.8
     bar_width = group_width / category_count
 
-    # Positions of the five small bars around each group centre
+    # Positions of the small bars around each group centre
     offsets = (
         np.arange(category_count) - (category_count - 1) / 2
     ) * bar_width
@@ -44,23 +193,27 @@ def grouped_bar_chart(groups, data, title="Chart Title"):
             edgecolor="black"
         )
 
-        # Count above each bar
-        for bar_x, value in zip(positions, values):
+        # Count and percentage of that group's total above each bar
+        for bar_x, value, group_total in zip(positions, values, totals):
             if value > 0:
+                pct = value / group_total * 100
                 ax.text(
                     bar_x,
                     value,
-                    f"{value:g}",
+                    f"{value:g}\n({pct:.1f}%)",
                     ha="center",
                     va="bottom",
-                    fontsize=9
+                    fontsize=8
                 )
 
     ax.set_xticks(x)
     ax.set_xticklabels(groups)
     ax.set_title(title)
     ax.set_ylabel("Number of findings")
-    ax.set_ylim(bottom=0)
+
+    # Add headroom so the two-line labels don't get clipped
+    max_value = max(max(values) for values in data.values())
+    ax.set_ylim(0, max_value * 1.1)
 
     ax.grid(axis="y", alpha=0.4)
     ax.set_axisbelow(True)
@@ -76,7 +229,7 @@ def grouped_bar_chart(groups, data, title="Chart Title"):
     plt.show()
 
     return fig, ax
-
+    
 def plot_model_summary(
     metrics,
     title="Model comparison: discovery and severity consistency",

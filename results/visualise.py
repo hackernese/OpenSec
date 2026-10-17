@@ -6,6 +6,29 @@ from matplotlib.ticker import PercentFormatter
 from matplotlib.colors import ListedColormap, BoundaryNorm
 from matplotlib.lines import Line2D
 
+def bar_chart(labels, values, title="Model comparison", ylabel="Score (%)"):
+    if len(labels) != len(values):
+        raise ValueError("Labels and values must have the same length.")
+
+    colors = ["#4472C4", "#ED7D31", "#70AD47", "#FFC000", "#A246DB"]
+    bar_colors = [colors[i % len(colors)] for i in range(len(labels))]
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    bars = ax.bar(labels, values, color=bar_colors, width=0.6)
+    ax.bar_label(bars, fmt="%.1f", padding=5)
+
+    ax.set_title(title)
+    ax.set_ylabel(ylabel)
+    ax.set_ylim(bottom=0)
+    ax.margins(y=0.15)
+    ax.set_axisbelow(True)
+    ax.grid(axis="y", alpha=0.3)
+
+    fig.tight_layout()
+    plt.show()
+
+    return fig, ax
 
 def group_barchart_with_average(data, title="Bugs found across companies"):
     """
@@ -144,7 +167,7 @@ def group_barchart_with_average(data, title="Bugs found across companies"):
     fig.tight_layout()
     return fig, ax
     
-def grouped_bar_chart(groups, data, totals, title="Chart Title"):
+def grouped_bar_chart(groups, data, totals, title="Chart Title", colors = ["#4472C4", "#A5A5A5", "#ED7D31", "#FFC000", "#A246DB"]):
     group_count = len(groups)
     category_count = len(data)
 
@@ -168,7 +191,7 @@ def grouped_bar_chart(groups, data, totals, title="Chart Title"):
     totals = np.array(totals, dtype=float)
     x = np.arange(group_count)
 
-    colors = ["#4472C4", "#A5A5A5", "#ED7D31", "#FFC000", "#A246DB"]
+    
 
     group_width = 0.8
     bar_width = group_width / category_count

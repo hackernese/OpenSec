@@ -592,3 +592,4 @@ def plot_dot_with_median(data, title, subtitle, unit):
 
     plt.tight_layout()
     plt.show()
+    return fig, ax

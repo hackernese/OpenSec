@@ -55,9 +55,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
 
+      // Default to localhost:4096 if no endpoint configured
+      if (!endpoint) {
+        endpoint = 'http://localhost:4096';
+      }
+
       if (endpoint) {
         elements.apiEndpoint.value = endpoint;
-        updateStatus('configured', '✅ API endpoint configured');
+        updateStatus('configured', '✅ OpenCode endpoint configured');
         enableButtons();
       } else {
         updateStatus('error', '⚠️ No API endpoint configured');
@@ -97,48 +102,76 @@ document.addEventListener('DOMContentLoaded', async () => {
     elements.testButton.disabled = true;
     elements.testButton.innerHTML = '<span class="btn-icon">⏳</span>Testing...';
     
-    showTestResult('', '⏳ Testing Connection', 'Sending test request...');
+    showTestResult('', '⏳ Testing Connection', 'Checking OpenCode API availability...');
 
     try {
-      const testPayload = {
-        test: true,
-        placeName: 'Test Business',
-        websiteUrl: 'https://maps.google.com/test',
-        address: '123 Test Street, Test City',
-        ownerName: 'Test Owner',
-        email: 'test@example.com',
-        notes: 'This is a test request from Maps Company Insights extension.',
-        markdown: '# Test Data\n\nThis is a test request.',
-        timestamp: new Date().toISOString()
-      };
-
-      const response = await fetch(url, {
+      // Step 1: Create a test session
+      const createSessionResponse = await fetch(`${url}/session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(testPayload)
+        body: JSON.stringify({
+          title: 'Test from Maps Company Insights Extension'
+        })
       });
 
-      if (response.ok) {
-        const responseText = await response.text();
-        showTestResult(
-          'success',
-          '✅ Test Successful',
-          `Status: ${response.status} ${response.statusText}\n\nResponse preview:\n${responseText.substring(0, 200)}${responseText.length > 200 ? '...' : ''}`
-        );
-      } else {
-        showTestResult(
-          'error',
-          '❌ Test Failed',
-          `Status: ${response.status} ${response.statusText}\n\nThe endpoint returned an error. Please check your API configuration.`
-        );
+      if (!createSessionResponse.ok) {
+        const errorText = await createSessionResponse.text();
+        throw new Error(`Failed to create session: ${createSessionResponse.status} ${createSessionResponse.statusText}\n\n${errorText}`);
       }
+
+      const sessionData = await createSessionResponse.json();
+      const sessionId = sessionData.id;
+
+      if (!sessionId) {
+        throw new Error('Session created but no ID returned from OpenCode');
+      }
+
+      // Step 2: Send a test message to the session
+      const testMarkdown = `# Company's detail
+
+- name: \`Test Business\`
+- website: \`https://example.com\`
+- googleMap: \`https://www.google.com/maps/test\`
+- address: \`123 Test Street, Test City\`
+- ownerName: \`Test Owner\`
+- email: \`test@example.com\`
+
+# Notes
+
+This is a test message from the Maps Company Insights extension to verify the connection to OpenCode.`;
+
+      const sendMessageResponse = await fetch(`${url}/session/${sessionId}/message`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          parts: [
+            {
+              type: 'text',
+              text: testMarkdown
+            }
+          ]
+        })
+      });
+
+      if (!sendMessageResponse.ok) {
+        const errorText = await sendMessageResponse.text();
+        throw new Error(`Failed to send message: ${sendMessageResponse.status} ${sendMessageResponse.statusText}\n\n${errorText}`);
+      }
+
+      showTestResult(
+        'success',
+        '✅ Test Successful',
+        `OpenCode is running and accepting requests!\n\n✓ Session created: ${sessionId}\n✓ Message sent successfully\n\nYou can now use the extension to send business assessments to OpenCode.`
+      );
     } catch (error) {
       showTestResult(
         'error',
         '❌ Connection Failed',
-        `Network error: ${error.message}\n\nPlease check:\n- URL is correct\n- Endpoint is accessible\n- CORS is configured (if needed)`
+        `Error: ${error.message}\n\nPlease check:\n✓ OpenCode is running on ${url}\n✓ Port 4096 is accessible\n✓ No firewall blocking the connection\n\nExpected endpoints:\n• POST ${url}/session\n• POST ${url}/session/<id>/message`
       );
     } finally {
       elements.testButton.disabled = false;

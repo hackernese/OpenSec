@@ -15,7 +15,7 @@
       </div>
       <div class="popup-title">
         <h1>Maps Company Insights</h1>
-        <p>Configure your API endpoint</p>
+        <p>Configure OpenCode integration</p>
       </div>
     </div>
 
@@ -27,18 +27,18 @@
 
       <div class="form-section">
         <label for="apiEndpoint" class="form-label">
-          API Endpoint URL
+          OpenCode Endpoint URL
           <span class="form-required">*</span>
         </label>
         <input 
           type="url" 
           id="apiEndpoint" 
           class="form-input"
-          placeholder="https://your-api.com/endpoint"
+          placeholder="http://localhost:4096"
           spellcheck="false"
         />
         <p class="form-help">
-          Enter the URL where company data should be sent. This endpoint will receive POST requests with business information in JSON format.
+          Enter the URL where OpenCode is running. By default, OpenCode runs on http://localhost:4096. Business assessments will be sent as new sessions.
         </p>
       </div>
 

@@ -334,48 +334,80 @@
         saveBtn.disabled = true;
 
         try {
-          // Send to API endpoint (configurable)
+          // Send to OpenCode API endpoint
           const apiEndpoint = await getApiEndpoint();
           
           if (!apiEndpoint) {
-            throw new Error("API endpoint not configured. Please set it in extension options.");
+            throw new Error("OpenCode endpoint not configured. Please set it in extension options.");
           }
 
-          const response = await fetch(apiEndpoint, {
+          // Step 1: Create a new session in OpenCode
+          const createSessionResponse = await fetch(`${apiEndpoint}/session`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              placeName,
-              website: website,
-              googleMapUrl: googleMapUrl,
-              address: address || "N/A",
-              ownerName: owner,
-              email: email || null,
-              notes,
-              markdown,
-              timestamp: new Date().toISOString()
+              title: `Security Assessment: ${placeName}`
             })
           });
 
-          if (!response.ok) {
-            throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+          if (!createSessionResponse.ok) {
+            const errorText = await createSessionResponse.text();
+            throw new Error(`Failed to create session: ${createSessionResponse.status} ${createSessionResponse.statusText} - ${errorText}`);
           }
 
+          const sessionData = await createSessionResponse.json();
+          const sessionId = sessionData.id;
+
+          if (!sessionId) {
+            throw new Error('Session created but no ID returned');
+          }
+
+          console.log('📋 Created session:', sessionId);
+
+          // Step 2: Send the markdown message to the session
+          const sendMessageResponse = await fetch(`${apiEndpoint}/session/${sessionId}/message`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              parts: [
+                {
+                  type: 'text',
+                  text: markdown
+                }
+              ]
+            })
+          });
+
+          if (!sendMessageResponse.ok) {
+            const errorText = await sendMessageResponse.text();
+            throw new Error(`Failed to send message: ${sendMessageResponse.status} ${sendMessageResponse.statusText} - ${errorText}`);
+          }
+
+          console.log('✅ Message sent to session:', sessionId);
+          
           // Persist to localStorage keyed by place name
           const key = `maps-insights-note::${placeName}`;
-          localStorage.setItem(key, JSON.stringify({ notes, ownerName, email }));
+          localStorage.setItem(key, JSON.stringify({ 
+            notes, 
+            ownerName, 
+            email,
+            sessionId: sessionId,
+            sentAt: new Date().toISOString()
+          }));
 
-          // Show success toast and close modal
-          showToast("✅ Successfully saved and sent to API!", "success");
-          setTimeout(() => overlay.remove(), 1000);
+          // Show success toast with session info
+          showToast(`✅ Successfully sent to OpenCode! (Session: ${sessionId})`, "success");
+          setTimeout(() => overlay.remove(), 1500);
 
         } catch (error) {
-          console.error('Failed to send to API:', error);
+          console.error('Failed to send to OpenCode:', error);
           
           // Show error toast
-          showToast(`❌ Failed to send to API: ${error.message}`, "error");
+          showToast(`❌ Failed to send to OpenCode: ${error.message}`, "error");
 
           saveBtn.textContent = originalText;
           saveBtn.disabled = false;
@@ -440,9 +472,7 @@
   }
 
   /**
-   * Gets the API endpoint from storage. Returns null if not configured.
-   * You can set this by running in console: 
-   * localStorage.setItem('maps-insights-api-endpoint', 'https://your-api.com/endpoint')
+   * Gets the API endpoint from storage. Defaults to localhost:4096 for OpenCode.
    */
   async function getApiEndpoint() {
     // Try localStorage first (for quick setup)
@@ -454,10 +484,10 @@
       const result = await new Promise((resolve) => {
         chrome.storage.sync.get(['apiEndpoint'], resolve);
       });
-      return result.apiEndpoint || null;
+      return result.apiEndpoint || 'http://localhost:4096'; // Default to OpenCode
     } catch (error) {
-      console.warn('Chrome storage not available, using localStorage only');
-      return null;
+      console.warn('Chrome storage not available, using default localhost:4096');
+      return 'http://localhost:4096';
     }
   }
 

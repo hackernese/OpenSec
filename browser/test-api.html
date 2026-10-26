@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenCode API Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #014f5a;
+    }
+    button {
+      background: #014f5a;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #023944;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .output {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 15px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .success {
+      color: #28a745;
+    }
+    .error {
+      color: #dc3545;
+    }
+    .info {
+      color: #007bff;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 OpenCode API Test</h1>
+  <p>Test the OpenCode API endpoints to verify the connection is working correctly.</p>
+
+  <div class="container">
+    <h3>Configuration</h3>
+    <label>
+      OpenCode Endpoint:
+      <input type="text" id="endpoint" value="http://localhost:4096" placeholder="http://localhost:4096">
+    </label>
+  </div>
+
+  <div class="container">
+    <h3>Quick Tests</h3>
+    <button onclick="testCreateSession()">1️⃣ Test Create Session</button>
+    <button onclick="testSendMessage()" id="sendMessageBtn" disabled>2️⃣ Test Send Message</button>
+    <button onclick="testCompleteFlow()">🚀 Test Complete Flow</button>
+    <button onclick="clearOutput()">🗑️ Clear Output</button>
+  </div>
+
+  <div class="container">
+    <h3>Output</h3>
+    <div id="output" class="output">Ready to test...</div>
+  </div>
+
+  <script>
+    let currentSessionId = null;
+
+    function log(message, type = 'info') {
+      const output = document.getElementById('output');
+      const timestamp = new Date().toLocaleTimeString();
+      const prefix = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+      output.innerHTML += `<div class="${type}">[${timestamp}] ${prefix} ${message}</div>`;
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function clearOutput() {
+      document.getElementById('output').innerHTML = 'Ready to test...';
+      currentSessionId = null;
+      document.getElementById('sendMessageBtn').disabled = true;
+    }
+
+    async function testCreateSession() {
+      const endpoint = document.getElementById('endpoint').value.trim();
+      log('Creating test session...', 'info');
+
+      try {
+        const response = await fetch(`${endpoint}/session`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title: 'Test from API Test Page'
+          })
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        currentSessionId = data.id;
+
+        log(`Session created successfully!`, 'success');
+        log(`Session ID: ${currentSessionId}`, 'success');
+        log(`Full response: ${JSON.stringify(data, null, 2)}`, 'info');
+
+        // Enable send message button
+        document.getElementById('sendMessageBtn').disabled = false;
+
+      } catch (error) {
+        log(`Failed to create session: ${error.message}`, 'error');
+        console.error(error);
+      }
+    }
+
+    async function testSendMessage() {
+      if (!currentSessionId) {
+        log('No session ID available. Create a session first!', 'error');
+        return;
+      }
+
+      const endpoint = document.getElementById('endpoint').value.trim();
+      log(`Sending test message to session ${currentSessionId}...`, 'info');
+
+      const testMessage = `# Company's detail
+
+- name: \`Test Business Inc.\`
+- website: \`https://test-business.example.com\`
+- googleMap: \`https://www.google.com/maps/place/Test/@-33.8688,151.2093\`
+- address: \`123 Test Street, Test City, Test Country\`
+- ownerName: \`Test Owner\`
+- email: \`test@example.com\`
+
+# Notes
+
+This is a test message from the API test page to verify the OpenCode integration is working correctly.`;
+
+      try {
+        const response = await fetch(`${endpoint}/session/${currentSessionId}/message`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            parts: [
+              {
+                type: 'text',
+                text: testMessage
+              }
+            ]
+          })
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        log(`Message sent successfully!`, 'success');
+        log(`Response: ${JSON.stringify(data, null, 2)}`, 'info');
+
+      } catch (error) {
+        log(`Failed to send message: ${error.message}`, 'error');
+        console.error(error);
+      }
+    }
+
+    async function testCompleteFlow() {
+      const endpoint = document.getElementById('endpoint').value.trim();
+      log('========================================', 'info');
+      log('Starting complete flow test...', 'info');
+      log('========================================', 'info');
+
+      try {
+        // Step 1: Create session
+        log('Step 1: Creating session...', 'info');
+        const createResponse = await fetch(`${endpoint}/session`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title: 'Complete Flow Test - ACME Corporation'
+          })
+        });
+
+        if (!createResponse.ok) {
+          throw new Error(`Create session failed: ${createResponse.status}`);
+        }
+
+        const sessionData = await createResponse.json();
+        const sessionId = sessionData.id;
+        log(`✓ Session created: ${sessionId}`, 'success');
+
+        // Step 2: Send message
+        log('Step 2: Sending message...', 'info');
+        const markdown = `# Company's detail
+
+- name: \`ACME Corporation\`
+- website: \`https://acme.example.com\`
+- googleMap: \`https://www.google.com/maps/place/ACME/@-33.8688,151.2093\`
+- address: \`456 Business Avenue, Sydney NSW 2000, Australia\`
+- ownerName: \`John Doe\`
+- email: \`john.doe@acme.example.com\`
+
+# Notes
+
+This is a complete flow test. The assessment should focus on:
+1. Web application security
+2. API endpoint vulnerabilities
+3. Authentication mechanisms
+4. Data protection measures
+
+Please conduct a thorough assessment of all discovered assets.`;
+
+        const messageResponse = await fetch(`${endpoint}/session/${sessionId}/message`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            parts: [
+              {
+                type: 'text',
+                text: markdown
+              }
+            ]
+          })
+        });
+
+        if (!messageResponse.ok) {
+          throw new Error(`Send message failed: ${messageResponse.status}`);
+        }
+
+        log(`✓ Message sent successfully`, 'success');
+        log('========================================', 'success');
+        log('✅ COMPLETE FLOW TEST PASSED!', 'success');
+        log('========================================', 'success');
+        log(`Session ID: ${sessionId}`, 'success');
+        log('You can now check OpenCode to see the new session', 'info');
+
+        currentSessionId = sessionId;
+        document.getElementById('sendMessageBtn').disabled = false;
+
+      } catch (error) {
+        log('========================================', 'error');
+        log('❌ COMPLETE FLOW TEST FAILED!', 'error');
+        log('========================================', 'error');
+        log(`Error: ${error.message}`, 'error');
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
